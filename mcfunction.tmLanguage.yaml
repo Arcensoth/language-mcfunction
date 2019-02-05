@@ -10,3 +10,6 @@ patterns:
   - name: command
     begin: "\\w"
     end: "\\n"
+    patterns:
+      - name: command.selector
+        match: "\\s((@\\w)(\\[.*\\])?)\\s"
