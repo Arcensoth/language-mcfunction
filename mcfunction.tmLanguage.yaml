@@ -1,0 +1,12 @@
+---
+name: mcfunction
+scopeName: source.mcfunction
+fileTypes: [mcfunction]
+
+patterns:
+  - name: comment
+    begin: "#"
+    end: "\\n"
+  - name: command
+    begin: "\\w"
+    end: "\\n"
