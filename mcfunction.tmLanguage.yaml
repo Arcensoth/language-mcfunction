@@ -13,3 +13,5 @@ patterns:
     patterns:
       - name: entity.name.tag.mcfunction
         match: "\\s((@\\w)(\\[.*\\])?)\\s"
+      - name: "entity.name.function.mcfunction"
+        match: "\\s(([a-z0-9._\\-]+):([a-z0-9._\\-\\/]+))\\s"
