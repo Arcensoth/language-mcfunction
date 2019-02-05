@@ -4,12 +4,12 @@ scopeName: source.mcfunction
 fileTypes: [mcfunction]
 
 patterns:
-  - name: comment
+  - name: comment.mcfunction
     begin: "#"
     end: "\\n"
-  - name: command
+  - name: entity.name.mcfunction
     begin: "\\w"
     end: "\\n"
     patterns:
-      - name: command.selector
+      - name: entity.name.tag.mcfunction
         match: "\\s((@\\w)(\\[.*\\])?)\\s"
