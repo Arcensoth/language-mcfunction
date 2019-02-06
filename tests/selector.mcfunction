@@ -14,6 +14,7 @@ execute as @a as @a run
 execute as @a as @a[sort=nearest] run
 execute as @a[sort=nearest] as @a run
 execute as @a[sort=nearest] as @a[sort=nearest] run
+teleport @a @s
 
 # test valid basic argument types
 execute as @a[sort=nearest]

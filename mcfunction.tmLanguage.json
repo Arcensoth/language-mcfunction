@@ -46,7 +46,7 @@
       "patterns": [
         {
           "name": "entity.name.tag.mcfunction",
-          "match": "\\s((@[a-z])(\\[.*?\\])?)\\s"
+          "match": "(?<=\\s)((@[a-z])(\\[.*?\\])?)(?=\\s)"
         }
       ]
     },
@@ -54,7 +54,7 @@
       "patterns": [
         {
           "name": "entity.name.function.mcfunction",
-          "match": "\\s((#?[a-z0-9._\\-]+):([a-z0-9._\\-\\/]+))\\s"
+          "match": "(?<=\\s)((#?[a-z0-9._\\-]+):([a-z0-9._\\-\\/]+))(?=\\s)"
         }
       ]
     },
@@ -75,15 +75,19 @@
       "patterns": [
         {
           "name": "keyword.operator.mcfunction",
-          "match": "\\s(-?\\d*\\.?\\d+)\\s"
+          "match": "(?<=\\s)(-?\\d*\\.?\\d+)(?=\\s)"
         }
       ]
     },
     "range": {
       "patterns": [
         {
+          "name": "invalid.mcfunction",
+          "match": "(?<=\\s)\\.\\.(?=\\s)"
+        },
+        {
           "name": "keyword.operator.mcfunction",
-          "match": "\\s(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?\\s"
+          "match": "(?<=\\s)(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?(?=\\s)"
         }
       ]
     },
@@ -100,38 +104,16 @@
     "relative_coordinate": {
       "patterns": [
         {
-          "include": "#zero_relative_coordinate"
-        },
-        {
           "name": "keyword.operator.mcfunction",
-          "match": "\\s\\~(-?\\d*\\.?\\d+)\\s"
-        }
-      ]
-    },
-    "zero_relative_coordinate": {
-      "patterns": [
-        {
-          "name": "keyword.operator.mcfunction",
-          "match": "\\s\\~\\s"
+          "match": "(?<=\\s)\\~(-?\\d*\\.?\\d+)?(?=\\s)"
         }
       ]
     },
     "local_coordinate": {
       "patterns": [
         {
-          "include": "#zero_local_coordinate"
-        },
-        {
           "name": "keyword.operator.mcfunction",
-          "match": "\\s\\^(-?\\d*\\.?\\d+)\\s"
-        }
-      ]
-    },
-    "zero_local_coordinate": {
-      "patterns": [
-        {
-          "name": "keyword.operator.mcfunction",
-          "match": "\\s\\^\\s"
+          "match": "(?<=\\s)\\^(-?\\d*\\.?\\d+)?(?=\\s)"
         }
       ]
     }
