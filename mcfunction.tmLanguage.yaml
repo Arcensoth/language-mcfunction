@@ -26,7 +26,7 @@ repository:
   selector:
     patterns:
       - name: entity.name.tag.mcfunction
-        match: '\s((@\w)(\[.*?\])?)\s'
+        match: '\s((@[a-z])(\[.*?\])?)\s'
 
   resource_location:
     patterns:
