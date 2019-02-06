@@ -6,7 +6,7 @@
   ],
   "patterns": [
     {
-      "include": "#sample"
+      "include": "#groups"
     },
     {
       "include": "#comment"
@@ -55,6 +55,242 @@
         {
           "name": "entity.name.function.mcfunction",
           "match": "\\s(([a-z0-9._\\-]+):([a-z0-9._\\-\\/]+))\\s"
+        }
+      ]
+    },
+    "groups": {
+      "patterns": [
+        {
+          "name": "constant.mcfunction",
+          "match": "^constant$"
+        },
+        {
+          "name": "constant.numeric.mcfunction",
+          "match": "^constant.numeric$"
+        },
+        {
+          "name": "constant.character.mcfunction",
+          "match": "^constant.character$"
+        },
+        {
+          "name": "constant.language.mcfunction",
+          "match": "^constant.language$"
+        },
+        {
+          "name": "constant.other.mcfunction",
+          "match": "^constant.other$"
+        },
+        {
+          "name": "entity.mcfunction",
+          "match": "^entity$"
+        },
+        {
+          "name": "entity.name.mcfunction",
+          "match": "^entity.name$"
+        },
+        {
+          "name": "entity.name.function.mcfunction",
+          "match": "^entity.name.function$"
+        },
+        {
+          "name": "entity.name.type.mcfunction",
+          "match": "^entity.name.type$"
+        },
+        {
+          "name": "entity.name.tag.mcfunction",
+          "match": "^entity.name.tag$"
+        },
+        {
+          "name": "entity.name.section.mcfunction",
+          "match": "^entity.name.section$"
+        },
+        {
+          "name": "entity.other.mcfunction",
+          "match": "^entity.other$"
+        },
+        {
+          "name": "entity.other.inherited-class.mcfunction",
+          "match": "^entity.other.inherited-class$"
+        },
+        {
+          "name": "entity.other.attribute-name.mcfunction",
+          "match": "^entity.other.attribute-name$"
+        },
+        {
+          "name": "invalid.mcfunction",
+          "match": "^invalid$"
+        },
+        {
+          "name": "invalid.illegal.mcfunction",
+          "match": "^invalid.illegal$"
+        },
+        {
+          "name": "invalid.deprecated.mcfunction",
+          "match": "^invalid.deprecated$"
+        },
+        {
+          "name": "keyword.mcfunction",
+          "match": "^keyword$"
+        },
+        {
+          "name": "keyword.control.mcfunction",
+          "match": "^keyword.control$"
+        },
+        {
+          "name": "keyword.operator.mcfunction",
+          "match": "^keyword.operator$"
+        },
+        {
+          "name": "keyword.other.mcfunction",
+          "match": "^keyword.other$"
+        },
+        {
+          "name": "markup.mcfunction",
+          "match": "^markup$"
+        },
+        {
+          "name": "markup.underline.mcfunction",
+          "match": "^markup.underline$"
+        },
+        {
+          "name": "markup.underline.link.mcfunction",
+          "match": "^markup.underline.link$"
+        },
+        {
+          "name": "markup.bold.mcfunction",
+          "match": "^markup.bold$"
+        },
+        {
+          "name": "markup.heading.mcfunction",
+          "match": "^markup.heading$"
+        },
+        {
+          "name": "markup.italic.mcfunction",
+          "match": "^markup.italic$"
+        },
+        {
+          "name": "markup.list.mcfunction",
+          "match": "^markup.list$"
+        },
+        {
+          "name": "markup.numbered.mcfunction",
+          "match": "^markup.numbered$"
+        },
+        {
+          "name": "markup.unnumbered.mcfunction",
+          "match": "^markup.unnumbered$"
+        },
+        {
+          "name": "markup.quote.mcfunction",
+          "match": "^markup.quote$"
+        },
+        {
+          "name": "markup.raw.mcfunction",
+          "match": "^markup.raw$"
+        },
+        {
+          "name": "markup.other.mcfunction",
+          "match": "^markup.other$"
+        },
+        {
+          "name": "meta.mcfunction",
+          "match": "^meta$"
+        },
+        {
+          "name": "storage.mcfunction",
+          "match": "^storage$"
+        },
+        {
+          "name": "storage.type.mcfunction",
+          "match": "^storage.type$"
+        },
+        {
+          "name": "storage.modifier.mcfunction",
+          "match": "^storage.modifier$"
+        },
+        {
+          "name": "string",
+          "match": "^string$"
+        },
+        {
+          "name": "string.quoted",
+          "match": "^string.quoted$"
+        },
+        {
+          "name": "string.quoted.single",
+          "match": "^string.quoted.single$"
+        },
+        {
+          "name": "string.quoted.double",
+          "match": "^string.quoted.double$"
+        },
+        {
+          "name": "string.quoted.triple",
+          "match": "^string.quoted.triple$"
+        },
+        {
+          "name": "string.quoted.other",
+          "match": "^string.quoted.other$"
+        },
+        {
+          "name": "string.unquoted",
+          "match": "^string.unquoted$"
+        },
+        {
+          "name": "string.interpolated",
+          "match": "^string.interpolated$"
+        },
+        {
+          "name": "string.regexp",
+          "match": "^string.regexp$"
+        },
+        {
+          "name": "string.other",
+          "match": "^string.other$"
+        },
+        {
+          "name": "support",
+          "match": "^support$"
+        },
+        {
+          "name": "support.function",
+          "match": "^support.function$"
+        },
+        {
+          "name": "support.class",
+          "match": "^support.class$"
+        },
+        {
+          "name": "support.type",
+          "match": "^support.type$"
+        },
+        {
+          "name": "support.constant",
+          "match": "^support.constant$"
+        },
+        {
+          "name": "support.variable",
+          "match": "^support.variable$"
+        },
+        {
+          "name": "support.other",
+          "match": "^support.other$"
+        },
+        {
+          "name": "variable",
+          "match": "^variable$"
+        },
+        {
+          "name": "variable.parameter",
+          "match": "^variable.parameter$"
+        },
+        {
+          "name": "variable.language",
+          "match": "^variable.language$"
+        },
+        {
+          "name": "variable.other",
+          "match": "^variable.other$"
         }
       ]
     }
