@@ -31,4 +31,4 @@ repository:
   resource_location:
     patterns:
       - name: entity.name.function.mcfunction
-        match: '\s(([a-z0-9._\-]+):([a-z0-9._\-\/]+))\s'
+        match: '\s((#?[a-z0-9._\-]+):([a-z0-9._\-\/]+))\s'
