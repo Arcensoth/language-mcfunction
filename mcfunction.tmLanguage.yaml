@@ -22,6 +22,7 @@ repository:
         patterns:
           - include: "#selector"
           - include: "#resource_location"
+          - include: "#numeric"
 
   selector:
     patterns:
@@ -32,3 +33,46 @@ repository:
     patterns:
       - name: entity.name.function.mcfunction
         match: '\s((#?[a-z0-9._\-]+):([a-z0-9._\-\/]+))\s'
+
+  numeric:
+    patterns:
+      - include: "#number"
+      - include: "#range"
+      - include: "#coordinate"
+
+  number:
+    patterns:
+      - name: keyword.operator.mcfunction
+        match: '\s(-?\d*\.?\d+)\s'
+
+  range:
+    patterns:
+      - name: keyword.operator.mcfunction
+        match: '\s(-?\d*\.?\d+)?(\.\.)(-?\d*\.?\d+)?\s'
+
+  coordinate:
+    patterns:
+      - include: "#relative_coordinate"
+      - include: "#local_coordinate"
+
+  relative_coordinate:
+    patterns:
+      - include: "#zero_relative_coordinate"
+      - name: keyword.operator.mcfunction
+        match: '\s\~(-?\d*\.?\d+)\s'
+
+  zero_relative_coordinate:
+    patterns:
+      - name: keyword.operator.mcfunction
+        match: '\s\~\s'
+
+  local_coordinate:
+    patterns:
+      - include: "#zero_local_coordinate"
+      - name: keyword.operator.mcfunction
+        match: '\s\^(-?\d*\.?\d+)\s'
+
+  zero_local_coordinate:
+    patterns:
+      - name: keyword.operator.mcfunction
+        match: '\s\^\s'
