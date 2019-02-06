@@ -1,0 +1,1 @@
+npx js-yaml mcfunction.tmLanguage.yaml > mcfunction.tmLanguage.json

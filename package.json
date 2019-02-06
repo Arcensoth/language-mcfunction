@@ -1,0 +1,36 @@
+{
+  "name": "lanuage-mcfunction",
+  "displayName": "language-mcfunction",
+  "description": "TextMate language grammar for mcfunction files.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "mcfunction",
+        "aliases": [
+          "mcfunction"
+        ],
+        "extensions": [
+          "mcfunction"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "mcfunction",
+        "scopeName": "source.mcfunction",
+        "path": "./mcfunction.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "js-yaml": "^3.12.1"
+  }
+}

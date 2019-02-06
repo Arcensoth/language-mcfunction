@@ -1,0 +1,62 @@
+{
+  "name": "mcfunction",
+  "scopeName": "source.mcfunction",
+  "fileTypes": [
+    "mcfunction"
+  ],
+  "patterns": [
+    {
+      "include": "#sample"
+    },
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#command"
+    }
+  ],
+  "repository": {
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.mcfunction",
+          "begin": "#",
+          "end": "\\n"
+        }
+      ]
+    },
+    "command": {
+      "patterns": [
+        {
+          "name": "keyword.mcfunction",
+          "begin": "\\w",
+          "end": "\\n",
+          "patterns": [
+            {
+              "include": "#selector"
+            },
+            {
+              "include": "#resource_location"
+            }
+          ]
+        }
+      ]
+    },
+    "selector": {
+      "patterns": [
+        {
+          "name": "entity.name.tag.mcfunction",
+          "match": "\\s((@\\w)(\\[.*?\\])?)\\s"
+        }
+      ]
+    },
+    "resource_location": {
+      "patterns": [
+        {
+          "name": "entity.name.function.mcfunction",
+          "match": "\\s(([a-z0-9._\\-]+):([a-z0-9._\\-\\/]+))\\s"
+        }
+      ]
+    }
+  }
+}
