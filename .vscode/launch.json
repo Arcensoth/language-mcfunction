@@ -6,6 +6,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug build",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "debug"],
+      "port": 9229
+    },
+    {
       "name": "Extension",
       "type": "extensionHost",
       "request": "launch",

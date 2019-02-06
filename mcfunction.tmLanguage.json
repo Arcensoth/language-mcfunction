@@ -4,6 +4,16 @@
   "fileTypes": [
     "mcfunction"
   ],
+  "variables": {
+    "token_l": "(?<=\\s)",
+    "token_r": "(?=\\s)",
+    "resource_location": "(\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+)",
+    "range": "(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?",
+    "number": "(-?\\d*\\.?\\d+)",
+    "coordinate": "([\\~\\^])(-?\\d*\\.?\\d+)?",
+    "literal": "([a-z0-9_]+)",
+    "selector_pairkey": "(([a-z0-9_]+))(\\=)(\\!?)"
+  },
   "patterns": [
     {
       "include": "#comment"
@@ -16,9 +26,9 @@
     "comment": {
       "patterns": [
         {
-          "name": "comment.mcfunction",
-          "begin": "#",
-          "end": "\\n"
+          "name": "comment.number-sign.mcfunction",
+          "begin": "^\\s*#",
+          "end": "$"
         }
       ]
     },
@@ -26,48 +36,276 @@
       "patterns": [
         {
           "name": "keyword.mcfunction",
-          "begin": "\\w",
-          "end": "\\n",
+          "begin": "^\\s*([a-z0-9_]+)",
+          "end": "$",
           "patterns": [
             {
-              "include": "#selector"
-            },
-            {
-              "include": "#resource_location"
-            },
-            {
-              "include": "#numeric"
+              "include": "#tokens"
             }
           ]
         }
       ]
     },
-    "selector": {
+    "tokens": {
       "patterns": [
         {
-          "name": "entity.name.tag.mcfunction",
-          "match": "(?<=\\s)((@[a-z])(\\[.*?\\])?)(?=\\s)"
+          "include": "#token.selector"
+        },
+        {
+          "include": "#token.resource_location"
+        },
+        {
+          "include": "#token.range"
+        },
+        {
+          "include": "#token.number"
+        },
+        {
+          "include": "#token.relative_coordinate"
+        },
+        {
+          "include": "#token.local_coordinate"
+        },
+        {
+          "include": "#token.literal"
+        }
+      ]
+    },
+    "token.selector": {
+      "patterns": [
+        {
+          "name": "meta.token.selector.mcfunction",
+          "match": "(?<=\\s)(\\@[a-z])(\\[.*?\\])?(?=\\s)",
+          "captures": {
+            "1": {
+              "name": "entity.name.tag.mcfunction"
+            },
+            "2": {
+              "name": "markup.bold.mcfunction",
+              "begin": "\\[",
+              "end": "\\]",
+              "patterns": [
+                {
+                  "include": "#selector.pairs"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "token.resource_location": {
+      "patterns": [
+        {
+          "name": "meta.token.resource_location.mcfunction",
+          "match": "(?<=\\s)((\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+))(?=\\s)",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#resource_location"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "token.range": {
+      "patterns": [
+        {
+          "name": "meta.token.range.mcfunction",
+          "match": "(?<=\\s)((-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?)(?=\\s)",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#range"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "token.number": {
+      "patterns": [
+        {
+          "name": "meta.token.number.mcfunction",
+          "match": "(?<=\\s)((-?\\d*\\.?\\d+))(?=\\s)",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#number"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "token.coordinate": {
+      "patterns": [
+        {
+          "name": "meta.token.coordinate.mcfunction",
+          "match": "(?<=\\s)(([\\~\\^])(-?\\d*\\.?\\d+)?)(?=\\s)",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#coordinate"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "selector.pairs": {
+      "patterns": [
+        {
+          "include": "#selector.pair.resource_location"
+        },
+        {
+          "include": "#selector.pair.range"
+        },
+        {
+          "include": "#selector.pair.number"
+        },
+        {
+          "include": "#selector.pair.literal"
+        }
+      ]
+    },
+    "selector.nonvalue": {
+      "patterns": [
+        {
+          "name": "meta.selector.nonvalue.mcfunction",
+          "match": "(([a-z0-9_]+))(\\=)(\\!?)",
+          "captures": {
+            "1": {
+              "name": "entity.name.tag.mcfunction"
+            },
+            "2": {
+              "name": "comment.percentage.mcfunction"
+            },
+            "3": {
+              "name": "keyword.control.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "selector.pair.resource_location": {
+      "patterns": [
+        {
+          "name": "meta.selector.pair.resource_location.mcfunction",
+          "match": "((([a-z0-9_]+))(\\=)(\\!?))((\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+))",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#selector.nonvalue"
+                }
+              ]
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#resource_location"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "selector.pair.range": {
+      "patterns": [
+        {
+          "name": "meta.selector.pair.range.mcfunction",
+          "match": "((([a-z0-9_]+))(\\=)(\\!?))((-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?)",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#selector.nonvalue"
+                }
+              ]
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#range"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "selector.pair.number": {
+      "patterns": [
+        {
+          "name": "meta.selector.pair.number.mcfunction",
+          "match": "((([a-z0-9_]+))(\\=)(\\!?))((-?\\d*\\.?\\d+))",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#selector.nonvalue"
+                }
+              ]
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#number"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "selector.pair.literal": {
+      "patterns": [
+        {
+          "name": "meta.selector.pair.literal.mcfunction",
+          "match": "((([a-z0-9_]+))(\\=)(\\!?))(([a-z0-9_]+))",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#selector.nonvalue"
+                }
+              ]
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#literal"
+                }
+              ]
+            }
+          }
         }
       ]
     },
     "resource_location": {
       "patterns": [
         {
-          "name": "entity.name.function.mcfunction",
-          "match": "(?<=\\s)((#?[a-z0-9._\\-]+):([a-z0-9._\\-\\/]+))(?=\\s)"
+          "name": "constant.mcfunction",
+          "match": "(\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+)"
         }
       ]
     },
-    "numeric": {
+    "range": {
       "patterns": [
         {
-          "include": "#number"
-        },
-        {
-          "include": "#range"
-        },
-        {
-          "include": "#coordinate"
+          "name": "keyword.operator.mcfunction",
+          "match": "(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?"
         }
       ]
     },
@@ -75,45 +313,23 @@
       "patterns": [
         {
           "name": "keyword.operator.mcfunction",
-          "match": "(?<=\\s)(-?\\d*\\.?\\d+)(?=\\s)"
-        }
-      ]
-    },
-    "range": {
-      "patterns": [
-        {
-          "name": "invalid.mcfunction",
-          "match": "(?<=\\s)\\.\\.(?=\\s)"
-        },
-        {
-          "name": "keyword.operator.mcfunction",
-          "match": "(?<=\\s)(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?(?=\\s)"
+          "match": "(-?\\d*\\.?\\d+)"
         }
       ]
     },
     "coordinate": {
       "patterns": [
         {
-          "include": "#relative_coordinate"
-        },
-        {
-          "include": "#local_coordinate"
+          "name": "keyword.operator.mcfunction",
+          "match": "([\\~\\^])(-?\\d*\\.?\\d+)?"
         }
       ]
     },
-    "relative_coordinate": {
+    "literal": {
       "patterns": [
         {
-          "name": "keyword.operator.mcfunction",
-          "match": "(?<=\\s)\\~(-?\\d*\\.?\\d+)?(?=\\s)"
-        }
-      ]
-    },
-    "local_coordinate": {
-      "patterns": [
-        {
-          "name": "keyword.operator.mcfunction",
-          "match": "(?<=\\s)\\^(-?\\d*\\.?\\d+)?(?=\\s)"
+          "name": "constant.mcfunction",
+          "match": "([a-z0-9_]+)"
         }
       ]
     }

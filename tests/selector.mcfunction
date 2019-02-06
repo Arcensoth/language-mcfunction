@@ -2,12 +2,14 @@
 execute as @b
 execute as @a
 execute as @a[]
-execute as @a[sort=nearest]
+execute as @a[tag=foo]
+execute as @a[tag=!foo]
 
 # test valid with trailing command
 execute as @a run
 execute as @a[] run
-execute as @a[sort=nearest] run
+execute as @a[tag=foo] run
+execute as @a[tag=!foo] run
 
 # test valid with mixed selectors
 execute as @a as @a run
@@ -37,6 +39,8 @@ execute as @a[distance=0.9..]
 # test valid multiple arguments
 execute as @a[sort=nearest,limit=1] run
 execute as @a[sort=nearest, limit=1] run
+execute as @a[sort=nearest, limit=1, distance=0] run
+execute as @a[sort=nearest, tag=!foo, tag=bar] run
 
 # test valid arguments in separate selectors
 execute as @a[sort=nearest] as @s[tag=foo] run

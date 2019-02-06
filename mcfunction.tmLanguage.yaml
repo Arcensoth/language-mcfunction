@@ -1,7 +1,18 @@
 ---
 name: mcfunction
 scopeName: source.mcfunction
-fileTypes: [mcfunction]
+fileTypes:
+  - mcfunction
+
+variables:
+  token_l: '(?<=\s)'
+  token_r: '(?=\s)'
+  resource_location: '(\#?)([a-z0-9\._\-]+)(\:)([a-z0-9\._\-\/]+)'
+  range: '(-?\d*\.?\d+)?(\.\.)(-?\d*\.?\d+)?'
+  number: '(-?\d*\.?\d+)'
+  coordinate: '([\~\^])(-?\d*\.?\d+)?'
+  literal: "([a-z0-9_]+)"
+  selector_pairkey: '({{literal}})(\=)(\!?)'
 
 patterns:
   - include: "#comment"
@@ -10,59 +21,165 @@ patterns:
 repository:
   comment:
     patterns:
-      - name: comment.mcfunction
-        begin: "#"
-        end: '\n'
+      - name: comment.number-sign.mcfunction
+        begin: '^\s*#'
+        end: "$"
 
   command:
     patterns:
       - name: keyword.mcfunction
-        begin: '\w'
-        end: '\n'
+        begin: '^\s*{{literal}}'
+        end: "$"
         patterns:
-          - include: "#selector"
-          - include: "#resource_location"
-          - include: "#numeric"
+          - include: "#tokens"
 
-  selector:
+  tokens:
     patterns:
-      - name: entity.name.tag.mcfunction
-        match: '(?<=\s)((@[a-z])(\[.*?\])?)(?=\s)'
+      - include: "#token.selector"
+      - include: "#token.resource_location"
+      - include: "#token.range"
+      - include: "#token.number"
+      - include: "#token.relative_coordinate"
+      - include: "#token.local_coordinate"
+      - include: "#token.literal"
+
+  token.selector:
+    patterns:
+      - name: meta.token.selector.mcfunction
+        match: '{{token_l}}(\@[a-z])(\[.*?\])?{{token_r}}'
+        captures:
+          1:
+            name: entity.name.tag.mcfunction
+          2:
+            name: markup.bold.mcfunction
+            begin: '\['
+            end: '\]'
+            patterns:
+              - include: "#selector.pairs"
+
+  token.resource_location:
+    patterns:
+      - name: meta.token.resource_location.mcfunction
+        match: "{{token_l}}({{resource_location}}){{token_r}}"
+        captures:
+          1:
+            patterns:
+              - include: "#resource_location"
+
+  token.range:
+    patterns:
+      - name: meta.token.range.mcfunction
+        match: "{{token_l}}({{range}}){{token_r}}"
+        captures:
+          1:
+            patterns:
+              - include: "#range"
+
+  token.number:
+    patterns:
+      - name: meta.token.number.mcfunction
+        match: "{{token_l}}({{number}}){{token_r}}"
+        captures:
+          1:
+            patterns:
+              - include: "#number"
+
+  token.coordinate:
+    patterns:
+      - name: meta.token.coordinate.mcfunction
+        match: "{{token_l}}({{coordinate}}){{token_r}}"
+        captures:
+          1:
+            patterns:
+              - include: "#coordinate"
+
+  selector.pairs:
+    patterns:
+      - include: "#selector.pair.resource_location"
+      - include: "#selector.pair.range"
+      - include: "#selector.pair.number"
+      - include: "#selector.pair.literal"
+
+  selector.nonvalue:
+    patterns:
+      - name: meta.selector.nonvalue.mcfunction
+        match: "{{selector_pairkey}}"
+        captures:
+          1:
+            name: entity.name.tag.mcfunction
+          2:
+            name: comment.percentage.mcfunction
+          3:
+            name: keyword.control.mcfunction
+
+  selector.pair.resource_location:
+    patterns:
+      - name: meta.selector.pair.resource_location.mcfunction
+        match: "({{selector_pairkey}})({{resource_location}})"
+        captures:
+          1:
+            patterns:
+              - include: "#selector.nonvalue"
+          2:
+            patterns:
+              - include: "#resource_location"
+
+  selector.pair.range:
+    patterns:
+      - name: meta.selector.pair.range.mcfunction
+        match: "({{selector_pairkey}})({{range}})"
+        captures:
+          1:
+            patterns:
+              - include: "#selector.nonvalue"
+          2:
+            patterns:
+              - include: "#range"
+
+  selector.pair.number:
+    patterns:
+      - name: meta.selector.pair.number.mcfunction
+        match: "({{selector_pairkey}})({{number}})"
+        captures:
+          1:
+            patterns:
+              - include: "#selector.nonvalue"
+          2:
+            patterns:
+              - include: "#number"
+
+  selector.pair.literal:
+    patterns:
+      - name: meta.selector.pair.literal.mcfunction
+        match: "({{selector_pairkey}})({{literal}})"
+        captures:
+          1:
+            patterns:
+              - include: "#selector.nonvalue"
+          2:
+            patterns:
+              - include: "#literal"
 
   resource_location:
     patterns:
-      - name: entity.name.function.mcfunction
-        match: '(?<=\s)((#?[a-z0-9._\-]+):([a-z0-9._\-\/]+))(?=\s)'
-
-  numeric:
-    patterns:
-      - include: "#number"
-      - include: "#range"
-      - include: "#coordinate"
-
-  number:
-    patterns:
-      - name: keyword.operator.mcfunction
-        match: '(?<=\s)(-?\d*\.?\d+)(?=\s)'
+      - name: constant.mcfunction
+        match: "{{resource_location}}"
 
   range:
     patterns:
-      - name: invalid.mcfunction
-        match: '(?<=\s)\.\.(?=\s)'
       - name: keyword.operator.mcfunction
-        match: '(?<=\s)(-?\d*\.?\d+)?(\.\.)(-?\d*\.?\d+)?(?=\s)'
+        match: "{{range}}"
+  number:
+    patterns:
+      - name: keyword.operator.mcfunction
+        match: "{{number}}"
 
   coordinate:
     patterns:
-      - include: "#relative_coordinate"
-      - include: "#local_coordinate"
-
-  relative_coordinate:
-    patterns:
       - name: keyword.operator.mcfunction
-        match: '(?<=\s)\~(-?\d*\.?\d+)?(?=\s)'
+        match: "{{coordinate}}"
 
-  local_coordinate:
+  literal:
     patterns:
-      - name: keyword.operator.mcfunction
-        match: '(?<=\s)\^(-?\d*\.?\d+)?(?=\s)'
+      - name: constant.mcfunction
+        match: "{{literal}}"

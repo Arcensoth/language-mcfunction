@@ -3,6 +3,12 @@
   "displayName": "language-mcfunction",
   "description": "TextMate language grammar for mcfunction files.",
   "version": "0.0.1",
+  "repository": "https://github.com/Arcensoth/language-mcfunction",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -b build -v && node build/build.js",
+    "debug": "tsc -b build -v && node --nolazy --inspect-brk=9229 build/build.js"
+  },
   "engines": {
     "vscode": "^1.30.0"
   },
@@ -31,6 +37,9 @@
     ]
   },
   "devDependencies": {
-    "js-yaml": "^3.12.1"
+    "js-yaml": "latest",
+    "typescript": "latest",
+    "@types/js-yaml": "latest",
+    "@types/node": "latest"
   }
 }
