@@ -16,7 +16,7 @@ repository:
 
   command:
     patterns:
-      - name: entity.name.mcfunction
+      - name: keyword.mcfunction
         begin: '\w'
         end: '\n'
         patterns:
@@ -30,5 +30,5 @@ repository:
 
   resource_location:
     patterns:
-      - name: entity.name.function.mcfunction
+      - name: entity.name.tag.mcfunction
         match: '\s(([a-z0-9._\-]+):([a-z0-9._\-\/]+))\s'
