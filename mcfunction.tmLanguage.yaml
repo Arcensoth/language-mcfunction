@@ -7,13 +7,16 @@ fileTypes:
 variables:
   token_l: '(?<=\s)'
   token_r: '(?=\s)'
-  resource_location: '(\#?)([a-z0-9\._\-]+)(\:)([a-z0-9\._\-\/]+)'
-  range: '(-?\d*\.?\d+)?(\.\.)(-?\d*\.?\d+)?'
-  number: '-?\d*\.?\d+'
-  coordinate: '([\~\^])(-?\d*\.?\d+)?'
-  literal: "[a-z0-9_]+"
+  literal: '[a-z0-9_\.\-]+'
+  number: '\-?\d*\.?\d+'
+  # resource_location: '(\#?)({{literal}})(\:)({{literal}})(\/{{literal}})*'
+  resource_location: '(\#?)({{literal}})(\:)([a-z0-9_\.\-\/]+)'
+  # range: '({{number}})?(\.\.)({{number}})?'
+  range: '(\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)?'
+  # coordinate: '([\~\^])+({{number}})?'
+  coordinate: '([\~\^])(\-?\d*\.?\d+)?'
   base_selector: '\@[a-z]'
-  selector_key: '(\,?)({{literal}})(\=)(\!?)'
+  selector_key: '(\,?\s*)({{literal}})(\=)(\!?)'
 
 patterns:
   - include: "#comment"
@@ -28,9 +31,13 @@ repository:
 
   command:
     patterns:
-      - name: keyword.mcfunction
-        begin: '^\s*{{literal}}'
+      - name: keyword.operator.mcfunction
+        begin: '^\s*({{literal}})'
         end: "$"
+        beginCaptures:
+          # highlight the first command on each line
+          1:
+            name: keyword.control.mcfunction
         patterns:
           - include: "#tokens"
 
@@ -47,21 +54,22 @@ repository:
 
   token.selector_without_arguments:
     patterns:
-      - name: entity.name.tag.mcfunction
-        match: '{{token_l}}{{base_selector}}{{token_r}}'
+      - name: variable.language.mcfunction
+        match: "{{token_l}}{{base_selector}}{{token_r}}"
 
+  # processing this separately makes things much more manageable
   token.selector_with_arguments:
     patterns:
-      - name: entity.name.tag.mcfunction
+      - name: variable.language.mcfunction
         begin: '{{token_l}}{{base_selector}}(\[)'
         end: '(\]){{token_r}}'
-        # contentName: markup.bold.mcfunction
+        contentName: invalid
         beginCaptures:
           1:
-            name: markup.bold.mcfunction
+            name: keyword.control.mcfunction
         endCaptures:
           1:
-            name: markup.bold.mcfunction
+            name: keyword.control.mcfunction
         patterns:
           - include: "#selector_arguments"
 
@@ -103,9 +111,9 @@ repository:
 
   selector_arguments:
     patterns:
-      - include: "#selector_argument.resource_location"
       - include: "#selector_argument.range"
       - include: "#selector_argument.number"
+      - include: "#selector_argument.resource_location"
       - include: "#selector_argument.literal"
 
   selector.argument_key:
@@ -114,25 +122,18 @@ repository:
         match: "{{selector_key}}"
         captures:
           1:
-            name: markup.bold.mcfunction
-          2:
-            name: entity.name.tag.mcfunction
-          3:
-            name: comment.percentage.mcfunction
-          4:
+            # the preceding `,` (if any) and the whitespace between
             name: keyword.control.mcfunction
-
-  selector_argument.resource_location:
-    patterns:
-      - name: meta.selector_argument.resource_location.mcfunction
-        match: "({{selector_key}})({{resource_location}})"
-        captures:
-          1:
-            patterns:
-              - include: "#selector.argument_key"
-          6:
-            patterns:
-              - include: "#resource_location"
+          2:
+            # the actual argument key
+            name: variable.parameter.mcfunction
+          3:
+            # the `=`
+            name: keyword.control.mcfunction
+          4:
+            # optional negation operator `!` (if any)
+            # name: keyword.control.mcfunction
+            name: string.regexp.mcfunction
 
   selector_argument.range:
     patterns:
@@ -158,6 +159,18 @@ repository:
             patterns:
               - include: "#number"
 
+  selector_argument.resource_location:
+    patterns:
+      - name: meta.selector_argument.resource_location.mcfunction
+        match: "({{selector_key}})({{resource_location}})"
+        captures:
+          1:
+            patterns:
+              - include: "#selector.argument_key"
+          6:
+            patterns:
+              - include: "#resource_location"
+
   selector_argument.literal:
     patterns:
       - name: meta.selector_argument.literal.mcfunction
@@ -170,30 +183,34 @@ repository:
             patterns:
               - include: "#literal"
 
-  resource_location:
-    patterns:
-      - name: keyword.operator.mcfunction
-        match: "{{resource_location}}"
-
   range:
     patterns:
-      - name: constant.mcfunction
+      - name: constant.numeric.mcfunction
         match: "{{range}}"
         captures:
           2:
-            # name: keyword.mcfunction
-            # name: entity.name.function.mcfunction
-            name: keyword.operator.mcfunction
+            # color the `..` differently to distinguish it from decimals
+            # name: keyword.control.mcfunction
+            name: string.regexp.mcfunction
 
   number:
     patterns:
-      - name: constant.mcfunction
+      - name: constant.numeric.mcfunction
         match: "{{number}}"
 
   coordinate:
     patterns:
-      - name: constant.mcfunction
+      - name: constant.numeric.mcfunction
         match: "{{coordinate}}"
+        captures:
+          1:
+            # the `~` or `^`
+            name: keyword.control.mcfunction
+
+  resource_location:
+    patterns:
+      - name: entity.name.type.mcfunction
+        match: "{{resource_location}}"
 
   literal:
     patterns:

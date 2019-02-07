@@ -7,13 +7,13 @@
   "variables": {
     "token_l": "(?<=\\s)",
     "token_r": "(?=\\s)",
-    "resource_location": "(\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+)",
-    "range": "(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?",
-    "number": "-?\\d*\\.?\\d+",
-    "coordinate": "([\\~\\^])(-?\\d*\\.?\\d+)?",
-    "literal": "[a-z0-9_]+",
+    "literal": "[a-z0-9_\\.\\-]+",
+    "number": "\\-?\\d*\\.?\\d+",
+    "resource_location": "(\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
+    "range": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
+    "coordinate": "([\\~\\^])(\\-?\\d*\\.?\\d+)?",
     "base_selector": "\\@[a-z]",
-    "selector_key": "(\\,?)([a-z0-9_]+)(\\=)(\\!?)"
+    "selector_key": "(\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?)"
   },
   "patterns": [
     {
@@ -36,9 +36,14 @@
     "command": {
       "patterns": [
         {
-          "name": "keyword.mcfunction",
-          "begin": "^\\s*[a-z0-9_]+",
+          "name": "keyword.operator.mcfunction",
+          "begin": "^\\s*([a-z0-9_\\.\\-]+)",
           "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.mcfunction"
+            }
+          },
           "patterns": [
             {
               "include": "#tokens"
@@ -78,7 +83,7 @@
     "token.selector_without_arguments": {
       "patterns": [
         {
-          "name": "entity.name.tag.mcfunction",
+          "name": "variable.language.mcfunction",
           "match": "(?<=\\s)\\@[a-z](?=\\s)"
         }
       ]
@@ -86,17 +91,18 @@
     "token.selector_with_arguments": {
       "patterns": [
         {
-          "name": "entity.name.tag.mcfunction",
+          "name": "variable.language.mcfunction",
           "begin": "(?<=\\s)\\@[a-z](\\[)",
           "end": "(\\])(?=\\s)",
+          "contentName": "invalid",
           "beginCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "keyword.control.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "keyword.control.mcfunction"
             }
           },
           "patterns": [
@@ -111,7 +117,7 @@
       "patterns": [
         {
           "name": "meta.token.resource_location.mcfunction",
-          "match": "(?<=\\s)((\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+))(?=\\s)",
+          "match": "(?<=\\s)((\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=\\s)",
           "captures": {
             "1": {
               "patterns": [
@@ -128,7 +134,7 @@
       "patterns": [
         {
           "name": "meta.token.range.mcfunction",
-          "match": "(?<=\\s)((-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?)(?=\\s)",
+          "match": "(?<=\\s)((\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?)(?=\\s)",
           "captures": {
             "1": {
               "patterns": [
@@ -145,7 +151,7 @@
       "patterns": [
         {
           "name": "meta.token.number.mcfunction",
-          "match": "(?<=\\s)(-?\\d*\\.?\\d+)(?=\\s)",
+          "match": "(?<=\\s)(\\-?\\d*\\.?\\d+)(?=\\s)",
           "captures": {
             "1": {
               "patterns": [
@@ -162,7 +168,7 @@
       "patterns": [
         {
           "name": "meta.token.coordinate.mcfunction",
-          "match": "(?<=\\s)(([\\~\\^])(-?\\d*\\.?\\d+)?)(?=\\s)",
+          "match": "(?<=\\s)(([\\~\\^])(\\-?\\d*\\.?\\d+)?)(?=\\s)",
           "captures": {
             "1": {
               "patterns": [
@@ -178,13 +184,13 @@
     "selector_arguments": {
       "patterns": [
         {
-          "include": "#selector_argument.resource_location"
-        },
-        {
           "include": "#selector_argument.range"
         },
         {
           "include": "#selector_argument.number"
+        },
+        {
+          "include": "#selector_argument.resource_location"
         },
         {
           "include": "#selector_argument.literal"
@@ -195,43 +201,19 @@
       "patterns": [
         {
           "name": "meta.selector.argument_key.mcfunction",
-          "match": "(\\,?)([a-z0-9_]+)(\\=)(\\!?)",
+          "match": "(\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?)",
           "captures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "keyword.control.mcfunction"
             },
             "2": {
-              "name": "entity.name.tag.mcfunction"
+              "name": "variable.parameter.mcfunction"
             },
             "3": {
-              "name": "comment.percentage.mcfunction"
+              "name": "keyword.control.mcfunction"
             },
             "4": {
-              "name": "keyword.control.mcfunction"
-            }
-          }
-        }
-      ]
-    },
-    "selector_argument.resource_location": {
-      "patterns": [
-        {
-          "name": "meta.selector_argument.resource_location.mcfunction",
-          "match": "((\\,?)([a-z0-9_]+)(\\=)(\\!?))((\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+))",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#selector.argument_key"
-                }
-              ]
-            },
-            "6": {
-              "patterns": [
-                {
-                  "include": "#resource_location"
-                }
-              ]
+              "name": "string.regexp.mcfunction"
             }
           }
         }
@@ -241,7 +223,7 @@
       "patterns": [
         {
           "name": "meta.selector_argument.range.mcfunction",
-          "match": "((\\,?)([a-z0-9_]+)(\\=)(\\!?))((-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?)",
+          "match": "((\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?))((\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?)",
           "captures": {
             "1": {
               "patterns": [
@@ -265,7 +247,7 @@
       "patterns": [
         {
           "name": "meta.selector_argument.number.mcfunction",
-          "match": "((\\,?)([a-z0-9_]+)(\\=)(\\!?))(-?\\d*\\.?\\d+)",
+          "match": "((\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?))(\\-?\\d*\\.?\\d+)",
           "captures": {
             "1": {
               "patterns": [
@@ -285,11 +267,35 @@
         }
       ]
     },
+    "selector_argument.resource_location": {
+      "patterns": [
+        {
+          "name": "meta.selector_argument.resource_location.mcfunction",
+          "match": "((\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?))((\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#selector.argument_key"
+                }
+              ]
+            },
+            "6": {
+              "patterns": [
+                {
+                  "include": "#resource_location"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
     "selector_argument.literal": {
       "patterns": [
         {
           "name": "meta.selector_argument.literal.mcfunction",
-          "match": "((\\,?)([a-z0-9_]+)(\\=)(\\!?))([a-z0-9_]+)",
+          "match": "((\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?))([a-z0-9_\\.\\-]+)",
           "captures": {
             "1": {
               "patterns": [
@@ -309,22 +315,14 @@
         }
       ]
     },
-    "resource_location": {
-      "patterns": [
-        {
-          "name": "keyword.operator.mcfunction",
-          "match": "(\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+)"
-        }
-      ]
-    },
     "range": {
       "patterns": [
         {
-          "name": "constant.mcfunction",
-          "match": "(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?",
+          "name": "constant.numeric.mcfunction",
+          "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
           "captures": {
             "2": {
-              "name": "keyword.operator.mcfunction"
+              "name": "string.regexp.mcfunction"
             }
           }
         }
@@ -333,16 +331,29 @@
     "number": {
       "patterns": [
         {
-          "name": "constant.mcfunction",
-          "match": "-?\\d*\\.?\\d+"
+          "name": "constant.numeric.mcfunction",
+          "match": "\\-?\\d*\\.?\\d+"
         }
       ]
     },
     "coordinate": {
       "patterns": [
         {
-          "name": "constant.mcfunction",
-          "match": "([\\~\\^])(-?\\d*\\.?\\d+)?"
+          "name": "constant.numeric.mcfunction",
+          "match": "([\\~\\^])(\\-?\\d*\\.?\\d+)?",
+          "captures": {
+            "1": {
+              "name": "keyword.control.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "resource_location": {
+      "patterns": [
+        {
+          "name": "entity.name.type.mcfunction",
+          "match": "(\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)"
         }
       ]
     },
@@ -350,7 +361,7 @@
       "patterns": [
         {
           "name": "keyword.operator.mcfunction",
-          "match": "[a-z0-9_]+"
+          "match": "[a-z0-9_\\.\\-]+"
         }
       ]
     }
