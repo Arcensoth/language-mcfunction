@@ -36,9 +36,10 @@
     "command": {
       "patterns": [
         {
-          "name": "keyword.operator.mcfunction",
+          "name": "meta.command.mcfunction",
           "begin": "^\\s*([a-z0-9_\\.\\-]+)",
           "end": "$",
+          "contentName": "invalid",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.mcfunction"

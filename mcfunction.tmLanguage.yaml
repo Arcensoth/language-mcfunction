@@ -31,9 +31,10 @@ repository:
 
   command:
     patterns:
-      - name: keyword.operator.mcfunction
+      - name: meta.command.mcfunction
         begin: '^\s*({{literal}})'
         end: "$"
+        contentName: invalid
         beginCaptures:
           # highlight the first command on each line
           1:
