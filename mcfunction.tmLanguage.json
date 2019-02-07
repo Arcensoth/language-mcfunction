@@ -9,10 +9,11 @@
     "token_r": "(?=\\s)",
     "resource_location": "(\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+)",
     "range": "(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?",
-    "number": "(-?\\d*\\.?\\d+)",
+    "number": "-?\\d*\\.?\\d+",
     "coordinate": "([\\~\\^])(-?\\d*\\.?\\d+)?",
-    "literal": "([a-z0-9_]+)",
-    "selector_pairkey": "(([a-z0-9_]+))(\\=)(\\!?)"
+    "literal": "[a-z0-9_]+",
+    "base_selector": "\\@[a-z]",
+    "selector_key": "(\\,?)([a-z0-9_]+)(\\=)(\\!?)"
   },
   "patterns": [
     {
@@ -36,7 +37,7 @@
       "patterns": [
         {
           "name": "keyword.mcfunction",
-          "begin": "^\\s*([a-z0-9_]+)",
+          "begin": "^\\s*[a-z0-9_]+",
           "end": "$",
           "patterns": [
             {
@@ -49,7 +50,10 @@
     "tokens": {
       "patterns": [
         {
-          "include": "#token.selector"
+          "include": "#token.selector_without_arguments"
+        },
+        {
+          "include": "#token.selector_with_arguments"
         },
         {
           "include": "#token.resource_location"
@@ -71,26 +75,35 @@
         }
       ]
     },
-    "token.selector": {
+    "token.selector_without_arguments": {
       "patterns": [
         {
-          "name": "meta.token.selector.mcfunction",
-          "match": "(?<=\\s)(\\@[a-z])(\\[.*?\\])?(?=\\s)",
-          "captures": {
+          "name": "entity.name.tag.mcfunction",
+          "match": "(?<=\\s)\\@[a-z](?=\\s)"
+        }
+      ]
+    },
+    "token.selector_with_arguments": {
+      "patterns": [
+        {
+          "name": "entity.name.tag.mcfunction",
+          "begin": "(?<=\\s)\\@[a-z](\\[)",
+          "end": "(\\])(?=\\s)",
+          "beginCaptures": {
             "1": {
-              "name": "entity.name.tag.mcfunction"
-            },
-            "2": {
-              "name": "markup.bold.mcfunction",
-              "begin": "\\[",
-              "end": "\\]",
-              "patterns": [
-                {
-                  "include": "#selector.pairs"
-                }
-              ]
+              "name": "markup.bold.mcfunction"
             }
-          }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#selector_arguments"
+            }
+          ]
         }
       ]
     },
@@ -132,7 +145,7 @@
       "patterns": [
         {
           "name": "meta.token.number.mcfunction",
-          "match": "(?<=\\s)((-?\\d*\\.?\\d+))(?=\\s)",
+          "match": "(?<=\\s)(-?\\d*\\.?\\d+)(?=\\s)",
           "captures": {
             "1": {
               "patterns": [
@@ -162,55 +175,58 @@
         }
       ]
     },
-    "selector.pairs": {
+    "selector_arguments": {
       "patterns": [
         {
-          "include": "#selector.pair.resource_location"
+          "include": "#selector_argument.resource_location"
         },
         {
-          "include": "#selector.pair.range"
+          "include": "#selector_argument.range"
         },
         {
-          "include": "#selector.pair.number"
+          "include": "#selector_argument.number"
         },
         {
-          "include": "#selector.pair.literal"
+          "include": "#selector_argument.literal"
         }
       ]
     },
-    "selector.nonvalue": {
+    "selector.argument_key": {
       "patterns": [
         {
-          "name": "meta.selector.nonvalue.mcfunction",
-          "match": "(([a-z0-9_]+))(\\=)(\\!?)",
+          "name": "meta.selector.argument_key.mcfunction",
+          "match": "(\\,?)([a-z0-9_]+)(\\=)(\\!?)",
           "captures": {
             "1": {
-              "name": "entity.name.tag.mcfunction"
+              "name": "markup.bold.mcfunction"
             },
             "2": {
-              "name": "comment.percentage.mcfunction"
+              "name": "entity.name.tag.mcfunction"
             },
             "3": {
+              "name": "comment.percentage.mcfunction"
+            },
+            "4": {
               "name": "keyword.control.mcfunction"
             }
           }
         }
       ]
     },
-    "selector.pair.resource_location": {
+    "selector_argument.resource_location": {
       "patterns": [
         {
-          "name": "meta.selector.pair.resource_location.mcfunction",
-          "match": "((([a-z0-9_]+))(\\=)(\\!?))((\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+))",
+          "name": "meta.selector_argument.resource_location.mcfunction",
+          "match": "((\\,?)([a-z0-9_]+)(\\=)(\\!?))((\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+))",
           "captures": {
             "1": {
               "patterns": [
                 {
-                  "include": "#selector.nonvalue"
+                  "include": "#selector.argument_key"
                 }
               ]
             },
-            "2": {
+            "6": {
               "patterns": [
                 {
                   "include": "#resource_location"
@@ -221,20 +237,20 @@
         }
       ]
     },
-    "selector.pair.range": {
+    "selector_argument.range": {
       "patterns": [
         {
-          "name": "meta.selector.pair.range.mcfunction",
-          "match": "((([a-z0-9_]+))(\\=)(\\!?))((-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?)",
+          "name": "meta.selector_argument.range.mcfunction",
+          "match": "((\\,?)([a-z0-9_]+)(\\=)(\\!?))((-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?)",
           "captures": {
             "1": {
               "patterns": [
                 {
-                  "include": "#selector.nonvalue"
+                  "include": "#selector.argument_key"
                 }
               ]
             },
-            "2": {
+            "6": {
               "patterns": [
                 {
                   "include": "#range"
@@ -245,20 +261,20 @@
         }
       ]
     },
-    "selector.pair.number": {
+    "selector_argument.number": {
       "patterns": [
         {
-          "name": "meta.selector.pair.number.mcfunction",
-          "match": "((([a-z0-9_]+))(\\=)(\\!?))((-?\\d*\\.?\\d+))",
+          "name": "meta.selector_argument.number.mcfunction",
+          "match": "((\\,?)([a-z0-9_]+)(\\=)(\\!?))(-?\\d*\\.?\\d+)",
           "captures": {
             "1": {
               "patterns": [
                 {
-                  "include": "#selector.nonvalue"
+                  "include": "#selector.argument_key"
                 }
               ]
             },
-            "2": {
+            "6": {
               "patterns": [
                 {
                   "include": "#number"
@@ -269,20 +285,20 @@
         }
       ]
     },
-    "selector.pair.literal": {
+    "selector_argument.literal": {
       "patterns": [
         {
-          "name": "meta.selector.pair.literal.mcfunction",
-          "match": "((([a-z0-9_]+))(\\=)(\\!?))(([a-z0-9_]+))",
+          "name": "meta.selector_argument.literal.mcfunction",
+          "match": "((\\,?)([a-z0-9_]+)(\\=)(\\!?))([a-z0-9_]+)",
           "captures": {
             "1": {
               "patterns": [
                 {
-                  "include": "#selector.nonvalue"
+                  "include": "#selector.argument_key"
                 }
               ]
             },
-            "2": {
+            "6": {
               "patterns": [
                 {
                   "include": "#literal"
@@ -296,7 +312,7 @@
     "resource_location": {
       "patterns": [
         {
-          "name": "constant.mcfunction",
+          "name": "keyword.operator.mcfunction",
           "match": "(\\#?)([a-z0-9\\._\\-]+)(\\:)([a-z0-9\\._\\-\\/]+)"
         }
       ]
@@ -304,23 +320,28 @@
     "range": {
       "patterns": [
         {
-          "name": "keyword.operator.mcfunction",
-          "match": "(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?"
+          "name": "constant.mcfunction",
+          "match": "(-?\\d*\\.?\\d+)?(\\.\\.)(-?\\d*\\.?\\d+)?",
+          "captures": {
+            "2": {
+              "name": "keyword.operator.mcfunction"
+            }
+          }
         }
       ]
     },
     "number": {
       "patterns": [
         {
-          "name": "keyword.operator.mcfunction",
-          "match": "(-?\\d*\\.?\\d+)"
+          "name": "constant.mcfunction",
+          "match": "-?\\d*\\.?\\d+"
         }
       ]
     },
     "coordinate": {
       "patterns": [
         {
-          "name": "keyword.operator.mcfunction",
+          "name": "constant.mcfunction",
           "match": "([\\~\\^])(-?\\d*\\.?\\d+)?"
         }
       ]
@@ -328,8 +349,8 @@
     "literal": {
       "patterns": [
         {
-          "name": "constant.mcfunction",
-          "match": "([a-z0-9_]+)"
+          "name": "keyword.operator.mcfunction",
+          "match": "[a-z0-9_]+"
         }
       ]
     }
