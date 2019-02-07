@@ -2,7 +2,9 @@ import fs = require("fs");
 import path = require("path");
 import yaml = require("js-yaml");
 
-const FORMAT_PROPERTIES = ["match", "begin", "end"];
+const FORMAT_PROPERTIES = ["name", "match", "begin", "end"];
+const RECURSE_MAPS = ["captures", "beginCaptures", "endCaptures"];
+const RECURSE_LISTS = ["patterns"];
 
 function formatProperty(grammar: any, s: string): string {
   let s2 = s;
@@ -14,26 +16,30 @@ function formatProperty(grammar: any, s: string): string {
 }
 
 function updateNode(grammar: any, node: any) {
-  // format properties with variable expressions
+  // format properties (leaf-nodes) with variable expressions
   FORMAT_PROPERTIES.forEach((key: string) => {
     if (key in node) {
       node[key] = formatProperty(grammar, node[key]);
     }
   });
 
-  // recurse into captures
-  if ("captures" in node) {
-    for (const key in node.captures) {
-      updateNode(grammar, node.captures[key]);
+  // recurse into key-value children
+  RECURSE_MAPS.forEach((key: string) => {
+    if (key in node) {
+      for (const child_key in node[key]) {
+        updateNode(grammar, node[key][child_key]);
+      }
     }
-  }
+  });
 
-  // recurse into patterns
-  if ("patterns" in node) {
-    node.patterns.forEach((pattern: any) => {
-      updateNode(grammar, pattern);
-    });
-  }
+  // recurse into list children
+  RECURSE_LISTS.forEach((key: string) => {
+    if (key in node) {
+      node[key].forEach((pattern: any) => {
+        updateNode(grammar, pattern);
+      });
+    }
+  });
 }
 
 const grammar = yaml.safeLoad(
