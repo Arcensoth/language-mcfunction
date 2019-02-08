@@ -84,6 +84,9 @@ execute as @a[type=:foo] run
 execute as @a[type=#mypack:] run
 execute as @a[type=#:foo] run
 
+# test invalid edge cases
+execute as @a[gamemode=survival,]] run
+
 # TODO test invalid scores argument
 
 # TODO test invalid advancement argument

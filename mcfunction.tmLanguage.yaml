@@ -9,7 +9,7 @@ variables:
   token_r: '(?=\s)'
 
   # characters for literal subcommands and other identifiers
-  literal: "[a-z_][a-z0-9_]+"
+  literal: "[a-z_][a-z0-9_]*"
 
   # characters permitted in namespaces, resource paths, etc
   component: '[a-z0-9_\.\-]+'
@@ -76,6 +76,7 @@ repository:
       - include: "#token.number"
       - include: "#token.coordinate"
       - include: "#token.literal"
+      - include: "#token.anything"
 
   token.selector_without_arguments:
     patterns:
@@ -152,6 +153,11 @@ repository:
             patterns:
               - include: "#literal"
 
+  token.anything:
+    patterns:
+      - name: invalid.mcfunction
+        match: "{{token_l}}.*{{token_r}}"
+
   selector_arguments:
     patterns:
       - include: "#selector_argument.range"
@@ -159,6 +165,7 @@ repository:
       - include: "#selector_argument.resource_location"
       - include: "#selector_argument.tagged_resource_location"
       - include: "#selector_argument.literal"
+      - include: "#selector_argument.anything"
 
   selector.argument_key:
     patterns:
@@ -240,6 +247,12 @@ repository:
           6:
             patterns:
               - include: "#literal"
+
+  selector_argument.anything:
+    patterns:
+      - name: invalid.mcfunction
+        # match: ".*"
+        match: "[^\\]]*"
 
   range:
     patterns:
