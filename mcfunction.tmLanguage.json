@@ -11,7 +11,7 @@
     "component": "[a-z0-9_\\.\\-]+",
     "number": "\\-?\\d*\\.?\\d+",
     "resource_location": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
-    "tagged_resource_location": "(\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
+    "tagged_resource_location": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
     "range": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
     "coordinate": "([\\~\\^])+(\\-?\\d*\\.?\\d+)?",
     "base_selector": "\\@[a-z]",
@@ -73,6 +73,9 @@
           "include": "#token.resource_location"
         },
         {
+          "include": "#token.tagged_resource_location"
+        },
+        {
           "include": "#token.range"
         },
         {
@@ -129,6 +132,23 @@
               "patterns": [
                 {
                   "include": "#resource_location"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "token.tagged_resource_location": {
+      "patterns": [
+        {
+          "name": "meta.token.tagged_resource_location.mcfunction",
+          "match": "(?<=\\s)((\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=\\s)",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#tagged_resource_location"
                 }
               ]
             }
@@ -214,6 +234,9 @@
         },
         {
           "include": "#selector_argument.resource_location"
+        },
+        {
+          "include": "#selector_argument.tagged_resource_location"
         },
         {
           "include": "#selector_argument.literal"
@@ -314,6 +337,30 @@
         }
       ]
     },
+    "selector_argument.tagged_resource_location": {
+      "patterns": [
+        {
+          "name": "meta.selector_argument.tagged_resource_location.mcfunction",
+          "match": "((\\,?\\s*)([a-z_][a-z0-9_]+)(\\=)(\\!?))((\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))",
+          "captures": {
+            "1": {
+              "patterns": [
+                {
+                  "include": "#selector.argument_key"
+                }
+              ]
+            },
+            "6": {
+              "patterns": [
+                {
+                  "include": "#tagged_resource_location"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
     "selector_argument.literal": {
       "patterns": [
         {
@@ -377,6 +424,14 @@
         {
           "name": "entity.name.function.mcfunction",
           "match": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)"
+        }
+      ]
+    },
+    "tagged_resource_location": {
+      "patterns": [
+        {
+          "name": "constant.character.escape.mcfunction",
+          "match": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)"
         }
       ]
     },

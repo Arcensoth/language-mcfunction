@@ -9,7 +9,7 @@ variables:
   token_r: '(?=\s)'
 
   # characters for literal subcommands and other identifiers
-  literal: '[a-z_][a-z0-9_]+'
+  literal: "[a-z_][a-z0-9_]+"
 
   # characters permitted in namespaces, resource paths, etc
   component: '[a-z0-9_\.\-]+'
@@ -20,7 +20,8 @@ variables:
   # TODO improve resource location validity
   # resource_location: '({{component}})(\:)({{component}})(\/{{component}})*'
   resource_location: '({{component}})(\:)([a-z0-9_\.\-\/]+)'
-  tagged_resource_location: '(\#?){{resource_location}}'
+  tagged_resource_location: '(\#){{resource_location}}'
+
   range: '({{number}})?(\.\.)({{number}})?'
   coordinate: '([\~\^])+({{number}})?'
   base_selector: '\@[a-z]'
@@ -69,9 +70,8 @@ repository:
       - include: "#token.selector_with_arguments"
       # TODO block predicate token
       # - include: "#token.block_predicate"
-      # TODO tagged resource location token
-      # - include: "#token.tagged_resource_location"
       - include: "#token.resource_location"
+      - include: "#token.tagged_resource_location"
       - include: "#token.range"
       - include: "#token.number"
       - include: "#token.coordinate"
@@ -86,8 +86,8 @@ repository:
   token.selector_with_arguments:
     patterns:
       - name: variable.language.mcfunction
-        begin: '{{token_l}}{{selector_with_arguments.begin}}'
-        end: '{{selector_with_arguments.end}}{{token_r}}'
+        begin: "{{token_l}}{{selector_with_arguments.begin}}"
+        end: "{{selector_with_arguments.end}}{{token_r}}"
         contentName: invalid
         beginCaptures:
           1:
@@ -106,6 +106,15 @@ repository:
           1:
             patterns:
               - include: "#resource_location"
+
+  token.tagged_resource_location:
+    patterns:
+      - name: meta.token.tagged_resource_location.mcfunction
+        match: "{{token_l}}({{tagged_resource_location}}){{token_r}}"
+        captures:
+          1:
+            patterns:
+              - include: "#tagged_resource_location"
 
   token.range:
     patterns:
@@ -148,8 +157,7 @@ repository:
       - include: "#selector_argument.range"
       - include: "#selector_argument.number"
       - include: "#selector_argument.resource_location"
-      # TODO tagged resource location selector argument
-      # - include: "#selector_argument.tagged_resource_location"
+      - include: "#selector_argument.tagged_resource_location"
       - include: "#selector_argument.literal"
 
   selector.argument_key:
@@ -209,6 +217,18 @@ repository:
             patterns:
               - include: "#resource_location"
 
+  selector_argument.tagged_resource_location:
+    patterns:
+      - name: meta.selector_argument.tagged_resource_location.mcfunction
+        match: "({{selector_key}})({{tagged_resource_location}})"
+        captures:
+          1:
+            patterns:
+              - include: "#selector.argument_key"
+          6:
+            patterns:
+              - include: "#tagged_resource_location"
+
   selector_argument.literal:
     patterns:
       - name: meta.selector_argument.literal.mcfunction
@@ -246,8 +266,15 @@ repository:
 
   resource_location:
     patterns:
+      # - name: entity.name.tag.mcfunction
       - name: entity.name.function.mcfunction
         match: "{{resource_location}}"
+
+  tagged_resource_location:
+    patterns:
+      # - name: entity.other.attribute-name.mcfunction
+      - name: constant.character.escape.mcfunction
+        match: "{{tagged_resource_location}}"
 
   literal:
     patterns:

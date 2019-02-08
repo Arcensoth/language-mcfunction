@@ -3,18 +3,17 @@ say hello world
 
     # indented comment
     say hello indent
-    
+
 function mypack:foo
 function #mypack:footag
 function mypack:foo/bar
-execute if block ~ ~ ~ minecraft:stone
-execute as @a[sort=arbitrary]
-execute as @a[sort=nearest] at @s[tag=!sometag] run function mypack:foobar
-execute as @a[distance=0.2..0.8] run
-execute as @a[x_rotation=-0.1..] run
-execute if score @a[] temp matches 1 run
-execute if score @a[] temp matches 1..2 run
-execute if score @a[] temp matches ..2 run
-execute if score @a temp matches -1 run
-execute positioned ~ ~10 ~ run
-execute positioned ^ ^0.5 ^ run
+
+execute positioned 10 ~10 -10 run
+execute positioned 10 ~-0.5 -10 run
+execute positioned 10 ^0.5 -10 run
+execute positioned 10 ^-10 -10 run
+
+execute if score @a temp matches 10 run
+execute if score @a temp matches 10.. run
+execute if score @a temp matches 2020 run
+execute if score @a temp matches ..20 run
