@@ -10,7 +10,7 @@ function formatProperty(grammar: any, s: string): string {
   let s2 = s;
   for (const key in grammar.variables) {
     const value = grammar.variables[key];
-    s2 = s2.replace("{{" + key + "}}", value);
+    s2 = s2.replace(new RegExp("{{" + key + "}}", "g"), value);
   }
   return s2;
 }
