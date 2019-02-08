@@ -7,16 +7,22 @@ fileTypes:
 variables:
   token_l: '(?<=\s)'
   token_r: '(?=\s)'
+
   literal: '[a-z0-9_\.\-]+'
   number: '\-?\d*\.?\d+'
-  # resource_location: '(\#?)({{literal}})(\:)({{literal}})(\/{{literal}})*'
-  resource_location: '(\#?)({{literal}})(\:)([a-z0-9_\.\-\/]+)'
-  # range: '({{number}})?(\.\.)({{number}})?'
-  range: '(\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)?'
-  # coordinate: '([\~\^])+({{number}})?'
-  coordinate: '([\~\^])(\-?\d*\.?\d+)?'
+  # TODO improve resource location validity
+  # resource_location: '({{literal}})(\:)({{literal}})(\/{{literal}})*'
+  resource_location: '({{literal}})(\:)([a-z0-9_\.\-\/]+)'
+  tagged_resource_location: '(\#?){{resource_location}}'
+  range: '({{number}})?(\.\.)({{number}})?'
+  coordinate: '([\~\^])+({{number}})?'
   base_selector: '\@[a-z]'
   selector_key: '(\,?\s*)({{literal}})(\=)(\!?)'
+
+  selector_with_arguments.begin: '{{base_selector}}(\[)'
+  selector_with_arguments.end: '(\])'
+  block_predicate.begin: '(\#?){{resource_location}}(\[)'
+  block_predicate.end: '(\])'
 
   # tokens related to brackets and scope
   # for selectors: their brackets `[]`, key-value mappings `=` and separators `:`
@@ -54,11 +60,16 @@ repository:
     patterns:
       - include: "#token.selector_without_arguments"
       - include: "#token.selector_with_arguments"
+      # TODO block predicate token
+      # - include: "#token.block_predicate"
+      # TODO tagged resource location token
+      # - include: "#token.tagged_resource_location"
       - include: "#token.resource_location"
       - include: "#token.range"
       - include: "#token.number"
       - include: "#token.coordinate"
-      - include: "#token.literal"
+      # TODO literal token
+      # - include: "#token.literal"
 
   token.selector_without_arguments:
     patterns:
@@ -69,8 +80,8 @@ repository:
   token.selector_with_arguments:
     patterns:
       - name: variable.language.mcfunction
-        begin: '{{token_l}}{{base_selector}}(\[)'
-        end: '(\]){{token_r}}'
+        begin: '{{token_l}}{{selector_with_arguments.begin}}'
+        end: '{{selector_with_arguments.end}}{{token_r}}'
         contentName: invalid
         beginCaptures:
           1:
@@ -122,6 +133,8 @@ repository:
       - include: "#selector_argument.range"
       - include: "#selector_argument.number"
       - include: "#selector_argument.resource_location"
+      # TODO tagged resource location selector argument
+      # - include: "#selector_argument.tagged_resource_location"
       - include: "#selector_argument.literal"
 
   selector.argument_key:
@@ -142,6 +155,8 @@ repository:
             # optional negation operator `!` (if any)
             # name: string.regexp.mcfunction
             name: "{{group.bracket_flow}}"
+
+  # TODO can we express the key=value syntax without duplicating it for each type of value?
 
   selector_argument.range:
     patterns:

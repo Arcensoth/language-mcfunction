@@ -9,11 +9,16 @@
     "token_r": "(?=\\s)",
     "literal": "[a-z0-9_\\.\\-]+",
     "number": "\\-?\\d*\\.?\\d+",
-    "resource_location": "(\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
+    "resource_location": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
+    "tagged_resource_location": "(\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
     "range": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
-    "coordinate": "([\\~\\^])(\\-?\\d*\\.?\\d+)?",
+    "coordinate": "([\\~\\^])+(\\-?\\d*\\.?\\d+)?",
     "base_selector": "\\@[a-z]",
     "selector_key": "(\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?)",
+    "selector_with_arguments.begin": "\\@[a-z](\\[)",
+    "selector_with_arguments.end": "(\\])",
+    "block_predicate.begin": "(\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(\\[)",
+    "block_predicate.end": "(\\])",
     "group.bracket_flow": "markup.bold.mcfunction",
     "group.numeric_operator": "keyword.control.mcfunction"
   },
@@ -74,9 +79,6 @@
         },
         {
           "include": "#token.coordinate"
-        },
-        {
-          "include": "#token.literal"
         }
       ]
     },
@@ -117,7 +119,7 @@
       "patterns": [
         {
           "name": "meta.token.resource_location.mcfunction",
-          "match": "(?<=\\s)((\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=\\s)",
+          "match": "(?<=\\s)(([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=\\s)",
           "captures": {
             "1": {
               "patterns": [
@@ -168,7 +170,7 @@
       "patterns": [
         {
           "name": "meta.token.coordinate.mcfunction",
-          "match": "(?<=\\s)(([\\~\\^])(\\-?\\d*\\.?\\d+)?)(?=\\s)",
+          "match": "(?<=\\s)(([\\~\\^])+(\\-?\\d*\\.?\\d+)?)(?=\\s)",
           "captures": {
             "1": {
               "patterns": [
@@ -271,7 +273,7 @@
       "patterns": [
         {
           "name": "meta.selector_argument.resource_location.mcfunction",
-          "match": "((\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?))((\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))",
+          "match": "((\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?))(([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))",
           "captures": {
             "1": {
               "patterns": [
@@ -340,7 +342,7 @@
       "patterns": [
         {
           "name": "constant.character.escape.mcfunction",
-          "match": "([\\~\\^])(\\-?\\d*\\.?\\d+)?",
+          "match": "([\\~\\^])+(\\-?\\d*\\.?\\d+)?",
           "captures": {
             "1": {
               "name": "keyword.control.mcfunction"
@@ -353,7 +355,7 @@
       "patterns": [
         {
           "name": "entity.name.function.mcfunction",
-          "match": "(\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)"
+          "match": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)"
         }
       ]
     },
