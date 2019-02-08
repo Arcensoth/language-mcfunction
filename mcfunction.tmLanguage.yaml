@@ -8,11 +8,18 @@ variables:
   token_l: '(?<=\s)'
   token_r: '(?=\s)'
 
-  literal: '[a-z0-9_\.\-]+'
+  # characters for literal subcommands and other identifiers
+  literal: '[a-z_][a-z0-9_]+'
+
+  # characters permitted in namespaces, resource paths, etc
+  component: '[a-z0-9_\.\-]+'
+
+  # an integer or decimal with optional leading digit
   number: '\-?\d*\.?\d+'
+
   # TODO improve resource location validity
-  # resource_location: '({{literal}})(\:)({{literal}})(\/{{literal}})*'
-  resource_location: '({{literal}})(\:)([a-z0-9_\.\-\/]+)'
+  # resource_location: '({{component}})(\:)({{component}})(\/{{component}})*'
+  resource_location: '({{component}})(\:)([a-z0-9_\.\-\/]+)'
   tagged_resource_location: '(\#?){{resource_location}}'
   range: '({{number}})?(\.\.)({{number}})?'
   coordinate: '([\~\^])+({{number}})?'
@@ -68,8 +75,7 @@ repository:
       - include: "#token.range"
       - include: "#token.number"
       - include: "#token.coordinate"
-      # TODO literal token
-      # - include: "#token.literal"
+      - include: "#token.literal"
 
   token.selector_without_arguments:
     patterns:
@@ -127,6 +133,15 @@ repository:
           1:
             patterns:
               - include: "#coordinate"
+
+  token.literal:
+    patterns:
+      - name: meta.token.literal.mcfunction
+        match: "{{token_l}}({{literal}}){{token_r}}"
+        captures:
+          1:
+            patterns:
+              - include: "#literal"
 
   selector_arguments:
     patterns:
