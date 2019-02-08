@@ -13,7 +13,9 @@
     "range": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
     "coordinate": "([\\~\\^])(\\-?\\d*\\.?\\d+)?",
     "base_selector": "\\@[a-z]",
-    "selector_key": "(\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?)"
+    "selector_key": "(\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?)",
+    "group.bracket_flow": "markup.bold.mcfunction",
+    "group.numeric_operator": "keyword.control.mcfunction"
   },
   "patterns": [
     {
@@ -71,10 +73,7 @@
           "include": "#token.number"
         },
         {
-          "include": "#token.relative_coordinate"
-        },
-        {
-          "include": "#token.local_coordinate"
+          "include": "#token.coordinate"
         },
         {
           "include": "#token.literal"
@@ -98,12 +97,12 @@
           "contentName": "invalid",
           "beginCaptures": {
             "1": {
-              "name": "keyword.control.mcfunction"
+              "name": "markup.bold.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "keyword.control.mcfunction"
+              "name": "markup.bold.mcfunction"
             }
           },
           "patterns": [
@@ -205,16 +204,16 @@
           "match": "(\\,?\\s*)([a-z0-9_\\.\\-]+)(\\=)(\\!?)",
           "captures": {
             "1": {
-              "name": "keyword.control.mcfunction"
+              "name": "markup.bold.mcfunction"
             },
             "2": {
               "name": "variable.parameter.mcfunction"
             },
             "3": {
-              "name": "keyword.control.mcfunction"
+              "name": "markup.bold.mcfunction"
             },
             "4": {
-              "name": "string.regexp.mcfunction"
+              "name": "markup.bold.mcfunction"
             }
           }
         }
@@ -319,11 +318,11 @@
     "range": {
       "patterns": [
         {
-          "name": "constant.numeric.mcfunction",
+          "name": "constant.character.escape.mcfunction",
           "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
           "captures": {
             "2": {
-              "name": "string.regexp.mcfunction"
+              "name": "keyword.control.mcfunction"
             }
           }
         }
@@ -340,7 +339,7 @@
     "coordinate": {
       "patterns": [
         {
-          "name": "constant.numeric.mcfunction",
+          "name": "constant.character.escape.mcfunction",
           "match": "([\\~\\^])(\\-?\\d*\\.?\\d+)?",
           "captures": {
             "1": {
@@ -353,7 +352,7 @@
     "resource_location": {
       "patterns": [
         {
-          "name": "entity.name.type.mcfunction",
+          "name": "entity.name.function.mcfunction",
           "match": "(\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)"
         }
       ]

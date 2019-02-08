@@ -18,6 +18,14 @@ variables:
   base_selector: '\@[a-z]'
   selector_key: '(\,?\s*)({{literal}})(\=)(\!?)'
 
+  # tokens related to brackets and scope
+  # for selectors: their brackets `[]`, key-value mappings `=` and separators `:`
+  # for nbt: compound brackets `{}`, list brackets `[]`, key-value mappings `:` and separators `,`
+  group.bracket_flow: markup.bold.mcfunction
+
+  # things like `..` in ranges and `~` or `^` for coordinates
+  group.numeric_operator: keyword.control.mcfunction
+
 patterns:
   - include: "#comment"
   - include: "#command"
@@ -49,8 +57,7 @@ repository:
       - include: "#token.resource_location"
       - include: "#token.range"
       - include: "#token.number"
-      - include: "#token.relative_coordinate"
-      - include: "#token.local_coordinate"
+      - include: "#token.coordinate"
       - include: "#token.literal"
 
   token.selector_without_arguments:
@@ -67,10 +74,10 @@ repository:
         contentName: invalid
         beginCaptures:
           1:
-            name: keyword.control.mcfunction
+            name: "{{group.bracket_flow}}"
         endCaptures:
           1:
-            name: keyword.control.mcfunction
+            name: "{{group.bracket_flow}}"
         patterns:
           - include: "#selector_arguments"
 
@@ -124,17 +131,17 @@ repository:
         captures:
           1:
             # the preceding `,` (if any) and the whitespace between
-            name: keyword.control.mcfunction
+            name: "{{group.bracket_flow}}"
           2:
             # the actual argument key
             name: variable.parameter.mcfunction
           3:
             # the `=`
-            name: keyword.control.mcfunction
+            name: "{{group.bracket_flow}}"
           4:
             # optional negation operator `!` (if any)
-            # name: keyword.control.mcfunction
-            name: string.regexp.mcfunction
+            # name: string.regexp.mcfunction
+            name: "{{group.bracket_flow}}"
 
   selector_argument.range:
     patterns:
@@ -186,13 +193,12 @@ repository:
 
   range:
     patterns:
-      - name: constant.numeric.mcfunction
+      - name: constant.character.escape.mcfunction
         match: "{{range}}"
         captures:
           2:
             # color the `..` differently to distinguish it from decimals
-            # name: keyword.control.mcfunction
-            name: string.regexp.mcfunction
+            name: "{{group.numeric_operator}}"
 
   number:
     patterns:
@@ -201,16 +207,16 @@ repository:
 
   coordinate:
     patterns:
-      - name: constant.numeric.mcfunction
+      - name: constant.character.escape.mcfunction
         match: "{{coordinate}}"
         captures:
           1:
             # the `~` or `^`
-            name: keyword.control.mcfunction
+            name: "{{group.numeric_operator}}"
 
   resource_location:
     patterns:
-      - name: entity.name.type.mcfunction
+      - name: entity.name.function.mcfunction
         match: "{{resource_location}}"
 
   literal:
