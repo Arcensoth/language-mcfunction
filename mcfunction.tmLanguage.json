@@ -5,19 +5,27 @@
     "mcfunction"
   ],
   "variables": {
-    "command.token_l": "(?<= )",
-    "command.token_r": "(?=[ \\n])",
-    "literal": "[a-z_][a-z0-9_]*",
-    "component": "[a-z0-9_\\.\\-]+",
-    "number": "\\-?\\d*\\.?\\d+",
+    "command_token_l": "(?<= )",
+    "command_token_r": "(?=[ \\n])",
+    "literal": "([a-z_][a-z0-9_]*)",
+    "component_nc": "[a-z0-9_\\.\\-]+",
+    "component": "([a-z0-9_\\.\\-]+)",
+    "number": "(\\-?\\d*\\.?\\d+)",
     "resource_location": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
     "tagged_resource_location": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
+    "coordinate": "([\\~\\^])(\\-?\\d*\\.?\\d+)?",
     "range": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
-    "coordinate": "([\\~\\^])+(\\-?\\d*\\.?\\d+)?",
-    "base_selector": "\\@[a-z]",
-    "selector_key": "([a-z_][a-z0-9_]*)(\\=)(\\!?)",
-    "group.bracket_flow": "string.regexp.mcfunction",
-    "group.numeric_operator": "keyword.control.mcfunction"
+    "base_selector": "(\\@[a-z])",
+    "name.numeric_constant": "constant.numeric.mcfunction",
+    "name.numeric_altered": "constant.character.escape.mcfunction",
+    "name.range_ellipsis": "keyword.control.mcfunction",
+    "name.coordinate_operator": "keyword.control.mcfunction",
+    "name.base_selector": "variable.language.mcfunction",
+    "name.resource_location": "entity.name.function.mcfunction",
+    "name.tagged_resource_location": "constant.character.escape.mcfunction",
+    "name.literal": "keyword.operator.mcfunction",
+    "name.unknown": "invalid.illegal.mcfunction",
+    "name.error": "invalid.illegal.mcfunction"
   },
   "patterns": [
     {
@@ -58,7 +66,12 @@
           "patterns": [
             {
               "begin": "(?<= )",
-              "end": "[ \\n]",
+              "end": "([ \\n])",
+              "endCaptures": {
+                "1": {
+                  "name": "markup.underline.debug.mcfunction"
+                }
+              },
               "contentName": "meta.command.token.mcfunction",
               "patterns": [
                 {
@@ -86,19 +99,91 @@
     "command.tokens": {
       "patterns": [
         {
-          "include": "#command.token.word"
+          "include": "#command.token.selector_without_arguments"
+        },
+        {
+          "include": "#command.token.resource_location"
+        },
+        {
+          "include": "#command.token.tagged_resource_location"
+        },
+        {
+          "include": "#command.token.range"
+        },
+        {
+          "include": "#command.token.number"
+        },
+        {
+          "include": "#command.token.coordinate"
+        },
+        {
+          "include": "#command.token.literal"
         },
         {
           "include": "#command.token.unknown"
         }
       ]
     },
-    "command.token.word": {
-      "name": "meta.command.token.word.mcfunction",
-      "match": "(?<= )(\\w+)(?=[ \\n])",
+    "command.token.selector_without_arguments": {
+      "name": "meta.command.token.selector_without_arguments.mcfunction",
+      "match": "(?<= )(\\@[a-z])(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "string.mcfunction"
+          "name": "variable.language.mcfunction"
+        }
+      }
+    },
+    "command.token.resource_location": {
+      "name": "meta.command.token.resource_location.mcfunction",
+      "match": "(?<= )([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "entity.name.function.mcfunction"
+        }
+      }
+    },
+    "command.token.range": {
+      "name": "meta.command.token.range.mcfunction",
+      "match": "(?<= )(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "2": {
+          "name": "keyword.control.mcfunction"
+        },
+        "3": {
+          "name": "constant.character.escape.mcfunction"
+        }
+      }
+    },
+    "command.token.number": {
+      "name": "meta.command.token.number.mcfunction",
+      "match": "(?<= )(\\-?\\d*\\.?\\d+)(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "constant.numeric.mcfunction"
+        }
+      }
+    },
+    "command.token.coordinate": {
+      "name": "meta.command.token.coordinate.mcfunction",
+      "match": "(?<= )([\\~\\^])(\\-?\\d*\\.?\\d+)?(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "keyword.control.mcfunction"
+        },
+        "2": {
+          "name": "constant.character.escape.mcfunction"
+        }
+      }
+    },
+    "command.token.literal": {
+      "name": "meta.command.token.literal.mcfunction",
+      "match": "(?<= )([a-z_][a-z0-9_]*)(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.mcfunction"
         }
       }
     },
