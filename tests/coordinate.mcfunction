@@ -6,6 +6,13 @@ execute positioned 10 ~.5 -10 run
 execute positioned 10 ~-10 -10 run
 execute positioned 10 ~-0.5 -10 run
 execute positioned 10 ~-.5 -10 run
+execute
+execute 
+execute  
+execute   
+execute    
+execute     
+execute.
 
 # test valid local coordinates
 execute positioned 10 ^ -10 run

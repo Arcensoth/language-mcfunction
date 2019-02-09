@@ -5,8 +5,8 @@
     "mcfunction"
   ],
   "variables": {
-    "token_l": "(?<=\\s)",
-    "token_r": "(?=\\s)",
+    "command.token_l": "(?<= )",
+    "command.token_r": "(?=[ \\n])",
     "literal": "[a-z_][a-z0-9_]*",
     "component": "[a-z0-9_\\.\\-]+",
     "number": "\\-?\\d*\\.?\\d+",
@@ -15,8 +15,8 @@
     "range": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
     "coordinate": "([\\~\\^])+(\\-?\\d*\\.?\\d+)?",
     "base_selector": "\\@[a-z]",
-    "selector_key": "(\\,?\\s*)([a-z_][a-z0-9_]*)(\\=)(\\!?)",
-    "group.bracket_flow": "markup.bold.mcfunction",
+    "selector_key": "([a-z_][a-z0-9_]*)(\\=)(\\!?)",
+    "group.bracket_flow": "string.regexp.mcfunction",
     "group.numeric_operator": "keyword.control.mcfunction"
   },
   "patterns": [
@@ -25,15 +25,22 @@
     },
     {
       "include": "#command"
+    },
+    {
+      "include": "#unknown"
     }
   ],
   "repository": {
     "comment": {
       "patterns": [
         {
-          "name": "comment.number-sign.mcfunction",
-          "begin": "^\\s*#",
-          "end": "$"
+          "name": "meta.comment.mcfunction",
+          "match": "^\\s*(#.*)$",
+          "captures": {
+            "1": {
+              "name": "comment.number-sign.mcfunction"
+            }
+          }
         }
       ]
     },
@@ -41,9 +48,8 @@
       "patterns": [
         {
           "name": "meta.command.mcfunction",
-          "begin": "^\\s*([a-z_][a-z0-9_]*)",
-          "end": "\\n",
-          "contentName": "invalid.mcfunction",
+          "begin": "^\\s*([a-z_][a-z0-9_]*)[ \\n]",
+          "end": "$",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.mcfunction"
@@ -51,393 +57,59 @@
           },
           "patterns": [
             {
-              "include": "#tokens"
+              "begin": "(?<= )",
+              "end": "[ \\n]",
+              "contentName": "meta.command.token.mcfunction",
+              "patterns": [
+                {
+                  "include": "#command.tokens"
+                }
+              ]
             }
           ]
         }
       ]
     },
-    "tokens": {
+    "unknown": {
       "patterns": [
         {
-          "include": "#token.selector_without_arguments"
+          "name": "meta.unknown.mcfunction",
+          "match": "^(.*)$",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "command.tokens": {
+      "patterns": [
+        {
+          "include": "#command.token.word"
         },
         {
-          "include": "#token.selector_with_arguments"
-        },
-        {
-          "include": "#token.resource_location"
-        },
-        {
-          "include": "#token.tagged_resource_location"
-        },
-        {
-          "include": "#token.range"
-        },
-        {
-          "include": "#token.number"
-        },
-        {
-          "include": "#token.coordinate"
-        },
-        {
-          "include": "#token.literal"
+          "include": "#command.token.unknown"
         }
       ]
     },
-    "token.selector_without_arguments": {
-      "patterns": [
-        {
-          "name": "variable.language.mcfunction",
-          "match": "(?<=\\s)\\@[a-z](?=\\s)"
+    "command.token.word": {
+      "name": "meta.command.token.word.mcfunction",
+      "match": "(?<= )(\\w+)(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "string.mcfunction"
         }
-      ]
+      }
     },
-    "token.selector_with_arguments": {
-      "patterns": [
-        {
-          "name": "variable.language.mcfunction",
-          "begin": "(?<=\\s)\\@[a-z](\\[)",
-          "end": "(\\])(?=\\s)",
-          "contentName": "invalid.mcfunction",
-          "beginCaptures": {
-            "1": {
-              "name": "markup.bold.mcfunction"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "markup.bold.mcfunction"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#selector_arguments"
-            }
-          ]
+    "command.token.unknown": {
+      "name": "meta.command.token.unknown.mcfunction",
+      "match": "(?<= )([^ \\n]*)(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "invalid.illegal.mcfunction"
         }
-      ]
-    },
-    "token.resource_location": {
-      "patterns": [
-        {
-          "name": "meta.token.resource_location.mcfunction",
-          "match": "(?<=\\s)(([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=\\s)",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#resource_location"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "token.tagged_resource_location": {
-      "patterns": [
-        {
-          "name": "meta.token.tagged_resource_location.mcfunction",
-          "match": "(?<=\\s)((\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=\\s)",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#tagged_resource_location"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "token.range": {
-      "patterns": [
-        {
-          "name": "meta.token.range.mcfunction",
-          "match": "(?<=\\s)((\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?)(?=\\s)",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#range"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "token.number": {
-      "patterns": [
-        {
-          "name": "meta.token.number.mcfunction",
-          "match": "(?<=\\s)(\\-?\\d*\\.?\\d+)(?=\\s)",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#number"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "token.coordinate": {
-      "patterns": [
-        {
-          "name": "meta.token.coordinate.mcfunction",
-          "match": "(?<=\\s)(([\\~\\^])+(\\-?\\d*\\.?\\d+)?)(?=\\s)",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#coordinate"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "token.literal": {
-      "patterns": [
-        {
-          "name": "meta.token.literal.mcfunction",
-          "match": "(?<=\\s)([a-z_][a-z0-9_]*)(?=\\s)",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#literal"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "selector_arguments": {
-      "patterns": [
-        {
-          "include": "#selector_argument.range"
-        },
-        {
-          "include": "#selector_argument.number"
-        },
-        {
-          "include": "#selector_argument.resource_location"
-        },
-        {
-          "include": "#selector_argument.tagged_resource_location"
-        },
-        {
-          "include": "#selector_argument.literal"
-        }
-      ]
-    },
-    "selector.argument_key": {
-      "patterns": [
-        {
-          "name": "meta.selector.argument_key.mcfunction",
-          "match": "(\\,?\\s*)([a-z_][a-z0-9_]*)(\\=)(\\!?)",
-          "captures": {
-            "1": {
-              "name": "markup.bold.mcfunction"
-            },
-            "2": {
-              "name": "variable.parameter.mcfunction"
-            },
-            "3": {
-              "name": "markup.bold.mcfunction"
-            },
-            "4": {
-              "name": "markup.bold.mcfunction"
-            }
-          }
-        }
-      ]
-    },
-    "selector_argument.range": {
-      "patterns": [
-        {
-          "name": "meta.selector_argument.range.mcfunction",
-          "match": "((\\,?\\s*)([a-z_][a-z0-9_]*)(\\=)(\\!?))((\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?)",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#selector.argument_key"
-                }
-              ]
-            },
-            "6": {
-              "patterns": [
-                {
-                  "include": "#range"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "selector_argument.number": {
-      "patterns": [
-        {
-          "name": "meta.selector_argument.number.mcfunction",
-          "match": "((\\,?\\s*)([a-z_][a-z0-9_]*)(\\=)(\\!?))(\\-?\\d*\\.?\\d+)",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#selector.argument_key"
-                }
-              ]
-            },
-            "6": {
-              "patterns": [
-                {
-                  "include": "#number"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "selector_argument.resource_location": {
-      "patterns": [
-        {
-          "name": "meta.selector_argument.resource_location.mcfunction",
-          "match": "((\\,?\\s*)([a-z_][a-z0-9_]*)(\\=)(\\!?))(([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#selector.argument_key"
-                }
-              ]
-            },
-            "6": {
-              "patterns": [
-                {
-                  "include": "#resource_location"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "selector_argument.tagged_resource_location": {
-      "patterns": [
-        {
-          "name": "meta.selector_argument.tagged_resource_location.mcfunction",
-          "match": "((\\,?\\s*)([a-z_][a-z0-9_]*)(\\=)(\\!?))((\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#selector.argument_key"
-                }
-              ]
-            },
-            "6": {
-              "patterns": [
-                {
-                  "include": "#tagged_resource_location"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "selector_argument.literal": {
-      "patterns": [
-        {
-          "name": "meta.selector_argument.literal.mcfunction",
-          "match": "((\\,?\\s*)([a-z_][a-z0-9_]*)(\\=)(\\!?))([a-z_][a-z0-9_]*)",
-          "captures": {
-            "1": {
-              "patterns": [
-                {
-                  "include": "#selector.argument_key"
-                }
-              ]
-            },
-            "6": {
-              "patterns": [
-                {
-                  "include": "#literal"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "range": {
-      "patterns": [
-        {
-          "name": "constant.character.escape.mcfunction",
-          "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
-          "captures": {
-            "2": {
-              "name": "keyword.control.mcfunction"
-            }
-          }
-        }
-      ]
-    },
-    "number": {
-      "patterns": [
-        {
-          "name": "constant.numeric.mcfunction",
-          "match": "\\-?\\d*\\.?\\d+"
-        }
-      ]
-    },
-    "coordinate": {
-      "patterns": [
-        {
-          "name": "constant.character.escape.mcfunction",
-          "match": "([\\~\\^])+(\\-?\\d*\\.?\\d+)?",
-          "captures": {
-            "1": {
-              "name": "keyword.control.mcfunction"
-            }
-          }
-        }
-      ]
-    },
-    "resource_location": {
-      "patterns": [
-        {
-          "name": "entity.name.function.mcfunction",
-          "match": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)"
-        }
-      ]
-    },
-    "tagged_resource_location": {
-      "patterns": [
-        {
-          "name": "constant.character.escape.mcfunction",
-          "match": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)"
-        }
-      ]
-    },
-    "literal": {
-      "patterns": [
-        {
-          "name": "keyword.operator.mcfunction",
-          "match": "[a-z_][a-z0-9_]*"
-        }
-      ]
+      }
     }
   }
 }

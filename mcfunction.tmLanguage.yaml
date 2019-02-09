@@ -5,8 +5,9 @@ fileTypes:
   - mcfunction
 
 variables:
-  token_l: '(?<=\s)'
-  token_r: '(?=\s)'
+
+  command.token_l: (?<= )
+  command.token_r: (?=[ \n])
 
   # characters for literal subcommands and other identifiers
   literal: "[a-z_][a-z0-9_]*"
@@ -25,8 +26,8 @@ variables:
   range: '({{number}})?(\.\.)({{number}})?'
   coordinate: '([\~\^])+({{number}})?'
   base_selector: '\@[a-z]'
-  # selector_key: '({{literal}})(\=)(\!?)'
-  selector_key: '(\,?\s*)({{literal}})(\=)(\!?)'
+  selector_key: '({{literal}})(\=)(\!?)'
+  # selector_key: '(\,?\s*)({{literal}})(\=)(\!?)'
 
   # TODO block predicates: resource location + selector-like argument list
   # block_predicate.begin: '(\#?){{resource_location}}(\[)'
@@ -35,8 +36,8 @@ variables:
   # tokens related to brackets and scope
   # for selectors: their brackets `[]`, key-value mappings `=` and separators `:`
   # for nbt: compound brackets `{}`, list brackets `[]`, key-value mappings `:` and separators `,`
-  group.bracket_flow: markup.bold.mcfunction
-  # group.bracket_flow: string.regexp.mcfunction
+  # group.bracket_flow: markup.bold.mcfunction
+  group.bracket_flow: string.regexp.mcfunction
 
   # things like `..` in ranges and `~` or `^` for coordinates
   group.numeric_operator: keyword.control.mcfunction
@@ -44,273 +45,314 @@ variables:
 patterns:
   - include: "#comment"
   - include: "#command"
+  - include: "#unknown"
 
 repository:
   comment:
     patterns:
-      - name: comment.number-sign.mcfunction
-        begin: '^\s*#'
-        end: "$"
+      - name: meta.comment.mcfunction
+        match: '^\s*(#.*)$'
+        captures:
+          1:
+            name: comment.number-sign.mcfunction
 
   command:
     patterns:
       - name: meta.command.mcfunction
-        begin: '^\s*({{literal}})'
-        end: '\n'
-        contentName: invalid.mcfunction
+        begin: '^\s*({{literal}})[ \n]'
+        end: "$"
         beginCaptures:
           # highlight the first command on each line
           1:
             name: keyword.control.mcfunction
         patterns:
-          - include: "#tokens"
+          # don't name this one yet, we want to get rid of the space
+          - begin: '(?<= )'
+            # consume the space
+            end: '[ \n]'
+            # name everything inside as part of the token
+            contentName: meta.command.token.mcfunction
+            patterns:
+              - include: "#command.tokens"
 
-  tokens:
+  unknown:
     patterns:
-      - include: "#token.selector_without_arguments"
-      - include: "#token.selector_with_arguments"
+      - name: meta.unknown.mcfunction
+        match: '^(.*)$'
+        captures:
+          1:
+            name: invalid.illegal.mcfunction
+
+  command.tokens:
+    patterns:
+      - include: "#command.token.word"
+      - include: "#command.token.unknown"
+
+  command.token.word:
+    name: meta.command.token.word.mcfunction
+    match: '{{command.token_l}}(\w+){{command.token_r}}'
+    captures:
+      1:
+        name: string.mcfunction
+
+  command.token.unknown:
+    name: meta.command.token.unknown.mcfunction
+    match: '{{command.token_l}}([^ \n]*){{command.token_r}}'
+    captures:
+      1:
+        name: invalid.illegal.mcfunction
+
+  # tokens:
+  #   patterns:
+      # - include: "#token.selector_without_arguments"
+      # - include: "#token.selector_with_arguments"
       # TODO block predicate token
       # - include: "#token.block_predicate"
-      - include: "#token.resource_location"
-      - include: "#token.tagged_resource_location"
-      - include: "#token.range"
-      - include: "#token.number"
-      - include: "#token.coordinate"
-      - include: "#token.literal"
+      # - include: "#token.resource_location"
+      # - include: "#token.tagged_resource_location"
+      # - include: "#token.range"
+      # - include: "#token.number"
+      # - include: "#token.coordinate"
+      # - include: "#token.literal"
       # - include: "#token.anything_else"
 
-  token.selector_without_arguments:
-    patterns:
-      - name: variable.language.mcfunction
-        match: "{{token_l}}{{base_selector}}{{token_r}}"
-
-  # processing this separately makes things much more manageable
-  token.selector_with_arguments:
-    patterns:
-      - name: variable.language.mcfunction
-        begin: '{{token_l}}{{base_selector}}(\[)'
-        end: '(\]){{token_r}}'
-        contentName: invalid.mcfunction
-        beginCaptures:
-          1:
-            name: "{{group.bracket_flow}}"
-        endCaptures:
-          1:
-            name: "{{group.bracket_flow}}"
-        patterns:
-          - include: "#selector_arguments"
-
-  token.resource_location:
-    patterns:
-      - name: meta.token.resource_location.mcfunction
-        match: "{{token_l}}({{resource_location}}){{token_r}}"
-        captures:
-          1:
-            patterns:
-              - include: "#resource_location"
-
-  token.tagged_resource_location:
-    patterns:
-      - name: meta.token.tagged_resource_location.mcfunction
-        match: "{{token_l}}({{tagged_resource_location}}){{token_r}}"
-        captures:
-          1:
-            patterns:
-              - include: "#tagged_resource_location"
-
-  token.range:
-    patterns:
-      - name: meta.token.range.mcfunction
-        match: "{{token_l}}({{range}}){{token_r}}"
-        captures:
-          1:
-            patterns:
-              - include: "#range"
-
-  token.number:
-    patterns:
-      - name: meta.token.number.mcfunction
-        match: "{{token_l}}({{number}}){{token_r}}"
-        captures:
-          1:
-            patterns:
-              - include: "#number"
-
-  token.coordinate:
-    patterns:
-      - name: meta.token.coordinate.mcfunction
-        match: "{{token_l}}({{coordinate}}){{token_r}}"
-        captures:
-          1:
-            patterns:
-              - include: "#coordinate"
-
-  token.literal:
-    patterns:
-      - name: meta.token.literal.mcfunction
-        match: "{{token_l}}({{literal}}){{token_r}}"
-        captures:
-          1:
-            patterns:
-              - include: "#literal"
-
-  # token.anything_else:
+  # token.selector_without_arguments:
   #   patterns:
-  #     - name: invalid.mcfunction
-  #       match: "{{token_l}}.*{{token_r}}"
+  #     - name: meta.token.selector_without_arguments.mcfunction
+  #       match: "{{token_l}}({{base_selector}}){{token_r}}"
+  #       catpures:
+  #         1:
+  #           name: variable.language.mcfunction
 
-  selector_arguments:
-    patterns:
-      # - name: variable.language.mcfunction
-      #   begin: '(?<=([,\[]))(\s*)'
-      #   end: '(\s*)(?=([,\]]))'
-      #   contentName: string.other.mcfunction
-      #   beginCaptures:
-      #     1:
-      #       # the `[` or `,`
-      #       # name: markup.underline.mcfunction
-      #       name: "{{group.bracket_flow}}"
-      #     2:
-      #       # the whitespace, if any
-      #       name: markup.underline.mcfunction
-      #   endCaptures:
-      #     1:
-      #       # the whitespace, if any
-      #       name: markup.underline.mcfunction
-      #     2:
-      #       # the `,` or `]`
-      #       # name: markup.underline.mcfunction
-      #       name: "{{group.bracket_flow}}"
-      #   patterns:
-      - include: "#selector_argument.range"
-      - include: "#selector_argument.number"
-      - include: "#selector_argument.resource_location"
-      - include: "#selector_argument.tagged_resource_location"
-      - include: "#selector_argument.literal"
-      # - include: "#selector_argument.anything_else"
-
-  selector.argument_key:
-    patterns:
-      - name: meta.selector.argument_key.mcfunction
-        match: "{{selector_key}}"
-        captures:
-          1:
-            # the preceding `,` (if any) and the whitespace between
-            name: "{{group.bracket_flow}}"
-          2:
-            # the actual argument key
-            name: variable.parameter.mcfunction
-          3:
-            # the `=`
-            name: "{{group.bracket_flow}}"
-          4:
-            # optional negation operator `!` (if any)
-            # name: string.regexp.mcfunction
-            name: "{{group.bracket_flow}}"
-
-  # TODO can we express the key=value syntax without duplicating it for each type of value?
-
-  selector_argument.range:
-    patterns:
-      - name: meta.selector_argument.range.mcfunction
-        match: "({{selector_key}})({{range}})"
-        captures:
-          1:
-            patterns:
-              - include: "#selector.argument_key"
-          6:
-            patterns:
-              - include: "#range"
-
-  selector_argument.number:
-    patterns:
-      - name: meta.selector_argument.number.mcfunction
-        match: "({{selector_key}})({{number}})"
-        captures:
-          1:
-            patterns:
-              - include: "#selector.argument_key"
-          6:
-            patterns:
-              - include: "#number"
-
-  selector_argument.resource_location:
-    patterns:
-      - name: meta.selector_argument.resource_location.mcfunction
-        match: "({{selector_key}})({{resource_location}})"
-        captures:
-          1:
-            patterns:
-              - include: "#selector.argument_key"
-          6:
-            patterns:
-              - include: "#resource_location"
-
-  selector_argument.tagged_resource_location:
-    patterns:
-      - name: meta.selector_argument.tagged_resource_location.mcfunction
-        match: "({{selector_key}})({{tagged_resource_location}})"
-        captures:
-          1:
-            patterns:
-              - include: "#selector.argument_key"
-          6:
-            patterns:
-              - include: "#tagged_resource_location"
-
-  selector_argument.literal:
-    patterns:
-      - name: meta.selector_argument.literal.mcfunction
-        match: "({{selector_key}})({{literal}})"
-        captures:
-          1:
-            patterns:
-              - include: "#selector.argument_key"
-          6:
-            patterns:
-              - include: "#literal"
-
-  # selector_argument.anything_else:
+  # # processing this separately makes things much more manageable
+  # token.selector_with_arguments:
   #   patterns:
-  #     - name: invalid.mcfunction
-  #       match: '[^\,\=\]]*'
+  #     - name: meta.token.selector_with_arguments.mcfunction
+  #       begin: '{{token_l}}{{base_selector}}(\[)'
+  #       end: '(\]){{token_r}}'
+  #       # contentName: invalid.mcfunction
+  #       beginCaptures:
+  #         1:
+  #           name: "{{group.bracket_flow}}"
+  #       endCaptures:
+  #         1:
+  #           name: "{{group.bracket_flow}}"
+  #       patterns:
+  #         # - include: "#selector_arguments"
+  #         - name: support.class.mcfunction
+  #           match: ".*"
 
-  range:
-    patterns:
-      - name: constant.character.escape.mcfunction
-        match: "{{range}}"
-        captures:
-          2:
-            # color the `..` differently to distinguish it from decimals
-            name: "{{group.numeric_operator}}"
+  # token.resource_location:
+  #   patterns:
+  #     - name: meta.token.resource_location.mcfunction
+  #       match: "{{token_l}}({{resource_location}}){{token_r}}"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#resource_location"
 
-  number:
-    patterns:
-      - name: constant.numeric.mcfunction
-        match: "{{number}}"
+  # token.tagged_resource_location:
+  #   patterns:
+  #     - name: meta.token.tagged_resource_location.mcfunction
+  #       match: "{{token_l}}({{tagged_resource_location}}){{token_r}}"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#tagged_resource_location"
 
-  coordinate:
-    patterns:
-      - name: constant.character.escape.mcfunction
-        match: "{{coordinate}}"
-        captures:
-          1:
-            # the `~` or `^`
-            name: "{{group.numeric_operator}}"
+  # token.range:
+  #   patterns:
+  #     - name: meta.token.range.mcfunction
+  #       match: "{{token_l}}({{range}}){{token_r}}"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#range"
 
-  resource_location:
-    patterns:
-      # - name: entity.name.tag.mcfunction
-      - name: entity.name.function.mcfunction
-        match: "{{resource_location}}"
+  # token.number:
+  #   patterns:
+  #     - name: meta.token.number.mcfunction
+  #       match: "{{token_l}}({{number}}){{token_r}}"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#number"
 
-  tagged_resource_location:
-    patterns:
-      # - name: entity.other.attribute-name.mcfunction
-      - name: constant.character.escape.mcfunction
-        match: "{{tagged_resource_location}}"
+  # token.coordinate:
+  #   patterns:
+  #     - name: meta.token.coordinate.mcfunction
+  #       match: "{{token_l}}({{coordinate}}){{token_r}}"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#coordinate"
 
-  literal:
-    patterns:
-      - name: keyword.operator.mcfunction
-        match: "{{literal}}"
+  # token.literal:
+  #   patterns:
+  #     - name: meta.token.literal.mcfunction
+  #       match: "{{token_l}}({{literal}}){{token_r}}"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#literal"
+
+  # # token.anything_else:
+  # #   patterns:
+  # #     - name: invalid.mcfunction
+  # #       match: "{{token_l}}.*{{token_r}}"
+
+  # selector_arguments:
+  #   patterns:
+  #     # - name: variable.language.mcfunction
+  #     #   begin: '(?<=([,\[]))(\s*)'
+  #     #   end: '(\s*)(?=([,\]]))'
+  #     #   contentName: string.other.mcfunction
+  #     #   beginCaptures:
+  #     #     1:
+  #     #       # the `[` or `,`
+  #     #       # name: markup.underline.mcfunction
+  #     #       name: "{{group.bracket_flow}}"
+  #     #     2:
+  #     #       # the whitespace, if any
+  #     #       name: markup.underline.mcfunction
+  #     #   endCaptures:
+  #     #     1:
+  #     #       # the whitespace, if any
+  #     #       name: markup.underline.mcfunction
+  #     #     2:
+  #     #       # the `,` or `]`
+  #     #       # name: markup.underline.mcfunction
+  #     #       name: "{{group.bracket_flow}}"
+  #     #   patterns:
+  #     - include: "#selector_argument.range"
+  #     - include: "#selector_argument.number"
+  #     - include: "#selector_argument.resource_location"
+  #     - include: "#selector_argument.tagged_resource_location"
+  #     - include: "#selector_argument.literal"
+  #     # - include: "#selector_argument.anything_else"
+
+  # selector.argument_key:
+  #   patterns:
+  #     - name: meta.selector.argument_key.mcfunction
+  #       match: "{{selector_key}}"
+  #       captures:
+  #         1:
+  #           # the preceding `,` (if any) and the whitespace between
+  #           name: "{{group.bracket_flow}}"
+  #         2:
+  #           # the actual argument key
+  #           name: variable.parameter.mcfunction
+  #         3:
+  #           # the `=`
+  #           name: "{{group.bracket_flow}}"
+  #         4:
+  #           # optional negation operator `!` (if any)
+  #           # name: string.regexp.mcfunction
+  #           name: "{{group.bracket_flow}}"
+
+  # # TODO can we express the key=value syntax without duplicating it for each type of value?
+
+  # selector_argument.range:
+  #   patterns:
+  #     - name: meta.selector_argument.range.mcfunction
+  #       match: "({{selector_key}})({{range}})"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#selector.argument_key"
+  #         5:
+  #           patterns:
+  #             - include: "#range"
+
+  # selector_argument.number:
+  #   patterns:
+  #     - name: meta.selector_argument.number.mcfunction
+  #       match: "({{selector_key}})({{number}})"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#selector.argument_key"
+  #         5:
+  #           patterns:
+  #             - include: "#number"
+
+  # selector_argument.resource_location:
+  #   patterns:
+  #     - name: meta.selector_argument.resource_location.mcfunction
+  #       match: "({{selector_key}})({{resource_location}})"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#selector.argument_key"
+  #         5:
+  #           patterns:
+  #             - include: "#resource_location"
+
+  # selector_argument.tagged_resource_location:
+  #   patterns:
+  #     - name: meta.selector_argument.tagged_resource_location.mcfunction
+  #       match: "({{selector_key}})({{tagged_resource_location}})"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#selector.argument_key"
+  #         5:
+  #           patterns:
+  #             - include: "#tagged_resource_location"
+
+  # selector_argument.literal:
+  #   patterns:
+  #     - name: meta.selector_argument.literal.mcfunction
+  #       match: "({{selector_key}})({{literal}})"
+  #       captures:
+  #         1:
+  #           patterns:
+  #             - include: "#selector.argument_key"
+  #         5:
+  #           patterns:
+  #             - include: "#literal"
+
+  # # selector_argument.anything_else:
+  # #   patterns:
+  # #     - name: invalid.mcfunction
+  # #       match: '[^\,\=\]]*'
+
+  # range:
+  #   patterns:
+  #     - name: constant.character.escape.mcfunction
+  #       match: "{{range}}"
+  #       captures:
+  #         2:
+  #           # color the `..` differently to distinguish it from decimals
+  #           name: "{{group.numeric_operator}}"
+
+  # number:
+  #   patterns:
+  #     - name: constant.numeric.mcfunction
+  #       match: "{{number}}"
+
+  # coordinate:
+  #   patterns:
+  #     - name: constant.character.escape.mcfunction
+  #       match: "{{coordinate}}"
+  #       captures:
+  #         1:
+  #           # the `~` or `^`
+  #           name: "{{group.numeric_operator}}"
+
+  # resource_location:
+  #   patterns:
+  #     # - name: entity.name.tag.mcfunction
+  #     - name: entity.name.function.mcfunction
+  #       match: "{{resource_location}}"
+
+  # tagged_resource_location:
+  #   patterns:
+  #     # - name: entity.other.attribute-name.mcfunction
+  #     - name: constant.character.escape.mcfunction
+  #       match: "{{tagged_resource_location}}"
+
+  # literal:
+  #   patterns:
+  #     - name: keyword.operator.mcfunction
+  #       match: "{{literal}}"
