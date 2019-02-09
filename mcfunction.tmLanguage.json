@@ -46,7 +46,36 @@
           "match": "^\\s*(#.*)$",
           "captures": {
             "1": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "comment.number-sign.mcfunction",
+              "patterns": [
+                {
+                  "name": "meta.comment.todo.mcfunction",
+                  "match": "#\\s*((?:TODO|FIXME|DELETEME).*)$",
+                  "captures": {
+                    "1": {
+                      "name": "markup.bold.mcfunction"
+                    }
+                  }
+                },
+                {
+                  "name": "meta.comment.annotation.mcfunction",
+                  "match": "#\\s*(\\@\\w*).*$",
+                  "captures": {
+                    "1": {
+                      "name": "markup.bold.mcfunction"
+                    }
+                  }
+                },
+                {
+                  "name": "meta.comment.annotation.mcfunction",
+                  "match": "##\\s*(.*)$",
+                  "captures": {
+                    "1": {
+                      "name": "markup.heading.mcfunction"
+                    }
+                  }
+                }
+              ]
             }
           }
         }

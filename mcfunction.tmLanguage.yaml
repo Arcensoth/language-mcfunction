@@ -58,6 +58,25 @@ repository:
         captures:
           1:
             name: comment.number-sign.mcfunction
+            patterns:
+              # things that need attention, like todos and fixmes
+              - name: meta.comment.todo.mcfunction
+                match: '#\s*((?:TODO|FIXME|DELETEME).*)$'
+                captures:
+                  1:
+                    name: markup.bold.mcfunction
+              # doc tags like `@params` and `@returns`
+              - name: meta.comment.annotation.mcfunction
+                match: '#\s*(\@\w*).*$'
+                captures:
+                  1:
+                    name: markup.bold.mcfunction
+              # headers for separating blocks
+              - name: meta.comment.annotation.mcfunction
+                match: '##\s*(.*)$'
+                captures:
+                  1:
+                    name: markup.heading.mcfunction
 
   command:
     patterns:
