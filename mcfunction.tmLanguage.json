@@ -11,6 +11,7 @@
     "component_nc": "[a-z0-9_\\.\\-]+",
     "component": "([a-z0-9_\\.\\-]+)",
     "number": "(\\-?\\d*\\.?\\d+)",
+    "resource_path": "([a-z0-9_\\.\\-\\/]+)",
     "resource_location": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
     "tagged_resource_location": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
     "coordinate": "([\\~\\^])(\\-?\\d*\\.?\\d+)?",
@@ -164,10 +165,19 @@
     },
     "command.token.resource_location": {
       "name": "meta.command.token.resource_location.mcfunction",
-      "match": "(?<= )([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
+      "match": "(?<= )(([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=[ \\n])",
       "captures": {
         "1": {
           "name": "entity.name.function.mcfunction"
+        }
+      }
+    },
+    "command.token.tagged_resource_location": {
+      "name": "meta.command.token.tagged_resource_location.mcfunction",
+      "match": "(?<= )((\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "constant.character.escape.mcfunction"
         }
       }
     },

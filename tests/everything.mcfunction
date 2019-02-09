@@ -11,9 +11,11 @@
 #       The ratio of block precision to a full block.
 # @returns The number of entities hit by the ray.
 
-# TODO optimize entity selectors
 function #mypack:hooks/raycast/begin
+
+# TODO optimize entity selectors
 function mypack:raycast/loop
+
 function #mypack:hooks/raycast/begin
 
 # this is a comment

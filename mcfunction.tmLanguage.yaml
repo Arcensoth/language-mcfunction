@@ -18,10 +18,15 @@ variables:
   # an integer or decimal with optional leading digit
   number: '(\-?\d*\.?\d+)'
 
+  # a resource path is the portion of the resource location following the namesapce
+  resource_path: '([a-z0-9_\.\-\/]+)'
+
   # resource locations: namespace + path
   # TODO improve resource location validity
   # resource_location: '{{component}}(\:)({{component_nc}}(?:\/{{component_nc}})*)'
-  resource_location: '{{component}}(\:)([a-z0-9_\.\-\/]+)'
+  resource_location: '{{component}}(\:){{resource_path}}'
+
+  # a tagged resource location is a resource location prefaced with `#`
   tagged_resource_location: '(\#){{resource_location}}'
 
   # relative or local coordinate
@@ -114,6 +119,7 @@ repository:
 
   command.tokens:
     patterns:
+      # TODO re-implement selectors with arguments
       # - include: "#command.token.selector_with_arguments"
       - include: "#command.token.selector_without_arguments"
       - include: "#command.token.resource_location"
@@ -133,15 +139,25 @@ repository:
 
   command.token.resource_location:
     name: meta.command.token.resource_location.mcfunction
-    match: "{{command_token_l}}{{resource_location}}{{command_token_r}}"
+    # TODO use capture-includes, remove wrapping group
+    match: "{{command_token_l}}({{resource_location}}){{command_token_r}}"
     captures:
       1:
         name: "{{name.resource_location}}"
+
+  command.token.tagged_resource_location:
+    name: meta.command.token.tagged_resource_location.mcfunction
+    # TODO use capture-includes, remove wrapping group
+    match: "{{command_token_l}}({{tagged_resource_location}}){{command_token_r}}"
+    captures:
+      1:
+        name: "{{name.tagged_resource_location}}"
 
   command.token.range:
     name: meta.command.token.range.mcfunction
     # TODO catch `..` error case
     match: "{{command_token_l}}{{range}}{{command_token_r}}"
+    # TODO implement capture-includes in build script for re-use in selectors
     captures:
       1:
         # the number on the left side
