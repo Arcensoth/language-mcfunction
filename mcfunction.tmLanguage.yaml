@@ -25,17 +25,18 @@ variables:
   range: '({{number}})?(\.\.)({{number}})?'
   coordinate: '([\~\^])+({{number}})?'
   base_selector: '\@[a-z]'
+  # selector_key: '({{literal}})(\=)(\!?)'
   selector_key: '(\,?\s*)({{literal}})(\=)(\!?)'
 
-  selector_with_arguments.begin: '{{base_selector}}(\[)'
-  selector_with_arguments.end: '(\])'
-  block_predicate.begin: '(\#?){{resource_location}}(\[)'
-  block_predicate.end: '(\])'
+  # TODO block predicates: resource location + selector-like argument list
+  # block_predicate.begin: '(\#?){{resource_location}}(\[)'
+  # block_predicate.end: '(\])'
 
   # tokens related to brackets and scope
   # for selectors: their brackets `[]`, key-value mappings `=` and separators `:`
   # for nbt: compound brackets `{}`, list brackets `[]`, key-value mappings `:` and separators `,`
   group.bracket_flow: markup.bold.mcfunction
+  # group.bracket_flow: string.regexp.mcfunction
 
   # things like `..` in ranges and `~` or `^` for coordinates
   group.numeric_operator: keyword.control.mcfunction
@@ -55,8 +56,8 @@ repository:
     patterns:
       - name: meta.command.mcfunction
         begin: '^\s*({{literal}})'
-        end: "$"
-        contentName: invalid
+        end: '\n'
+        contentName: invalid.mcfunction
         beginCaptures:
           # highlight the first command on each line
           1:
@@ -76,7 +77,7 @@ repository:
       - include: "#token.number"
       - include: "#token.coordinate"
       - include: "#token.literal"
-      - include: "#token.anything"
+      # - include: "#token.anything_else"
 
   token.selector_without_arguments:
     patterns:
@@ -87,9 +88,9 @@ repository:
   token.selector_with_arguments:
     patterns:
       - name: variable.language.mcfunction
-        begin: "{{token_l}}{{selector_with_arguments.begin}}"
-        end: "{{selector_with_arguments.end}}{{token_r}}"
-        contentName: invalid
+        begin: '{{token_l}}{{base_selector}}(\[)'
+        end: '(\]){{token_r}}'
+        contentName: invalid.mcfunction
         beginCaptures:
           1:
             name: "{{group.bracket_flow}}"
@@ -153,19 +154,40 @@ repository:
             patterns:
               - include: "#literal"
 
-  token.anything:
-    patterns:
-      - name: invalid.mcfunction
-        match: "{{token_l}}.*{{token_r}}"
+  # token.anything_else:
+  #   patterns:
+  #     - name: invalid.mcfunction
+  #       match: "{{token_l}}.*{{token_r}}"
 
   selector_arguments:
     patterns:
+      # - name: variable.language.mcfunction
+      #   begin: '(?<=([,\[]))(\s*)'
+      #   end: '(\s*)(?=([,\]]))'
+      #   contentName: string.other.mcfunction
+      #   beginCaptures:
+      #     1:
+      #       # the `[` or `,`
+      #       # name: markup.underline.mcfunction
+      #       name: "{{group.bracket_flow}}"
+      #     2:
+      #       # the whitespace, if any
+      #       name: markup.underline.mcfunction
+      #   endCaptures:
+      #     1:
+      #       # the whitespace, if any
+      #       name: markup.underline.mcfunction
+      #     2:
+      #       # the `,` or `]`
+      #       # name: markup.underline.mcfunction
+      #       name: "{{group.bracket_flow}}"
+      #   patterns:
       - include: "#selector_argument.range"
       - include: "#selector_argument.number"
       - include: "#selector_argument.resource_location"
       - include: "#selector_argument.tagged_resource_location"
       - include: "#selector_argument.literal"
-      - include: "#selector_argument.anything"
+      # - include: "#selector_argument.anything_else"
 
   selector.argument_key:
     patterns:
@@ -248,11 +270,10 @@ repository:
             patterns:
               - include: "#literal"
 
-  selector_argument.anything:
-    patterns:
-      - name: invalid.mcfunction
-        # match: ".*"
-        match: "[^\\]]*"
+  # selector_argument.anything_else:
+  #   patterns:
+  #     - name: invalid.mcfunction
+  #       match: '[^\,\=\]]*'
 
   range:
     patterns:

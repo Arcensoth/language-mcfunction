@@ -16,10 +16,6 @@
     "coordinate": "([\\~\\^])+(\\-?\\d*\\.?\\d+)?",
     "base_selector": "\\@[a-z]",
     "selector_key": "(\\,?\\s*)([a-z_][a-z0-9_]*)(\\=)(\\!?)",
-    "selector_with_arguments.begin": "\\@[a-z](\\[)",
-    "selector_with_arguments.end": "(\\])",
-    "block_predicate.begin": "(\\#?)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(\\[)",
-    "block_predicate.end": "(\\])",
     "group.bracket_flow": "markup.bold.mcfunction",
     "group.numeric_operator": "keyword.control.mcfunction"
   },
@@ -46,8 +42,8 @@
         {
           "name": "meta.command.mcfunction",
           "begin": "^\\s*([a-z_][a-z0-9_]*)",
-          "end": "$",
-          "contentName": "invalid",
+          "end": "\\n",
+          "contentName": "invalid.mcfunction",
           "beginCaptures": {
             "1": {
               "name": "keyword.control.mcfunction"
@@ -86,9 +82,6 @@
         },
         {
           "include": "#token.literal"
-        },
-        {
-          "include": "#token.anything"
         }
       ]
     },
@@ -106,7 +99,7 @@
           "name": "variable.language.mcfunction",
           "begin": "(?<=\\s)\\@[a-z](\\[)",
           "end": "(\\])(?=\\s)",
-          "contentName": "invalid",
+          "contentName": "invalid.mcfunction",
           "beginCaptures": {
             "1": {
               "name": "markup.bold.mcfunction"
@@ -227,14 +220,6 @@
         }
       ]
     },
-    "token.anything": {
-      "patterns": [
-        {
-          "name": "invalid.mcfunction",
-          "match": "(?<=\\s).*(?=\\s)"
-        }
-      ]
-    },
     "selector_arguments": {
       "patterns": [
         {
@@ -251,9 +236,6 @@
         },
         {
           "include": "#selector_argument.literal"
-        },
-        {
-          "include": "#selector_argument.anything"
         }
       ]
     },
@@ -396,14 +378,6 @@
               ]
             }
           }
-        }
-      ]
-    },
-    "selector_argument.anything": {
-      "patterns": [
-        {
-          "name": "invalid.mcfunction",
-          "match": "[^\\]]*"
         }
       ]
     },
