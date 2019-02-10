@@ -51,7 +51,7 @@
               "patterns": [
                 {
                   "name": "meta.comment.todo.mcfunction",
-                  "match": "#\\s*((?:TODO|FIXME|DELETEME).*)$",
+                  "match": "#\\s*((?:TODO|FIXME|DELETEME)\\s.*)$",
                   "captures": {
                     "1": {
                       "name": "markup.bold.mcfunction"
@@ -60,7 +60,7 @@
                 },
                 {
                   "name": "meta.comment.annotation.mcfunction",
-                  "match": "#\\s*(\\@\\w*).*$",
+                  "match": "#\\s*(\\@\\w*)\\s.*$",
                   "captures": {
                     "1": {
                       "name": "markup.bold.mcfunction"

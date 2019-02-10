@@ -66,13 +66,13 @@ repository:
             patterns:
               # things that need attention, like todos and fixmes
               - name: meta.comment.todo.mcfunction
-                match: '#\s*((?:TODO|FIXME|DELETEME).*)$'
+                match: '#\s*((?:TODO|FIXME|DELETEME)\s.*)$'
                 captures:
                   1:
                     name: markup.bold.mcfunction
               # doc tags like `@params` and `@returns`
               - name: meta.comment.annotation.mcfunction
-                match: '#\s*(\@\w*).*$'
+                match: '#\s*(\@\w*)\s.*$'
                 captures:
                   1:
                     name: markup.bold.mcfunction
