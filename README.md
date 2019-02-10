@@ -1,5 +1,5 @@
 # language-mcfunction
-TextMate language grammar for mcfunction files.
+Language grammar and syntax highlighting for mcfunction files.
 
 ## Resources
 - https://github.com/github/linguist/blob/master/CONTRIBUTING.md
