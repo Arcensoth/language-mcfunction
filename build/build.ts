@@ -15,6 +15,12 @@ function formatProperty(grammar: any, s: string): string {
   return s2;
 }
 
+function getRepositoryItem(grammar: any, name: string): any {
+  const key = name.substring(1);
+  const item = grammar.repository[key];
+  return item;
+}
+
 function updateNode(grammar: any, node: any) {
   // format properties (leaf-nodes) with variable expressions
   FORMAT_PROPERTIES.forEach((key: string) => {
@@ -22,6 +28,28 @@ function updateNode(grammar: any, node: any) {
       node[key] = formatProperty(grammar, node[key]);
     }
   });
+
+  // process capture-includes
+  if ('captures' in node) {
+    const captures = node['captures'];
+    if (captures instanceof String) {
+      node['captures'] = [{ include: captures }];
+    }
+    
+    if (captures instanceof Array) {
+      // merge dicts, let keys overlap in order
+      const newCaptures: {[key: number]: any} = {};
+      captures.forEach(entry => {
+        const includeName = entry['include'];
+        const includeValue: {[key: number]: any} = getRepositoryItem(grammar, includeName);
+        for (const groupKey in includeValue) {
+          const groupValue = includeValue[groupKey];
+          newCaptures[groupKey] = groupValue;
+        }
+      });
+      node['captures'] = newCaptures;
+    }
+  }
 
   // recurse into key-value children
   RECURSE_MAPS.forEach((key: string) => {
