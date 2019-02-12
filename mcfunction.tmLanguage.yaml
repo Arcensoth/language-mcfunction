@@ -31,6 +31,10 @@ variables:
   # resource_location: '{{component}}(\:)({{component_nc}}(?:\/{{component_nc}})*)'
   resource_location: '{{component}}(\:){{resource_path}}'
 
+  # uuid format
+  hex_digit: "[0-9a-fA-F]"
+  uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
+
   # unquoted strings are like literals with additional available characters
   # TODO check what the game allows for word-type string arguments
   unquoted_string: '([\w\.\-\#\$\%]+)'
@@ -55,6 +59,7 @@ variables:
   name.base_selector: variable.language.mcfunction
   name.resource_location: entity.name.function.mcfunction
   name.tagged_resource_location: constant.character.escape.mcfunction
+  name.uuid: "{{name.base_selector}}"
   name.literal: keyword.operator.mcfunction
   name.unquoted_string: string.unquoted.mcfunction
   name.quoted_string: string.quoted.mcfunction
@@ -123,6 +128,10 @@ capturesRepository:
   literal:
     1:
       name: "{{name.literal}}"
+
+  uuid:
+    1:
+      name: "{{name.uuid}}"
 
   unquoted_string:
     1:
@@ -202,6 +211,7 @@ repository:
       - include: "#command.token.coordinate"
       # we literals before strings, because literals are a subset of strings
       - include: "#command.token.literal"
+      - include: "#command.token.uuid"
       - include: "#command.token.unquoted_string"
       - include: "#command.token.quoted_string"
       - include: "#command.token.unknown"
@@ -241,6 +251,11 @@ repository:
     name: meta.command.token.literal.mcfunction
     match: "{{command_token_l}}{{literal}}{{command_token_r}}"
     captures: "#literal"
+
+  command.token.uuid:
+    name: meta.command.token.uuid.mcfunction
+    match: "{{command_token_l}}{{uuid}}{{command_token_r}}"
+    captures: "#uuid"
 
   command.token.unquoted_string:
     name: meta.command.token.unquoted_string.mcfunction

@@ -121,6 +121,9 @@
           "include": "#command.token.literal"
         },
         {
+          "include": "#command.token.uuid"
+        },
+        {
           "include": "#command.token.unquoted_string"
         },
         {
@@ -215,6 +218,15 @@
       "captures": {
         "1": {
           "name": "keyword.operator.mcfunction"
+        }
+      }
+    },
+    "command.token.uuid": {
+      "name": "meta.command.token.uuid.mcfunction",
+      "match": "(?<= )([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "variable.language.mcfunction"
         }
       }
     },
