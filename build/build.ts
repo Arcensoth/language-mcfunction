@@ -15,9 +15,9 @@ function formatProperty(grammar: any, s: string): string {
   return s2;
 }
 
-function getRepositoryItem(grammar: any, name: string): any {
+function getCapturesRepositoryItem(grammar: any, name: string): any {
   const key = name.substring(1);
-  const item = grammar.repository[key];
+  const item = grammar.capturesRepository[key];
   return item;
 }
 
@@ -30,24 +30,26 @@ function updateNode(grammar: any, node: any) {
   });
 
   // process capture-includes
-  if ('captures' in node) {
-    const captures = node['captures'];
-    if (captures instanceof String) {
-      node['captures'] = [{ include: captures }];
-    }
-    
-    if (captures instanceof Array) {
+  if ("captures" in node) {
+    const captures = node["captures"];
+    if (typeof captures === "string") {
+      const includeValue = getCapturesRepositoryItem(grammar, captures);
+      node["captures"] = includeValue;
+    } else if (captures instanceof Array) {
       // merge dicts, let keys overlap in order
-      const newCaptures: {[key: number]: any} = {};
+      const newCaptures: { [key: number]: any } = {};
       captures.forEach(entry => {
-        const includeName = entry['include'];
-        const includeValue: {[key: number]: any} = getRepositoryItem(grammar, includeName);
+        const includeName = entry["include"];
+        const includeValue: { [key: number]: any } = getCapturesRepositoryItem(
+          grammar,
+          includeName
+        );
         for (const groupKey in includeValue) {
           const groupValue = includeValue[groupKey];
           newCaptures[groupKey] = groupValue;
         }
       });
-      node['captures'] = newCaptures;
+      node["captures"] = newCaptures;
     }
   }
 
@@ -70,24 +72,31 @@ function updateNode(grammar: any, node: any) {
   });
 }
 
-const grammar = yaml.safeLoad(
-  fs.readFileSync("mcfunction.tmLanguage.yaml", "utf8")
-);
+function run() {
+  const grammar = yaml.safeLoad(
+    fs.readFileSync("mcfunction.tmLanguage.yaml", "utf8")
+  );
 
-// start by formatting variables themselves
-for (const key in grammar.variables) {
-  grammar.variables[key] = formatProperty(grammar, grammar.variables[key]);
+  // start by formatting variables themselves
+  for (const key in grammar.variables) {
+    grammar.variables[key] = formatProperty(grammar, grammar.variables[key]);
+  }
+
+  // update root
+  updateNode(grammar, grammar);
+
+  // update repository
+  for (const key in grammar.repository) {
+    updateNode(grammar, grammar.repository[key]);
+  }
+
+  // remove excess nodes
+  delete grammar.capturesRepository;
+
+  fs.writeFileSync(
+    "mcfunction.tmLanguage.json",
+    JSON.stringify(grammar, null, 2)
+  );
 }
 
-// update root
-updateNode(grammar, grammar);
-
-// update repository
-for (const key in grammar.repository) {
-  updateNode(grammar, grammar.repository[key]);
-}
-
-fs.writeFileSync(
-  "mcfunction.tmLanguage.json",
-  JSON.stringify(grammar, null, 2)
-);
+run();

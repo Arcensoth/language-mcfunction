@@ -55,6 +55,18 @@ patterns:
   - include: "#command"
   - include: "#unknown"
 
+capturesRepository:
+  range:
+    1:
+      # the number on the left side
+      name: "{{name.numeric_altered}}"
+    2:
+      # color the `..` differently to distinguish it from decimals
+      name: "{{name.range_ellipsis}}"
+    3:
+      # the number on the right side
+      name: "{{name.numeric_altered}}"
+
 repository:
   comment:
     patterns:
@@ -157,17 +169,7 @@ repository:
     name: meta.command.token.range.mcfunction
     # TODO catch `..` error case
     match: "{{command_token_l}}{{range}}{{command_token_r}}"
-    # TODO implement capture-includes in build script for re-use in selectors
-    captures:
-      1:
-        # the number on the left side
-        name: "{{name.numeric_altered}}"
-      2:
-        # color the `..` differently to distinguish it from decimals
-        name: "{{name.range_ellipsis}}"
-      3:
-        # the number on the right side
-        name: "{{name.numeric_altered}}"
+    captures: "#range"
 
   command.token.number:
     name: meta.command.token.number.mcfunction
