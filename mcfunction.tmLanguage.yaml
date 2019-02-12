@@ -153,13 +153,13 @@ repository:
           # don't name this one yet, we want to get rid of the space
           - begin: "(?<= )"
             # consume the space
-            # end: '[ \n]'
+            end: '[ \n]'
 
             # for debugging purposes...
-            end: '([ \n])'
-            endCaptures:
-              1:
-                name: markup.underline.debug.mcfunction
+            # end: '([ \n])'
+            # endCaptures:
+            #   1:
+            #     name: markup.underline.debug.mcfunction
 
             # name everything inside as part of the token
             contentName: meta.command.token.mcfunction

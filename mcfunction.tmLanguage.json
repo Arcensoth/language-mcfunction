@@ -72,12 +72,7 @@
           "patterns": [
             {
               "begin": "(?<= )",
-              "end": "([ \\n])",
-              "endCaptures": {
-                "1": {
-                  "name": "markup.underline.debug.mcfunction"
-                }
-              },
+              "end": "[ \\n]",
               "contentName": "meta.command.token.mcfunction",
               "patterns": [
                 {
