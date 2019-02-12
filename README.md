@@ -22,6 +22,7 @@ This is a generalized "context-free" grammar that does not target any particular
     - [ ] NBT compounds: `{ Fire: 20s , NoGravity: true, Tags: [ "mytag" ] }`
     - [ ] NBT paths: `SelectedItem.Count` / `RecordItem.tag.mycustomtag`
     - [x] UUIDs: `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` `0-0-0-0-0`
+    - [x] Fakeplayers: `#hidden` / `$fakefoo` / `%fakebar`
     - [x] Base selectors: `@e`
     - [ ] Selectors arguments: `@e[tag=foo]`
         - [ ] Literals: `gamemode` / `sort`

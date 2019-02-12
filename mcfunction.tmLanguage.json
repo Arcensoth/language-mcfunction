@@ -124,6 +124,9 @@
           "include": "#command.token.uuid"
         },
         {
+          "include": "#command.token.fakeplayer"
+        },
+        {
           "include": "#command.token.unquoted_string"
         },
         {
@@ -224,6 +227,15 @@
     "command.token.uuid": {
       "name": "meta.command.token.uuid.mcfunction",
       "match": "(?<= )([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "variable.language.mcfunction"
+        }
+      }
+    },
+    "command.token.fakeplayer": {
+      "name": "meta.command.token.fakeplayer.mcfunction",
+      "match": "(?<= )([\\#\\$\\%][\\w\\.\\-]+)(?=[ \\n])",
       "captures": {
         "1": {
           "name": "variable.language.mcfunction"
