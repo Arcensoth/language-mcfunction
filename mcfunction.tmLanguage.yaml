@@ -5,10 +5,15 @@ fileTypes:
   - mcfunction
 
 variables:
-  command_token_l: (?<= )
-  command_token_r: (?=[ \n])
+  lookahead_newline: '(?=\n)'
 
-  # characters for literal subcommands and other word-like identifiers
+  command_token_delim: '[ \n]'
+  not_command_token_delim: '[^ \n]'
+
+  command_token_l: "(?<= )"
+  command_token_r: '(?=[ \n])'
+
+  # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
 
   # characters permitted in namespaces, resource paths, etc
@@ -25,6 +30,10 @@ variables:
   # TODO improve resource location validity
   # resource_location: '{{component}}(\:)({{component_nc}}(?:\/{{component_nc}})*)'
   resource_location: '{{component}}(\:){{resource_path}}'
+
+  # unquoted strings are like literals with additional available characters
+  # TODO check what the game allows for word-type string arguments
+  unquoted_string: '([\w\.\-\#\$\%]+)'
 
   # a tagged resource location is a resource location prefaced with `#`
   tagged_resource_location: '(\#){{resource_location}}'
@@ -47,6 +56,9 @@ variables:
   name.resource_location: entity.name.function.mcfunction
   name.tagged_resource_location: constant.character.escape.mcfunction
   name.literal: keyword.operator.mcfunction
+  name.unquoted_string: string.unquoted.mcfunction
+  name.quoted_string: string.quoted.mcfunction
+  name.quoted_string_escape: constant.character.mcfunction
   name.unknown: invalid.illegal.mcfunction
   name.error: invalid.illegal.mcfunction
 
@@ -111,6 +123,10 @@ capturesRepository:
   literal:
     1:
       name: "{{name.literal}}"
+
+  unquoted_string:
+    1:
+      name: "{{name.unquoted_string}}"
 
 repository:
   comment:
@@ -184,7 +200,10 @@ repository:
       - include: "#command.token.range"
       - include: "#command.token.number"
       - include: "#command.token.coordinate"
+      # we literals before strings, because literals are a subset of strings
       - include: "#command.token.literal"
+      - include: "#command.token.unquoted_string"
+      - include: "#command.token.quoted_string"
       - include: "#command.token.unknown"
 
   command.token.selector_without_arguments:
@@ -222,6 +241,49 @@ repository:
     name: meta.command.token.literal.mcfunction
     match: "{{command_token_l}}{{literal}}{{command_token_r}}"
     captures: "#literal"
+
+  command.token.unquoted_string:
+    name: meta.command.token.unquoted_string.mcfunction
+    match: "{{command_token_l}}{{unquoted_string}}{{command_token_r}}"
+    captures: "#unquoted_string"
+
+  command.token.quoted_string:
+    # quoted strings are a recursive format captured between the quotes
+    name: meta.command.token.quoted_string.mcfunction
+
+    # TODO how do we highlight the whole thing as an error, if any part of it fails?
+
+    # begin whenever we see a quote
+    begin: '{{command_token_l}}(\")'
+
+    # End on anything. This is tricky. If we got to this point, it means the
+    # child scope has been terminated. According to the child scope, the only
+    # things that can get us here are an unescaped quote or a newline (which
+    # cannot be escaped). Also make sure to mark anything following an ending
+    # quote to the next token delimiter as an error.
+    # end: '([\"\n]){{command_token_r}}'
+    # end: '\n|((\")(.*){{command_token_r}})'
+    end: '{{lookahead_newline}}|(\")({{not_command_token_delim}}*)'
+
+    beginCaptures:
+      1:
+        name: "{{name.quoted_string}}"
+    endCaptures:
+      1:
+        name: "{{name.quoted_string}}"
+      2:
+        name: "{{name.error}}"
+    patterns:
+      # consume everything except for backslashes, quotes, and newlines
+      - name: "{{name.quoted_string}}"
+        match: '[^\\\"\n]'
+      # consume any escaped characters... except for newlines
+      - name: "{{name.quoted_string_escape}}"
+        match: '\\[^\n]'
+      # consume a single backslash (implicitly followed by a newline) as an error
+      - name: "{{name.error}}"
+        match: '\\'
+      # anything else will be handed back to the parent scope
 
   command.token.unknown:
     name: meta.command.token.unknown.mcfunction

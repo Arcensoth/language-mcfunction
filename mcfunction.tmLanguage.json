@@ -121,6 +121,12 @@
           "include": "#command.token.literal"
         },
         {
+          "include": "#command.token.unquoted_string"
+        },
+        {
+          "include": "#command.token.quoted_string"
+        },
+        {
           "include": "#command.token.unknown"
         }
       ]
@@ -211,6 +217,47 @@
           "name": "keyword.operator.mcfunction"
         }
       }
+    },
+    "command.token.unquoted_string": {
+      "name": "meta.command.token.unquoted_string.mcfunction",
+      "match": "(?<= )([\\w\\.\\-\\#\\$\\%]+)(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "string.unquoted.mcfunction"
+        }
+      }
+    },
+    "command.token.quoted_string": {
+      "name": "meta.command.token.quoted_string.mcfunction",
+      "begin": "(?<= )(\\\")",
+      "end": "(?=\\n)|(\\\")([^ \\n]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "string.quoted.mcfunction"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "string.quoted.mcfunction"
+        },
+        "2": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "name": "string.quoted.mcfunction",
+          "match": "[^\\\\\\\"\\n]"
+        },
+        {
+          "name": "constant.character.mcfunction",
+          "match": "\\\\[^\\n]"
+        },
+        {
+          "name": "invalid.illegal.mcfunction",
+          "match": "\\\\"
+        }
+      ]
     },
     "command.token.unknown": {
       "name": "meta.command.token.unknown.mcfunction",
