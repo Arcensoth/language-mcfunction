@@ -4,30 +4,6 @@
   "fileTypes": [
     "mcfunction"
   ],
-  "variables": {
-    "command_token_l": "(?<= )",
-    "command_token_r": "(?=[ \\n])",
-    "literal": "([a-z_][a-z0-9_]*)",
-    "component_nc": "[a-z0-9_\\.\\-]+",
-    "component": "([a-z0-9_\\.\\-]+)",
-    "number": "(\\-?\\d*\\.?\\d+)",
-    "resource_path": "([a-z0-9_\\.\\-\\/]+)",
-    "resource_location": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
-    "tagged_resource_location": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
-    "coordinate": "([\\~\\^])(\\-?\\d*\\.?\\d+)?",
-    "range": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
-    "base_selector": "(\\@[a-z])",
-    "name.numeric_constant": "constant.numeric.mcfunction",
-    "name.numeric_altered": "constant.character.escape.mcfunction",
-    "name.range_ellipsis": "keyword.control.mcfunction",
-    "name.coordinate_operator": "keyword.control.mcfunction",
-    "name.base_selector": "variable.language.mcfunction",
-    "name.resource_location": "entity.name.function.mcfunction",
-    "name.tagged_resource_location": "constant.character.escape.mcfunction",
-    "name.literal": "keyword.operator.mcfunction",
-    "name.unknown": "invalid.illegal.mcfunction",
-    "name.error": "invalid.illegal.mcfunction"
-  },
   "patterns": [
     {
       "include": "#comment"

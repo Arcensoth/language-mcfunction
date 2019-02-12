@@ -91,6 +91,7 @@ function run() {
   }
 
   // remove excess nodes
+  delete grammar.variables;
   delete grammar.capturesRepository;
 
   fs.writeFileSync(
