@@ -56,6 +56,35 @@ patterns:
   - include: "#unknown"
 
 capturesRepository:
+  selector_without_arguments:
+    1:
+      name: "{{name.base_selector}}"
+
+  resource_location:
+    1:
+      # the namespace
+      name: "{{name.resource_location}}"
+    2:
+      # the `:`
+      name: "{{name.resource_location}}"
+    3:
+      # the path
+      name: "{{name.resource_location}}"
+
+  tagged_resource_location:
+    1:
+      # the `#`
+      name: "{{name.tagged_resource_location}}"
+    2:
+      # the namespace
+      name: "{{name.tagged_resource_location}}"
+    3:
+      # the `:`
+      name: "{{name.tagged_resource_location}}"
+    4:
+      # the path
+      name: "{{name.tagged_resource_location}}"
+
   range:
     1:
       # the number on the left side
@@ -66,6 +95,22 @@ capturesRepository:
     3:
       # the number on the right side
       name: "{{name.numeric_altered}}"
+
+  number:
+    1:
+      name: "{{name.numeric_constant}}"
+
+  coordinate:
+    1:
+      # the `~` or `^`
+      name: "{{name.coordinate_operator}}"
+    2:
+      # the actual number
+      name: "{{name.numeric_altered}}"
+
+  literal:
+    1:
+      name: "{{name.literal}}"
 
 repository:
   comment:
@@ -145,25 +190,17 @@ repository:
   command.token.selector_without_arguments:
     name: meta.command.token.selector_without_arguments.mcfunction
     match: "{{command_token_l}}{{base_selector}}{{command_token_r}}"
-    captures:
-      1:
-        name: "{{name.base_selector}}"
+    captures: "#selector_without_arguments"
 
   command.token.resource_location:
     name: meta.command.token.resource_location.mcfunction
-    # TODO use capture-includes, remove wrapping group
-    match: "{{command_token_l}}({{resource_location}}){{command_token_r}}"
-    captures:
-      1:
-        name: "{{name.resource_location}}"
+    match: "{{command_token_l}}{{resource_location}}{{command_token_r}}"
+    captures: "#resource_location"
 
   command.token.tagged_resource_location:
     name: meta.command.token.tagged_resource_location.mcfunction
-    # TODO use capture-includes, remove wrapping group
-    match: "{{command_token_l}}({{tagged_resource_location}}){{command_token_r}}"
-    captures:
-      1:
-        name: "{{name.tagged_resource_location}}"
+    match: "{{command_token_l}}{{tagged_resource_location}}{{command_token_r}}"
+    captures: "#tagged_resource_location"
 
   command.token.range:
     name: meta.command.token.range.mcfunction
@@ -174,27 +211,17 @@ repository:
   command.token.number:
     name: meta.command.token.number.mcfunction
     match: "{{command_token_l}}{{number}}{{command_token_r}}"
-    captures:
-      1:
-        name: "{{name.numeric_constant}}"
+    captures: "#number"
 
   command.token.coordinate:
     name: meta.command.token.coordinate.mcfunction
     match: "{{command_token_l}}{{coordinate}}{{command_token_r}}"
-    captures:
-      1:
-        # the `~` or `^`
-        name: "{{name.coordinate_operator}}"
-      2:
-        # the actual number
-        name: "{{name.numeric_altered}}"
+    captures: "#coordinate"
 
   command.token.literal:
     name: meta.command.token.literal.mcfunction
     match: "{{command_token_l}}{{literal}}{{command_token_r}}"
-    captures:
-      1:
-        name: "{{name.literal}}"
+    captures: "#literal"
 
   command.token.unknown:
     name: meta.command.token.unknown.mcfunction

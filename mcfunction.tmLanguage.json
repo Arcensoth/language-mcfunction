@@ -141,18 +141,33 @@
     },
     "command.token.resource_location": {
       "name": "meta.command.token.resource_location.mcfunction",
-      "match": "(?<= )(([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=[ \\n])",
+      "match": "(?<= )([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
       "captures": {
         "1": {
+          "name": "entity.name.function.mcfunction"
+        },
+        "2": {
+          "name": "entity.name.function.mcfunction"
+        },
+        "3": {
           "name": "entity.name.function.mcfunction"
         }
       }
     },
     "command.token.tagged_resource_location": {
       "name": "meta.command.token.tagged_resource_location.mcfunction",
-      "match": "(?<= )((\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+))(?=[ \\n])",
+      "match": "(?<= )(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
       "captures": {
         "1": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "2": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "3": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "4": {
           "name": "constant.character.escape.mcfunction"
         }
       }
