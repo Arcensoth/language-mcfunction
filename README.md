@@ -39,5 +39,6 @@ This is a generalized "context-free" grammar that does not target any particular
 - https://github.com/github/linguist/blob/master/vendor/README.md
   - https://github.com/Microsoft/TypeScript-TmLanguage/blob/master/TypeScript.YAML-tmLanguage
 - https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
+- https://gist.github.com/Aerijo/b8c82d647db783187804e86fa0a604a1
 - https://macromates.com/manual/en/language_grammars
 - https://regex101.com/
