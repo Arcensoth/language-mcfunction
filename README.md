@@ -24,17 +24,18 @@ This is a generalized "context-free" grammar that does not target any particular
     - [x] UUIDs: `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` `0-0-0-0-0`
     - [x] Fakeplayers: `#hidden` / `$fakefoo` / `%fakebar`
     - [x] Base selectors: `@e`
-    - [ ] Selectors arguments: `@e[tag=foo]`
-        - [ ] Literals: `gamemode` / `sort`
-        - [ ] Numbers: `x` / `y` / `z` / `limit`
-        - [ ] Ranges: `distance` / `level`
-        - [ ] Resource locations: `type`
-        - [ ] Tagged resource locations: `type`
-        - [ ] Quoted strings: `name`
-        - [ ] Unquoted strings: `tag`
-        - [ ] NBT compounds: `nbt`
-        - [ ] Scores: `scores`
-        - [ ] Advancements: `advancements`
+    - [x] Selectors with arguments: `@e[tag=foo]`
+    - [ ] Selector arguments
+        - [ ] Literal arguments: `gamemode` / `sort`
+        - [ ] Numeric arguments: `x` / `y` / `z` / `limit`
+        - [ ] Range arguments: `distance` / `level`
+        - [ ] Resource location arguments: `type`
+        - [ ] Tagged resource location arguments: `type`
+        - [ ] Unquoted string arguments: `tag`
+        - [ ] Quoted string arguments: `name`
+        - [ ] NBT compound arguments: `nbt`
+        - [ ] Score arguments: `scores`
+        - [ ] Advancement arguments: `advancements`
 
 ## Resources
 - https://github.com/github/linguist/blob/master/CONTRIBUTING.md
