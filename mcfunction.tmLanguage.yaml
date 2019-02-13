@@ -312,6 +312,10 @@ repository:
         name: "{{name.error}}"
 
     patterns:
+      - include: "#common.quoted_string"
+
+  common.quoted_string:
+    patterns:
       # consume everything except for backslashes, quotes, and newlines
       - name: "{{name.quoted_string}}"
         match: '[^\\\"\n]'
@@ -355,28 +359,47 @@ repository:
       # consume whitespace in between arguments
       - name: meta.selector.argument_spacing.mcfunction
         match: " +"
-      # consume and classify commas
-      - name: meta.selector.argument_separator.mcfunction
-        match: '(\,)'
-        captures:
-          1:
-            name: "{{name.selector_delims}}"
-      # consume and classify equals
-      - name: meta.selector.argument_separator.mcfunction
-        match: '(\=)'
-        captures:
-          1:
-            name: "{{name.selector_delims}}"
       # now the fun part: recurse yet again whenever we encounter an argument
-      # TODO recurse into selector argument sub-patterns
       - name: meta.selector.argument.mcfunction
-        match: '{{literal}}(\=)(\!)?([^\n\]\,]+)'
-        captures:
+        begin: '{{literal}}(\=)(\!)?'
+        end: '(\,)(?=[\]\n])|(\,)|(?=[\]\n])'
+
+        beginCaptures:
           1:
             name: "variable.parameter.mcfunction"
           2:
             name: "{{name.selector_delims}}"
           3:
             name: "keyword.control.mcfunction"
-          4:
-            name: "variable.parameter.mcfunction"
+
+        endCaptures:
+          1:
+            name: "{{name.error}}"
+          2:
+            name: "{{name.selector_delims}}"
+
+        patterns:
+          - name: meta.selector.argument.quoted_string.mcfunction
+            begin: '(\")'
+            end: '{{lookahead_newline}}|(\")([^\]\,\n]*)'
+            beginCaptures:
+              1:
+                name: "{{name.quoted_string}}"
+            endCaptures:
+              1:
+                name: "{{name.quoted_string}}"
+              2:
+                name: "{{name.error}}"
+            patterns:
+              - include: "#common.quoted_string"
+
+          - name: meta.selector.argument.other.mcfunction
+            match: '([^\]\n\,]+)'
+            captures:
+              1:
+                # name: variable.parameter.mcfunction
+                name: string.regexp.mcfunction
+
+      # anything else apart from terminals is classified as an error
+      - name: "{{name.error}}"
+        match: '[^\]\n]+'

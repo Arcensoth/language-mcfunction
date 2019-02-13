@@ -282,6 +282,13 @@
       },
       "patterns": [
         {
+          "include": "#common.quoted_string"
+        }
+      ]
+    },
+    "common.quoted_string": {
+      "patterns": [
+        {
           "name": "string.quoted.mcfunction",
           "match": "[^\\\\\\\"\\n]"
         },
@@ -321,27 +328,10 @@
           "match": " +"
         },
         {
-          "name": "meta.selector.argument_separator.mcfunction",
-          "match": "(\\,)",
-          "captures": {
-            "1": {
-              "name": "markup.bold.mcfunction"
-            }
-          }
-        },
-        {
-          "name": "meta.selector.argument_separator.mcfunction",
-          "match": "(\\=)",
-          "captures": {
-            "1": {
-              "name": "markup.bold.mcfunction"
-            }
-          }
-        },
-        {
           "name": "meta.selector.argument.mcfunction",
-          "match": "([a-z_][a-z0-9_]*)(\\=)(\\!)?([^\\n\\]\\,]+)",
-          "captures": {
+          "begin": "([a-z_][a-z0-9_]*)(\\=)(\\!)?",
+          "end": "(\\,)(?=[\\]\\n])|(\\,)|(?=[\\]\\n])",
+          "beginCaptures": {
             "1": {
               "name": "variable.parameter.mcfunction"
             },
@@ -350,11 +340,54 @@
             },
             "3": {
               "name": "keyword.control.mcfunction"
-            },
-            "4": {
-              "name": "variable.parameter.mcfunction"
             }
-          }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "invalid.illegal.mcfunction"
+            },
+            "2": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "name": "meta.selector.argument.quoted_string.mcfunction",
+              "begin": "(\\\")",
+              "end": "(?=\\n)|(\\\")([^\\]\\,\\n]*)",
+              "beginCaptures": {
+                "1": {
+                  "name": "string.quoted.mcfunction"
+                }
+              },
+              "endCaptures": {
+                "1": {
+                  "name": "string.quoted.mcfunction"
+                },
+                "2": {
+                  "name": "invalid.illegal.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#common.quoted_string"
+                }
+              ]
+            },
+            {
+              "name": "meta.selector.argument.other.mcfunction",
+              "match": "([^\\]\\n\\,]+)",
+              "captures": {
+                "1": {
+                  "name": "string.regexp.mcfunction"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "invalid.illegal.mcfunction",
+          "match": "[^\\]\\n]+"
         }
       ]
     }
