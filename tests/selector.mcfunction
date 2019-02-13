@@ -75,7 +75,7 @@ execute as @a[sort=nearest,limit=1] as @a[tag=foo] run
 execute as @a[sort=nearest] as @a[tag=foo,tag=bar] run
 execute as @a[sort=nearest,limit=1] as @a[tag=foo,tag=bar] run
 
-# test edge cases
+# test invalid edge cases
 execute as @a[,] as @s run
 execute as @a[,,] as @s run
 execute as @a[,tag=foo] as @s run

@@ -56,11 +56,13 @@ variables:
   base_selector: '(\@[a-z])'
 
   # group names, in one place
+  name.brace_delims: markup.bold.mcfunction
   name.numeric_constant: constant.numeric.mcfunction
   name.numeric_altered: constant.character.escape.mcfunction
   name.range_ellipsis: keyword.control.mcfunction
   name.coordinate_operator: keyword.control.mcfunction
   name.base_selector: variable.language.mcfunction
+  name.selector_delims: "{{name.brace_delims}}"
   name.resource_location: entity.name.function.mcfunction
   name.tagged_resource_location: constant.character.escape.mcfunction
   name.uuid: "{{name.base_selector}}"
@@ -210,8 +212,7 @@ repository:
 
   command.tokens:
     patterns:
-      # TODO re-implement selectors with arguments
-      # - include: "#command.token.selector_with_arguments"
+      - include: "#command.token.selector_with_arguments"
       - include: "#command.token.selector_without_arguments"
       - include: "#command.token.resource_location"
       - include: "#command.token.tagged_resource_location"
@@ -277,6 +278,13 @@ repository:
     match: "{{command_token_l}}{{unquoted_string}}{{command_token_r}}"
     captures: "#unquoted_string"
 
+  command.token.unknown:
+    name: meta.command.token.unknown.mcfunction
+    match: '{{command_token_l}}([^ \n]*){{command_token_r}}'
+    captures:
+      1:
+        name: "{{name.unknown}}"
+
   command.token.quoted_string:
     # quoted strings are a recursive format captured between the quotes
     name: meta.command.token.quoted_string.mcfunction
@@ -291,18 +299,18 @@ repository:
     # things that can get us here are an unescaped quote or a newline (which
     # cannot be escaped). Also make sure to mark anything following an ending
     # quote to the next token delimiter as an error.
-    # end: '([\"\n]){{command_token_r}}'
-    # end: '\n|((\")(.*){{command_token_r}})'
     end: '{{lookahead_newline}}|(\")({{not_command_token_delim}}*)'
 
     beginCaptures:
       1:
         name: "{{name.quoted_string}}"
+
     endCaptures:
       1:
         name: "{{name.quoted_string}}"
       2:
         name: "{{name.error}}"
+
     patterns:
       # consume everything except for backslashes, quotes, and newlines
       - name: "{{name.quoted_string}}"
@@ -315,9 +323,60 @@ repository:
         match: '\\'
       # anything else will be handed back to the parent scope
 
-  command.token.unknown:
-    name: meta.command.token.unknown.mcfunction
-    match: '{{command_token_l}}([^ \n]*){{command_token_r}}'
-    captures:
+  command.token.selector_with_arguments:
+    name: meta.command.token.selector_with_arguments.mcfunction
+
+    # Begin whenever we see a base selector followed by an opening square brace.
+    begin: '{{command_token_l}}{{base_selector}}(\[)'
+
+    # Similar to quotes, we have two distinct ending cases.
+    #   1. End on a newline, without consuming it. This is technically an error
+    #      case, but will occur frequently with unfinished selectors; e.g. while
+    #      the user is typing a selector at the end of a line.
+    #   2. End on any other character, although according to the child scope it
+    #      should only ever be a closing square brace. The child scope does not
+    #      consume the closing brace, and so it becomes our job to check for
+    #      erroneous trailing data and to advance the next token.
+    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
+
+    beginCaptures:
       1:
-        name: "{{name.unknown}}"
+        name: "{{name.selector_delims}}"
+      2:
+        name: "{{name.selector_delims}}"
+
+    endCaptures:
+      1:
+        name: "{{name.selector_delims}}"
+      2:
+        name: "{{name.error}}"
+
+    patterns:
+      # consume whitespace in between arguments
+      - name: meta.selector.argument_spacing.mcfunction
+        match: " +"
+      # consume and classify commas
+      - name: meta.selector.argument_separator.mcfunction
+        match: '(\,)'
+        captures:
+          1:
+            name: "{{name.selector_delims}}"
+      # consume and classify equals
+      - name: meta.selector.argument_separator.mcfunction
+        match: '(\=)'
+        captures:
+          1:
+            name: "{{name.selector_delims}}"
+      # now the fun part: recurse yet again whenever we encounter an argument
+      # TODO recurse into selector argument sub-patterns
+      - name: meta.selector.argument.mcfunction
+        match: '{{literal}}(\=)(\!)?([^\n\]\,]+)'
+        captures:
+          1:
+            name: "variable.parameter.mcfunction"
+          2:
+            name: "{{name.selector_delims}}"
+          3:
+            name: "keyword.control.mcfunction"
+          4:
+            name: "variable.parameter.mcfunction"
