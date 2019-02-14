@@ -16,6 +16,9 @@ variables:
   selector_argument_terminal: '(?= *[\,\]\n])'
   sat: "{{selector_argument_terminal}}"
 
+  block_predicate_argument_terminal: "{{sat}}"
+  bpat: "{{block_predicate_argument_terminal}}"
+
   # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
 
@@ -60,12 +63,14 @@ variables:
 
   # group names, in one place
   name.brace_delims: markup.bold.mcfunction
+  name.dict_key: variable.parameter.mcfunction
   name.numeric_constant: constant.numeric.mcfunction
   name.numeric_altered: constant.character.escape.mcfunction
   name.range_ellipsis: keyword.control.mcfunction
   name.coordinate_operator: keyword.control.mcfunction
   name.base_selector: variable.language.mcfunction
   name.selector_delims: "{{name.brace_delims}}"
+  name.block_predicate_delims: "{{name.brace_delims}}"
   name.resource_location: entity.name.function.mcfunction
   name.tagged_resource_location: constant.character.escape.mcfunction
   name.uuid: "{{name.base_selector}}"
@@ -218,6 +223,8 @@ repository:
     patterns:
       - include: "#command.token.selector_with_arguments"
       - include: "#command.token.selector_without_arguments"
+      - include: "#command.token.block_predicate"
+      - include: "#command.token.tagged_block_predicate"
       - include: "#command.token.resource_location"
       - include: "#command.token.tagged_resource_location"
       - include: "#command.token.range"
@@ -317,6 +324,72 @@ repository:
     patterns:
       - include: "#common.quoted_string"
 
+  command.token.block_predicate:
+    # This whole thing is going to look a lot like selector arguments.
+
+    name: meta.command.token.block_predicate.mcfunction
+
+    # Begin whenever we see a resource location followed by an opening square brace.
+    begin: '{{command_token_l}}{{resource_location}}(\[)'
+
+    # Similar to selector arguments; end in several cases.
+    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
+
+    beginCaptures:
+      # TODO refactor repeated code (groups 1-3)
+      1:
+        # the namespace
+        name: "{{name.resource_location}}"
+      2:
+        # the `:`
+        name: "{{name.resource_location}}"
+      3:
+        # the path
+        name: "{{name.resource_location}}"
+      4:
+        # the opening brace
+        name: "{{name.block_predicate_delims}}"
+
+    endCaptures:
+      1:
+        name: "{{name.block_predicate_delims}}"
+      2:
+        name: "{{name.error}}"
+
+    patterns:
+      - include: "#block_predicate.arguments"
+
+  command.token.tagged_block_predicate:
+    # Same as without a tag... all for a different colour.
+    # TODO can we reduce thr amount of repeated code here?
+    name: meta.command.token.tagged_block_predicate.mcfunction
+    begin: '{{command_token_l}}{{tagged_resource_location}}(\[)'
+    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
+    beginCaptures:
+      # TODO refactor repeated code (groups 1-4)
+      1:
+        # the `#`
+        name: "{{name.tagged_resource_location}}"
+      2:
+        # the namespace
+        name: "{{name.tagged_resource_location}}"
+      3:
+        # the `:`
+        name: "{{name.tagged_resource_location}}"
+      4:
+        # the path
+        name: "{{name.tagged_resource_location}}"
+      5:
+        # the opening brace
+        name: "{{name.block_predicate_delims}}"
+    endCaptures:
+      1:
+        name: "{{name.block_predicate_delims}}"
+      2:
+        name: "{{name.error}}"
+    patterns:
+      - include: "#block_predicate.arguments"
+
   command.token.selector_with_arguments:
     name: meta.command.token.selector_with_arguments.mcfunction
 
@@ -365,7 +438,7 @@ repository:
         beginCaptures:
           1:
             # the key
-            name: "variable.parameter.mcfunction"
+            name: "{{name.dict_key}}"
           2:
             # the `=`
             name: "{{name.selector_delims}}"
@@ -394,6 +467,37 @@ repository:
       # anything else apart from terminals is classified as an error
       - name: "{{name.error}}"
         match: '[^\]\n]+'
+
+  block_predicate.arguments:
+    patterns:
+      - name: meta.block_predicate.argument_spacing.mcfunction
+        match: " +"
+      - name: meta.block_predicate.argument.mcfunction
+        begin: '{{literal}} *(\=) *'
+        end: '(\,)(?=[\]\n])|(\,)|(?=[\]\n])'
+        beginCaptures:
+          1:
+            name: "{{name.dict_key}}"
+          2:
+            name: "{{name.block_predicate_delims}}"
+        endCaptures:
+          1:
+            name: "{{name.error}}"
+          2:
+            name: "{{name.block_predicate_delims}}"
+        patterns:
+          - include: "#block_predicate.argument.number"
+          - include: "#block_predicate.argument.literal"
+
+  block_predicate.argument.number:
+    name: meta.block_predicate.argument.number.mcfunction
+    match: "{{number}}{{bpat}}"
+    captures: "#number"
+
+  block_predicate.argument.literal:
+    name: meta.block_predicate.argument.literal.mcfunction
+    match: "{{literal}}{{bpat}}"
+    captures: "#literal"
 
   selector.argument.resource_location:
     name: meta.selector.argument.resource_location.mcfunction

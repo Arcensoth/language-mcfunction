@@ -16,7 +16,7 @@ This is a generalized "context-free" grammar that does not target any particular
     - [x] Local coordinates: `^` / `^-1` / `^.05`
     - [x] Resource locations: `minecraft:chests/simple_dungeon`
     - [x] Tagged resource locations: `#minecraft:wools` / `#mypack:hooks/run`
-    - [ ] Block predicates: `minecraft:dispenser[facing=up]`
+    - [x] Block predicates: `minecraft:dispenser[facing=up]`
     - [x] Unquoted strings: `mypack.some.tag` / `mypack.custom_crafting_marker`
     - [x] Quoted strings: `"hello world"` / `"CustomName With Spaces"`
     - [ ] NBT compounds: `{ Fire: 20s , NoGravity: true, Tags: [ "mytag" ] }`

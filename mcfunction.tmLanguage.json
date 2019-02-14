@@ -106,6 +106,12 @@
           "include": "#command.token.selector_without_arguments"
         },
         {
+          "include": "#command.token.block_predicate"
+        },
+        {
+          "include": "#command.token.tagged_block_predicate"
+        },
+        {
           "include": "#command.token.resource_location"
         },
         {
@@ -286,6 +292,73 @@
         }
       ]
     },
+    "command.token.block_predicate": {
+      "name": "meta.command.token.block_predicate.mcfunction",
+      "begin": "(?<= )([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(\\[)",
+      "end": "(?=\\n)|(\\])([^ \\n]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.function.mcfunction"
+        },
+        "2": {
+          "name": "entity.name.function.mcfunction"
+        },
+        "3": {
+          "name": "entity.name.function.mcfunction"
+        },
+        "4": {
+          "name": "markup.bold.mcfunction"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        },
+        "2": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#block_predicate.arguments"
+        }
+      ]
+    },
+    "command.token.tagged_block_predicate": {
+      "name": "meta.command.token.tagged_block_predicate.mcfunction",
+      "begin": "(?<= )(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(\\[)",
+      "end": "(?=\\n)|(\\])([^ \\n]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "2": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "3": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "4": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "5": {
+          "name": "markup.bold.mcfunction"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        },
+        "2": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#block_predicate.arguments"
+        }
+      ]
+    },
     "command.token.selector_with_arguments": {
       "name": "meta.command.token.selector_with_arguments.mcfunction",
       "begin": "(?<= )(\\@[a-z])(\\[)",
@@ -366,6 +439,61 @@
           "match": "[^\\]\\n]+"
         }
       ]
+    },
+    "block_predicate.arguments": {
+      "patterns": [
+        {
+          "name": "meta.block_predicate.argument_spacing.mcfunction",
+          "match": " +"
+        },
+        {
+          "name": "meta.block_predicate.argument.mcfunction",
+          "begin": "([a-z_][a-z0-9_]*) *(\\=) *",
+          "end": "(\\,)(?=[\\]\\n])|(\\,)|(?=[\\]\\n])",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.parameter.mcfunction"
+            },
+            "2": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "invalid.illegal.mcfunction"
+            },
+            "2": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#block_predicate.argument.number"
+            },
+            {
+              "include": "#block_predicate.argument.literal"
+            }
+          ]
+        }
+      ]
+    },
+    "block_predicate.argument.number": {
+      "name": "meta.block_predicate.argument.number.mcfunction",
+      "match": "(\\-?\\d*\\.?\\d+)(?= *[\\,\\]\\n])",
+      "captures": {
+        "1": {
+          "name": "constant.numeric.mcfunction"
+        }
+      }
+    },
+    "block_predicate.argument.literal": {
+      "name": "meta.block_predicate.argument.literal.mcfunction",
+      "match": "([a-z_][a-z0-9_]*)(?= *[\\,\\]\\n])",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.mcfunction"
+        }
+      }
     },
     "selector.argument.resource_location": {
       "name": "meta.selector.argument.resource_location.mcfunction",
