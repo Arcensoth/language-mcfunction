@@ -446,7 +446,7 @@ repository:
     match: '([^\]\n\,]+)'
     captures:
       1:
-        name: string.regexp.mcfunction
+        name: "{{name.unknown}}"
 
   common.quoted_string:
     patterns:

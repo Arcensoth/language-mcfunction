@@ -470,7 +470,7 @@
       "match": "([^\\]\\n\\,]+)",
       "captures": {
         "1": {
-          "name": "string.regexp.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       }
     },
