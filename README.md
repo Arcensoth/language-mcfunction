@@ -1,6 +1,8 @@
 # language-mcfunction
 Language grammar and syntax highlighting for mcfunction files.
 
+[![Showcase](https://i.imgur.com/g5o08t3.png)](https://i.imgur.com/g5o08t3.png)
+
 This is a generalized "context-free" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for all versions of the game.
 
 ## Features

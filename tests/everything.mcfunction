@@ -16,7 +16,7 @@ function #mypack:hooks/raycast/begin
 # TODO optimize entity selectors
 function mypack:raycast/loop
 
-function #mypack:hooks/raycast/begin
+function #mypack:hooks/raycast/end
 
 # this is a comment
 say hello world
