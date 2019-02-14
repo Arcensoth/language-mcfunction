@@ -31,8 +31,8 @@ This is a generalized "context-free" grammar that does not target any particular
         - [ ] Range arguments: `distance` / `level`
         - [ ] Resource location arguments: `type`
         - [ ] Tagged resource location arguments: `type`
-        - [ ] Unquoted string arguments: `tag`
-        - [ ] Quoted string arguments: `name`
+        - [x] Unquoted string arguments: `tag`
+        - [x] Quoted string arguments: `name`
         - [ ] NBT compound arguments: `nbt`
         - [ ] Score arguments: `scores`
         - [ ] Advancement arguments: `advancements`
