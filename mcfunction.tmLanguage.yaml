@@ -13,6 +13,9 @@ variables:
   command_token_l: "(?<= )"
   command_token_r: '(?=[ \n])'
 
+  selector_argument_terminal: '(?= *[\,\]\n])'
+  sat: "{{selector_argument_terminal}}"
+
   # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
 
@@ -350,7 +353,7 @@ repository:
       - name: meta.selector.argument.mcfunction
 
         # Begin as soon as we see a key, equals, and optional negation operator.
-        begin: '{{literal}}(\=)(\!)?'
+        begin: '{{literal}} *(\=) *(\!)? *'
 
         # End in three distinct cases:
         #   1. Comma followed immediately by a terminal. Consume the comma, but
@@ -389,7 +392,7 @@ repository:
 
   selector.argument.unquoted_string:
     name: meta.selector.argument.unquoted_string.mcfunction
-    match: "{{unquoted_string}}"
+    match: "{{unquoted_string}}{{sat}}"
     captures: "#unquoted_string"
 
   selector.argument.quoted_string:

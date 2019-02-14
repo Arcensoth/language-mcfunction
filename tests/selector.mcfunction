@@ -69,11 +69,30 @@ execute as @a[ sort=nearest , limit=1] run
 execute as @a[sort=nearest , limit=1 ] run
 execute as @a[ sort=nearest , limit=1 ] run
 
+execute as @a[ sort =nearest , limit=1 ] run
+execute as @a[ sort= nearest , limit=1 ] run
+execute as @a[ sort = nearest , limit=1 ] run
+
+execute as @a[  tag  =  foo  ,  limit  =  1  ] run
+execute as @a[  tag  =  !  foo  ,  limit  =  1  ] run
+
 # test valid arguments in separate selectors
 execute as @a[sort=nearest] as @s[tag=foo] run
 execute as @a[sort=nearest,limit=1] as @a[tag=foo] run
 execute as @a[sort=nearest] as @a[tag=foo,tag=bar] run
 execute as @a[sort=nearest,limit=1] as @a[tag=foo,tag=bar] run
+
+# test valid resource location argument
+execute as @a[type=minecraft:bat] run
+execute as @a[type=minecraft:bat,tag=foo] run
+execute as @a[tag=foo,type=minecraft:bat] run
+execute as @a[tag=foo,type=minecraft:bat,tag=foo] run
+
+# test valid tagged resource location argument
+execute as @a[type=#minecraft:skeletons] run
+execute as @a[type=#minecraft:skeletons,tag=foo] run
+execute as @a[tag=foo,type=#minecraft:skeletons] run
+execute as @a[tag=foo,type=#minecraft:skeletons,tag=foo] run
 
 # test valid unquoted string argument
 execute as @a[tag=my.custom.tag] run
