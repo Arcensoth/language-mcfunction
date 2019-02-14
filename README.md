@@ -26,11 +26,11 @@ This is a generalized "context-free" grammar that does not target any particular
     - [x] Base selectors: `@e`
     - [x] Selectors with arguments: `@e[tag=foo]`
     - [ ] Selector arguments
-        - [ ] Literal arguments: `gamemode` / `sort`
-        - [ ] Numeric arguments: `x` / `y` / `z` / `limit`
-        - [ ] Range arguments: `distance` / `level`
-        - [ ] Resource location arguments: `type`
-        - [ ] Tagged resource location arguments: `type`
+        - [x] Literal arguments: `gamemode` / `sort`
+        - [x] Numeric arguments: `x` / `y` / `z` / `limit`
+        - [x] Range arguments: `distance` / `level`
+        - [x] Resource location arguments: `type`
+        - [x] Tagged resource location arguments: `type`
         - [x] Unquoted string arguments: `tag`
         - [x] Quoted string arguments: `name`
         - [ ] NBT compound arguments: `nbt`

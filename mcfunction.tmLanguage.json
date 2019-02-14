@@ -336,6 +336,21 @@
           },
           "patterns": [
             {
+              "include": "#selector.argument.resource_location"
+            },
+            {
+              "include": "#selector.argument.tagged_resource_location"
+            },
+            {
+              "include": "#selector.argument.range"
+            },
+            {
+              "include": "#selector.argument.number"
+            },
+            {
+              "include": "#selector.argument.literal"
+            },
+            {
               "include": "#selector.argument.unquoted_string"
             },
             {
@@ -351,6 +366,72 @@
           "match": "[^\\]\\n]+"
         }
       ]
+    },
+    "selector.argument.resource_location": {
+      "name": "meta.selector.argument.resource_location.mcfunction",
+      "match": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?= *[\\,\\]\\n])",
+      "captures": {
+        "1": {
+          "name": "entity.name.function.mcfunction"
+        },
+        "2": {
+          "name": "entity.name.function.mcfunction"
+        },
+        "3": {
+          "name": "entity.name.function.mcfunction"
+        }
+      }
+    },
+    "selector.argument.tagged_resource_location": {
+      "name": "meta.selector.argument.tagged_resource_location.mcfunction",
+      "match": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?= *[\\,\\]\\n])",
+      "captures": {
+        "1": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "2": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "3": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "4": {
+          "name": "constant.character.escape.mcfunction"
+        }
+      }
+    },
+    "selector.argument.range": {
+      "name": "meta.selector.argument.range.mcfunction",
+      "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?(?= *[\\,\\]\\n])",
+      "captures": {
+        "1": {
+          "name": "constant.character.escape.mcfunction"
+        },
+        "2": {
+          "name": "keyword.control.mcfunction"
+        },
+        "3": {
+          "name": "constant.character.escape.mcfunction"
+        }
+      }
+    },
+    "selector.argument.number": {
+      "name": "meta.selector.argument.number.mcfunction",
+      "match": "(\\-?\\d*\\.?\\d+)(?= *[\\,\\]\\n])",
+      "captures": {
+        "1": {
+          "name": "constant.numeric.mcfunction"
+        }
+      }
+    },
+    "selector.argument.literal": {
+      "name": "meta.selector.argument.literal.mcfunction",
+      "match": "([a-z_][a-z0-9_]*)(?= *[\\,\\]\\n])",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.mcfunction"
+        }
+      }
     },
     "selector.argument.unquoted_string": {
       "name": "meta.selector.argument.unquoted_string.mcfunction",

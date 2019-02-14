@@ -113,6 +113,7 @@ capturesRepository:
       name: "{{name.tagged_resource_location}}"
 
   range:
+    # TODO catch `..` error case
     1:
       # the number on the left side
       name: "{{name.numeric_altered}}"
@@ -247,7 +248,6 @@ repository:
 
   command.token.range:
     name: meta.command.token.range.mcfunction
-    # TODO catch `..` error case
     match: "{{command_token_l}}{{range}}{{command_token_r}}"
     captures: "#range"
 
@@ -382,6 +382,11 @@ repository:
             name: "{{name.selector_delims}}"
 
         patterns:
+          - include: "#selector.argument.resource_location"
+          - include: "#selector.argument.tagged_resource_location"
+          - include: "#selector.argument.range"
+          - include: "#selector.argument.number"
+          - include: "#selector.argument.literal"
           - include: "#selector.argument.unquoted_string"
           - include: "#selector.argument.quoted_string"
           - include: "#selector.argument.unknown"
@@ -389,6 +394,31 @@ repository:
       # anything else apart from terminals is classified as an error
       - name: "{{name.error}}"
         match: '[^\]\n]+'
+
+  selector.argument.resource_location:
+    name: meta.selector.argument.resource_location.mcfunction
+    match: "{{resource_location}}{{sat}}"
+    captures: "#resource_location"
+
+  selector.argument.tagged_resource_location:
+    name: meta.selector.argument.tagged_resource_location.mcfunction
+    match: "{{tagged_resource_location}}{{sat}}"
+    captures: "#tagged_resource_location"
+
+  selector.argument.range:
+    name: meta.selector.argument.range.mcfunction
+    match: "{{range}}{{sat}}"
+    captures: "#range"
+
+  selector.argument.number:
+    name: meta.selector.argument.number.mcfunction
+    match: "{{number}}{{sat}}"
+    captures: "#number"
+
+  selector.argument.literal:
+    name: meta.selector.argument.literal.mcfunction
+    match: "{{literal}}{{sat}}"
+    captures: "#literal"
 
   selector.argument.unquoted_string:
     name: meta.selector.argument.unquoted_string.mcfunction
