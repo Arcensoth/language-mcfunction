@@ -286,22 +286,6 @@
         }
       ]
     },
-    "common.quoted_string": {
-      "patterns": [
-        {
-          "name": "string.quoted.mcfunction",
-          "match": "[^\\\\\\\"\\n]"
-        },
-        {
-          "name": "constant.character.mcfunction",
-          "match": "\\\\[^\\n]"
-        },
-        {
-          "name": "invalid.illegal.mcfunction",
-          "match": "\\\\"
-        }
-      ]
-    },
     "command.token.selector_with_arguments": {
       "name": "meta.command.token.selector_with_arguments.mcfunction",
       "begin": "(?<= )(\\@[a-z])(\\[)",
@@ -352,42 +336,76 @@
           },
           "patterns": [
             {
-              "name": "meta.selector.argument.quoted_string.mcfunction",
-              "begin": "(\\\")",
-              "end": "(?=\\n)|(\\\")([^\\]\\,\\n]*)",
-              "beginCaptures": {
-                "1": {
-                  "name": "string.quoted.mcfunction"
-                }
-              },
-              "endCaptures": {
-                "1": {
-                  "name": "string.quoted.mcfunction"
-                },
-                "2": {
-                  "name": "invalid.illegal.mcfunction"
-                }
-              },
-              "patterns": [
-                {
-                  "include": "#common.quoted_string"
-                }
-              ]
+              "include": "#selector.argument.unquoted_string"
             },
             {
-              "name": "meta.selector.argument.other.mcfunction",
-              "match": "([^\\]\\n\\,]+)",
-              "captures": {
-                "1": {
-                  "name": "string.regexp.mcfunction"
-                }
-              }
+              "include": "#selector.argument.quoted_string"
+            },
+            {
+              "include": "#selector.argument.unknown"
             }
           ]
         },
         {
           "name": "invalid.illegal.mcfunction",
           "match": "[^\\]\\n]+"
+        }
+      ]
+    },
+    "selector.argument.unquoted_string": {
+      "name": "meta.selector.argument.unquoted_string.mcfunction",
+      "match": "([\\w\\.\\-\\#\\$\\%]+)",
+      "captures": {
+        "1": {
+          "name": "string.unquoted.mcfunction"
+        }
+      }
+    },
+    "selector.argument.quoted_string": {
+      "name": "meta.selector.argument.quoted_string.mcfunction",
+      "begin": "(\\\")",
+      "end": "(?=\\n)|(\\\")([^\\]\\,\\n]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "string.quoted.mcfunction"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "string.quoted.mcfunction"
+        },
+        "2": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#common.quoted_string"
+        }
+      ]
+    },
+    "selector.argument.unknown": {
+      "name": "meta.selector.argument.unknown.mcfunction",
+      "match": "([^\\]\\n\\,]+)",
+      "captures": {
+        "1": {
+          "name": "string.regexp.mcfunction"
+        }
+      }
+    },
+    "common.quoted_string": {
+      "patterns": [
+        {
+          "name": "string.quoted.mcfunction",
+          "match": "[^\\\\\\\"\\n]"
+        },
+        {
+          "name": "constant.character.mcfunction",
+          "match": "\\\\[^\\n]"
+        },
+        {
+          "name": "invalid.illegal.mcfunction",
+          "match": "\\\\"
         }
       ]
     }

@@ -314,19 +314,6 @@ repository:
     patterns:
       - include: "#common.quoted_string"
 
-  common.quoted_string:
-    patterns:
-      # consume everything except for backslashes, quotes, and newlines
-      - name: "{{name.quoted_string}}"
-        match: '[^\\\"\n]'
-      # consume any escaped characters... except for newlines
-      - name: "{{name.quoted_string_escape}}"
-        match: '\\[^\n]'
-      # consume a single backslash (implicitly followed by a newline) as an error
-      - name: "{{name.error}}"
-        match: '\\'
-      # anything else will be handed back to the parent scope
-
   command.token.selector_with_arguments:
     name: meta.command.token.selector_with_arguments.mcfunction
 
@@ -361,45 +348,82 @@ repository:
         match: " +"
       # now the fun part: recurse yet again whenever we encounter an argument
       - name: meta.selector.argument.mcfunction
+
+        # Begin as soon as we see a key, equals, and optional negation operator.
         begin: '{{literal}}(\=)(\!)?'
+
+        # End in three distinct cases:
+        #   1. Comma followed immediately by a terminal. Consume the comma, but
+        #      not the terminal. This is an error case.
+        #   2. Just a comma. This is the expected case and we can proceed fine.
+        #   3. just a terminal. Also an error case.
         end: '(\,)(?=[\]\n])|(\,)|(?=[\]\n])'
 
         beginCaptures:
           1:
+            # the key
             name: "variable.parameter.mcfunction"
           2:
+            # the `=`
             name: "{{name.selector_delims}}"
           3:
+            # the optional `!`
             name: "keyword.control.mcfunction"
 
         endCaptures:
           1:
+            # the `,` in invalid case (1)
             name: "{{name.error}}"
           2:
+            # the `,` in valid case (2)
             name: "{{name.selector_delims}}"
 
         patterns:
-          - name: meta.selector.argument.quoted_string.mcfunction
-            begin: '(\")'
-            end: '{{lookahead_newline}}|(\")([^\]\,\n]*)'
-            beginCaptures:
-              1:
-                name: "{{name.quoted_string}}"
-            endCaptures:
-              1:
-                name: "{{name.quoted_string}}"
-              2:
-                name: "{{name.error}}"
-            patterns:
-              - include: "#common.quoted_string"
-
-          - name: meta.selector.argument.other.mcfunction
-            match: '([^\]\n\,]+)'
-            captures:
-              1:
-                # name: variable.parameter.mcfunction
-                name: string.regexp.mcfunction
+          - include: "#selector.argument.unquoted_string"
+          - include: "#selector.argument.quoted_string"
+          - include: "#selector.argument.unknown"
 
       # anything else apart from terminals is classified as an error
       - name: "{{name.error}}"
         match: '[^\]\n]+'
+
+  selector.argument.unquoted_string:
+    name: meta.selector.argument.unquoted_string.mcfunction
+    match: "{{unquoted_string}}"
+    captures: "#unquoted_string"
+
+  selector.argument.quoted_string:
+    name: meta.selector.argument.quoted_string.mcfunction
+    begin: '(\")'
+    end: '{{lookahead_newline}}|(\")([^\]\,\n]*)'
+    beginCaptures:
+      1:
+        name: "{{name.quoted_string}}"
+    endCaptures:
+      1:
+        name: "{{name.quoted_string}}"
+      2:
+        # anything trailing after the quote, apart from terminals, is an error
+        name: "{{name.error}}"
+    patterns:
+      - include: "#common.quoted_string"
+
+  selector.argument.unknown:
+    name: meta.selector.argument.unknown.mcfunction
+    match: '([^\]\n\,]+)'
+    captures:
+      1:
+        name: string.regexp.mcfunction
+
+  common.quoted_string:
+    patterns:
+      # consume everything except for backslashes, quotes, and newlines
+      - name: "{{name.quoted_string}}"
+        match: '[^\\\"\n]'
+      # consume any escaped characters... except for newlines
+      - name: "{{name.quoted_string_escape}}"
+        match: '\\[^\n]'
+      # consume a single backslash (implicitly followed by a newline) as an error
+      - name: "{{name.error}}"
+        match: '\\'
+      # anything else will be handed back to the parent scope
