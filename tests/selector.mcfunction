@@ -118,6 +118,27 @@ execute as @a[tag=foo,name="foo, bar"] as @s run
 execute as @a[tag=foo,name="escaped \" quote"] as @s run
 execute as @a[  tag  =  foo  ,  name  =  "  lots of space  "  ,  tag  =  bar  ] as @s run
 
+# test valid scores argument
+execute as @a[scores={myscore=10}] run
+execute as @a[scores={myscore=10..12}] run
+execute as @a[scores={myscore=5..}] run
+execute as @a[scores={myscore=..15}] run
+execute as @a[scores={foo=10,bar=1..5}] run
+execute as @a[scores={foo=10,bar=1..5,baz=..0}] run
+execute as @a[ scores = {foo=10,bar=1..5,baz=..0} ] run
+execute as @a[ scores = { foo = 10 , bar = 1..5 , baz = ..0 } ] run
+
+# test valid advancements argument
+execute as @a[advancements={minecraft:story/form_obsidian=true}] run
+execute as @a[advancements={minecraft:story/form_obsidian=false}] run
+execute as @a[advancements={minecraft:story/obtain_armor={iron_helmet=true}}] run
+execute as @a[advancements={minecraft:story/follow_ender_eye=true}] run
+execute as @a[advancements={minecraft:story/form_obsidian=true,minecraft:story/follow_ender_eye=true}] run
+execute as @a[advancements={minecraft:story/form_obsidian=true,minecraft:story/follow_ender_eye=true,minecraft:story/obtain_armor=true}] run
+execute as @a[ advancements = {minecraft:story/follow_ender_eye=true} ] run
+execute as @a[ advancements = { minecraft:story/follow_ender_eye = true } ] run
+execute as @a[ advancements = { minecraft:story/form_obsidian = true , minecraft:story/follow_ender_eye = true , minecraft:story/obtain_armor = true } ] run
+
 # test invalid edge cases
 execute as @a[,] as @s run
 execute as @a[,,] as @s run
