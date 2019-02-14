@@ -19,6 +19,9 @@ variables:
   block_predicate_argument_terminal: "{{sat}}"
   bpat: "{{block_predicate_argument_terminal}}"
 
+  # boolean true/false
+  boolean: '(true|false)'
+
   # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
 
@@ -75,6 +78,7 @@ variables:
   name.tagged_resource_location: constant.character.escape.mcfunction
   name.uuid: "{{name.base_selector}}"
   name.fakeplayer: "{{name.base_selector}}"
+  name.boolean: support.type.mcfunction
   name.literal: keyword.operator.mcfunction
   name.unquoted_string: string.unquoted.mcfunction
   name.quoted_string: string.quoted.mcfunction
@@ -140,6 +144,10 @@ capturesRepository:
     2:
       # the actual number
       name: "{{name.numeric_altered}}"
+
+  boolean:
+    1:
+      name: "{{name.boolean}}"
 
   literal:
     1:
@@ -230,7 +238,7 @@ repository:
       - include: "#command.token.range"
       - include: "#command.token.number"
       - include: "#command.token.coordinate"
-      # we literals before strings, because literals are a subset of strings
+      - include: "#command.token.boolean"
       - include: "#command.token.literal"
       - include: "#command.token.uuid"
       - include: "#command.token.fakeplayer"
@@ -267,6 +275,11 @@ repository:
     name: meta.command.token.coordinate.mcfunction
     match: "{{command_token_l}}{{coordinate}}{{command_token_r}}"
     captures: "#coordinate"
+
+  command.token.boolean:
+    name: meta.command.token.boolean.mcfunction
+    match: "{{command_token_l}}{{boolean}}{{command_token_r}}"
+    captures: "#boolean"
 
   command.token.literal:
     name: meta.command.token.literal.mcfunction
@@ -459,6 +472,7 @@ repository:
           - include: "#selector.argument.tagged_resource_location"
           - include: "#selector.argument.range"
           - include: "#selector.argument.number"
+          - include: "#selector.argument.boolean"
           - include: "#selector.argument.literal"
           - include: "#selector.argument.unquoted_string"
           - include: "#selector.argument.quoted_string"
@@ -487,12 +501,18 @@ repository:
             name: "{{name.block_predicate_delims}}"
         patterns:
           - include: "#block_predicate.argument.number"
+          - include: "#block_predicate.argument.boolean"
           - include: "#block_predicate.argument.literal"
 
   block_predicate.argument.number:
     name: meta.block_predicate.argument.number.mcfunction
     match: "{{number}}{{bpat}}"
     captures: "#number"
+
+  block_predicate.argument.boolean:
+    name: meta.block_predicate.argument.boolean.mcfunction
+    match: '{{boolean}}{{bpat}}'
+    captures: '#boolean'
 
   block_predicate.argument.literal:
     name: meta.block_predicate.argument.literal.mcfunction
@@ -518,6 +538,11 @@ repository:
     name: meta.selector.argument.number.mcfunction
     match: "{{number}}{{sat}}"
     captures: "#number"
+
+  selector.argument.boolean:
+    name: meta.selector.argument.boolean.mcfunction
+    match: "{{boolean}}{{sat}}"
+    captures: "#boolean"
 
   selector.argument.literal:
     name: meta.selector.argument.literal.mcfunction

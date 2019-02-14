@@ -127,6 +127,9 @@
           "include": "#command.token.coordinate"
         },
         {
+          "include": "#command.token.boolean"
+        },
+        {
           "include": "#command.token.literal"
         },
         {
@@ -221,6 +224,15 @@
         },
         "2": {
           "name": "constant.character.escape.mcfunction"
+        }
+      }
+    },
+    "command.token.boolean": {
+      "name": "meta.command.token.boolean.mcfunction",
+      "match": "(?<= )(true|false)(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "support.type.mcfunction"
         }
       }
     },
@@ -421,6 +433,9 @@
               "include": "#selector.argument.number"
             },
             {
+              "include": "#selector.argument.boolean"
+            },
+            {
               "include": "#selector.argument.literal"
             },
             {
@@ -471,6 +486,9 @@
               "include": "#block_predicate.argument.number"
             },
             {
+              "include": "#block_predicate.argument.boolean"
+            },
+            {
               "include": "#block_predicate.argument.literal"
             }
           ]
@@ -483,6 +501,15 @@
       "captures": {
         "1": {
           "name": "constant.numeric.mcfunction"
+        }
+      }
+    },
+    "block_predicate.argument.boolean": {
+      "name": "meta.block_predicate.argument.boolean.mcfunction",
+      "match": "(true|false)(?= *[\\,\\]\\n])",
+      "captures": {
+        "1": {
+          "name": "support.type.mcfunction"
         }
       }
     },
@@ -549,6 +576,15 @@
       "captures": {
         "1": {
           "name": "constant.numeric.mcfunction"
+        }
+      }
+    },
+    "selector.argument.boolean": {
+      "name": "meta.selector.argument.boolean.mcfunction",
+      "match": "(true|false)(?= *[\\,\\]\\n])",
+      "captures": {
+        "1": {
+          "name": "support.type.mcfunction"
         }
       }
     },

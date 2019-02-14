@@ -10,6 +10,7 @@ This is a generalized "context-free" grammar that does not target any particular
     - [x] Headings: `## Some Heading`
 - [ ] Commands and arguments
     - [x] Literals (subcommands and more)
+    - [x] Booleans: `true` / `false`
     - [x] Numbers: `20` / `3.14` / `.001`
     - [x] Ranges: `1..` / `3.14..20` / `...001`
     - [x] Relative coordinates: `~` / `~10` / `~-4.5`

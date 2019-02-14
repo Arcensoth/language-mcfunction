@@ -99,6 +99,13 @@ execute as @a[distance=-.25]
 execute as @a[tag=foo,distance=-.25,tag=bar]
 execute as @a[ tag = foo , distance = -.25 , tag = bar ]
 
+# test valid boolean argument (were it to exist)
+execute as @a[somekey=true]
+execute as @a[somekey=false]
+execute as @a[ somekey = true ]
+execute as @a[tag=foo,somekey=true,tag=bar]
+execute as @a[ tag = foo , somekey = true , tag = bar ]
+
 # test valid literal argument
 execute as @a[sort=nearest] run
 execute as @a[tag=foo,sort=nearest,tag=bar] run
