@@ -307,10 +307,10 @@
     },
     "command.token.root_redirect": {
       "name": "meta.command.token.root_redirect.mcfunction",
-      "match": "(?<= )(run) ([a-z_][a-z0-9_]*)(?=[ \\n])",
+      "match": "(?<= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "keyword.operator.mcfunction"
+          "name": "markup.italic.mcfunction"
         },
         "2": {
           "name": "keyword.control.mcfunction"
