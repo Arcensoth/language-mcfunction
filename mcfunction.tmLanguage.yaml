@@ -20,7 +20,7 @@ variables:
   bpat: "{{block_predicate_argument_terminal}}"
 
   # boolean true/false
-  boolean: '(true|false)'
+  boolean: "(true|false)"
 
   # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
@@ -75,7 +75,7 @@ variables:
   name.selector_delims: "{{name.brace_delims}}"
   name.block_predicate_delims: "{{name.brace_delims}}"
   name.nbt_delims: "{{name.brace_delims}}"
-  name.nbt_key: support.class.mcfunction
+  name.nbt_key: "{{name.dict_key}}"
   name.nbt_index: constant.numeric.mcfunction
   name.resource_location: entity.name.function.mcfunction
   name.tagged_resource_location: constant.character.escape.mcfunction
@@ -232,6 +232,7 @@ repository:
 
   command.tokens:
     patterns:
+      - include: "#command.token.nbt_compound"
       - include: "#command.token.selector_with_arguments"
       - include: "#command.token.selector_without_arguments"
       - include: "#command.token.block_predicate"
@@ -311,6 +312,84 @@ repository:
     captures:
       1:
         name: "{{name.unknown}}"
+
+  command.token.nbt_compound:
+    name: meta.command.token.nbt_compound.mcfunction
+    begin: '{{command_token_l}}(\{)'
+    end: '(\}){{command_token_r}}'
+    beginCaptures:
+      1:
+        name: "{{name.nbt_delims}}"
+    endCaptures:
+      1:
+        name: "{{name.nbt_delims}}"
+    patterns:
+      - include: "#nbt.compound"
+
+  nbt.compound:
+    patterns:
+      - match: " +"
+      - begin: '(\w+) *(\:) *'
+        end: ' *(?=[\n\}\,])'
+        beginCaptures:
+          1:
+            name: "{{name.nbt_key}}"
+          2:
+            name: "{{name.nbt_delims}}"
+        patterns:
+          - include: "#nbt.value"
+      - match: '[^\n\}\,]+'
+        name: "{{name.error}}"
+
+  nbt.list:
+    patterns:
+      - match: " +"
+      - match: ","
+        name: "{{name.nbt_delims}}"
+      - include: "#nbt.value"
+      - match: '[^\]\n]+'
+        name: "{{name.error}}"
+
+  nbt.value:
+    patterns:
+      - begin: '(\{)'
+        end: '(\})'
+        beginCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+        endCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+        patterns:
+          - include: "#nbt.compound"
+      - begin: '(\[)'
+        end: '(\])'
+        beginCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+        endCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+        patterns:
+          - include: "#nbt.list"
+      - begin: '(\")'
+        end: '(\")'
+        beginCaptures:
+          1:
+            name: "{{name.quoted_string}}"
+        endCaptures:
+          1:
+            name: "{{name.quoted_string}}"
+        patterns:
+          - include: "#common.quoted_string"
+      - match: "{{boolean}}"
+        name: "{{name.boolean}}"
+      - match: "{{number}}"
+        name: "{{name.numeric_constant}}"
+      - match: "{{unquoted_string}}"
+        name: "{{name.unquoted_string}}"
+      - match: '[^\n\,\]\}]+'
+        name: "{{name.error}}"
 
   command.token.quoted_string:
     # quoted strings are a recursive format captured between the quotes
@@ -500,7 +579,7 @@ repository:
     # It's impossible to know what an NBT path will end on, so apart from being
     # careful about newlines like usual we just accept anything.
     # end: '{{lookahead_newline}}|({{not_command_token_delim}}*)'
-    end: '{{command_token_r}}'
+    end: "{{command_token_r}}"
 
     endCaptures:
       1:
@@ -526,7 +605,7 @@ repository:
           1:
             name: "{{name.nbt_delims}}"
         patterns:
-          - include: "#nbt_path.root"
+          - include: "#nbt.list"
       - begin: '(\{)'
         end: '(\})'
         beginCaptures:
@@ -536,7 +615,7 @@ repository:
           1:
             name: "{{name.nbt_delims}}"
         patterns:
-          - include: "#nbt_path.root"
+          - include: "#nbt.compound"
 
   block_predicate.arguments:
     patterns:
@@ -567,8 +646,8 @@ repository:
 
   block_predicate.argument.boolean:
     name: meta.block_predicate.argument.boolean.mcfunction
-    match: '{{boolean}}{{bpat}}'
-    captures: '#boolean'
+    match: "{{boolean}}{{bpat}}"
+    captures: "#boolean"
 
   block_predicate.argument.literal:
     name: meta.block_predicate.argument.literal.mcfunction

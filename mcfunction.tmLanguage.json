@@ -100,6 +100,9 @@
     "command.tokens": {
       "patterns": [
         {
+          "include": "#command.token.nbt_compound"
+        },
+        {
           "include": "#command.token.selector_with_arguments"
         },
         {
@@ -283,6 +286,149 @@
           "name": "invalid.illegal.mcfunction"
         }
       }
+    },
+    "command.token.nbt_compound": {
+      "name": "meta.command.token.nbt_compound.mcfunction",
+      "begin": "(?<= )(\\{)",
+      "end": "(\\})(?=[ \\n])",
+      "beginCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#nbt.compound"
+        }
+      ]
+    },
+    "nbt.compound": {
+      "patterns": [
+        {
+          "match": " +"
+        },
+        {
+          "begin": "(\\w+) *(\\:) *",
+          "end": " *(?=[\\n\\}\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.parameter.mcfunction"
+            },
+            "2": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#nbt.value"
+            }
+          ]
+        },
+        {
+          "match": "[^\\n\\}\\,]+",
+          "name": "invalid.illegal.mcfunction"
+        }
+      ]
+    },
+    "nbt.list": {
+      "patterns": [
+        {
+          "match": " +"
+        },
+        {
+          "match": ",",
+          "name": "markup.bold.mcfunction"
+        },
+        {
+          "include": "#nbt.value"
+        },
+        {
+          "match": "[^\\]\\n]+",
+          "name": "invalid.illegal.mcfunction"
+        }
+      ]
+    },
+    "nbt.value": {
+      "patterns": [
+        {
+          "begin": "(\\{)",
+          "end": "(\\})",
+          "beginCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#nbt.compound"
+            }
+          ]
+        },
+        {
+          "begin": "(\\[)",
+          "end": "(\\])",
+          "beginCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#nbt.list"
+            }
+          ]
+        },
+        {
+          "begin": "(\\\")",
+          "end": "(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string.quoted.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.quoted_string"
+            }
+          ]
+        },
+        {
+          "match": "(true|false)",
+          "name": "support.type.mcfunction"
+        },
+        {
+          "match": "(\\-?\\d*\\.?\\d+)",
+          "name": "constant.numeric.mcfunction"
+        },
+        {
+          "match": "([\\w\\.\\-\\#\\$\\%]+)",
+          "name": "string.unquoted.mcfunction"
+        },
+        {
+          "match": "[^\\n\\,\\]\\}]+",
+          "name": "invalid.illegal.mcfunction"
+        }
+      ]
     },
     "command.token.quoted_string": {
       "name": "meta.command.token.quoted_string.mcfunction",
@@ -481,7 +627,7 @@
         },
         {
           "match": "(\\w+)",
-          "name": "support.class.mcfunction"
+          "name": "variable.parameter.mcfunction"
         },
         {
           "match": "(\\.)",
@@ -502,7 +648,7 @@
           },
           "patterns": [
             {
-              "include": "#nbt_path.root"
+              "include": "#nbt.list"
             }
           ]
         },
@@ -521,7 +667,7 @@
           },
           "patterns": [
             {
-              "include": "#nbt_path.root"
+              "include": "#nbt.compound"
             }
           ]
         }
