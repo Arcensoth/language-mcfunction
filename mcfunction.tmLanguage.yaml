@@ -316,44 +316,74 @@ repository:
   command.token.nbt_compound:
     name: meta.command.token.nbt_compound.mcfunction
     begin: '{{command_token_l}}(\{)'
-    end: '(\}){{command_token_r}}'
+    end: '{{lookahead_newline}}|(\})({{not_command_token_delim}}*)'
     beginCaptures:
       1:
         name: "{{name.nbt_delims}}"
     endCaptures:
       1:
         name: "{{name.nbt_delims}}"
+      2:
+        name: "{{name.error}}"
     patterns:
       - include: "#nbt.compound"
 
   nbt.compound:
     patterns:
+      # skip whitespace: {( )SelectedItem : { Count : 64 } }
       - match: " +"
-      - begin: '(\w+) *(\:) *'
+
+      # TODO quoted keys?
+
+      # unquoted keys: { (SelectedItem) (:) { Count: 64 } }
+      - begin: '(,)? *(\w+) *(\:) *'
+
+        # Possible ending cases:
+        #   1. the closing brace of the parent compound
+        #   2. the comma separating the next element
+        #   3. newline (error case)
         end: ' *(?=[\n\}\,])'
+
         beginCaptures:
           1:
-            name: "{{name.nbt_key}}"
+            name: string
           2:
+            name: "{{name.nbt_key}}"
+          3:
             name: "{{name.nbt_delims}}"
+
         patterns:
           - include: "#nbt.value"
+
+      # anything else apart from separators and terminals is an error
       - match: '[^\n\}\,]+'
         name: "{{name.error}}"
 
   nbt.list:
     patterns:
+      # skip whitespace: [( )1 , 2 , 3]
       - match: " +"
-      - match: ","
-        name: "{{name.nbt_delims}}"
-      - include: "#nbt.value"
-      - match: '[^\]\n]+'
+
+      # values: [ 1 (,) (2) , 3]
+      # begin on anything that is not a terminal or separator
+      - begin: '(,)? *(?=[^\n\]\,])'
+
+        # Possible ending cases:
+        #   1. the closing brace of the parent compound
+        #   2. the comma separating the next element
+        #   3. newline (error case)
+        end: ' *(?=[\n\]\,])'
+
+        patterns:
+          - include: "#nbt.value"
+
+      - match: '[^\n\]\,]+'
         name: "{{name.error}}"
 
   nbt.value:
     patterns:
       - begin: '(\{)'
-        end: '(\})'
+        end: '{{lookahead_newline}}|(\})'
         beginCaptures:
           1:
             name: "{{name.nbt_delims}}"
@@ -363,7 +393,7 @@ repository:
         patterns:
           - include: "#nbt.compound"
       - begin: '(\[)'
-        end: '(\])'
+        end: '{{lookahead_newline}}|(\])'
         beginCaptures:
           1:
             name: "{{name.nbt_delims}}"
@@ -373,7 +403,7 @@ repository:
         patterns:
           - include: "#nbt.list"
       - begin: '(\")'
-        end: '(\")'
+        end: '{{lookahead_newline}}|(\")'
         beginCaptures:
           1:
             name: "{{name.quoted_string}}"

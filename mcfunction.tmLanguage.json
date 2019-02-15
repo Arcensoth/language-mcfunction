@@ -290,7 +290,7 @@
     "command.token.nbt_compound": {
       "name": "meta.command.token.nbt_compound.mcfunction",
       "begin": "(?<= )(\\{)",
-      "end": "(\\})(?=[ \\n])",
+      "end": "(?=\\n)|(\\})([^ \\n]*)",
       "beginCaptures": {
         "1": {
           "name": "markup.bold.mcfunction"
@@ -299,6 +299,9 @@
       "endCaptures": {
         "1": {
           "name": "markup.bold.mcfunction"
+        },
+        "2": {
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -313,13 +316,16 @@
           "match": " +"
         },
         {
-          "begin": "(\\w+) *(\\:) *",
+          "begin": "(,)? *(\\w+) *(\\:) *",
           "end": " *(?=[\\n\\}\\,])",
           "beginCaptures": {
             "1": {
-              "name": "variable.parameter.mcfunction"
+              "name": "string"
             },
             "2": {
+              "name": "variable.parameter.mcfunction"
+            },
+            "3": {
               "name": "markup.bold.mcfunction"
             }
           },
@@ -341,14 +347,16 @@
           "match": " +"
         },
         {
-          "match": ",",
-          "name": "markup.bold.mcfunction"
+          "begin": "(,)? *(?=[^\\n\\]\\,])",
+          "end": " *(?=[\\n\\]\\,])",
+          "patterns": [
+            {
+              "include": "#nbt.value"
+            }
+          ]
         },
         {
-          "include": "#nbt.value"
-        },
-        {
-          "match": "[^\\]\\n]+",
+          "match": "[^\\n\\]\\,]+",
           "name": "invalid.illegal.mcfunction"
         }
       ]
@@ -357,7 +365,7 @@
       "patterns": [
         {
           "begin": "(\\{)",
-          "end": "(\\})",
+          "end": "(?=\\n)|(\\})",
           "beginCaptures": {
             "1": {
               "name": "markup.bold.mcfunction"
@@ -376,7 +384,7 @@
         },
         {
           "begin": "(\\[)",
-          "end": "(\\])",
+          "end": "(?=\\n)|(\\])",
           "beginCaptures": {
             "1": {
               "name": "markup.bold.mcfunction"
@@ -395,7 +403,7 @@
         },
         {
           "begin": "(\\\")",
-          "end": "(\\\")",
+          "end": "(?=\\n)|(\\\")",
           "beginCaptures": {
             "1": {
               "name": "string.quoted.mcfunction"
