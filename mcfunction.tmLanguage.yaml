@@ -25,6 +25,9 @@ variables:
   # math/numeric operations
   operation: '(\%\=|\*\=|\+\=|\-\=|\/\=|\<|\=|\>|\>\<|\<\=|\>\=)'
 
+  # commands like `execute ... run` that redirect to the root node
+  root_redirect: "(run)"
+
   # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
 
@@ -90,6 +93,7 @@ variables:
   name.unquoted_string: string.unquoted.mcfunction
   name.quoted_string: string.quoted.mcfunction
   name.quoted_string_escape: constant.character.mcfunction
+  name.top_level_command: keyword.control.mcfunction
   name.unknown: invalid.illegal.mcfunction
   name.error: invalid.illegal.mcfunction
 
@@ -160,6 +164,12 @@ capturesRepository:
     1:
       name: "{{name.operation}}"
 
+  root_redirect:
+    1:
+      name: "{{name.literal}}"
+    2:
+      name: "{{name.top_level_command}}"
+
   literal:
     1:
       name: "{{name.literal}}"
@@ -212,19 +222,12 @@ repository:
         beginCaptures:
           # highlight the first command on each line
           1:
-            name: keyword.control.mcfunction
+            name: "{{name.top_level_command}}"
         patterns:
           # don't name this one yet, we want to get rid of the space
           - begin: "(?<= )"
             # consume the space
             end: '[ \n]'
-
-            # for debugging purposes...
-            # end: '([ \n])'
-            # endCaptures:
-            #   1:
-            #     name: markup.underline.debug.mcfunction
-
             # name everything inside as part of the token
             contentName: meta.command.token.mcfunction
             patterns:
@@ -253,6 +256,7 @@ repository:
       - include: "#command.token.coordinate"
       - include: "#command.token.boolean"
       - include: "#command.token.operation"
+      - include: "#command.token.root_redirect"
       - include: "#command.token.literal"
       - include: "#command.token.uuid"
       - include: "#command.token.fakeplayer"
@@ -327,6 +331,14 @@ repository:
     captures:
       1:
         name: "{{name.unknown}}"
+
+  command.token.root_redirect:
+    # Special case for commands like `execute ... run` that redirect to the
+    # root command. We use this to highlight the top-level command despite it
+    # not being on its own line.
+    name: meta.command.token.root_redirect.mcfunction
+    match: "{{command_token_l}}{{root_redirect}} {{literal}}{{command_token_r}}"
+    captures: "#root_redirect"
 
   command.token.nbt_compound:
     name: meta.command.token.nbt_compound.mcfunction
