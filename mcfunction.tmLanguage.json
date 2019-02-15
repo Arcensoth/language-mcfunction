@@ -608,36 +608,37 @@
       "name": "meta.command.token.nbt_path.mcfunction",
       "begin": "(?<= )(?=\\w+[\\.\\[\\{])",
       "end": "(?=[ \\n])",
-      "endCaptures": {
-        "1": {
-          "name": "invalid.illegal.mcfunction"
-        }
-      },
       "patterns": [
         {
-          "include": "#nbt_path.root"
+          "include": "#nbt_path.property"
         }
       ]
     },
-    "nbt_path.root": {
+    "nbt_path.property": {
       "patterns": [
         {
-          "match": "(\\d+)",
-          "name": "constant.numeric.mcfunction"
-        },
-        {
-          "match": "(\\w+)",
+          "match": "(\\w+)(?=[ \\n])",
           "name": "variable.parameter.mcfunction"
         },
         {
-          "match": "(\\.)",
-          "name": "markup.bold.mcfunction"
+          "match": "(\\w+)(\\.)",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.mcfunction"
+            },
+            "2": {
+              "name": "markup.bold.mcfunction"
+            }
+          }
         },
         {
-          "begin": "(\\[)",
-          "end": "(\\])",
+          "begin": "(\\w+)(\\[)",
+          "end": "(\\])|(?=\\n)",
           "beginCaptures": {
             "1": {
+              "name": "variable.parameter.mcfunction"
+            },
+            "2": {
               "name": "markup.bold.mcfunction"
             }
           },
@@ -648,15 +649,18 @@
           },
           "patterns": [
             {
-              "include": "#nbt.list"
+              "include": "#nbt_path.index"
             }
           ]
         },
         {
-          "begin": "(\\{)",
-          "end": "(\\})",
+          "begin": "(\\w+)(\\{)",
+          "end": "(\\})|(?=\\n)",
           "beginCaptures": {
             "1": {
+              "name": "variable.parameter.mcfunction"
+            },
+            "2": {
               "name": "markup.bold.mcfunction"
             }
           },
@@ -670,6 +674,25 @@
               "include": "#nbt.compound"
             }
           ]
+        },
+        {
+          "match": "(?<=\\.)(\\.)",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "[^\\.\\s]+",
+          "name": "invalid.illegal.mcfunction"
+        }
+      ]
+    },
+    "nbt_path.index": {
+      "patterns": [
+        {
+          "include": "#nbt.list"
         }
       ]
     },
