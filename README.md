@@ -42,6 +42,7 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
         - [ ] (TODO) Advancement arguments: `advancements`
 
 ## Resources
+- https://github.com/Arcensoth/language-tmdemo
 - https://github.com/github/linguist/blob/master/CONTRIBUTING.md
 - https://github.com/github/linguist/blob/master/vendor/README.md
   - https://github.com/Microsoft/TypeScript-TmLanguage/blob/master/TypeScript.YAML-tmLanguage
