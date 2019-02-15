@@ -125,6 +125,14 @@ execute as @a[tag=foo,name="foo, bar"] as @s run
 execute as @a[tag=foo,name="escaped \" quote"] as @s run
 execute as @a[  tag  =  foo  ,  name  =  "  lots of space  "  ,  tag  =  bar  ] as @s run
 
+# test valid nbt argument
+execute as @e[nbt={PortalCooldown:0}] run
+execute as @e[nbt={ PortalCooldown : 0 }] run
+execute as @e[ nbt = { PortalCooldown : 0 } ] run
+execute as @e[nbt={Item:{id:"minecraft:diamond",Count:64}}] run
+execute as @e[nbt={ Item : { id : "minecraft:diamond", Count : 64 } }] run
+execute as @e[ nbt = { Item : { id : "minecraft:diamond" , Count : 64 } } ] run
+
 # test valid scores argument
 execute as @a[scores={myscore=10}] run
 execute as @a[scores={myscore=10..12}] run

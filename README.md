@@ -1,7 +1,7 @@
 # language-mcfunction
 Language grammar and syntax highlighting for mcfunction files.
 
-[![Showcase](https://i.imgur.com/3j5h4LK.png)](https://i.imgur.com/3j5h4LK.png)
+[![Showcase](https://i.imgur.com/eo7oC1Y.png)](https://i.imgur.com/eo7oC1Y.png)
 
 This is a generalized "context-free" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for all versions of the game.
 
@@ -37,7 +37,7 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
         - [x] [Resource location arguments](https://i.imgur.com/ZQ920Yw.png): `type`
         - [x] [Unquoted string arguments](https://i.imgur.com/svqzc2o.png): `tag`
         - [x] [Quoted string arguments](https://i.imgur.com/ahm8HYb.png): `name`
-        - [ ] (TODO) NBT compound arguments: `nbt`
+        - [x] [NBT compound arguments](https://i.imgur.com/JqWrpVm.png): `nbt`
         - [ ] (TODO) Score arguments: `scores`
         - [ ] (TODO) Advancement arguments: `advancements`
 

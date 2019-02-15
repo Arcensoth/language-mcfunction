@@ -645,6 +645,9 @@
               "include": "#selector.argument.quoted_string"
             },
             {
+              "include": "#selector.argument.nbt_compound"
+            },
+            {
               "include": "#selector.argument.unknown"
             }
           ]
@@ -920,6 +923,29 @@
       "patterns": [
         {
           "include": "#common.quoted_string"
+        }
+      ]
+    },
+    "selector.argument.nbt_compound": {
+      "name": "meta.selector.argument.nbt_compound.mcfunction",
+      "begin": "(\\{)",
+      "end": "(?=\\n)|(\\})([^\\]\\,\\n]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        },
+        "2": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#nbt.compound"
         }
       ]
     },

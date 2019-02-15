@@ -116,6 +116,9 @@ execute as @a[name="escape \" me"] as @s run
 execute as @a[name="how, about, commas ?"] as @s run
 execute as @a[name="and [braces] ?"] as @s run
 
+execute as @e[nbt={ PortalCooldown: 0 }] run
+execute as @e[nbt={ Item: {id: "minecraft:diamond", Count: 64 } }] run
+
 execute if score @s foo < @s bar run
 execute if score @s foo <= @s bar run
 execute if score @s foo = @s bar run
