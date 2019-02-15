@@ -133,6 +133,9 @@
           "include": "#command.token.boolean"
         },
         {
+          "include": "#command.token.operation"
+        },
+        {
           "include": "#command.token.literal"
         },
         {
@@ -239,6 +242,15 @@
       "captures": {
         "1": {
           "name": "support.type.mcfunction"
+        }
+      }
+    },
+    "command.token.operation": {
+      "name": "meta.command.token.operation.mcfunction",
+      "match": "(?<= )(\\%\\=|\\*\\=|\\+\\=|\\-\\=|\\/\\=|\\<|\\=|\\>|\\>\\<|\\<\\=|\\>\\=)(?=[ \\n])",
+      "captures": {
+        "1": {
+          "name": "keyword.control.mcfunction"
         }
       }
     },

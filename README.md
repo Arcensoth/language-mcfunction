@@ -16,6 +16,7 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
     - [x] [Indentation](https://i.imgur.com/6bRd6Dd.png)
     - [x] [Booleans](https://i.imgur.com/FBKTc5u.png): `true` / `false`
     - [x] [Numbers](https://i.imgur.com/KSvbapt.png): `20` / `3.14` / `.001`
+    - [x] [Operations](https://i.imgur.com/iYvND6j.png): `=` / `/=` / `%=` / etc
     - [x] [Ranges](https://i.imgur.com/ZUicjD0.png): `1..` / `3.14..20` / `...001`
     - [x] [Relative coordinates](https://i.imgur.com/3qaVlrO.png): `~` / `~10` / `~-4.5`
     - [x] [Local coordinates](https://i.imgur.com/9De4utY.png): `^` / `^-1` / `^.05`

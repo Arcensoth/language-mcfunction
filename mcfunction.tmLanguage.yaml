@@ -22,6 +22,9 @@ variables:
   # boolean true/false
   boolean: "(true|false)"
 
+  # math/numeric operations
+  operation: '(\%\=|\*\=|\+\=|\-\=|\/\=|\<|\=|\>|\>\<|\<\=|\>\=)'
+
   # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
 
@@ -82,6 +85,7 @@ variables:
   name.uuid: "{{name.base_selector}}"
   name.fakeplayer: "{{name.base_selector}}"
   name.boolean: support.type.mcfunction
+  name.operation: keyword.control.mcfunction
   name.literal: keyword.operator.mcfunction
   name.unquoted_string: string.unquoted.mcfunction
   name.quoted_string: string.quoted.mcfunction
@@ -151,6 +155,10 @@ capturesRepository:
   boolean:
     1:
       name: "{{name.boolean}}"
+
+  operation:
+    1:
+      name: "{{name.operation}}"
 
   literal:
     1:
@@ -243,6 +251,7 @@ repository:
       - include: "#command.token.number"
       - include: "#command.token.coordinate"
       - include: "#command.token.boolean"
+      - include: "#command.token.operation"
       - include: "#command.token.literal"
       - include: "#command.token.uuid"
       - include: "#command.token.fakeplayer"
@@ -285,6 +294,11 @@ repository:
     name: meta.command.token.boolean.mcfunction
     match: "{{command_token_l}}{{boolean}}{{command_token_r}}"
     captures: "#boolean"
+
+  command.token.operation:
+    name: meta.command.token.operation.mcfunction
+    match: "{{command_token_l}}{{operation}}{{command_token_r}}"
+    captures: "#operation"
 
   command.token.literal:
     name: meta.command.token.literal.mcfunction
