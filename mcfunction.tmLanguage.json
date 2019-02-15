@@ -103,6 +103,9 @@
           "include": "#command.token.nbt_compound"
         },
         {
+          "include": "#command.token.nbt_list"
+        },
+        {
           "include": "#command.token.selector_with_arguments"
         },
         {
@@ -319,6 +322,29 @@
       "patterns": [
         {
           "include": "#nbt.compound"
+        }
+      ]
+    },
+    "command.token.nbt_list": {
+      "name": "meta.command.token.nbt_list.mcfunction",
+      "begin": "(?<= )(\\[)",
+      "end": "(?=\\n)|(\\])([^ \\n]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        },
+        "2": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#nbt.list"
         }
       ]
     },

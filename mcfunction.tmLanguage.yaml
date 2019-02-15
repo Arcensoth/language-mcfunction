@@ -241,6 +241,7 @@ repository:
   command.tokens:
     patterns:
       - include: "#command.token.nbt_compound"
+      - include: "#command.token.nbt_list"
       - include: "#command.token.selector_with_arguments"
       - include: "#command.token.selector_without_arguments"
       - include: "#command.token.block_predicate"
@@ -341,6 +342,21 @@ repository:
         name: "{{name.error}}"
     patterns:
       - include: "#nbt.compound"
+
+  command.token.nbt_list:
+    name: meta.command.token.nbt_list.mcfunction
+    begin: '{{command_token_l}}(\[)'
+    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
+    beginCaptures:
+      1:
+        name: "{{name.nbt_delims}}"
+    endCaptures:
+      1:
+        name: "{{name.nbt_delims}}"
+      2:
+        name: "{{name.error}}"
+    patterns:
+      - include: "#nbt.list"
 
   nbt.compound:
     patterns:
