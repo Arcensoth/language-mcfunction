@@ -360,7 +360,7 @@ repository:
 
         beginCaptures:
           1:
-            name: string
+            name: "{{name.nbt_delims}}"
           2:
             name: "{{name.nbt_key}}"
           3:
@@ -387,6 +387,10 @@ repository:
         #   2. the comma separating the next element
         #   3. newline (error case)
         end: ' *(?=[\n\]\,])'
+
+        beginCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
 
         patterns:
           - include: "#nbt.value"

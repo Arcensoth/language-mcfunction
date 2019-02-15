@@ -332,7 +332,7 @@
           "end": " *(?=[\\n\\}\\,])",
           "beginCaptures": {
             "1": {
-              "name": "string"
+              "name": "markup.bold.mcfunction"
             },
             "2": {
               "name": "variable.parameter.mcfunction"
@@ -361,6 +361,11 @@
         {
           "begin": "(,)? *(?=[^\\n\\]\\,])",
           "end": " *(?=[\\n\\]\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
           "patterns": [
             {
               "include": "#nbt.value"
