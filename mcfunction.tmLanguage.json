@@ -637,28 +637,16 @@
     "nbt_path.property": {
       "patterns": [
         {
-          "match": "(\\w+)(?=[ \\n])",
-          "name": "variable.parameter.mcfunction"
-        },
-        {
-          "match": "(\\w+)(\\.)",
-          "captures": {
-            "1": {
-              "name": "variable.parameter.mcfunction"
-            },
-            "2": {
-              "name": "markup.bold.mcfunction"
-            }
-          }
-        },
-        {
-          "begin": "(\\w+)(\\[)",
+          "begin": "(\\.)?(\\w+)(\\[)",
           "end": "(\\])|(?=\\n)",
           "beginCaptures": {
             "1": {
-              "name": "variable.parameter.mcfunction"
+              "name": "markup.bold.mcfunction"
             },
             "2": {
+              "name": "variable.parameter.mcfunction"
+            },
+            "3": {
               "name": "markup.bold.mcfunction"
             }
           },
@@ -674,13 +662,16 @@
           ]
         },
         {
-          "begin": "(\\w+)(\\{)",
+          "begin": "(\\.)?(\\w+)(\\{)",
           "end": "(\\})|(?=\\n)",
           "beginCaptures": {
             "1": {
-              "name": "variable.parameter.mcfunction"
+              "name": "markup.bold.mcfunction"
             },
             "2": {
+              "name": "variable.parameter.mcfunction"
+            },
+            "3": {
               "name": "markup.bold.mcfunction"
             }
           },
@@ -696,7 +687,18 @@
           ]
         },
         {
-          "match": "(?<=\\.)(\\.)",
+          "match": "(\\.)?(\\w+)",
+          "captures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            },
+            "2": {
+              "name": "variable.parameter.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "(\\.)(?=\\.)",
           "captures": {
             "1": {
               "name": "invalid.illegal.mcfunction"

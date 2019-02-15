@@ -630,23 +630,15 @@ repository:
 
   nbt_path.property:
     patterns:
-      # SelectedItem.(Count)
-      - match: '(\w+){{command_token_r}}'
-        name: "{{name.nbt_key}}"
-      # (SelectedItem.)Count
-      - match: '(\w+)(\.)'
-        captures:
-          1:
-            name: "{{name.nbt_key}}"
-          2:
-            name: "{{name.nbt_delims}}"
       # (Inventory)([){Count: 64}(])
-      - begin: '(\w+)(\[)'
+      - begin: '(\.)?(\w+)(\[)'
         end: '(\])|(?=\n)'
         beginCaptures:
           1:
-            name: "{{name.nbt_key}}"
+            name: "{{name.nbt_delims}}"
           2:
+            name: "{{name.nbt_key}}"
+          3:
             name: "{{name.nbt_delims}}"
         endCaptures:
           1:
@@ -654,20 +646,29 @@ repository:
         patterns:
           - include: "#nbt_path.index"
       # Inventory[].(tag)({)custom: true(}).display.Name
-      - begin: '(\w+)(\{)'
+      - begin: '(\.)?(\w+)(\{)'
         end: '(\})|(?=\n)'
         beginCaptures:
           1:
-            name: "{{name.nbt_key}}"
+            name: "{{name.nbt_delims}}"
           2:
+            name: "{{name.nbt_key}}"
+          3:
             name: "{{name.nbt_delims}}"
         endCaptures:
           1:
             name: "{{name.nbt_delims}}"
         patterns:
           - include: "#nbt.compound"
-      # (error) look-behind double dot
-      - match: '(?<=\.)(\.)'
+      # SelectedItem(.Count)
+      - match: '(\.)?(\w+)'
+        captures:
+          1:
+            name: "{{name.nbt_delims}}"
+          2:
+            name: "{{name.nbt_key}}"
+      # (error) look-ahead double dot
+      - match: '(\.)(?=\.)'
         captures:
           1:
             name: "{{name.error}}"
