@@ -115,3 +115,18 @@ execute as @a[name="hello world"] as @s run
 execute as @a[name="escape \" me"] as @s run
 execute as @a[name="how, about, commas ?"] as @s run
 execute as @a[name="and [braces] ?"] as @s run
+
+execute if score @s foo < @s bar run
+execute if score @s foo <= @s bar run
+execute if score @s foo = @s bar run
+execute if score @s foo > @s bar run
+execute if score @s foo >= @s bar run
+
+data get entity @s SelectedItem.tag.display.Name
+data get entity @s Inventory[0]
+data get entity @s Inventory[{id: "minecraft:diamond"}].Count
+data get entity @s Inventory[].tag{custom: true}.display.Name
+
+data merge entity @s { foo: true, bar: 1234 }
+data modify block ~ ~ ~ RecordItem.tag set value { messages: [hi, bye] }
+data modify block ~ ~ ~ RecordItem.tag.messages append value [ { message: "hello world" } ]

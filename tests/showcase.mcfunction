@@ -37,3 +37,12 @@ execute as @a[type=!minecraft:cow,type=!minecraft:pig] run
 execute as @a[type=#minecraft:skeletons] run
 execute as @a[type=!#minecraft:skeletons,type=!minecraft:zombie] run
 execute as @a[name="Custom Name"] as @s run
+execute if score @s foo < @s bar run
+scoreboard players operation @s foo %= @s bar
+data get entity @s SelectedItem.tag.display.Name
+data get entity @s Inventory[0]
+data get entity @s Inventory[{id: "minecraft:diamond"}].Count
+data get entity @s Inventory[].tag{custom: true}.display.Name
+data merge entity @s { foo: true, bar: 1234 }
+data modify block ~ ~ ~ RecordItem.tag set value { messages: [hi, bye] }
+data modify block ~ ~ ~ RecordItem.tag.messages append value [ { message: "hello world" } ]

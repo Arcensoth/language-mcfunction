@@ -1,7 +1,7 @@
 # language-mcfunction
 Language grammar and syntax highlighting for mcfunction files.
 
-[![Showcase](https://i.imgur.com/g5o08t3.png)](https://i.imgur.com/g5o08t3.png)
+[![Showcase](https://i.imgur.com/3j5h4LK.png)](https://i.imgur.com/3j5h4LK.png)
 
 This is a generalized "context-free" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for all versions of the game.
 
@@ -24,8 +24,8 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
     - [x] [Block predicates](https://i.imgur.com/7QpQsi6.png): `minecraft:dispenser[facing=up]`
     - [x] [Unquoted strings](https://i.imgur.com/82vSj6Q.png): `mypack.some.tag` / `mypack.custom_crafting_marker`
     - [x] [Quoted strings with escaping](https://i.imgur.com/3Ns8MzH.png): `"hello world"` / `"CustomName With Spaces"`
-    - [ ] (TODO) NBT compounds: `{ Fire: 20s , NoGravity: true, Tags: [ "mytag" ] }`
-    - [ ] (TODO) NBT paths: `SelectedItem.Count` / `RecordItem.tag.mycustomtag`
+    - [x] [NBT compounds/lists](https://i.imgur.com/ISjyX3Z.png): `{ Fire: 20s , NoGravity: true, Tags: [ "mytag" ] }`
+    - [x] [NBT paths](https://i.imgur.com/DVPvepj.png): `SelectedItem.Count` / `RecordItem.tag.mycustomtag`
     - [x] [UUIDs](https://i.imgur.com/uvwKnCC.png): `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` `0-0-0-0-0`
     - [x] [Fakeplayers](https://i.imgur.com/jNODt4g.png): `#hidden` / `$fakefoo` / `%fakebar`
     - [x] [Base selectors](https://i.imgur.com/6eWmGa4.png): `@e`
