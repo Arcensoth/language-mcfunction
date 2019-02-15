@@ -139,6 +139,9 @@
           "include": "#command.token.fakeplayer"
         },
         {
+          "include": "#command.token.nbt_path"
+        },
+        {
           "include": "#command.token.unquoted_string"
         },
         {
@@ -452,6 +455,75 @@
         {
           "name": "invalid.illegal.mcfunction",
           "match": "[^\\]\\n]+"
+        }
+      ]
+    },
+    "command.token.nbt_path": {
+      "name": "meta.command.token.nbt_path.mcfunction",
+      "begin": "(?<= )(?=\\w+[\\.\\[\\{])",
+      "end": "(?=[ \\n])",
+      "endCaptures": {
+        "1": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#nbt_path.root"
+        }
+      ]
+    },
+    "nbt_path.root": {
+      "patterns": [
+        {
+          "match": "(\\d+)",
+          "name": "constant.numeric.mcfunction"
+        },
+        {
+          "match": "(\\w+)",
+          "name": "support.class.mcfunction"
+        },
+        {
+          "match": "(\\.)",
+          "name": "markup.bold.mcfunction"
+        },
+        {
+          "begin": "(\\[)",
+          "end": "(\\])",
+          "beginCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#nbt_path.root"
+            }
+          ]
+        },
+        {
+          "begin": "(\\{)",
+          "end": "(\\})",
+          "beginCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#nbt_path.root"
+            }
+          ]
         }
       ]
     },

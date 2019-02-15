@@ -74,6 +74,9 @@ variables:
   name.base_selector: variable.language.mcfunction
   name.selector_delims: "{{name.brace_delims}}"
   name.block_predicate_delims: "{{name.brace_delims}}"
+  name.nbt_delims: "{{name.brace_delims}}"
+  name.nbt_key: support.class.mcfunction
+  name.nbt_index: constant.numeric.mcfunction
   name.resource_location: entity.name.function.mcfunction
   name.tagged_resource_location: constant.character.escape.mcfunction
   name.uuid: "{{name.base_selector}}"
@@ -242,6 +245,7 @@ repository:
       - include: "#command.token.literal"
       - include: "#command.token.uuid"
       - include: "#command.token.fakeplayer"
+      - include: "#command.token.nbt_path"
       - include: "#command.token.unquoted_string"
       - include: "#command.token.quoted_string"
       - include: "#command.token.unknown"
@@ -481,6 +485,58 @@ repository:
       # anything else apart from terminals is classified as an error
       - name: "{{name.error}}"
         match: '[^\]\n]+'
+
+  command.token.nbt_path:
+    name: meta.command.token.nbt_path.mcfunction
+
+    # This one is tricky, because we won't know when to start recursing.
+    # There's also a lot of overlap with other token types, like strings.
+    # So what we're going to do is require at least one character familiar to
+    # NBT paths, like dots or opening braces, immediately following a word.
+    # We use lookahead here so that we can process the syntax more accurately
+    # after we're more confident that the token is an NBT path.
+    begin: '{{command_token_l}}(?=\w+[\.\[\{])'
+
+    # It's impossible to know what an NBT path will end on, so apart from being
+    # careful about newlines like usual we just accept anything.
+    # end: '{{lookahead_newline}}|({{not_command_token_delim}}*)'
+    end: '{{command_token_r}}'
+
+    endCaptures:
+      1:
+        name: "{{name.error}}"
+
+    patterns:
+      - include: "#nbt_path.root"
+
+  nbt_path.root:
+    patterns:
+      - match: '(\d+)'
+        name: "{{name.nbt_index}}"
+      - match: '(\w+)'
+        name: "{{name.nbt_key}}"
+      - match: '(\.)'
+        name: "{{name.nbt_delims}}"
+      - begin: '(\[)'
+        end: '(\])'
+        beginCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+        endCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+        patterns:
+          - include: "#nbt_path.root"
+      - begin: '(\{)'
+        end: '(\})'
+        beginCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+        endCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+        patterns:
+          - include: "#nbt_path.root"
 
   block_predicate.arguments:
     patterns:
