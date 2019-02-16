@@ -310,7 +310,7 @@
       "match": "(?<= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "markup.italic.mcfunction"
+          "name": "keyword.operator.mcfunction"
         },
         "2": {
           "name": "keyword.control.mcfunction"

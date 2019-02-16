@@ -93,7 +93,7 @@ variables:
   name.unquoted_string: string.unquoted.mcfunction
   name.quoted_string: string.quoted.mcfunction
   name.quoted_string_escape: constant.character.mcfunction
-  name.root_redirect: markup.italic.mcfunction
+  name.root_redirect: "{{name.literal}}"
   name.top_level_command: keyword.control.mcfunction
   name.unknown: invalid.illegal.mcfunction
   name.error: invalid.illegal.mcfunction
