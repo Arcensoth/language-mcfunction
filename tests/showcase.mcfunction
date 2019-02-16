@@ -41,4 +41,8 @@ data modify block ~ ~ ~ RecordItem.tag set value { messages: [hi, bye] }
 data modify block ~ ~ ~ RecordItem.tag.messages append value [ { message: "hello world" } ]
 tellraw @a {"text": "hello world", "color": "blue"}
 tellraw @a [{"text": "hello", "color": "blue"}, {"text": "world", "color": "blue"}]
+execute as @a[scores={myscore=1..}]
+execute as @a[scores={foo=10, bar=1..5, baz=..0}]
+execute as @a[advancements={mypack:some/advancement=true}]
+execute as @a[advancements={mypack:another/advancement={foo=true, bar=false}}]
 

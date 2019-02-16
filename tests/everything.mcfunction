@@ -136,3 +136,13 @@ data modify block ~ ~ ~ RecordItem.tag.messages append value [ { message: "hello
 
 tellraw @a {"text": "hello world", "color": "blue"}
 tellraw @a [{"text": "hello", "color": "blue"}, {"text": "world", "color": "blue"}]
+
+execute as @a[scores={myscore=10}] run
+execute as @a[scores={myscore=10..12}] run
+execute as @a[scores={foo=10, bar=1..5, baz=..0}] run
+
+execute as @a[advancements={minecraft:story/form_obsidian=true}] run
+execute as @a[advancements={minecraft:story/obtain_armor={iron_helmet=true}}] run
+execute as @a[advancements={minecraft:story/obtain_armor={iron_helmet=true, gold_helmet=false}}] run
+execute as @a[advancements={minecraft:story/form_obsidian=true, minecraft:story/follow_ender_eye=true}] run
+execute as @a[advancements={minecraft:story/form_obsidian={foo=true, bar=false},minecraft:story/follow_ender_eye={foo=false, bar=true}}] run

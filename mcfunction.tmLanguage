@@ -1034,6 +1034,10 @@
               </dict>
               <dict>
                 <key>include</key>
+                <string>#selector.argument.property_map</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#selector.argument.nbt_compound</string>
               </dict>
               <dict>
@@ -1441,6 +1445,21 @@
           </dict>
         </dict>
       </dict>
+      <key>selector.argument.unknown</key>
+      <dict>
+        <key>name</key>
+        <string>meta.selector.argument.unknown.mcfunction</string>
+        <key>match</key>
+        <string>([^\]\n\,]+)</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
       <key>selector.argument.quoted_string</key>
       <dict>
         <key>name</key>
@@ -1475,6 +1494,43 @@
           <dict>
             <key>include</key>
             <string>#common.quoted_string</string>
+          </dict>
+        </array>
+      </dict>
+      <key>selector.argument.property_map</key>
+      <dict>
+        <key>name</key>
+        <string>meta.selector.argument.property_map.mcfunction</string>
+        <key>begin</key>
+        <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+) *(\=))</string>
+        <key>end</key>
+        <string>(?=\n)|(\})([^\]\,\n]*)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>markup.bold.mcfunction</string>
+          </dict>
+        </dict>
+        <key>endCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>markup.bold.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#property_map</string>
           </dict>
         </array>
       </dict>
@@ -1515,20 +1571,128 @@
           </dict>
         </array>
       </dict>
-      <key>selector.argument.unknown</key>
+      <key>property_map</key>
       <dict>
-        <key>name</key>
-        <string>meta.selector.argument.unknown.mcfunction</string>
-        <key>match</key>
-        <string>([^\]\n\,]+)</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
+        <key>patterns</key>
+        <array>
           <dict>
+            <key>match</key>
+            <string> +</string>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(,)? *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+) *(\=) *</string>
+            <key>end</key>
+            <string> *(?=[\n\}\,])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>markup.bold.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>markup.bold.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>match</key>
+                <string>(true|false)</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>support.type.mcfunction</string>
+                  </dict>
+                </dict>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)?</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>constant.character.escape.mcfunction</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>keyword.control.mcfunction</string>
+                  </dict>
+                  <key>3</key>
+                  <dict>
+                    <key>name</key>
+                    <string>constant.character.escape.mcfunction</string>
+                  </dict>
+                </dict>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(\-?\d*\.?\d+)</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>constant.numeric.mcfunction</string>
+                  </dict>
+                </dict>
+              </dict>
+              <dict>
+                <key>begin</key>
+                <string>(\{) *</string>
+                <key>end</key>
+                <string>(?=\n)|(\})([^\}\,\n]*)</string>
+                <key>beginCaptures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>markup.bold.mcfunction</string>
+                  </dict>
+                </dict>
+                <key>endCaptures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>markup.bold.mcfunction</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>invalid.illegal.mcfunction</string>
+                  </dict>
+                </dict>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#property_map</string>
+                  </dict>
+                </array>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>[^\n\}\,]+</string>
             <key>name</key>
             <string>invalid.illegal.mcfunction</string>
           </dict>
-        </dict>
+        </array>
       </dict>
       <key>common.quoted_string</key>
       <dict>

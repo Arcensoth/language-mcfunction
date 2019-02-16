@@ -147,9 +147,12 @@ execute as @a[ scores = { foo = 10 , bar = 1..5 , baz = ..0 } ] run
 execute as @a[advancements={minecraft:story/form_obsidian=true}] run
 execute as @a[advancements={minecraft:story/form_obsidian=false}] run
 execute as @a[advancements={minecraft:story/obtain_armor={iron_helmet=true}}] run
+execute as @a[advancements={minecraft:story/obtain_armor={iron_helmet=true, gold_helmet=false}}] run
+execute as @a[ advancements = { minecraft:story/obtain_armor = { iron_helmet = true , gold_helmet = false } } ] run
 execute as @a[advancements={minecraft:story/follow_ender_eye=true}] run
 execute as @a[advancements={minecraft:story/form_obsidian=true,minecraft:story/follow_ender_eye=true}] run
 execute as @a[advancements={minecraft:story/form_obsidian=true,minecraft:story/follow_ender_eye=true,minecraft:story/obtain_armor=true}] run
+execute as @a[advancements={minecraft:story/form_obsidian={foo=true, bar=false},minecraft:story/follow_ender_eye={foo=false, bar=true}}] run
 execute as @a[ advancements = {minecraft:story/follow_ender_eye=true} ] run
 execute as @a[ advancements = { minecraft:story/follow_ender_eye = true } ] run
 execute as @a[ advancements = { minecraft:story/form_obsidian = true , minecraft:story/follow_ender_eye = true , minecraft:story/obtain_armor = true } ] run

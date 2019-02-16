@@ -39,11 +39,13 @@ variables:
   number: '(\-?\d*\.?\d+)'
 
   # a resource path is the portion of the resource location following the namesapce
-  resource_path: '([a-z0-9_\.\-\/]+)'
+  resource_path_nc: '[a-z0-9_\.\-\/]+'
+  resource_path: "({{resource_path_nc}})"
 
   # resource locations: namespace + path
   # TODO improve resource location validity
   # resource_location: '{{component}}(\:)({{component_nc}}(?:\/{{component_nc}})*)'
+  resource_location_nc: '{{component_nc}}\:{{resource_path_nc}}'
   resource_location: '{{component}}(\:){{resource_path}}'
 
   # uuid format
@@ -533,7 +535,7 @@ repository:
 
   command.token.tagged_block_predicate:
     # Same as without a tag... all for a different colour.
-    # TODO can we reduce thr amount of repeated code here?
+    # TODO can we reduce the amount of repeated code here?
     name: meta.command.token.tagged_block_predicate.mcfunction
     begin: '{{command_token_l}}{{tagged_resource_location}}(\[)'
     end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
@@ -635,6 +637,7 @@ repository:
           - include: "#selector.argument.literal"
           - include: "#selector.argument.unquoted_string"
           - include: "#selector.argument.quoted_string"
+          - include: "#selector.argument.property_map"
           - include: "#selector.argument.nbt_compound"
           - include: "#selector.argument.unknown"
 
@@ -787,6 +790,13 @@ repository:
     match: "{{unquoted_string}}{{sat}}"
     captures: "#unquoted_string"
 
+  selector.argument.unknown:
+    name: meta.selector.argument.unknown.mcfunction
+    match: '([^\]\n\,]+)'
+    captures:
+      1:
+        name: "{{name.unknown}}"
+
   selector.argument.quoted_string:
     name: meta.selector.argument.quoted_string.mcfunction
     begin: '(\")'
@@ -803,9 +813,26 @@ repository:
     patterns:
       - include: "#common.quoted_string"
 
+  selector.argument.property_map:
+    name: meta.selector.argument.property_map.mcfunction
+    # we need to try and distinguish this from an nbt argument
+    # lookahead for something unique to advancements/scores
+    # (how about we just copy-paste thee capturing part of the property map?)
+    begin: '(\{)(?= *({{resource_location_nc}}|{{resource_path_nc}}) *(\=))'
+    end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
+    beginCaptures:
+      1:
+        name: "{{name.nbt_delims}}"
+    endCaptures:
+      1:
+        name: "{{name.nbt_delims}}"
+      2:
+        name: "{{name.error}}"
+    patterns:
+      - include: "#property_map"
+
   selector.argument.nbt_compound:
     name: meta.selector.argument.nbt_compound.mcfunction
-    # TODO how to differentiate between scores/advancements mapping?
     begin: '(\{)'
     end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
     beginCaptures:
@@ -819,12 +846,49 @@ repository:
     patterns:
       - include: "#nbt.compound"
 
-  selector.argument.unknown:
-    name: meta.selector.argument.unknown.mcfunction
-    match: '([^\]\n\,]+)'
-    captures:
-      1:
-        name: "{{name.unknown}}"
+  property_map:
+    # for `advancements` in selectors
+    patterns:
+      # skip whitespace
+      - match: " +"
+
+      # with namespace:    {minecraft:story/form_obsidian=true}
+      # without namespace: {story/form_obsidian=true}
+      - begin: '(,)? *({{resource_location_nc}}|{{resource_path_nc}}) *(\=) *'
+
+        end: ' *(?=[\n\}\,])'
+
+        beginCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+          2:
+            name: "{{name.nbt_key}}"
+          3:
+            name: "{{name.nbt_delims}}"
+
+        patterns:
+          - match: "{{boolean}}"
+            captures: "#boolean"
+          - match: "{{range}}"
+            captures: "#range"
+          - match: "{{number}}"
+            captures: "#number"
+          - begin: '(\{) *'
+            end: '{{lookahead_newline}}|(\})([^\}\,\n]*)'
+            beginCaptures:
+              1:
+                name: "{{name.nbt_delims}}"
+            endCaptures:
+              1:
+                name: "{{name.nbt_delims}}"
+              2:
+                name: "{{name.error}}"
+            patterns:
+              - include: "#property_map"
+
+      # anything else apart from separators and terminals is an error
+      - match: '[^\n\}\,]+'
+        name: "{{name.error}}"
 
   common.quoted_string:
     patterns:

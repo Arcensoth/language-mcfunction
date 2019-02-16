@@ -660,6 +660,9 @@
               "include": "#selector.argument.quoted_string"
             },
             {
+              "include": "#selector.argument.property_map"
+            },
+            {
               "include": "#selector.argument.nbt_compound"
             },
             {
@@ -918,6 +921,15 @@
         }
       }
     },
+    "selector.argument.unknown": {
+      "name": "meta.selector.argument.unknown.mcfunction",
+      "match": "([^\\]\\n\\,]+)",
+      "captures": {
+        "1": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      }
+    },
     "selector.argument.quoted_string": {
       "name": "meta.selector.argument.quoted_string.mcfunction",
       "begin": "(\\\")",
@@ -938,6 +950,29 @@
       "patterns": [
         {
           "include": "#common.quoted_string"
+        }
+      ]
+    },
+    "selector.argument.property_map": {
+      "name": "meta.selector.argument.property_map.mcfunction",
+      "begin": "(\\{)(?= *([a-z0-9_\\.\\-]+\\:[a-z0-9_\\.\\-\\/]+|[a-z0-9_\\.\\-\\/]+) *(\\=))",
+      "end": "(?=\\n)|(\\})([^\\]\\,\\n]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "markup.bold.mcfunction"
+        },
+        "2": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#property_map"
         }
       ]
     },
@@ -964,14 +999,85 @@
         }
       ]
     },
-    "selector.argument.unknown": {
-      "name": "meta.selector.argument.unknown.mcfunction",
-      "match": "([^\\]\\n\\,]+)",
-      "captures": {
-        "1": {
+    "property_map": {
+      "patterns": [
+        {
+          "match": " +"
+        },
+        {
+          "begin": "(,)? *([a-z0-9_\\.\\-]+\\:[a-z0-9_\\.\\-\\/]+|[a-z0-9_\\.\\-\\/]+) *(\\=) *",
+          "end": " *(?=[\\n\\}\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "markup.bold.mcfunction"
+            },
+            "2": {
+              "name": "variable.parameter.mcfunction"
+            },
+            "3": {
+              "name": "markup.bold.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "match": "(true|false)",
+              "captures": {
+                "1": {
+                  "name": "support.type.mcfunction"
+                }
+              }
+            },
+            {
+              "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
+              "captures": {
+                "1": {
+                  "name": "constant.character.escape.mcfunction"
+                },
+                "2": {
+                  "name": "keyword.control.mcfunction"
+                },
+                "3": {
+                  "name": "constant.character.escape.mcfunction"
+                }
+              }
+            },
+            {
+              "match": "(\\-?\\d*\\.?\\d+)",
+              "captures": {
+                "1": {
+                  "name": "constant.numeric.mcfunction"
+                }
+              }
+            },
+            {
+              "begin": "(\\{) *",
+              "end": "(?=\\n)|(\\})([^\\}\\,\\n]*)",
+              "beginCaptures": {
+                "1": {
+                  "name": "markup.bold.mcfunction"
+                }
+              },
+              "endCaptures": {
+                "1": {
+                  "name": "markup.bold.mcfunction"
+                },
+                "2": {
+                  "name": "invalid.illegal.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#property_map"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "match": "[^\\n\\}\\,]+",
           "name": "invalid.illegal.mcfunction"
         }
-      }
+      ]
     },
     "common.quoted_string": {
       "patterns": [
