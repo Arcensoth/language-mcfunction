@@ -1,5 +1,5 @@
 # language-mcfunction
-Language grammar and syntax highlighting for mcfunction files.
+Generic version-agnostic language grammar and syntax highlighting for mcfunction files.
 
 [![Showcase](https://i.imgur.com/gwiDldD.png)](https://i.imgur.com/gwiDldD.png)
 
