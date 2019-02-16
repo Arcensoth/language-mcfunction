@@ -1,6 +1,7 @@
 import fs = require("fs");
 import path = require("path");
 import yaml = require("js-yaml");
+import plist = require("plist");
 
 const FORMAT_PROPERTIES = ["name", "match", "begin", "end"];
 const RECURSE_MAPS = ["captures", "beginCaptures", "endCaptures"];
@@ -94,10 +95,14 @@ function run() {
   delete grammar.variables;
   delete grammar.capturesRepository;
 
+  // write json
   fs.writeFileSync(
     "mcfunction.tmLanguage.json",
     JSON.stringify(grammar, null, 2)
   );
+
+  // write plist
+  fs.writeFileSync("mcfunction.tmLanguage", plist.build(grammar));
 }
 
 run();
