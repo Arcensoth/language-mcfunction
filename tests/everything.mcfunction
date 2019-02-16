@@ -133,3 +133,6 @@ data get entity @s Inventory[].tag{custom: true}.display.Name
 data merge entity @s { foo: true, bar: 1234 }
 data modify block ~ ~ ~ RecordItem.tag set value { messages: [hi, bye] }
 data modify block ~ ~ ~ RecordItem.tag.messages append value [ { message: "hello world" } ]
+
+tellraw @a {"text": "hello world", "color": "blue"}
+tellraw @a [{"text": "hello", "color": "blue"}, {"text": "world", "color": "blue"}]

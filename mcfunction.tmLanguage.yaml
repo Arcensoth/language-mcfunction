@@ -376,10 +376,9 @@ repository:
       # skip whitespace: {( )SelectedItem : { Count : 64 } }
       - match: " +"
 
-      # TODO quoted keys?
-
+      # quoted keys: { ("text") (:) "hello" }
       # unquoted keys: { (SelectedItem) (:) { Count: 64 } }
-      - begin: '(,)? *(\w+) *(\:) *'
+      - begin: '(,)? *(\w+|\"[^\n\"]+\") *(\:) *'
 
         # Possible ending cases:
         #   1. the closing brace of the parent compound

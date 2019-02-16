@@ -26,7 +26,7 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
     - [x] [Quoted strings with escaping](https://i.imgur.com/3Ns8MzH.png): `"hello world"` / `"CustomName With Spaces"`
     - [x] [NBT compounds/lists](https://i.imgur.com/ISjyX3Z.png): `{ Fire: 20s , NoGravity: true, Tags: [ "mytag" ] }`
     - [x] [NBT paths](https://i.imgur.com/DVPvepj.png): `SelectedItem.Count` / `RecordItem.tag.mycustomtag`
-    - [ ] (TODO) JSON/text components: `{"text": "hello world", "color": "blue"}`
+    - [x] [JSON/text components](https://i.imgur.com/5cJVdhc.png): `{"text": "hello world", "color": "blue"}`
     - [x] [UUIDs](https://i.imgur.com/uvwKnCC.png): `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` `0-0-0-0-0`
     - [x] [Fakeplayers](https://i.imgur.com/jNODt4g.png): `#hidden` / `$fakefoo` / `%fakebar`
     - [x] [Base selectors](https://i.imgur.com/6eWmGa4.png): `@e`
