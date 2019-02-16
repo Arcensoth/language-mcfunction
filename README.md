@@ -3,7 +3,7 @@ Generic version-agnostic language grammar and syntax highlighting for mcfunction
 
 [![Showcase](https://i.imgur.com/gwiDldD.png)](https://i.imgur.com/gwiDldD.png)
 
-This is a generalized "context-free" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for all versions of the game.
+This is a generic "context-free" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
 
 ## Features
 Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
