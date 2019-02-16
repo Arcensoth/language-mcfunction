@@ -2,7 +2,7 @@
   "name": "language-mcfunction",
   "displayName": "language-mcfunction",
   "description": "Language grammar and syntax highlighting for mcfunction files.",
-  "version": "0.0.1-dev",
+  "version": "0.1.0",
   "publisher": "arcensoth",
   "repository": "https://github.com/Arcensoth/language-mcfunction",
   "license": "MIT",
