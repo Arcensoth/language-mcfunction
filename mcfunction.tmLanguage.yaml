@@ -73,28 +73,31 @@ variables:
   base_selector: '(\@[a-z])'
 
   # group names, in one place
-  name.brace_delims: markup.bold.mcfunction
-  name.dict_key: variable.parameter.mcfunction
+  name.brace_delims: variable.language.mcfunction
+  name.argument_key: variable.other.mcfunction
   name.numeric_constant: constant.numeric.mcfunction
-  name.numeric_altered: constant.character.escape.mcfunction
+  name.numeric_altered: constant.numeric.mcfunction
   name.range_ellipsis: keyword.control.mcfunction
-  name.coordinate_operator: keyword.control.mcfunction
-  name.base_selector: variable.language.mcfunction
-  name.selector_delims: "{{name.brace_delims}}"
+  name.coordinate_operator: "{{name.numeric_altered}}"
+  name.base_selector: entity.other.attribute-name.mcfunction
+  name.selector_delims: "{{name.base_selector}}"
   name.block_predicate_delims: "{{name.brace_delims}}"
   name.nbt_delims: "{{name.brace_delims}}"
-  name.nbt_key: "{{name.dict_key}}"
+  name.nbt_key: string.interpolated.mcfunction
   name.nbt_index: constant.numeric.mcfunction
-  name.resource_location: entity.name.function.mcfunction
-  name.tagged_resource_location: constant.character.escape.mcfunction
+  name.resource_namespace: support.class.mcfunction
+  name.resource_path: "{{name.resource_namespace}}"
+  name.tagged_resource_namespace: "{{name.resource_namespace}}"
+  name.tagged_resource_path: "{{name.tagged_resource_namespace}}"
+  name.namespace_separator: "{{name.resource_namespace}}"
   name.uuid: "{{name.base_selector}}"
   name.fakeplayer: "{{name.base_selector}}"
-  name.boolean: support.type.mcfunction
-  name.operation: keyword.control.mcfunction
-  name.literal: keyword.operator.mcfunction
+  name.boolean: "{{name.numeric_constant}}"
+  name.operation: "{{name.numeric_constant}}"
+  name.literal: entity.name.mcfunction
   name.unquoted_string: string.unquoted.mcfunction
   name.quoted_string: string.quoted.mcfunction
-  name.quoted_string_escape: constant.character.mcfunction
+  name.quoted_string_escape: constant.character.escape.mcfunction
   name.root_redirect: "{{name.literal}}"
   name.top_level_command: keyword.control.mcfunction
   name.unknown: invalid.illegal.mcfunction
@@ -113,27 +116,27 @@ capturesRepository:
   resource_location:
     1:
       # the namespace
-      name: "{{name.resource_location}}"
+      name: "{{name.resource_namespace}}"
     2:
       # the `:`
-      name: "{{name.resource_location}}"
+      name: "{{name.namespace_separator}}"
     3:
       # the path
-      name: "{{name.resource_location}}"
+      name: "{{name.resource_path}}"
 
   tagged_resource_location:
     1:
       # the `#`
-      name: "{{name.tagged_resource_location}}"
+      name: "{{name.tagged_resource_namespace}}"
     2:
       # the namespace
-      name: "{{name.tagged_resource_location}}"
+      name: "{{name.tagged_resource_namespace}}"
     3:
       # the `:`
-      name: "{{name.tagged_resource_location}}"
+      name: "{{name.namespace_separator}}"
     4:
       # the path
-      name: "{{name.tagged_resource_location}}"
+      name: "{{name.tagged_resource_path}}"
 
   range:
     # TODO catch `..` error case
@@ -521,13 +524,13 @@ repository:
       # TODO refactor repeated code (groups 1-3)
       1:
         # the namespace
-        name: "{{name.resource_location}}"
+        name: "{{name.resource_namespace}}"
       2:
         # the `:`
-        name: "{{name.resource_location}}"
+        name: "{{name.namespace_separator}}"
       3:
         # the path
-        name: "{{name.resource_location}}"
+        name: "{{name.resource_path}}"
       4:
         # the opening brace
         name: "{{name.block_predicate_delims}}"
@@ -551,16 +554,16 @@ repository:
       # TODO refactor repeated code (groups 1-4)
       1:
         # the `#`
-        name: "{{name.tagged_resource_location}}"
+        name: "{{name.tagged_resource_namespace}}"
       2:
         # the namespace
-        name: "{{name.tagged_resource_location}}"
+        name: "{{name.tagged_resource_namespace}}"
       3:
         # the `:`
-        name: "{{name.tagged_resource_location}}"
+        name: "{{name.namespace_separator}}"
       4:
         # the path
-        name: "{{name.tagged_resource_location}}"
+        name: "{{name.tagged_resource_path}}"
       5:
         # the opening brace
         name: "{{name.block_predicate_delims}}"
@@ -590,7 +593,7 @@ repository:
 
     beginCaptures:
       1:
-        name: "{{name.selector_delims}}"
+        name: "{{name.base_selector}}"
       2:
         name: "{{name.selector_delims}}"
 
@@ -620,7 +623,7 @@ repository:
         beginCaptures:
           1:
             # the key
-            name: "{{name.dict_key}}"
+            name: "{{name.argument_key}}"
           2:
             # the `=`
             name: "{{name.selector_delims}}"
@@ -642,7 +645,6 @@ repository:
           - include: "#selector.argument.range"
           - include: "#selector.argument.number"
           - include: "#selector.argument.boolean"
-          - include: "#selector.argument.literal"
           - include: "#selector.argument.unquoted_string"
           - include: "#selector.argument.quoted_string"
           - include: "#selector.argument.property_map"
@@ -735,7 +737,7 @@ repository:
         end: '(\,)(?=[\]\n])|(\,)|(?=[\]\n])'
         beginCaptures:
           1:
-            name: "{{name.dict_key}}"
+            name: "{{name.argument_key}}"
           2:
             name: "{{name.block_predicate_delims}}"
         endCaptures:
@@ -787,11 +789,6 @@ repository:
     name: meta.selector.argument.boolean.mcfunction
     match: "{{boolean}}{{sat}}"
     captures: "#boolean"
-
-  selector.argument.literal:
-    name: meta.selector.argument.literal.mcfunction
-    match: "{{literal}}{{sat}}"
-    captures: "#literal"
 
   selector.argument.unquoted_string:
     name: meta.selector.argument.unquoted_string.mcfunction
@@ -870,7 +867,7 @@ repository:
           1:
             name: "{{name.nbt_delims}}"
           2:
-            name: "{{name.nbt_key}}"
+            name: "{{name.argument_key}}"
           3:
             name: "{{name.nbt_delims}}"
 

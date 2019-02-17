@@ -270,7 +270,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>variable.language.mcfunction</string>
+            <string>entity.other.attribute-name.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -285,17 +285,17 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -310,22 +310,22 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -340,7 +340,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -350,7 +350,7 @@
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -380,12 +380,12 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.control.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -400,7 +400,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.type.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -415,7 +415,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.control.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -430,7 +430,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.operator.mcfunction</string>
+            <string>entity.name.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -445,7 +445,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>variable.language.mcfunction</string>
+            <string>entity.other.attribute-name.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -460,7 +460,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>variable.language.mcfunction</string>
+            <string>entity.other.attribute-name.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -505,7 +505,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.operator.mcfunction</string>
+            <string>entity.name.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -527,7 +527,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
         </dict>
         <key>endCaptures</key>
@@ -535,7 +535,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -564,7 +564,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
         </dict>
         <key>endCaptures</key>
@@ -572,7 +572,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -606,17 +606,17 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>variable.parameter.mcfunction</string>
+                <string>string.interpolated.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -653,7 +653,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -686,7 +686,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>endCaptures</key>
@@ -694,7 +694,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -715,7 +715,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>endCaptures</key>
@@ -723,7 +723,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -767,7 +767,7 @@
             <key>match</key>
             <string>(true|false)</string>
             <key>name</key>
-            <string>support.type.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
           <dict>
             <key>match</key>
@@ -839,22 +839,22 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
         </dict>
         <key>endCaptures</key>
@@ -862,7 +862,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -891,27 +891,27 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>5</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
         </dict>
         <key>endCaptures</key>
@@ -919,7 +919,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -948,12 +948,12 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>entity.other.attribute-name.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>entity.other.attribute-name.mcfunction</string>
           </dict>
         </dict>
         <key>endCaptures</key>
@@ -961,7 +961,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>entity.other.attribute-name.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -989,12 +989,12 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>variable.parameter.mcfunction</string>
+                <string>variable.other.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>entity.other.attribute-name.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1012,7 +1012,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>entity.other.attribute-name.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1036,10 +1036,6 @@
               <dict>
                 <key>include</key>
                 <string>#selector.argument.boolean</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#selector.argument.literal</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -1101,17 +1097,17 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>variable.parameter.mcfunction</string>
+                <string>string.interpolated.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>endCaptures</key>
@@ -1119,7 +1115,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1140,17 +1136,17 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>variable.parameter.mcfunction</string>
+                <string>string.interpolated.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>endCaptures</key>
@@ -1158,7 +1154,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1177,12 +1173,12 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>variable.parameter.mcfunction</string>
+                <string>string.interpolated.mcfunction</string>
               </dict>
             </dict>
           </dict>
@@ -1238,12 +1234,12 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>variable.parameter.mcfunction</string>
+                <string>variable.other.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>endCaptures</key>
@@ -1256,7 +1252,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1303,7 +1299,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.type.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -1318,7 +1314,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.operator.mcfunction</string>
+            <string>entity.name.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -1333,17 +1329,17 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -1358,22 +1354,22 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -1388,7 +1384,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -1398,7 +1394,7 @@
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -1428,22 +1424,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.type.mcfunction</string>
-          </dict>
-        </dict>
-      </dict>
-      <key>selector.argument.literal</key>
-      <dict>
-        <key>name</key>
-        <string>meta.selector.argument.literal.mcfunction</string>
-        <key>match</key>
-        <string>([a-z_][a-z0-9_]*)(?= *[\,\]\n])</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.operator.mcfunction</string>
+            <string>constant.numeric.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -1527,7 +1508,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
         </dict>
         <key>endCaptures</key>
@@ -1535,7 +1516,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -1564,7 +1545,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
         </dict>
         <key>endCaptures</key>
@@ -1572,7 +1553,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>markup.bold.mcfunction</string>
+            <string>variable.language.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -1606,17 +1587,17 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>variable.parameter.mcfunction</string>
+                <string>variable.other.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>variable.language.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1629,7 +1610,7 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>support.type.mcfunction</string>
+                    <string>constant.numeric.mcfunction</string>
                   </dict>
                 </dict>
               </dict>
@@ -1641,7 +1622,7 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>constant.character.escape.mcfunction</string>
+                    <string>constant.numeric.mcfunction</string>
                   </dict>
                   <key>2</key>
                   <dict>
@@ -1651,7 +1632,7 @@
                   <key>3</key>
                   <dict>
                     <key>name</key>
-                    <string>constant.character.escape.mcfunction</string>
+                    <string>constant.numeric.mcfunction</string>
                   </dict>
                 </dict>
               </dict>
@@ -1677,7 +1658,7 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>markup.bold.mcfunction</string>
+                    <string>variable.language.mcfunction</string>
                   </dict>
                 </dict>
                 <key>endCaptures</key>
@@ -1685,7 +1666,7 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>markup.bold.mcfunction</string>
+                    <string>variable.language.mcfunction</string>
                   </dict>
                   <key>2</key>
                   <dict>
@@ -1723,7 +1704,7 @@
           </dict>
           <dict>
             <key>name</key>
-            <string>constant.character.mcfunction</string>
+            <string>constant.character.escape.mcfunction</string>
             <key>match</key>
             <string>\\[^\n]</string>
           </dict>

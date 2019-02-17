@@ -179,7 +179,7 @@
       "match": "(?<= )(\\@[a-z])(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "variable.language.mcfunction"
+          "name": "entity.other.attribute-name.mcfunction"
         }
       }
     },
@@ -188,13 +188,13 @@
       "match": "(?<= )([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "entity.name.function.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "2": {
-          "name": "entity.name.function.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "3": {
-          "name": "entity.name.function.mcfunction"
+          "name": "support.class.mcfunction"
         }
       }
     },
@@ -203,16 +203,16 @@
       "match": "(?<= )(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "2": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "3": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "4": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         }
       }
     },
@@ -221,13 +221,13 @@
       "match": "(?<= )(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "constant.numeric.mcfunction"
         },
         "2": {
           "name": "keyword.control.mcfunction"
         },
         "3": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "constant.numeric.mcfunction"
         }
       }
     },
@@ -245,10 +245,10 @@
       "match": "(?<= )([\\~\\^])(\\-?\\d*\\.?\\d+)?(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "keyword.control.mcfunction"
+          "name": "constant.numeric.mcfunction"
         },
         "2": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "constant.numeric.mcfunction"
         }
       }
     },
@@ -257,7 +257,7 @@
       "match": "(?<= )(true|false)(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "support.type.mcfunction"
+          "name": "constant.numeric.mcfunction"
         }
       }
     },
@@ -266,7 +266,7 @@
       "match": "(?<= )(\\%\\=|\\*\\=|\\+\\=|\\-\\=|\\/\\=|\\<|\\=|\\>|\\>\\<|\\<\\=|\\>\\=)(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "keyword.control.mcfunction"
+          "name": "constant.numeric.mcfunction"
         }
       }
     },
@@ -275,7 +275,7 @@
       "match": "(?<= )([a-z_][a-z0-9_]*)(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "keyword.operator.mcfunction"
+          "name": "entity.name.mcfunction"
         }
       }
     },
@@ -284,7 +284,7 @@
       "match": "(?<= )([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "variable.language.mcfunction"
+          "name": "entity.other.attribute-name.mcfunction"
         }
       }
     },
@@ -293,7 +293,7 @@
       "match": "(?<= )([\\#\\$\\%][\\w\\.\\-]+)(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "variable.language.mcfunction"
+          "name": "entity.other.attribute-name.mcfunction"
         }
       }
     },
@@ -320,7 +320,7 @@
       "match": "(?<= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "keyword.operator.mcfunction"
+          "name": "entity.name.mcfunction"
         },
         "2": {
           "name": "keyword.control.mcfunction"
@@ -333,12 +333,12 @@
       "end": "(?=\\n)|(\\})([^ \\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         }
       },
       "endCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         },
         "2": {
           "name": "invalid.illegal.mcfunction"
@@ -356,12 +356,12 @@
       "end": "(?=\\n)|(\\])([^ \\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         }
       },
       "endCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         },
         "2": {
           "name": "invalid.illegal.mcfunction"
@@ -383,13 +383,13 @@
           "end": " *(?=[\\n\\}\\,])",
           "beginCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             },
             "2": {
-              "name": "variable.parameter.mcfunction"
+              "name": "string.interpolated.mcfunction"
             },
             "3": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "patterns": [
@@ -414,7 +414,7 @@
           "end": " *(?=[\\n\\]\\,])",
           "beginCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "patterns": [
@@ -436,12 +436,12 @@
           "end": "(?=\\n)|(\\})",
           "beginCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "patterns": [
@@ -455,12 +455,12 @@
           "end": "(?=\\n)|(\\])",
           "beginCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "patterns": [
@@ -490,7 +490,7 @@
         },
         {
           "match": "(true|false)",
-          "name": "support.type.mcfunction"
+          "name": "constant.numeric.mcfunction"
         },
         {
           "match": "(\\-?\\d*\\.?\\d+)",
@@ -535,21 +535,21 @@
       "end": "(?=\\n)|(\\])([^ \\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "entity.name.function.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "2": {
-          "name": "entity.name.function.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "3": {
-          "name": "entity.name.function.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "4": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         }
       },
       "endCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         },
         "2": {
           "name": "invalid.illegal.mcfunction"
@@ -567,24 +567,24 @@
       "end": "(?=\\n)|(\\])([^ \\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "2": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "3": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "4": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "5": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         }
       },
       "endCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         },
         "2": {
           "name": "invalid.illegal.mcfunction"
@@ -602,15 +602,15 @@
       "end": "(?=\\n)|(\\])([^ \\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "entity.other.attribute-name.mcfunction"
         },
         "2": {
-          "name": "markup.bold.mcfunction"
+          "name": "entity.other.attribute-name.mcfunction"
         }
       },
       "endCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "entity.other.attribute-name.mcfunction"
         },
         "2": {
           "name": "invalid.illegal.mcfunction"
@@ -627,10 +627,10 @@
           "end": "(\\,)(?=[\\]\\n])|(\\,)|(?=[\\]\\n])",
           "beginCaptures": {
             "1": {
-              "name": "variable.parameter.mcfunction"
+              "name": "variable.other.mcfunction"
             },
             "2": {
-              "name": "markup.bold.mcfunction"
+              "name": "entity.other.attribute-name.mcfunction"
             },
             "3": {
               "name": "keyword.control.mcfunction"
@@ -641,7 +641,7 @@
               "name": "invalid.illegal.mcfunction"
             },
             "2": {
-              "name": "markup.bold.mcfunction"
+              "name": "entity.other.attribute-name.mcfunction"
             }
           },
           "patterns": [
@@ -659,9 +659,6 @@
             },
             {
               "include": "#selector.argument.boolean"
-            },
-            {
-              "include": "#selector.argument.literal"
             },
             {
               "include": "#selector.argument.unquoted_string"
@@ -703,18 +700,18 @@
           "end": "(\\])|(?=\\n)",
           "beginCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             },
             "2": {
-              "name": "variable.parameter.mcfunction"
+              "name": "string.interpolated.mcfunction"
             },
             "3": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "patterns": [
@@ -728,18 +725,18 @@
           "end": "(\\})|(?=\\n)",
           "beginCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             },
             "2": {
-              "name": "variable.parameter.mcfunction"
+              "name": "string.interpolated.mcfunction"
             },
             "3": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "patterns": [
@@ -752,10 +749,10 @@
           "match": "(\\.)?(\\w+)",
           "captures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             },
             "2": {
-              "name": "variable.parameter.mcfunction"
+              "name": "string.interpolated.mcfunction"
             }
           }
         },
@@ -792,10 +789,10 @@
           "end": "(\\,)(?=[\\]\\n])|(\\,)|(?=[\\]\\n])",
           "beginCaptures": {
             "1": {
-              "name": "variable.parameter.mcfunction"
+              "name": "variable.other.mcfunction"
             },
             "2": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "endCaptures": {
@@ -803,7 +800,7 @@
               "name": "invalid.illegal.mcfunction"
             },
             "2": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "patterns": [
@@ -834,7 +831,7 @@
       "match": "(true|false)(?= *[\\,\\]\\n])",
       "captures": {
         "1": {
-          "name": "support.type.mcfunction"
+          "name": "constant.numeric.mcfunction"
         }
       }
     },
@@ -843,7 +840,7 @@
       "match": "([a-z_][a-z0-9_]*)(?= *[\\,\\]\\n])",
       "captures": {
         "1": {
-          "name": "keyword.operator.mcfunction"
+          "name": "entity.name.mcfunction"
         }
       }
     },
@@ -852,13 +849,13 @@
       "match": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?= *[\\,\\]\\n])",
       "captures": {
         "1": {
-          "name": "entity.name.function.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "2": {
-          "name": "entity.name.function.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "3": {
-          "name": "entity.name.function.mcfunction"
+          "name": "support.class.mcfunction"
         }
       }
     },
@@ -867,16 +864,16 @@
       "match": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?= *[\\,\\]\\n])",
       "captures": {
         "1": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "2": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "3": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "4": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "support.class.mcfunction"
         }
       }
     },
@@ -885,13 +882,13 @@
       "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?(?= *[\\,\\]\\n])",
       "captures": {
         "1": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "constant.numeric.mcfunction"
         },
         "2": {
           "name": "keyword.control.mcfunction"
         },
         "3": {
-          "name": "constant.character.escape.mcfunction"
+          "name": "constant.numeric.mcfunction"
         }
       }
     },
@@ -909,16 +906,7 @@
       "match": "(true|false)(?= *[\\,\\]\\n])",
       "captures": {
         "1": {
-          "name": "support.type.mcfunction"
-        }
-      }
-    },
-    "selector.argument.literal": {
-      "name": "meta.selector.argument.literal.mcfunction",
-      "match": "([a-z_][a-z0-9_]*)(?= *[\\,\\]\\n])",
-      "captures": {
-        "1": {
-          "name": "keyword.operator.mcfunction"
+          "name": "constant.numeric.mcfunction"
         }
       }
     },
@@ -969,12 +957,12 @@
       "end": "(?=\\n)|(\\})([^\\]\\,\\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         }
       },
       "endCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         },
         "2": {
           "name": "invalid.illegal.mcfunction"
@@ -992,12 +980,12 @@
       "end": "(?=\\n)|(\\})([^\\]\\,\\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         }
       },
       "endCaptures": {
         "1": {
-          "name": "markup.bold.mcfunction"
+          "name": "variable.language.mcfunction"
         },
         "2": {
           "name": "invalid.illegal.mcfunction"
@@ -1019,13 +1007,13 @@
           "end": " *(?=[\\n\\}\\,])",
           "beginCaptures": {
             "1": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             },
             "2": {
-              "name": "variable.parameter.mcfunction"
+              "name": "variable.other.mcfunction"
             },
             "3": {
-              "name": "markup.bold.mcfunction"
+              "name": "variable.language.mcfunction"
             }
           },
           "patterns": [
@@ -1033,7 +1021,7 @@
               "match": "(true|false)",
               "captures": {
                 "1": {
-                  "name": "support.type.mcfunction"
+                  "name": "constant.numeric.mcfunction"
                 }
               }
             },
@@ -1041,13 +1029,13 @@
               "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
               "captures": {
                 "1": {
-                  "name": "constant.character.escape.mcfunction"
+                  "name": "constant.numeric.mcfunction"
                 },
                 "2": {
                   "name": "keyword.control.mcfunction"
                 },
                 "3": {
-                  "name": "constant.character.escape.mcfunction"
+                  "name": "constant.numeric.mcfunction"
                 }
               }
             },
@@ -1064,12 +1052,12 @@
               "end": "(?=\\n)|(\\})([^\\}\\,\\n]*)",
               "beginCaptures": {
                 "1": {
-                  "name": "markup.bold.mcfunction"
+                  "name": "variable.language.mcfunction"
                 }
               },
               "endCaptures": {
                 "1": {
-                  "name": "markup.bold.mcfunction"
+                  "name": "variable.language.mcfunction"
                 },
                 "2": {
                   "name": "invalid.illegal.mcfunction"
@@ -1096,7 +1084,7 @@
           "match": "[^\\\\\\\"\\n]"
         },
         {
-          "name": "constant.character.mcfunction",
+          "name": "constant.character.escape.mcfunction",
           "match": "\\\\[^\\n]"
         },
         {
