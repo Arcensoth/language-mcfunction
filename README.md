@@ -5,6 +5,10 @@ Generic version-agnostic language grammar and syntax highlighting for mcfunction
 
 This is a generic "context-free" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
 
+## Install
+- VSCode: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
+- SublimeText: clone repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`)
+
 ## Features
 Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
 
