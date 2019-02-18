@@ -9,6 +9,22 @@ This is a generic "context-free" grammar that does not target any particular ver
 - VSCode: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
 - SublimeText: clone repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`)
 
+## Configure
+### Version-agnostic grammar
+The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting. It is recommended that you use one of the version-specific grammars, if possible.
+
+### Version-specific grammars
+The version-specific grammars are partially generated based on Minecraft's generated data, which is provided only by Minecraft versions 1.13 and higher.
+
+#### VSCode
+You can easily choose which version of mcfunction to use by changing the `.mcfunction` extension association in your workspace settings:
+```
+"files.associations": {
+  "*.mcfunction": "mcfunction-snapshot"
+}
+```
+This option can also be set on the user-level in `settings.json` or folder-level in `.vscode/settings.json`.
+
 ## Features
 Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
 
