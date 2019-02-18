@@ -10,3 +10,7 @@ execute if block ~ ~ ~ minecraft:oak_leaves[distance=5,persistent=true] run
 # test tagged variant
 execute if block ~ ~ ~ #minecraft:leaves[distance=5] run
 execute if block ~ ~ ~ #minecraft:leaves[distance=5,persistent=true] run
+
+# test with nbt
+setblock ~ ~ ~ mypack:foo{foo: bar} destroy
+setblock ~ ~ ~ mypack:foo[facing=up]{foo: bar} destroy
