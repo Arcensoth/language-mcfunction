@@ -14,11 +14,11 @@
     <array>
       <dict>
         <key>include</key>
-        <string>#comments</string>
+        <string>#comment</string>
       </dict>
       <dict>
         <key>include</key>
-        <string>#commands</string>
+        <string>#command</string>
       </dict>
       <dict>
         <key>include</key>
@@ -27,50 +27,71 @@
     </array>
     <key>repository</key>
     <dict>
+      <key>comment</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta.comment.mcfunction</string>
+            <key>begin</key>
+            <string>^[ \t]*(?=\#)</string>
+            <key>end</key>
+            <string>\n</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#comments</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
       <key>comments</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta.comment.todo.mcfunction</string>
+            <string>meta.comment.annotation.mcfunction</string>
             <key>match</key>
-            <string>^\s*(#)\s*((?:TODO|FIXME|DELETEME)\b.*)$</string>
+            <string>(##)[ \t]*(.*)$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.comment.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>markup.heading.comment.mcfunction</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>name</key>
-            <string>meta.comment.annotation.mcfunction</string>
+            <string>meta.comment.todo.mcfunction</string>
             <key>match</key>
-            <string>^\s*(#)\s*(\@\w*)\b(.*)$</string>
+            <string>(#)[ \t]*((?:TODO|FIXME|XXX))(\b.*)$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.comment.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.bold.mcfunction</string>
+                <string>markup.bold.name.marker.comment.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.text.marker.comment.mcfunction</string>
               </dict>
             </dict>
           </dict>
@@ -78,41 +99,86 @@
             <key>name</key>
             <string>meta.comment.annotation.mcfunction</string>
             <key>match</key>
-            <string>^\s*(##)\s*(.*)$</string>
+            <string>(#)[ \t]*(\@\w*)(\b.*)$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.comment.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.heading.mcfunction</string>
+                <string>markup.heading.name.annotation.comment.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>comment.text.annotation.comment.mcfunction</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>name</key>
-            <string>meta.comment.mcfunction</string>
+            <string>meta.comment.plain.mcfunction</string>
             <key>match</key>
-            <string>^\s*(#.*)$</string>
+            <string>(#.*)$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.comment.mcfunction</string>
               </dict>
             </dict>
           </dict>
         </array>
       </dict>
-      <key>commands</key>
+      <key>command</key>
       <dict>
         <key>patterns</key>
-        <array/>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta.command.mcfunction</string>
+            <key>begin</key>
+            <string>^[ \t]*(?=[^\s\#])</string>
+            <key>end</key>
+            <string>\n</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated_commands</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#command.unknown</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>command.unknown</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta.command.unknown.mcfunction</string>
+            <key>match</key>
+            <string>(.*)$</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
       </dict>
       <key>unknown</key>
       <dict>
@@ -128,11 +194,16 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>invalid.illegal.mcfunction</string>
+                <string>invalid.mcfunction</string>
               </dict>
             </dict>
           </dict>
         </array>
+      </dict>
+      <key>generated_commands</key>
+      <dict>
+        <key>patterns</key>
+        <array/>
       </dict>
     </dict>
   </dict>

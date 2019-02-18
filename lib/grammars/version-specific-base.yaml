@@ -5,62 +5,108 @@ fileTypes:
   - mcfunction
 
 names:
+  comment: comment.comment.mcfunction
+  comment.heading: markup.heading.comment.mcfunction
+  comment.marker.name: markup.bold.name.marker.comment.mcfunction
+  comment.marker.text: comment.text.marker.comment.mcfunction
+  comment.annotation.name: markup.heading.name.annotation.comment.mcfunction
+  comment.annotation.text: comment.text.annotation.comment.mcfunction
+
+  unknown: invalid.mcfunction
   error: invalid.illegal.mcfunction
 
-variables: []
+variables:
+  space: " *"
+  tabspace: '[ \t]*'
+  command_delim: '[ \n]'
+  not_command_delim: '[^ \n]'
+
+  command_delim_l: "(?<={{command_delim}})"
+  command_delim_r: "(?={{command_delim}})"
 
 patterns:
-  - include: "#comments"
-  - include: "#commands"
+  - include: "#comment"
+  - include: "#command"
   - include: "#unknown"
 
 capturesRepository: {}
 
 repository:
+  comment:
+    patterns:
+      # comments begin on with `#`, after optional leading whitespace
+      - name: meta.comment.mcfunction
+        begin: '^{{tabspace}}(?=\#)'
+        end: '\n'
+        patterns:
+          - include: "#comments"
+
   comments:
     patterns:
-      # things that need attention, like todos and fixmes
-      - name: meta.comment.todo.mcfunction
-        match: '^\s*(#)\s*((?:TODO|FIXME|DELETEME)\b.*)$'
-        captures:
-          1:
-            name: comment.number-sign.mcfunction
-          2:
-            name: markup.bold.mcfunction
-      # doc tags like `@params` and `@returns`
-      - name: meta.comment.annotation.mcfunction
-        match: '^\s*(#)\s*(\@\w*)\b(.*)$'
-        captures:
-          1:
-            name: comment.number-sign.mcfunction
-          2:
-            name: markup.bold.mcfunction
-          3:
-            name: comment.number-sign.mcfunction
       # headers for separating blocks
       - name: meta.comment.annotation.mcfunction
-        match: '^\s*(##)\s*(.*)$'
+        match: "(##){{tabspace}}(.*)$"
         captures:
           1:
-            name: comment.number-sign.mcfunction
+            name: "#comment"
           2:
-            name: markup.heading.mcfunction
-      # any other comment should get caught here
-      - name: meta.comment.mcfunction
-        match: '^\s*(#.*)$'
+            name: "#comment.heading"
+      # things that need attention, like todos and fixmes
+      - name: meta.comment.todo.mcfunction
+        match: '(#){{tabspace}}((?:TODO|FIXME|XXX))(\b.*)$'
         captures:
           1:
-            name: comment.number-sign.mcfunction
+            name: "#comment"
+          2:
+            name: "#comment.marker.name"
+          3:
+            name: "#comment.marker.text"
+      # doc tags like `@params` and `@returns`
+      - name: meta.comment.annotation.mcfunction
+        match: '(#){{tabspace}}(\@\w*)(\b.*)$'
+        captures:
+          1:
+            name: "#comment"
+          2:
+            name: "#comment.annotation.name"
+          3:
+            name: "#comment.annotation.text"
+      # any other comment should get caught here
+      - name: meta.comment.plain.mcfunction
+        match: "(#.*)$"
+        captures:
+          1:
+            name: "#comment"
 
-  commands:
-    # this is where the generator will inject command patterns
-    patterns: []
+  command:
+    # commands begin with any non-whitespace, non-comment character, after optional leading whitespace
+    patterns:
+      - name: meta.command.mcfunction
+        # don't start consuming the command yet
+        begin: '^{{tabspace}}(?=[^\s\#])'
+        end: '\n'
+        patterns:
+          - include: "#generated_commands"
+          - include: "#command.unknown"
+
+  command.unknown:
+    patterns:
+      - name: meta.command.unknown.mcfunction
+        match: "(.*)$"
+        captures:
+          1:
+            name: "#unknown"
 
   unknown:
     # anything else gets caught here and highlighted as an error
+    # in theory this should only ever happen for lines consisting entirely of whitespace
     patterns:
       - name: meta.unknown.mcfunction
         match: "^(.*)$"
         captures:
           1:
-            name: "#error"
+            name: "#unknown"
+
+  generated_commands:
+    # this is where the generator will inject command patterns
+    patterns: []
