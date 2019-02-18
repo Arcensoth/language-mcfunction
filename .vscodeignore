@@ -1,6 +1,6 @@
 .vscode
 node_modules
 dist
-build
+lib
 tests
 mcfunction.tmLanguage.yaml

@@ -1,14 +1,13 @@
 {
   "name": "language-mcfunction",
   "displayName": "language-mcfunction",
-  "description": "Generic version-agnostic language grammar and syntax highlighting for mcfunction files.",
-  "version": "0.6.0",
+  "description": "Language grammar and syntax highlighting for mcfunction files.",
+  "version": "0.7.0-dev",
   "publisher": "arcensoth",
   "repository": "https://github.com/Arcensoth/language-mcfunction",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -b build -v && node build/build.js",
-    "debug": "tsc -b build -v && node --nolazy --inspect-brk=9229 build/build.js"
+    "build": "tsc -b lib -v && node lib/cli.js"
   },
   "engines": {
     "vscode": "^1.30.0"

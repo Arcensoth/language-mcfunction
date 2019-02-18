@@ -1,0 +1,48 @@
+name: mcfunction-snapshot
+scopeName: source.mcfunction-snapshot
+fileTypes:
+  - mcfunction
+patterns:
+  - include: '#comments'
+  - include: '#commands'
+  - include: '#unknown'
+repository:
+  comments:
+    patterns:
+      - name: meta.comment.todo.mcfunction
+        match: '^\s*(#)\s*((?:TODO|FIXME|DELETEME)\b.*)$'
+        captures:
+          '1':
+            name: comment.number-sign.mcfunction
+          '2':
+            name: markup.bold.mcfunction
+      - name: meta.comment.annotation.mcfunction
+        match: '^\s*(#)\s*(\@\w*)\b(.*)$'
+        captures:
+          '1':
+            name: comment.number-sign.mcfunction
+          '2':
+            name: markup.bold.mcfunction
+          '3':
+            name: comment.number-sign.mcfunction
+      - name: meta.comment.annotation.mcfunction
+        match: '^\s*(##)\s*(.*)$'
+        captures:
+          '1':
+            name: comment.number-sign.mcfunction
+          '2':
+            name: markup.heading.mcfunction
+      - name: meta.comment.mcfunction
+        match: '^\s*(#.*)$'
+        captures:
+          '1':
+            name: comment.number-sign.mcfunction
+  commands:
+    patterns: []
+  unknown:
+    patterns:
+      - name: meta.unknown.mcfunction
+        match: ^(.*)$
+        captures:
+          '1':
+            name: invalid.illegal.mcfunction

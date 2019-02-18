@@ -1,0 +1,66 @@
+---
+name: mcfunction
+scopeName: source.mcfunction
+fileTypes:
+  - mcfunction
+
+names:
+  error: invalid.illegal.mcfunction
+
+variables: []
+
+patterns:
+  - include: "#comments"
+  - include: "#commands"
+  - include: "#unknown"
+
+capturesRepository: {}
+
+repository:
+  comments:
+    patterns:
+      # things that need attention, like todos and fixmes
+      - name: meta.comment.todo.mcfunction
+        match: '^\s*(#)\s*((?:TODO|FIXME|DELETEME)\b.*)$'
+        captures:
+          1:
+            name: comment.number-sign.mcfunction
+          2:
+            name: markup.bold.mcfunction
+      # doc tags like `@params` and `@returns`
+      - name: meta.comment.annotation.mcfunction
+        match: '^\s*(#)\s*(\@\w*)\b(.*)$'
+        captures:
+          1:
+            name: comment.number-sign.mcfunction
+          2:
+            name: markup.bold.mcfunction
+          3:
+            name: comment.number-sign.mcfunction
+      # headers for separating blocks
+      - name: meta.comment.annotation.mcfunction
+        match: '^\s*(##)\s*(.*)$'
+        captures:
+          1:
+            name: comment.number-sign.mcfunction
+          2:
+            name: markup.heading.mcfunction
+      # any other comment should get caught here
+      - name: meta.comment.mcfunction
+        match: '^\s*(#.*)$'
+        captures:
+          1:
+            name: comment.number-sign.mcfunction
+
+  commands:
+    # this is where the generator will inject command patterns
+    patterns: []
+
+  unknown:
+    # anything else gets caught here and highlighted as an error
+    patterns:
+      - name: meta.unknown.mcfunction
+        match: "^(.*)$"
+        captures:
+          1:
+            name: "#error"

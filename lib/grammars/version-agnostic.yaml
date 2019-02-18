@@ -1,0 +1,924 @@
+---
+name: mcfunction
+scopeName: source.mcfunction
+fileTypes:
+  - mcfunction
+
+names:
+  brace_delims: variable.language.mcfunction
+  argument_key: variable.other.mcfunction
+  numeric_constant: constant.numeric.mcfunction
+  numeric_altered: constant.numeric.mcfunction
+  range_ellipsis: keyword.control.mcfunction
+  coordinate_operator: "#numeric_altered"
+  base_selector: support.class.mcfunction
+  selector_delims: "#base_selector"
+  block_predicate_delims: "#brace_delims"
+  nbt_delims: "#brace_delims"
+  nbt_key: string.interpolated.mcfunction
+  nbt_index: constant.numeric.mcfunction
+  resource_namespace: entity.name.function.mcfunction
+  resource_path: "#resource_namespace"
+  tagged_resource_namespace: "#resource_namespace"
+  tagged_resource_path: "#tagged_resource_namespace"
+  namespace_separator: "#resource_namespace"
+  uuid: "#base_selector"
+  fakeplayer: "#base_selector"
+  boolean: "#numeric_constant"
+  operation: "#numeric_constant"
+  literal: entity.name.mcfunction
+  unquoted_string: string.unquoted.mcfunction
+  quoted_string: string.quoted.mcfunction
+  quoted_string_escape: constant.character.escape.mcfunction
+  root_redirect: "#literal"
+  top_level_command: keyword.control.mcfunction
+  unknown: invalid.illegal.mcfunction
+  error: invalid.illegal.mcfunction
+
+variables:
+  lookahead_newline: '(?=\n)'
+
+  command_token_delim: '[ \n]'
+  not_command_token_delim: '[^ \n]'
+
+  command_token_l: "(?<= )"
+  command_token_r: '(?=[ \n])'
+
+  selector_argument_terminal: '(?= *[\,\]\n])'
+  sat: "{{selector_argument_terminal}}"
+
+  block_predicate_argument_terminal: "{{sat}}"
+  bpat: "{{block_predicate_argument_terminal}}"
+
+  # boolean true/false
+  boolean: "(true|false)"
+
+  # math/numeric operations
+  operation: '(\%\=|\*\=|\+\=|\-\=|\/\=|\<|\=|\>|\>\<|\<\=|\>\=)'
+
+  # commands like `execute ... run` that redirect to the root node
+  root_redirect: "(run)"
+
+  # characters for literal subcommands and other strict word-like identifiers
+  literal: "([a-z_][a-z0-9_]*)"
+
+  # characters permitted in namespaces, resource paths, etc
+  component_nc: '[a-z0-9_\.\-]+'
+  component: "({{component_nc}})"
+
+  # an integer or decimal with optional leading digit
+  number: '(\-?\d*\.?\d+)'
+
+  # a resource path is the portion of the resource location following the namespace
+  resource_path_nc: '[a-z0-9_\.\-\/]+'
+  resource_path: "({{resource_path_nc}})"
+
+  # resource locations: namespace + path
+  # TODO improve resource location validity
+  # resource_location: '{{component}}(\:)({{component_nc}}(?:\/{{component_nc}})*)'
+  resource_location_nc: '{{component_nc}}\:{{resource_path_nc}}'
+  resource_location: '{{component}}(\:){{resource_path}}'
+
+  # uuid format
+  hex_digit: "[0-9a-fA-F]"
+  uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
+
+  # various popular fakeplayer formats
+  # they'd get classified as unquoted strings anyway
+  fakeplayer: '([\#\$\%][\w\.\-]+)'
+
+  # unquoted strings are like literals with additional available characters
+  # TODO check what the game allows for word-type string arguments
+  unquoted_string: '([\w\.\-\#\$\%]+)'
+
+  # a tagged resource location is a resource location prefaced with `#`
+  tagged_resource_location: '(\#){{resource_location}}'
+
+  # relative or local coordinate
+  coordinate: '([\~\^]){{number}}?'
+
+  # numeric range
+  range: '{{number}}?(\.\.){{number}}?'
+
+  # base selectors are defined with a single, lower-case character
+  base_selector: '(\@[a-z])'
+
+patterns:
+  - include: "#comment"
+  - include: "#command"
+  - include: "#unknown"
+
+capturesRepository:
+  selector_without_arguments:
+    1:
+      name: "#base_selector"
+
+  resource_location:
+    1:
+      # the namespace
+      name: "#resource_namespace"
+    2:
+      # the `:`
+      name: "#namespace_separator"
+    3:
+      # the path
+      name: "#resource_path"
+
+  tagged_resource_location:
+    1:
+      # the `#`
+      name: "#tagged_resource_namespace"
+    2:
+      # the namespace
+      name: "#tagged_resource_namespace"
+    3:
+      # the `:`
+      name: "#namespace_separator"
+    4:
+      # the path
+      name: "#tagged_resource_path"
+
+  range:
+    # TODO catch `..` error case
+    1:
+      # the number on the left side
+      name: "#numeric_altered"
+    2:
+      # color the `..` differently to distinguish it from decimals
+      name: "#range_ellipsis"
+    3:
+      # the number on the right side
+      name: "#numeric_altered"
+
+  number:
+    1:
+      name: "#numeric_constant"
+
+  coordinate:
+    1:
+      # the `~` or `^`
+      name: "#coordinate_operator"
+    2:
+      # the actual number
+      name: "#numeric_altered"
+
+  boolean:
+    1:
+      name: "#boolean"
+
+  operation:
+    1:
+      name: "#operation"
+
+  root_redirect:
+    1:
+      name: "#root_redirect"
+    2:
+      name: "#top_level_command"
+
+  literal:
+    1:
+      name: "#literal"
+
+  uuid:
+    1:
+      name: "#uuid"
+
+  fakeplayer:
+    1:
+      name: "#fakeplayer"
+
+  unquoted_string:
+    1:
+      name: "#unquoted_string"
+
+repository:
+  comment:
+    patterns:
+      # things that need attention, like todos and fixmes
+      - name: meta.comment.todo.mcfunction
+        match: '^\s*(#)\s*((?:TODO|FIXME|DELETEME)\b.*)$'
+        captures:
+          1:
+            name: comment.number-sign.mcfunction
+          2:
+            name: markup.bold.mcfunction
+      # doc tags like `@params` and `@returns`
+      - name: meta.comment.annotation.mcfunction
+        match: '^\s*(#)\s*(\@\w*)\b(.*)$'
+        captures:
+          1:
+            name: comment.number-sign.mcfunction
+          2:
+            name: markup.bold.mcfunction
+          3:
+            name: comment.number-sign.mcfunction
+      # headers for separating blocks
+      - name: meta.comment.annotation.mcfunction
+        match: '^\s*(##)\s*(.*)$'
+        captures:
+          1:
+            name: comment.number-sign.mcfunction
+          2:
+            name: markup.heading.mcfunction
+      # any other comment should get caught here
+      - name: meta.comment.mcfunction
+        match: '^\s*(#.*)$'
+        captures:
+          1:
+            name: comment.number-sign.mcfunction
+
+  command:
+    patterns:
+      - name: meta.command.mcfunction
+        begin: '^\s*{{literal}}[ \n]'
+        end: "$"
+        beginCaptures:
+          # highlight the first command on each line
+          1:
+            name: "#top_level_command"
+        patterns:
+          # don't name this one yet, we want to get rid of the space
+          - begin: "(?<= )"
+            # consume the space
+            end: '[ \n]'
+            # name everything inside as part of the token
+            contentName: meta.command.token.mcfunction
+            patterns:
+              - include: "#command.tokens"
+
+  unknown:
+    patterns:
+      - name: meta.unknown.mcfunction
+        match: "^(.*)$"
+        captures:
+          1:
+            name: "#unknown"
+
+  command.tokens:
+    patterns:
+      - include: "#command.token.nbt_compound"
+      - include: "#command.token.nbt_list"
+      - include: "#command.token.selector_with_arguments"
+      - include: "#command.token.selector_without_arguments"
+      - include: "#command.token.block_predicate"
+      - include: "#command.token.tagged_block_predicate"
+      - include: "#command.token.resource_location"
+      - include: "#command.token.tagged_resource_location"
+      - include: "#command.token.range"
+      - include: "#command.token.number"
+      - include: "#command.token.coordinate"
+      - include: "#command.token.boolean"
+      - include: "#command.token.operation"
+      - include: "#command.token.root_redirect"
+      - include: "#command.token.literal"
+      - include: "#command.token.uuid"
+      - include: "#command.token.fakeplayer"
+      - include: "#command.token.nbt_path"
+      - include: "#command.token.unquoted_string"
+      - include: "#command.token.quoted_string"
+      - include: "#command.token.unknown"
+
+  command.token.selector_without_arguments:
+    name: meta.command.token.selector_without_arguments.mcfunction
+    match: "{{command_token_l}}{{base_selector}}{{command_token_r}}"
+    captures: "#selector_without_arguments"
+
+  command.token.resource_location:
+    name: meta.command.token.resource_location.mcfunction
+    match: "{{command_token_l}}{{resource_location}}{{command_token_r}}"
+    captures: "#resource_location"
+
+  command.token.tagged_resource_location:
+    name: meta.command.token.tagged_resource_location.mcfunction
+    match: "{{command_token_l}}{{tagged_resource_location}}{{command_token_r}}"
+    captures: "#tagged_resource_location"
+
+  command.token.range:
+    name: meta.command.token.range.mcfunction
+    match: "{{command_token_l}}{{range}}{{command_token_r}}"
+    captures: "#range"
+
+  command.token.number:
+    name: meta.command.token.number.mcfunction
+    match: "{{command_token_l}}{{number}}{{command_token_r}}"
+    captures: "#number"
+
+  command.token.coordinate:
+    name: meta.command.token.coordinate.mcfunction
+    match: "{{command_token_l}}{{coordinate}}{{command_token_r}}"
+    captures: "#coordinate"
+
+  command.token.boolean:
+    name: meta.command.token.boolean.mcfunction
+    match: "{{command_token_l}}{{boolean}}{{command_token_r}}"
+    captures: "#boolean"
+
+  command.token.operation:
+    name: meta.command.token.operation.mcfunction
+    match: "{{command_token_l}}{{operation}}{{command_token_r}}"
+    captures: "#operation"
+
+  command.token.literal:
+    name: meta.command.token.literal.mcfunction
+    match: "{{command_token_l}}{{literal}}{{command_token_r}}"
+    captures: "#literal"
+
+  command.token.uuid:
+    name: meta.command.token.uuid.mcfunction
+    match: "{{command_token_l}}{{uuid}}{{command_token_r}}"
+    captures: "#uuid"
+
+  command.token.fakeplayer:
+    name: meta.command.token.fakeplayer.mcfunction
+    match: "{{command_token_l}}{{fakeplayer}}{{command_token_r}}"
+    captures: "#fakeplayer"
+
+  command.token.unquoted_string:
+    name: meta.command.token.unquoted_string.mcfunction
+    match: "{{command_token_l}}{{unquoted_string}}{{command_token_r}}"
+    captures: "#unquoted_string"
+
+  command.token.unknown:
+    name: meta.command.token.unknown.mcfunction
+    match: '{{command_token_l}}([^ \n]*){{command_token_r}}'
+    captures:
+      1:
+        name: "#unknown"
+
+  command.token.root_redirect:
+    # Special case for commands like `execute ... run` that redirect to the
+    # root command. We use this to highlight the top-level command despite it
+    # not being on its own line.
+    name: meta.command.token.root_redirect.mcfunction
+    match: "{{command_token_l}}{{root_redirect}} ?{{literal}}?{{command_token_r}}"
+    captures: "#root_redirect"
+
+  command.token.nbt_compound:
+    name: meta.command.token.nbt_compound.mcfunction
+    begin: '{{command_token_l}}(\{)'
+    end: '{{lookahead_newline}}|(\})({{not_command_token_delim}}*)'
+    beginCaptures:
+      1:
+        name: "#nbt_delims"
+    endCaptures:
+      1:
+        name: "#nbt_delims"
+      2:
+        name: "#error"
+    patterns:
+      - include: "#nbt.compound"
+
+  command.token.nbt_list:
+    name: meta.command.token.nbt_list.mcfunction
+    begin: '{{command_token_l}}(\[)'
+    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
+    beginCaptures:
+      1:
+        name: "#nbt_delims"
+    endCaptures:
+      1:
+        name: "#nbt_delims"
+      2:
+        name: "#error"
+    patterns:
+      - include: "#nbt.list"
+
+  nbt.compound:
+    patterns:
+      # skip whitespace: {( )SelectedItem : { Count : 64 } }
+      - match: " +"
+
+      # quoted keys: { ("text") (:) "hello" }
+      # unquoted keys: { (SelectedItem) (:) { Count: 64 } }
+      - begin: '(,)? *(\w+|\"[^\n\"]+\") *(\:) *'
+
+        # Possible ending cases:
+        #   1. the closing brace of the parent compound
+        #   2. the comma separating the next element
+        #   3. newline (error case)
+        end: ' *(?=[\n\}\,])'
+
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+          2:
+            name: "#nbt_key"
+          3:
+            name: "#nbt_delims"
+
+        patterns:
+          - include: "#nbt.value"
+
+      # anything else apart from separators and terminals is an error
+      - match: '[^\n\}\,]+'
+        name: "#error"
+
+  nbt.list:
+    patterns:
+      # skip whitespace: [( )1 , 2 , 3]
+      - match: " +"
+
+      # values: [ 1 (,) (2) , 3]
+      # begin on anything that is not a terminal or separator
+      - begin: '(,)? *(?=[^\n\]\,])'
+
+        # Possible ending cases:
+        #   1. the closing brace of the parent compound
+        #   2. the comma separating the next element
+        #   3. newline (error case)
+        end: ' *(?=[\n\]\,])'
+
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+
+        patterns:
+          - include: "#nbt.value"
+
+      - match: '[^\n\]\,]+'
+        name: "#error"
+
+  nbt.value:
+    patterns:
+      - begin: '(\{)'
+        end: '{{lookahead_newline}}|(\})'
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+        endCaptures:
+          1:
+            name: "#nbt_delims"
+        patterns:
+          - include: "#nbt.compound"
+      - begin: '(\[)'
+        end: '{{lookahead_newline}}|(\])'
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+        endCaptures:
+          1:
+            name: "#nbt_delims"
+        patterns:
+          - include: "#nbt.list"
+      - begin: '(\")'
+        end: '{{lookahead_newline}}|(\")'
+        beginCaptures:
+          1:
+            name: "#quoted_string"
+        endCaptures:
+          1:
+            name: "#quoted_string"
+        patterns:
+          - include: "#common.quoted_string"
+      - match: "{{boolean}}"
+        name: "#boolean"
+      - match: "{{number}}"
+        name: "#numeric_constant"
+      - match: "{{unquoted_string}}"
+        name: "#unquoted_string"
+      - match: '[^\n\,\]\}]+'
+        name: "#error"
+
+  command.token.quoted_string:
+    # quoted strings are a recursive format captured between the quotes
+    name: meta.command.token.quoted_string.mcfunction
+
+    # TODO how do we highlight the whole thing as an error, if any part of it fails?
+
+    # begin whenever we see a quote
+    begin: '{{command_token_l}}(\")'
+
+    # End on anything. This is tricky. If we got to this point, it means the
+    # child scope has been terminated. According to the child scope, the only
+    # things that can get us here are an unescaped quote or a newline (which
+    # cannot be escaped). Also make sure to mark anything following an ending
+    # quote to the next token delimiter as an error.
+    end: '{{lookahead_newline}}|(\")({{not_command_token_delim}}*)'
+
+    beginCaptures:
+      1:
+        name: "#quoted_string"
+
+    endCaptures:
+      1:
+        name: "#quoted_string"
+      2:
+        name: "#error"
+
+    patterns:
+      - include: "#common.quoted_string"
+
+  command.token.block_predicate:
+    # This whole thing is going to look a lot like selector arguments.
+
+    name: meta.command.token.block_predicate.mcfunction
+
+    # Begin whenever we see a resource location followed by an opening square brace.
+    begin: '{{command_token_l}}{{resource_location}}(\[)'
+
+    # Similar to selector arguments; end in several cases.
+    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
+
+    beginCaptures:
+      # TODO refactor repeated code (groups 1-3)
+      1:
+        # the namespace
+        name: "#resource_namespace"
+      2:
+        # the `:`
+        name: "#namespace_separator"
+      3:
+        # the path
+        name: "#resource_path"
+      4:
+        # the opening brace
+        name: "#block_predicate_delims"
+
+    endCaptures:
+      1:
+        name: "#block_predicate_delims"
+      2:
+        name: "#error"
+
+    patterns:
+      - include: "#block_predicate.arguments"
+
+  command.token.tagged_block_predicate:
+    # Same as without a tag... all for a different colour.
+    # TODO can we reduce the amount of repeated code here?
+    name: meta.command.token.tagged_block_predicate.mcfunction
+    begin: '{{command_token_l}}{{tagged_resource_location}}(\[)'
+    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
+    beginCaptures:
+      # TODO refactor repeated code (groups 1-4)
+      1:
+        # the `#`
+        name: "#tagged_resource_namespace"
+      2:
+        # the namespace
+        name: "#tagged_resource_namespace"
+      3:
+        # the `:`
+        name: "#namespace_separator"
+      4:
+        # the path
+        name: "#tagged_resource_path"
+      5:
+        # the opening brace
+        name: "#block_predicate_delims"
+    endCaptures:
+      1:
+        name: "#block_predicate_delims"
+      2:
+        name: "#error"
+    patterns:
+      - include: "#block_predicate.arguments"
+
+  command.token.selector_with_arguments:
+    name: meta.command.token.selector_with_arguments.mcfunction
+
+    # Begin whenever we see a base selector followed by an opening square brace.
+    begin: '{{command_token_l}}{{base_selector}}(\[)'
+
+    # Similar to quotes, we have two distinct ending cases.
+    #   1. End on a newline, without consuming it. This is technically an error
+    #      case, but will occur frequently with unfinished selectors; e.g. while
+    #      the user is typing a selector at the end of a line.
+    #   2. End on any other character, although according to the child scope it
+    #      should only ever be a closing square brace. The child scope does not
+    #      consume the closing brace, and so it becomes our job to check for
+    #      erroneous trailing data and to advance the next token.
+    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
+
+    beginCaptures:
+      1:
+        name: "#base_selector"
+      2:
+        name: "#selector_delims"
+
+    endCaptures:
+      1:
+        name: "#selector_delims"
+      2:
+        name: "#error"
+
+    patterns:
+      # consume whitespace in between arguments
+      - name: meta.selector.argument_spacing.mcfunction
+        match: " +"
+      # now the fun part: recurse yet again whenever we encounter an argument
+      - name: meta.selector.argument.mcfunction
+
+        # Begin as soon as we see a key, equals, and optional negation operator.
+        begin: '{{literal}} *(\=) *(\!)? *'
+
+        # End in three distinct cases:
+        #   1. Comma followed immediately by a terminal. Consume the comma, but
+        #      not the terminal. This is an error case.
+        #   2. Just a comma. This is the expected case and we can proceed fine.
+        #   3. just a terminal. Also an error case.
+        end: '(\,)(?=[\]\n])|(\,)|(?=[\]\n])'
+
+        beginCaptures:
+          1:
+            # the key
+            name: "#argument_key"
+          2:
+            # the `=`
+            name: "#selector_delims"
+          3:
+            # the optional `!`
+            name: "keyword.control.mcfunction"
+
+        endCaptures:
+          1:
+            # the `,` in invalid case (1)
+            name: "#error"
+          2:
+            # the `,` in valid case (2)
+            name: "#selector_delims"
+
+        patterns:
+          - include: "#selector.argument.resource_location"
+          - include: "#selector.argument.tagged_resource_location"
+          - include: "#selector.argument.range"
+          - include: "#selector.argument.number"
+          - include: "#selector.argument.boolean"
+          - include: "#selector.argument.unquoted_string"
+          - include: "#selector.argument.quoted_string"
+          - include: "#selector.argument.property_map"
+          - include: "#selector.argument.nbt_compound"
+          - include: "#selector.argument.unknown"
+
+      # anything else apart from terminals is classified as an error
+      - name: "#error"
+        match: '[^\]\n]+'
+
+  command.token.nbt_path:
+    name: meta.command.token.nbt_path.mcfunction
+
+    # This one is tricky, because we won't know when to start recursing.
+    # There's also a lot of overlap with other token types, like strings.
+    # So what we're going to do is require at least one character familiar to
+    # NBT paths, like dots or opening braces, immediately following a word.
+    # We use lookahead here so that we can process the syntax more accurately
+    # after we're more confident that the token is an NBT path.
+    begin: '{{command_token_l}}(?=\w+[\.\[\{])'
+
+    # It's impossible to know what an NBT path will end on, so apart from being
+    # careful about newlines like usual we just accept anything.
+    # end: '{{lookahead_newline}}|({{not_command_token_delim}}*)'
+    end: "{{command_token_r}}"
+
+    patterns:
+      - include: "#nbt_path.property"
+
+  nbt_path.property:
+    patterns:
+      # (Inventory)([){Count: 64}(])
+      - begin: '(\.)?(\w+)(\[)'
+        end: '(\])|(?=\n)'
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+          2:
+            name: "#nbt_key"
+          3:
+            name: "#nbt_delims"
+        endCaptures:
+          1:
+            name: "#nbt_delims"
+        patterns:
+          - include: "#nbt_path.index"
+      # Inventory[].(tag)({)custom: true(}).display.Name
+      - begin: '(\.)?(\w+)(\{)'
+        end: '(\})|(?=\n)'
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+          2:
+            name: "#nbt_key"
+          3:
+            name: "#nbt_delims"
+        endCaptures:
+          1:
+            name: "#nbt_delims"
+        patterns:
+          - include: "#nbt.compound"
+      # SelectedItem(.Count)
+      - match: '(\.)?(\w+)'
+        captures:
+          1:
+            name: "#nbt_delims"
+          2:
+            name: "#nbt_key"
+      # (error) look-ahead double dot
+      - match: '(\.)(?=\.)'
+        captures:
+          1:
+            name: "#error"
+      # anything else between dots is an error
+      # make sure to break before newlines
+      - match: '[^\.\s]+'
+        name: "#error"
+
+  nbt_path.index:
+    patterns:
+      # TODO this isn't really an index
+      - include: "#nbt.list"
+
+  block_predicate.arguments:
+    patterns:
+      - name: meta.block_predicate.argument_spacing.mcfunction
+        match: " +"
+      - name: meta.block_predicate.argument.mcfunction
+        begin: '{{literal}} *(\=) *'
+        end: '(\,)(?=[\]\n])|(\,)|(?=[\]\n])'
+        beginCaptures:
+          1:
+            name: "#argument_key"
+          2:
+            name: "#block_predicate_delims"
+        endCaptures:
+          1:
+            name: "#error"
+          2:
+            name: "#block_predicate_delims"
+        patterns:
+          - include: "#block_predicate.argument.number"
+          - include: "#block_predicate.argument.boolean"
+          - include: "#block_predicate.argument.literal"
+
+  block_predicate.argument.number:
+    name: meta.block_predicate.argument.number.mcfunction
+    match: "{{number}}{{bpat}}"
+    captures: "#number"
+
+  block_predicate.argument.boolean:
+    name: meta.block_predicate.argument.boolean.mcfunction
+    match: "{{boolean}}{{bpat}}"
+    captures: "#boolean"
+
+  block_predicate.argument.literal:
+    name: meta.block_predicate.argument.literal.mcfunction
+    match: "{{literal}}{{bpat}}"
+    captures: "#literal"
+
+  selector.argument.resource_location:
+    name: meta.selector.argument.resource_location.mcfunction
+    match: "{{resource_location}}{{sat}}"
+    captures: "#resource_location"
+
+  selector.argument.tagged_resource_location:
+    name: meta.selector.argument.tagged_resource_location.mcfunction
+    match: "{{tagged_resource_location}}{{sat}}"
+    captures: "#tagged_resource_location"
+
+  selector.argument.range:
+    name: meta.selector.argument.range.mcfunction
+    match: "{{range}}{{sat}}"
+    captures: "#range"
+
+  selector.argument.number:
+    name: meta.selector.argument.number.mcfunction
+    match: "{{number}}{{sat}}"
+    captures: "#number"
+
+  selector.argument.boolean:
+    name: meta.selector.argument.boolean.mcfunction
+    match: "{{boolean}}{{sat}}"
+    captures: "#boolean"
+
+  selector.argument.unquoted_string:
+    name: meta.selector.argument.unquoted_string.mcfunction
+    match: "{{unquoted_string}}{{sat}}"
+    captures: "#unquoted_string"
+
+  selector.argument.unknown:
+    name: meta.selector.argument.unknown.mcfunction
+    match: '([^\]\n\,]+)'
+    captures:
+      1:
+        name: "#unknown"
+
+  selector.argument.quoted_string:
+    name: meta.selector.argument.quoted_string.mcfunction
+    begin: '(\")'
+    end: '{{lookahead_newline}}|(\")([^\]\,\n]*)'
+    beginCaptures:
+      1:
+        name: "#quoted_string"
+    endCaptures:
+      1:
+        name: "#quoted_string"
+      2:
+        # anything trailing after the quote, apart from terminals, is an error
+        name: "#error"
+    patterns:
+      - include: "#common.quoted_string"
+
+  selector.argument.property_map:
+    name: meta.selector.argument.property_map.mcfunction
+    # we need to try and distinguish this from an nbt argument
+    # lookahead for something unique to advancements/scores
+    # (how about we just copy-paste thee capturing part of the property map?)
+    begin: '(\{)(?= *({{resource_location_nc}}|{{resource_path_nc}}|{{unquoted_string}}) *(\=))'
+    end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
+    beginCaptures:
+      1:
+        name: "#nbt_delims"
+    endCaptures:
+      1:
+        name: "#nbt_delims"
+      2:
+        name: "#error"
+    patterns:
+      - include: "#property_map"
+
+  selector.argument.nbt_compound:
+    name: meta.selector.argument.nbt_compound.mcfunction
+    begin: '(\{)'
+    end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
+    beginCaptures:
+      1:
+        name: "#nbt_delims"
+    endCaptures:
+      1:
+        name: "#nbt_delims"
+      2:
+        name: "#error"
+    patterns:
+      - include: "#nbt.compound"
+
+  property_map:
+    # for `advancements` in selectors
+    patterns:
+      # skip whitespace
+      - match: " +"
+
+      # try for things that look like scores first
+      - begin: '(,)? *{{unquoted_string}} *(\=) *'
+        end: ' *(?=[\n\}\,])'
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+          2:
+            name: "#unquoted_string"
+          3:
+            name: "#nbt_delims"
+        patterns:
+          - include: "#property_map.values"
+
+      # then try for resource locations (advancements)
+      # with namespace:    {minecraft:story/form_obsidian=true}
+      # without namespace: {story/form_obsidian=true}
+      - begin: '(,)? *({{resource_location_nc}}|{{resource_path_nc}}) *(\=) *'
+        end: ' *(?=[\n\}\,])'
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+          2:
+            name: "#resource_path"
+          3:
+            name: "#nbt_delims"
+        patterns:
+          - include: "#property_map.values"
+
+      # anything else apart from separators and terminals is an error
+      - match: '[^\n\}\,]+'
+        name: "#error"
+
+  property_map.values:
+    patterns:
+      - match: "{{boolean}}"
+        captures: "#boolean"
+      - match: "{{range}}"
+        captures: "#range"
+      - match: "{{number}}"
+        captures: "#number"
+      - begin: '(\{) *'
+        end: '{{lookahead_newline}}|(\})([^\}\,\n]*)'
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+        endCaptures:
+          1:
+            name: "#nbt_delims"
+          2:
+            name: "#error"
+        patterns:
+          - include: "#property_map"
+
+  common.quoted_string:
+    patterns:
+      # consume everything except for backslashes, quotes, and newlines
+      - name: "#quoted_string"
+        match: '[^\\\"\n]'
+      # consume any escaped characters... except for newlines
+      - name: "#quoted_string_escape"
+        match: '\\[^\n]'
+      # consume a single backslash (implicitly followed by a newline) as an error
+      - name: "#error"
+        match: '\\'
+      # anything else will be handed back to the parent scope
