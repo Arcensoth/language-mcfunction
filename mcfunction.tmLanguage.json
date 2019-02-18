@@ -20,25 +20,28 @@
       "patterns": [
         {
           "name": "meta.comment.todo.mcfunction",
-          "match": "^\\s*(#)\\s*((?:TODO|FIXME|DELETEME)\\b.*)$",
+          "match": "^\\s*(#)\\s*((?:TODO|FIXME|DELETEME))(\\b.*)$",
           "captures": {
             "1": {
               "name": "comment.number-sign.mcfunction"
             },
             "2": {
               "name": "markup.bold.mcfunction"
+            },
+            "3": {
+              "name": "comment.number-sign.mcfunction"
             }
           }
         },
         {
           "name": "meta.comment.annotation.mcfunction",
-          "match": "^\\s*(#)\\s*(\\@\\w*)\\b(.*)$",
+          "match": "^\\s*(#)\\s*(\\@\\w*)(\\b.*)$",
           "captures": {
             "1": {
               "name": "comment.number-sign.mcfunction"
             },
             "2": {
-              "name": "markup.bold.mcfunction"
+              "name": "markup.heading.mcfunction"
             },
             "3": {
               "name": "comment.number-sign.mcfunction"
