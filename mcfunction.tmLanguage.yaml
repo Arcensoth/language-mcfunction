@@ -38,7 +38,7 @@ variables:
   # an integer or decimal with optional leading digit
   number: '(\-?\d*\.?\d+)'
 
-  # a resource path is the portion of the resource location following the namesapce
+  # a resource path is the portion of the resource location following the namespace
   resource_path_nc: '[a-z0-9_\.\-\/]+'
   resource_path: "({{resource_path_nc}})"
 
@@ -79,13 +79,13 @@ variables:
   name.numeric_altered: constant.numeric.mcfunction
   name.range_ellipsis: keyword.control.mcfunction
   name.coordinate_operator: "{{name.numeric_altered}}"
-  name.base_selector: entity.other.attribute-name.mcfunction
+  name.base_selector: support.class.mcfunction
   name.selector_delims: "{{name.base_selector}}"
   name.block_predicate_delims: "{{name.brace_delims}}"
   name.nbt_delims: "{{name.brace_delims}}"
   name.nbt_key: string.interpolated.mcfunction
   name.nbt_index: constant.numeric.mcfunction
-  name.resource_namespace: support.class.mcfunction
+  name.resource_namespace: entity.name.function.mcfunction
   name.resource_path: "{{name.resource_namespace}}"
   name.tagged_resource_namespace: "{{name.resource_namespace}}"
   name.tagged_resource_path: "{{name.tagged_resource_namespace}}"
@@ -823,7 +823,7 @@ repository:
     # we need to try and distinguish this from an nbt argument
     # lookahead for something unique to advancements/scores
     # (how about we just copy-paste thee capturing part of the property map?)
-    begin: '(\{)(?= *({{resource_location_nc}}|{{resource_path_nc}}) *(\=))'
+    begin: '(\{)(?= *({{resource_location_nc}}|{{resource_path_nc}}|{{unquoted_string}}) *(\=))'
     end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
     beginCaptures:
       1:
@@ -857,43 +857,58 @@ repository:
       # skip whitespace
       - match: " +"
 
-      # with namespace:    {minecraft:story/form_obsidian=true}
-      # without namespace: {story/form_obsidian=true}
-      - begin: '(,)? *({{resource_location_nc}}|{{resource_path_nc}}) *(\=) *'
-
+      # try for things that look like scores first
+      - begin: '(,)? *{{unquoted_string}} *(\=) *'
         end: ' *(?=[\n\}\,])'
-
         beginCaptures:
           1:
             name: "{{name.nbt_delims}}"
           2:
-            name: "{{name.argument_key}}"
+            name: "{{name.unquoted_string}}"
           3:
             name: "{{name.nbt_delims}}"
-
         patterns:
-          - match: "{{boolean}}"
-            captures: "#boolean"
-          - match: "{{range}}"
-            captures: "#range"
-          - match: "{{number}}"
-            captures: "#number"
-          - begin: '(\{) *'
-            end: '{{lookahead_newline}}|(\})([^\}\,\n]*)'
-            beginCaptures:
-              1:
-                name: "{{name.nbt_delims}}"
-            endCaptures:
-              1:
-                name: "{{name.nbt_delims}}"
-              2:
-                name: "{{name.error}}"
-            patterns:
-              - include: "#property_map"
+          - include: "#property_map.values"
+
+      # then try for resource locations (advancements)
+      # with namespace:    {minecraft:story/form_obsidian=true}
+      # without namespace: {story/form_obsidian=true}
+      - begin: '(,)? *({{resource_location_nc}}|{{resource_path_nc}}) *(\=) *'
+        end: ' *(?=[\n\}\,])'
+        beginCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+          2:
+            name: "{{name.resource_path}}"
+          3:
+            name: "{{name.nbt_delims}}"
+        patterns:
+          - include: "#property_map.values"
 
       # anything else apart from separators and terminals is an error
       - match: '[^\n\}\,]+'
         name: "{{name.error}}"
+
+  property_map.values:
+    patterns:
+      - match: "{{boolean}}"
+        captures: "#boolean"
+      - match: "{{range}}"
+        captures: "#range"
+      - match: "{{number}}"
+        captures: "#number"
+      - begin: '(\{) *'
+        end: '{{lookahead_newline}}|(\})([^\}\,\n]*)'
+        beginCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+        endCaptures:
+          1:
+            name: "{{name.nbt_delims}}"
+          2:
+            name: "{{name.error}}"
+        patterns:
+          - include: "#property_map"
 
   common.quoted_string:
     patterns:

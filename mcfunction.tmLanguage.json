@@ -179,7 +179,7 @@
       "match": "(?<= )(\\@[a-z])(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "entity.other.attribute-name.mcfunction"
+          "name": "support.class.mcfunction"
         }
       }
     },
@@ -188,13 +188,13 @@
       "match": "(?<= )([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "2": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "3": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         }
       }
     },
@@ -203,16 +203,16 @@
       "match": "(?<= )(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "2": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "3": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "4": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         }
       }
     },
@@ -284,7 +284,7 @@
       "match": "(?<= )([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "entity.other.attribute-name.mcfunction"
+          "name": "support.class.mcfunction"
         }
       }
     },
@@ -293,7 +293,7 @@
       "match": "(?<= )([\\#\\$\\%][\\w\\.\\-]+)(?=[ \\n])",
       "captures": {
         "1": {
-          "name": "entity.other.attribute-name.mcfunction"
+          "name": "support.class.mcfunction"
         }
       }
     },
@@ -535,13 +535,13 @@
       "end": "(?=\\n)|(\\])([^ \\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "2": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "3": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "4": {
           "name": "variable.language.mcfunction"
@@ -567,16 +567,16 @@
       "end": "(?=\\n)|(\\])([^ \\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "2": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "3": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "4": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "5": {
           "name": "variable.language.mcfunction"
@@ -602,15 +602,15 @@
       "end": "(?=\\n)|(\\])([^ \\n]*)",
       "beginCaptures": {
         "1": {
-          "name": "entity.other.attribute-name.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "2": {
-          "name": "entity.other.attribute-name.mcfunction"
+          "name": "support.class.mcfunction"
         }
       },
       "endCaptures": {
         "1": {
-          "name": "entity.other.attribute-name.mcfunction"
+          "name": "support.class.mcfunction"
         },
         "2": {
           "name": "invalid.illegal.mcfunction"
@@ -630,7 +630,7 @@
               "name": "variable.other.mcfunction"
             },
             "2": {
-              "name": "entity.other.attribute-name.mcfunction"
+              "name": "support.class.mcfunction"
             },
             "3": {
               "name": "keyword.control.mcfunction"
@@ -641,7 +641,7 @@
               "name": "invalid.illegal.mcfunction"
             },
             "2": {
-              "name": "entity.other.attribute-name.mcfunction"
+              "name": "support.class.mcfunction"
             }
           },
           "patterns": [
@@ -849,13 +849,13 @@
       "match": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?= *[\\,\\]\\n])",
       "captures": {
         "1": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "2": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "3": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         }
       }
     },
@@ -864,16 +864,16 @@
       "match": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?= *[\\,\\]\\n])",
       "captures": {
         "1": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "2": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "3": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         },
         "4": {
-          "name": "support.class.mcfunction"
+          "name": "entity.name.function.mcfunction"
         }
       }
     },
@@ -953,7 +953,7 @@
     },
     "selector.argument.property_map": {
       "name": "meta.selector.argument.property_map.mcfunction",
-      "begin": "(\\{)(?= *([a-z0-9_\\.\\-]+\\:[a-z0-9_\\.\\-\\/]+|[a-z0-9_\\.\\-\\/]+) *(\\=))",
+      "begin": "(\\{)(?= *([a-z0-9_\\.\\-]+\\:[a-z0-9_\\.\\-\\/]+|[a-z0-9_\\.\\-\\/]+|([\\w\\.\\-\\#\\$\\%]+)) *(\\=))",
       "end": "(?=\\n)|(\\})([^\\]\\,\\n]*)",
       "beginCaptures": {
         "1": {
@@ -1003,14 +1003,14 @@
           "match": " +"
         },
         {
-          "begin": "(,)? *([a-z0-9_\\.\\-]+\\:[a-z0-9_\\.\\-\\/]+|[a-z0-9_\\.\\-\\/]+) *(\\=) *",
+          "begin": "(,)? *([\\w\\.\\-\\#\\$\\%]+) *(\\=) *",
           "end": " *(?=[\\n\\}\\,])",
           "beginCaptures": {
             "1": {
               "name": "variable.language.mcfunction"
             },
             "2": {
-              "name": "variable.other.mcfunction"
+              "name": "string.unquoted.mcfunction"
             },
             "3": {
               "name": "variable.language.mcfunction"
@@ -1018,62 +1018,89 @@
           },
           "patterns": [
             {
-              "match": "(true|false)",
-              "captures": {
-                "1": {
-                  "name": "constant.numeric.mcfunction"
-                }
-              }
+              "include": "#property_map.values"
+            }
+          ]
+        },
+        {
+          "begin": "(,)? *([a-z0-9_\\.\\-]+\\:[a-z0-9_\\.\\-\\/]+|[a-z0-9_\\.\\-\\/]+) *(\\=) *",
+          "end": " *(?=[\\n\\}\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.language.mcfunction"
             },
-            {
-              "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
-              "captures": {
-                "1": {
-                  "name": "constant.numeric.mcfunction"
-                },
-                "2": {
-                  "name": "keyword.control.mcfunction"
-                },
-                "3": {
-                  "name": "constant.numeric.mcfunction"
-                }
-              }
+            "2": {
+              "name": "entity.name.function.mcfunction"
             },
+            "3": {
+              "name": "variable.language.mcfunction"
+            }
+          },
+          "patterns": [
             {
-              "match": "(\\-?\\d*\\.?\\d+)",
-              "captures": {
-                "1": {
-                  "name": "constant.numeric.mcfunction"
-                }
-              }
-            },
-            {
-              "begin": "(\\{) *",
-              "end": "(?=\\n)|(\\})([^\\}\\,\\n]*)",
-              "beginCaptures": {
-                "1": {
-                  "name": "variable.language.mcfunction"
-                }
-              },
-              "endCaptures": {
-                "1": {
-                  "name": "variable.language.mcfunction"
-                },
-                "2": {
-                  "name": "invalid.illegal.mcfunction"
-                }
-              },
-              "patterns": [
-                {
-                  "include": "#property_map"
-                }
-              ]
+              "include": "#property_map.values"
             }
           ]
         },
         {
           "match": "[^\\n\\}\\,]+",
           "name": "invalid.illegal.mcfunction"
+        }
+      ]
+    },
+    "property_map.values": {
+      "patterns": [
+        {
+          "match": "(true|false)",
+          "captures": {
+            "1": {
+              "name": "constant.numeric.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?",
+          "captures": {
+            "1": {
+              "name": "constant.numeric.mcfunction"
+            },
+            "2": {
+              "name": "keyword.control.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "(\\-?\\d*\\.?\\d+)",
+          "captures": {
+            "1": {
+              "name": "constant.numeric.mcfunction"
+            }
+          }
+        },
+        {
+          "begin": "(\\{) *",
+          "end": "(?=\\n)|(\\})([^\\}\\,\\n]*)",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.language.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "variable.language.mcfunction"
+            },
+            "2": {
+              "name": "invalid.illegal.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#property_map"
+            }
+          ]
         }
       ]
     },

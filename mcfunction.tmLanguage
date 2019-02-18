@@ -270,7 +270,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.other.attribute-name.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -285,17 +285,17 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -310,22 +310,22 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -445,7 +445,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.other.attribute-name.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -460,7 +460,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.other.attribute-name.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -839,17 +839,17 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>4</key>
           <dict>
@@ -891,22 +891,22 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>5</key>
           <dict>
@@ -948,12 +948,12 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.other.attribute-name.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>entity.other.attribute-name.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
         </dict>
         <key>endCaptures</key>
@@ -961,7 +961,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.other.attribute-name.mcfunction</string>
+            <string>support.class.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
@@ -994,7 +994,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>entity.other.attribute-name.mcfunction</string>
+                <string>support.class.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1012,7 +1012,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>entity.other.attribute-name.mcfunction</string>
+                <string>support.class.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1329,17 +1329,17 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -1354,22 +1354,22 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>support.class.mcfunction</string>
+            <string>entity.name.function.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -1500,7 +1500,7 @@
         <key>name</key>
         <string>meta.selector.argument.property_map.mcfunction</string>
         <key>begin</key>
-        <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+) *(\=))</string>
+        <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+|([\w\.\-\#\$\%]+)) *(\=))</string>
         <key>end</key>
         <string>(?=\n)|(\})([^\]\,\n]*)</string>
         <key>beginCaptures</key>
@@ -1579,6 +1579,37 @@
           </dict>
           <dict>
             <key>begin</key>
+            <string>(,)? *([\w\.\-\#\$\%]+) *(\=) *</string>
+            <key>end</key>
+            <string> *(?=[\n\}\,])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string.unquoted.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#property_map.values</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
             <string>(,)? *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+) *(\=) *</string>
             <key>end</key>
             <string> *(?=[\n\}\,])</string>
@@ -1592,7 +1623,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>variable.other.mcfunction</string>
+                <string>entity.name.function.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1603,84 +1634,8 @@
             <key>patterns</key>
             <array>
               <dict>
-                <key>match</key>
-                <string>(true|false)</string>
-                <key>captures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>constant.numeric.mcfunction</string>
-                  </dict>
-                </dict>
-              </dict>
-              <dict>
-                <key>match</key>
-                <string>(\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)?</string>
-                <key>captures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>constant.numeric.mcfunction</string>
-                  </dict>
-                  <key>2</key>
-                  <dict>
-                    <key>name</key>
-                    <string>keyword.control.mcfunction</string>
-                  </dict>
-                  <key>3</key>
-                  <dict>
-                    <key>name</key>
-                    <string>constant.numeric.mcfunction</string>
-                  </dict>
-                </dict>
-              </dict>
-              <dict>
-                <key>match</key>
-                <string>(\-?\d*\.?\d+)</string>
-                <key>captures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>constant.numeric.mcfunction</string>
-                  </dict>
-                </dict>
-              </dict>
-              <dict>
-                <key>begin</key>
-                <string>(\{) *</string>
-                <key>end</key>
-                <string>(?=\n)|(\})([^\}\,\n]*)</string>
-                <key>beginCaptures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>variable.language.mcfunction</string>
-                  </dict>
-                </dict>
-                <key>endCaptures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>variable.language.mcfunction</string>
-                  </dict>
-                  <key>2</key>
-                  <dict>
-                    <key>name</key>
-                    <string>invalid.illegal.mcfunction</string>
-                  </dict>
-                </dict>
-                <key>patterns</key>
-                <array>
-                  <dict>
-                    <key>include</key>
-                    <string>#property_map</string>
-                  </dict>
-                </array>
+                <key>include</key>
+                <string>#property_map.values</string>
               </dict>
             </array>
           </dict>
@@ -1689,6 +1644,92 @@
             <string>[^\n\}\,]+</string>
             <key>name</key>
             <string>invalid.illegal.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
+      <key>property_map.values</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(true|false)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)?</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\-?\d*\.?\d+)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(\{) *</string>
+            <key>end</key>
+            <string>(?=\n)|(\})([^\}\,\n]*)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#property_map</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>

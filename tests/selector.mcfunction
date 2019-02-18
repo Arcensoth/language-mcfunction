@@ -142,6 +142,8 @@ execute as @a[scores={foo=10,bar=1..5}] run
 execute as @a[scores={foo=10,bar=1..5,baz=..0}] run
 execute as @a[ scores = {foo=10,bar=1..5,baz=..0} ] run
 execute as @a[ scores = { foo = 10 , bar = 1..5 , baz = ..0 } ] run
+execute as @a[scores={my.score=10}] run
+execute as @a[scores={myScore=10}] run
 
 # test valid advancements argument
 execute as @a[advancements={minecraft:story/form_obsidian=true}] run
