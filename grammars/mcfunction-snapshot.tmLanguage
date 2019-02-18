@@ -53,157 +53,325 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>name</key>
-            <string>meta.comment.annotation.mcfunction</string>
-            <key>match</key>
-            <string>(##)[ \t]*(.*)$</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>comment.comment.mcfunction</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>markup.heading.comment.mcfunction</string>
-              </dict>
-            </dict>
+            <key>include</key>
+            <string>#comment.heading</string>
           </dict>
           <dict>
-            <key>name</key>
-            <string>meta.comment.todo.mcfunction</string>
-            <key>match</key>
-            <string>(#)[ \t]*((?:TODO|FIXME|XXX))(\b.*)$</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>comment.comment.mcfunction</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>markup.bold.name.marker.comment.mcfunction</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>comment.text.marker.comment.mcfunction</string>
-              </dict>
-            </dict>
+            <key>include</key>
+            <string>#comment.marker</string>
           </dict>
           <dict>
-            <key>name</key>
-            <string>meta.comment.annotation.mcfunction</string>
-            <key>match</key>
-            <string>(#)[ \t]*(\@\w*)(\b.*)$</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>comment.comment.mcfunction</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>markup.heading.name.annotation.comment.mcfunction</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>comment.text.annotation.comment.mcfunction</string>
-              </dict>
-            </dict>
+            <key>include</key>
+            <string>#comment.annotation</string>
           </dict>
           <dict>
-            <key>name</key>
-            <string>meta.comment.plain.mcfunction</string>
-            <key>match</key>
-            <string>(#.*)$</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>comment.comment.mcfunction</string>
-              </dict>
-            </dict>
+            <key>include</key>
+            <string>#comment.other</string>
           </dict>
         </array>
+      </dict>
+      <key>comment.heading</key>
+      <dict>
+        <key>name</key>
+        <string>meta.heading.comment.mcfunction</string>
+        <key>match</key>
+        <string>(##)[ \t]*(.*)$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>comment.comment.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>markup.heading.comment.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>comment.marker</key>
+      <dict>
+        <key>name</key>
+        <string>meta.marker.comment.mcfunction</string>
+        <key>match</key>
+        <string>(#)[ \t]*((?:TODO|FIXME|XXX))(\b.*)$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>comment.comment.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>markup.bold.name.marker.comment.mcfunction</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>comment.text.marker.comment.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>comment.annotation</key>
+      <dict>
+        <key>name</key>
+        <string>meta.annotation.comment.mcfunction</string>
+        <key>match</key>
+        <string>(#)[ \t]*(\@\w*)(\b.*)$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>comment.comment.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>markup.heading.name.annotation.comment.mcfunction</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>comment.text.annotation.comment.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>comment.other</key>
+      <dict>
+        <key>name</key>
+        <string>meta.other.comment.mcfunction</string>
+        <key>match</key>
+        <string>(#.*)$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>comment.comment.mcfunction</string>
+          </dict>
+        </dict>
       </dict>
       <key>command</key>
       <dict>
+        <key>name</key>
+        <string>meta.command.mcfunction</string>
+        <key>begin</key>
+        <string>^[ \t]*(?=[^\s\#])</string>
+        <key>end</key>
+        <string>\n</string>
         <key>patterns</key>
         <array>
           <dict>
-            <key>name</key>
-            <string>meta.command.mcfunction</string>
-            <key>begin</key>
-            <string>^[ \t]*(?=[^\s\#])</string>
-            <key>end</key>
-            <string>\n</string>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#generated_commands</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#command.unknown</string>
-              </dict>
-            </array>
+            <key>include</key>
+            <string>#commands</string>
           </dict>
         </array>
       </dict>
-      <key>command.unknown</key>
+      <key>commands</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
-            <key>name</key>
-            <string>meta.command.unknown.mcfunction</string>
-            <key>match</key>
-            <string>(.*)$</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>invalid.mcfunction</string>
-              </dict>
-            </dict>
+            <key>include</key>
+            <string>#generated.commands</string>
           </dict>
         </array>
+      </dict>
+      <key>unknown_command</key>
+      <dict>
+        <key>name</key>
+        <string>meta.unknown_command.mcfunction</string>
+        <key>match</key>
+        <string>(.*)$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.mcfunction</string>
+          </dict>
+        </dict>
       </dict>
       <key>unknown</key>
       <dict>
+        <key>name</key>
+        <string>meta.unknown.mcfunction</string>
+        <key>match</key>
+        <string>^(.*)$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>generated.commands</key>
+      <dict>
         <key>patterns</key>
         <array>
           <dict>
-            <key>name</key>
-            <string>meta.unknown.mcfunction</string>
-            <key>match</key>
-            <string>^(.*)$</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>invalid.mcfunction</string>
-              </dict>
-            </dict>
+            <key>include</key>
+            <string>#generated.command.execute</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#unknown_command</string>
           </dict>
         </array>
       </dict>
-      <key>generated_commands</key>
+      <key>generated.command.execute</key>
+      <dict>
+        <key>name</key>
+        <string>meta.execute.command.mcfunction</string>
+        <key>begin</key>
+        <string>(execute) (?=[^\s\#])</string>
+        <key>end</key>
+        <string>(?=\n)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.execute.command.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.commands.execute</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.execute</key>
       <dict>
         <key>patterns</key>
-        <array/>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.command.execute.run</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#generated.command.execute.as</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#unknown_command</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.execute.run</key>
+      <dict>
+        <key>name</key>
+        <string>meta.run.execute.command.mcfunction</string>
+        <key>begin</key>
+        <string>(run)( |(?=\n))</string>
+        <key>end</key>
+        <string>(?=\n)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.run.execute.command.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.commands.execute.run</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.execute.run</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.commands</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.execute.as</key>
+      <dict>
+        <key>name</key>
+        <string>meta.as.execute.command.mcfunction</string>
+        <key>begin</key>
+        <string>(as) (?=[^\s\#])</string>
+        <key>end</key>
+        <string>(?=\n)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.as.execute.command.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.commands.execute.as</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.execute.as</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.command.execute.as.targets</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#unknown_command</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.execute.as.targets</key>
+      <dict>
+        <key>name</key>
+        <string>meta.targets.as.execute.command.mcfunction</string>
+        <key>begin</key>
+        <string>(\@[a-z])( |(?=\n))</string>
+        <key>end</key>
+        <string>(?=\n)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>support.class.base_selector.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.commands.execute.as.targets</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.execute.as.targets</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.commands.execute</string>
+          </dict>
+        </array>
       </dict>
     </dict>
   </dict>

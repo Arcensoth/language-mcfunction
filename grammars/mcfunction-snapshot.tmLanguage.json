@@ -33,103 +33,211 @@
     "comments": {
       "patterns": [
         {
-          "name": "meta.comment.annotation.mcfunction",
-          "match": "(##)[ \\t]*(.*)$",
-          "captures": {
-            "1": {
-              "name": "comment.comment.mcfunction"
-            },
-            "2": {
-              "name": "markup.heading.comment.mcfunction"
-            }
-          }
+          "include": "#comment.heading"
         },
         {
-          "name": "meta.comment.todo.mcfunction",
-          "match": "(#)[ \\t]*((?:TODO|FIXME|XXX))(\\b.*)$",
-          "captures": {
-            "1": {
-              "name": "comment.comment.mcfunction"
-            },
-            "2": {
-              "name": "markup.bold.name.marker.comment.mcfunction"
-            },
-            "3": {
-              "name": "comment.text.marker.comment.mcfunction"
-            }
-          }
+          "include": "#comment.marker"
         },
         {
-          "name": "meta.comment.annotation.mcfunction",
-          "match": "(#)[ \\t]*(\\@\\w*)(\\b.*)$",
-          "captures": {
-            "1": {
-              "name": "comment.comment.mcfunction"
-            },
-            "2": {
-              "name": "markup.heading.name.annotation.comment.mcfunction"
-            },
-            "3": {
-              "name": "comment.text.annotation.comment.mcfunction"
-            }
-          }
+          "include": "#comment.annotation"
         },
         {
-          "name": "meta.comment.plain.mcfunction",
-          "match": "(#.*)$",
-          "captures": {
-            "1": {
-              "name": "comment.comment.mcfunction"
-            }
-          }
+          "include": "#comment.other"
         }
       ]
+    },
+    "comment.heading": {
+      "name": "meta.heading.comment.mcfunction",
+      "match": "(##)[ \\t]*(.*)$",
+      "captures": {
+        "1": {
+          "name": "comment.comment.mcfunction"
+        },
+        "2": {
+          "name": "markup.heading.comment.mcfunction"
+        }
+      }
+    },
+    "comment.marker": {
+      "name": "meta.marker.comment.mcfunction",
+      "match": "(#)[ \\t]*((?:TODO|FIXME|XXX))(\\b.*)$",
+      "captures": {
+        "1": {
+          "name": "comment.comment.mcfunction"
+        },
+        "2": {
+          "name": "markup.bold.name.marker.comment.mcfunction"
+        },
+        "3": {
+          "name": "comment.text.marker.comment.mcfunction"
+        }
+      }
+    },
+    "comment.annotation": {
+      "name": "meta.annotation.comment.mcfunction",
+      "match": "(#)[ \\t]*(\\@\\w*)(\\b.*)$",
+      "captures": {
+        "1": {
+          "name": "comment.comment.mcfunction"
+        },
+        "2": {
+          "name": "markup.heading.name.annotation.comment.mcfunction"
+        },
+        "3": {
+          "name": "comment.text.annotation.comment.mcfunction"
+        }
+      }
+    },
+    "comment.other": {
+      "name": "meta.other.comment.mcfunction",
+      "match": "(#.*)$",
+      "captures": {
+        "1": {
+          "name": "comment.comment.mcfunction"
+        }
+      }
     },
     "command": {
+      "name": "meta.command.mcfunction",
+      "begin": "^[ \\t]*(?=[^\\s\\#])",
+      "end": "\\n",
       "patterns": [
         {
-          "name": "meta.command.mcfunction",
-          "begin": "^[ \\t]*(?=[^\\s\\#])",
-          "end": "\\n",
-          "patterns": [
-            {
-              "include": "#generated_commands"
-            },
-            {
-              "include": "#command.unknown"
-            }
-          ]
+          "include": "#commands"
         }
       ]
     },
-    "command.unknown": {
+    "commands": {
       "patterns": [
         {
-          "name": "meta.command.unknown.mcfunction",
-          "match": "(.*)$",
-          "captures": {
-            "1": {
-              "name": "invalid.mcfunction"
-            }
-          }
+          "include": "#generated.commands"
         }
       ]
+    },
+    "unknown_command": {
+      "name": "meta.unknown_command.mcfunction",
+      "match": "(.*)$",
+      "captures": {
+        "1": {
+          "name": "invalid.mcfunction"
+        }
+      }
     },
     "unknown": {
+      "name": "meta.unknown.mcfunction",
+      "match": "^(.*)$",
+      "captures": {
+        "1": {
+          "name": "invalid.mcfunction"
+        }
+      }
+    },
+    "generated.commands": {
       "patterns": [
         {
-          "name": "meta.unknown.mcfunction",
-          "match": "^(.*)$",
-          "captures": {
-            "1": {
-              "name": "invalid.mcfunction"
-            }
-          }
+          "include": "#generated.command.execute"
+        },
+        {
+          "include": "#unknown_command"
         }
       ]
     },
-    "generated_commands": {
-      "patterns": []
+    "generated.command.execute": {
+      "name": "meta.execute.command.mcfunction",
+      "begin": "(execute) (?=[^\\s\\#])",
+      "end": "(?=\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.execute.command.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#generated.commands.execute"
+        }
+      ]
+    },
+    "generated.commands.execute": {
+      "patterns": [
+        {
+          "include": "#generated.command.execute.run"
+        },
+        {
+          "include": "#generated.command.execute.as"
+        },
+        {
+          "include": "#unknown_command"
+        }
+      ]
+    },
+    "generated.command.execute.run": {
+      "name": "meta.run.execute.command.mcfunction",
+      "begin": "(run)( |(?=\\n))",
+      "end": "(?=\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.run.execute.command.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#generated.commands.execute.run"
+        }
+      ]
+    },
+    "generated.commands.execute.run": {
+      "patterns": [
+        {
+          "include": "#generated.commands"
+        }
+      ]
+    },
+    "generated.command.execute.as": {
+      "name": "meta.as.execute.command.mcfunction",
+      "begin": "(as) (?=[^\\s\\#])",
+      "end": "(?=\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.as.execute.command.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#generated.commands.execute.as"
+        }
+      ]
+    },
+    "generated.commands.execute.as": {
+      "patterns": [
+        {
+          "include": "#generated.command.execute.as.targets"
+        },
+        {
+          "include": "#unknown_command"
+        }
+      ]
+    },
+    "generated.command.execute.as.targets": {
+      "name": "meta.targets.as.execute.command.mcfunction",
+      "begin": "(\\@[a-z])( |(?=\\n))",
+      "end": "(?=\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "support.class.base_selector.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#generated.commands.execute.as.targets"
+        }
+      ]
+    },
+    "generated.commands.execute.as.targets": {
+      "patterns": [
+        {
+          "include": "#generated.commands.execute"
+        }
+      ]
     }
   }
 }

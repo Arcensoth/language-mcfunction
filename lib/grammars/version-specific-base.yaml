@@ -12,7 +12,12 @@ names:
   comment.annotation.name: markup.heading.name.annotation.comment.mcfunction
   comment.annotation.text: comment.text.annotation.comment.mcfunction
 
+  base_selector: support.class.base_selector.mcfunction
+  block_pos: constant.numeric.block_pos.mcfunction
+  block_predicate: entity.name.function.block_predicate.mcfunction
+
   unknown: invalid.mcfunction
+  # unknown: markup.underline.mcfunction
   error: invalid.illegal.mcfunction
 
 variables:
@@ -21,8 +26,23 @@ variables:
   command_delim: '[ \n]'
   not_command_delim: '[^ \n]'
 
-  command_delim_l: "(?<={{command_delim}})"
-  command_delim_r: "(?={{command_delim}})"
+  lookahead_newline: '(?=\n)'
+  ln: "{{lookahead_newline}}"
+
+  # executable commands can be trailing
+  # either consume a space or border a newline
+  command_border_executable: '( |(?=\n))'
+  cbx: "{{command_border_executable}}"
+
+  # non-executable commands cannot be trailing
+  # consume a space and also border something
+  # still can give false positives for the command itself
+  # but at least if the following token is also non-executable,
+  # it will then be highlighted as an error
+  command_border_non_executable: ' (?=[^\s\#])'
+  cbnx: "{{command_border_non_executable}}"
+
+  base_selector: '(\@[a-z])'
 
 patterns:
   - include: "#comment"
@@ -43,70 +63,155 @@ repository:
 
   comments:
     patterns:
-      # headers for separating blocks
-      - name: meta.comment.annotation.mcfunction
-        match: "(##){{tabspace}}(.*)$"
-        captures:
-          1:
-            name: "#comment"
-          2:
-            name: "#comment.heading"
-      # things that need attention, like todos and fixmes
-      - name: meta.comment.todo.mcfunction
-        match: '(#){{tabspace}}((?:TODO|FIXME|XXX))(\b.*)$'
-        captures:
-          1:
-            name: "#comment"
-          2:
-            name: "#comment.marker.name"
-          3:
-            name: "#comment.marker.text"
-      # doc tags like `@params` and `@returns`
-      - name: meta.comment.annotation.mcfunction
-        match: '(#){{tabspace}}(\@\w*)(\b.*)$'
-        captures:
-          1:
-            name: "#comment"
-          2:
-            name: "#comment.annotation.name"
-          3:
-            name: "#comment.annotation.text"
-      # any other comment should get caught here
-      - name: meta.comment.plain.mcfunction
-        match: "(#.*)$"
-        captures:
-          1:
-            name: "#comment"
+      - include: "#comment.heading"
+      - include: "#comment.marker"
+      - include: "#comment.annotation"
+      - include: "#comment.other"
+
+  comment.heading:
+    # headers for separating blocks
+    name: meta.heading.comment.mcfunction
+    match: "(##){{tabspace}}(.*)$"
+    captures:
+      1:
+        name: "#comment"
+      2:
+        name: "#comment.heading"
+
+  comment.marker:
+    # things that need attention, like todos and fixmes
+    name: meta.marker.comment.mcfunction
+    match: '(#){{tabspace}}((?:TODO|FIXME|XXX))(\b.*)$'
+    captures:
+      1:
+        name: "#comment"
+      2:
+        name: "#comment.marker.name"
+      3:
+        name: "#comment.marker.text"
+
+  comment.annotation:
+    # doc tags like `@params` and `@returns`
+    name: meta.annotation.comment.mcfunction
+    match: '(#){{tabspace}}(\@\w*)(\b.*)$'
+    captures:
+      1:
+        name: "#comment"
+      2:
+        name: "#comment.annotation.name"
+      3:
+        name: "#comment.annotation.text"
+
+  comment.other:
+    # any other comment should get caught here
+    name: meta.other.comment.mcfunction
+    match: "(#.*)$"
+    captures:
+      1:
+        name: "#comment"
 
   command:
     # commands begin with any non-whitespace, non-comment character, after optional leading whitespace
+    name: meta.command.mcfunction
+    # don't start consuming the command yet
+    begin: '^{{tabspace}}(?=[^\s\#])'
+    # we will actually consume the newline here
+    # none of the sub-patterns will consume the newline
+    # instead they will use lookahead to return to the parent scope
+    end: '\n'
     patterns:
-      - name: meta.command.mcfunction
-        # don't start consuming the command yet
-        begin: '^{{tabspace}}(?=[^\s\#])'
-        end: '\n'
-        patterns:
-          - include: "#generated_commands"
-          - include: "#command.unknown"
+      - include: "#commands"
 
-  command.unknown:
+  commands:
     patterns:
-      - name: meta.command.unknown.mcfunction
-        match: "(.*)$"
-        captures:
-          1:
-            name: "#unknown"
+      - include: "#generated.commands"
+
+  unknown_command:
+    name: meta.unknown_command.mcfunction
+    match: "(.*)$"
+    captures:
+      1:
+        name: "#unknown"
 
   unknown:
     # anything else gets caught here and highlighted as an error
     # in theory this should only ever happen for lines consisting entirely of whitespace
-    patterns:
-      - name: meta.unknown.mcfunction
-        match: "^(.*)$"
-        captures:
-          1:
-            name: "#unknown"
+    name: meta.unknown.mcfunction
+    match: "^(.*)$"
+    captures:
+      1:
+        name: "#unknown"
 
-  generated_commands:
+  generated.commands:
     # this is where the generator will inject command patterns
-    patterns: []
+    patterns:
+      - include: "#generated.command.execute"
+      - include: "#unknown_command"
+
+  generated.command.execute:
+    name: meta.execute.command.mcfunction
+    # `execute` is non-executable
+    begin: "(execute){{cbnx}}"
+    end: "{{ln}}"
+    beginCaptures:
+      1:
+        # give all literals their own scope, under keyword
+        name: keyword.execute.command.mcfunction
+    patterns:
+      - include: "#generated.commands.execute"
+
+  generated.commands.execute:
+    # define child commands separately so they can be re-used in redirects
+    patterns:
+      - include: "#generated.command.execute.run"
+      - include: "#generated.command.execute.as"
+      - include: "#unknown_command"
+
+  generated.command.execute.run:
+    name: meta.run.execute.command.mcfunction
+    # `execute run` is executable
+    begin: "(run){{cbx}}"
+    end: "{{ln}}"
+    beginCaptures:
+      1:
+        name: keyword.run.execute.command.mcfunction
+    patterns:
+      - include: "#generated.commands.execute.run"
+
+  generated.commands.execute.run:
+    # redirect to root
+    patterns:
+      - include: "#generated.commands"
+
+  generated.command.execute.as:
+    name: meta.as.execute.command.mcfunction
+    # `execute as` is non-executable
+    begin: "(as){{cbnx}}"
+    end: "{{ln}}"
+    beginCaptures:
+      1:
+        name: keyword.as.execute.command.mcfunction
+    patterns:
+      - include: "#generated.commands.execute.as"
+
+  generated.commands.execute.as:
+    patterns:
+      - include: "#generated.command.execute.as.targets"
+      - include: "#unknown_command"
+
+  generated.command.execute.as.targets:
+    name: meta.targets.as.execute.command.mcfunction
+    # `execute as <targets>` is executable
+    # TODO how to dive into argument parser?
+    begin: "{{base_selector}}{{cbx}}"
+    end: "{{ln}}"
+    beginCaptures:
+      1:
+        name: "#base_selector"
+    patterns:
+      - include: "#generated.commands.execute.as.targets"
+
+  generated.commands.execute.as.targets:
+    # redirect to `execute`
+    patterns:
+      - include: "#generated.commands.execute"
