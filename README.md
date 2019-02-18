@@ -1,7 +1,7 @@
 # language-mcfunction
 Generic version-agnostic language grammar and syntax highlighting for mcfunction files.
 
-[![Showcase](https://i.imgur.com/R3vam0Z.png)](https://i.imgur.com/R3vam0Z.png)
+[![Showcase](https://i.imgur.com/3mpF4an.png)](https://i.imgur.com/3mpF4an.png)
 
 This is a generic "context-free" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
 
