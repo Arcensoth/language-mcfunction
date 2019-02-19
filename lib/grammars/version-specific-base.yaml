@@ -340,7 +340,8 @@ repository:
     patterns:
       - include: "#generated.selector_argument.tag"
       - include: "#generated.selector_argument.sort"
-      - include: "#generated.selector_argument.limit"
+      # - include: "#generated.selector_argument.limit"
+      - include: "#generated.selector_argument.limit_with_local_error_highlighting"
       - include: "#generated.selector_argument.nbt"
 
   generated.selector_argument.tag:
@@ -380,6 +381,23 @@ repository:
             name: "#entity_selector.equals"
           3:
             name: "#numeric_constant"
+
+  generated.selector_argument.limit_with_local_error_highlighting:
+    # accept the key and highlight only the value as an error
+    patterns:
+      - name: meta._.entity_selector.argument.limit.mcfunction
+        begin: '(limit){{pad}}(\=){{pad}}'
+        end: '{{ln}}|{{pad}}(?=[\]\,])'
+        captures:
+          1:
+            name: "#entity_selector.param"
+          2:
+            name: "#entity_selector.equals"
+        patterns:
+          - match: '(\d+)(?={{pad}}[\]\,])'
+            name: "#numeric_constant"
+          - match: '(([^\]\,]*))'
+            captures: "#underlined_error"
 
   generated.selector_argument.nbt:
     patterns:

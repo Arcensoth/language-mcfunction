@@ -523,7 +523,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#generated.selector_argument.limit</string>
+            <string>#generated.selector_argument.limit_with_local_error_highlighting</string>
           </dict>
           <dict>
             <key>include</key>
@@ -623,6 +623,59 @@
                 <string>constant.numeric._.numeric_constant.mcfunction</string>
               </dict>
             </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.selector_argument.limit_with_local_error_highlighting</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.entity_selector.argument.limit.mcfunction</string>
+            <key>begin</key>
+            <string>(limit) *(\=) *</string>
+            <key>end</key>
+            <string>(?=\n)| *(?=[\]\,])</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.entity_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.entity_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>match</key>
+                <string>(\d+)(?= *[\]\,])</string>
+                <key>name</key>
+                <string>constant.numeric._.numeric_constant.mcfunction</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(([^\]\,]*))</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>invalid.illegal._.invalid.mcfunction</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>markup.underline._.underline.mcfunction</string>
+                  </dict>
+                </dict>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>

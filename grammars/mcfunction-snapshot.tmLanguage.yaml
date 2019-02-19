@@ -173,7 +173,7 @@ repository:
     patterns:
       - include: '#generated.selector_argument.tag'
       - include: '#generated.selector_argument.sort'
-      - include: '#generated.selector_argument.limit'
+      - include: '#generated.selector_argument.limit_with_local_error_highlighting'
       - include: '#generated.selector_argument.nbt'
   generated.selector_argument.tag:
     patterns:
@@ -210,6 +210,21 @@ repository:
             name: support.class._.equals.entity_selector.mcfunction
           '3':
             name: constant.numeric._.numeric_constant.mcfunction
+  generated.selector_argument.limit_with_local_error_highlighting:
+    patterns:
+      - name: meta._.entity_selector.argument.limit.mcfunction
+        begin: (limit) *(\=) *
+        end: '(?=\n)| *(?=[\]\,])'
+        captures:
+          '1':
+            name: keyword.other._.param.entity_selector.mcfunction
+          '2':
+            name: support.class._.equals.entity_selector.mcfunction
+        patterns:
+          - match: '(\d+)(?= *[\]\,])'
+            name: constant.numeric._.numeric_constant.mcfunction
+          - match: '(([^\]\,]*))'
+            captures: *ref_0
   generated.selector_argument.nbt:
     patterns:
       - name: meta._.entity_selector.argument.nbt.mcfunction
