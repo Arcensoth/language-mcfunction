@@ -5,58 +5,101 @@ fileTypes:
   - mcfunction
 
 names:
-  comment: comment.comment.mcfunction
-  comment.heading: markup.heading.comment.mcfunction
-  comment.marker.name: markup.bold.name.marker.comment.mcfunction
-  comment.marker.text: comment.text.marker.comment.mcfunction
-  comment.annotation.name: markup.heading.name.annotation.comment.mcfunction
-  comment.annotation.text: comment.text.annotation.comment.mcfunction
+  # naming convention: <root_scope>._.<name>.<language>
 
-  base_selector: support.class.base_selector.mcfunction
-  block_pos: constant.numeric.block_pos.mcfunction
-  block_predicate: entity.name.function.block_predicate.mcfunction
+  # error scopes
+  invalid: invalid.illegal._.invalid.mcfunction
+  underline: markup.underline._.underline.mcfunction
 
-  unknown: invalid.mcfunction
-  # unknown: markup.underline.mcfunction
-  error: invalid.illegal.mcfunction
+  # comment scopes
+  comment: comment._.comment.mcfunction
+  comment.heading: markup.heading._.heading.comment.mcfunction
+  comment.marker.name: markup.bold._.name.marker.comment.mcfunction
+  comment.marker.text: comment._.text.marker.comment.mcfunction
+  comment.annotation.name: markup.heading._.name.annotation.comment.mcfunction
+  comment.annotation.text: comment._.text.annotation.comment.mcfunction
+
+  # command scopes
+  command: keyword.control._.command.mcfunction
+  subcommand: keyword.other._.subcommand.mcfunction
+
+  # entity selector scopes
+  entity_selector.base: support.class._.base.entity_selector.mcfunction
+  entity_selector.bracket: support.class._.bracket.entity_selector.mcfunction
+  entity_selector.equals: support.class._.equals.entity_selector.mcfunction
+  entity_selector.comma: support.class._.comma.entity_selector.mcfunction
+  entity_selector.not: constant.character.escape._.not.entity_selector.mcfunction
+  entity_selector.param: keyword.other._.param.entity_selector.mcfunction
+
+  # nbt scopes
+  nbt.compound_bracket: storage._.compound_bracket.nbt.mcfunction
+  nbt.list_bracket: storage._.list_bracket.nbt.mcfunction
+
+  # scopes for other types of arguments accepted by `minecraft:entity`
+  target.uuid: support.class._.uuid.target.mcfunction
+  target.player_name: support.class._.player_name.target.mcfunction
+
+  # string scopes
+  word: string._.word.mcfunction
+  keyword: keyword._.word.mcfunction
+
+  # numeric scopes
+  numeric_constant: constant.numeric._.numeric_constant.mcfunction
 
 variables:
-  space: " *"
-  tabspace: '[ \t]*'
-  command_delim: '[ \n]'
-  not_command_delim: '[^ \n]'
+  # padding
+  pad: " *"
+  tpad: '[ \t]*'
 
-  lookahead_newline: '(?=\n)'
-  ln: "{{lookahead_newline}}"
+  # lookahead_newline
+  ln: '(?=\n)'
 
   # executable commands can be trailing
   # either consume a space or border a newline
-  command_border_executable: '( |(?=\n))'
-  cbx: "{{command_border_executable}}"
+  # command_border_executable_true
+  cbx_true: '( |(?=\n))'
 
   # non-executable commands cannot be trailing
   # consume a space and also border something
   # still can give false positives for the command itself
   # but at least if the following token is also non-executable,
   # it will then be highlighted as an error
-  command_border_non_executable: ' (?=[^\s\#])'
-  cbnx: "{{command_border_non_executable}}"
+  # command_border_executable_false
+  cbx_false: ' (?=[^\s\#])'
 
-  base_selector: '(\@[a-z])'
+  # basic_entity_selector
+  basic_entity_selector: '(\@[a-z])'
+
+  # parameterized_entity_selector
+  parameterized_entity_selector.base: "{{basic_entity_selector}}"
+  parameterized_entity_selector.args_l: '(\[)'
+  parameterized_entity_selector.args_r: '(\])'
+  parameterized_entity_selector.begin: "{{parameterized_entity_selector.base}}{{parameterized_entity_selector.args_l}}"
+  parameterized_entity_selector.next: "{{parameterized_entity_selector.args_r}}"
+
+  hex_digit: "[0-9a-fA-F]"
+  uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
+
+  player_name: '(\w+)'
 
 patterns:
   - include: "#comment"
   - include: "#command"
   - include: "#unknown"
 
-capturesRepository: {}
+capturesRepository:
+  underlined_error:
+    1:
+      name: "#invalid"
+    2:
+      name: "#underline"
 
 repository:
   comment:
     patterns:
       # comments begin on with `#`, after optional leading whitespace
-      - name: meta.comment.mcfunction
-        begin: '^{{tabspace}}(?=\#)'
+      - name: meta._.comment.mcfunction
+        begin: '^{{tpad}}(?=\#)'
         end: '\n'
         patterns:
           - include: "#comments"
@@ -70,8 +113,8 @@ repository:
 
   comment.heading:
     # headers for separating blocks
-    name: meta.heading.comment.mcfunction
-    match: "(##){{tabspace}}(.*)$"
+    name: meta._.heading.comment.mcfunction
+    match: "(##){{tpad}}(.*)$"
     captures:
       1:
         name: "#comment"
@@ -80,8 +123,8 @@ repository:
 
   comment.marker:
     # things that need attention, like todos and fixmes
-    name: meta.marker.comment.mcfunction
-    match: '(#){{tabspace}}((?:TODO|FIXME|XXX))(\b.*)$'
+    name: meta._.marker.comment.mcfunction
+    match: '(#){{tpad}}((?:TODO|FIXME|XXX))(\b.*)$'
     captures:
       1:
         name: "#comment"
@@ -92,8 +135,8 @@ repository:
 
   comment.annotation:
     # doc tags like `@params` and `@returns`
-    name: meta.annotation.comment.mcfunction
-    match: '(#){{tabspace}}(\@\w*)(\b.*)$'
+    name: meta._.annotation.comment.mcfunction
+    match: '(#){{tpad}}(\@\w*)(\b.*)$'
     captures:
       1:
         name: "#comment"
@@ -104,7 +147,7 @@ repository:
 
   comment.other:
     # any other comment should get caught here
-    name: meta.other.comment.mcfunction
+    name: meta._.other.comment.mcfunction
     match: "(#.*)$"
     captures:
       1:
@@ -112,9 +155,9 @@ repository:
 
   command:
     # commands begin with any non-whitespace, non-comment character, after optional leading whitespace
-    name: meta.command.mcfunction
+    name: meta._.command.mcfunction
     # don't start consuming the command yet
-    begin: '^{{tabspace}}(?=[^\s\#])'
+    begin: '^{{tpad}}(?=[^\s\#])'
     # we will actually consume the newline here
     # none of the sub-patterns will consume the newline
     # instead they will use lookahead to return to the parent scope
@@ -127,20 +170,39 @@ repository:
       - include: "#generated.commands"
 
   unknown_command:
-    name: meta.unknown_command.mcfunction
-    match: "(.*)$"
-    captures:
-      1:
-        name: "#unknown"
+    name: meta._.unknown_command.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
 
   unknown:
     # anything else gets caught here and highlighted as an error
     # in theory this should only ever happen for lines consisting entirely of whitespace
-    name: meta.unknown.mcfunction
-    match: "^(.*)$"
-    captures:
-      1:
-        name: "#unknown"
+    name: meta._.unknown.mcfunction
+    match: "^((.*))$"
+    captures: "#underlined_error"
+
+  entity_selector_arguments:
+    patterns:
+      # consume commas between arguments
+      - name: meta._.entity_selector.argument_separator.mcfunction
+        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+        captures:
+          1:
+            name: "#entity_selector.comma"
+
+      # consume whitespace from separator to argument
+      - match: '(?<=[\[\,]) +(?=[^\]\,])'
+
+      # consume whitespace from argument to separator
+      - match: '(?<=[^\[\,]) +(?=[\]\,])'
+
+      # TODO what about `@e[ ]` case?
+
+      - include: "#generated.selector_arguments"
+
+  ##############################################################################
+  # GENERATED COMMANDS #########################################################
+  ##############################################################################
 
   generated.commands:
     # this is where the generator will inject command patterns
@@ -149,14 +211,13 @@ repository:
       - include: "#unknown_command"
 
   generated.command.execute:
-    name: meta.execute.command.mcfunction
     # `execute` is non-executable
-    begin: "(execute){{cbnx}}"
+    begin: "(execute){{cbx_false}}"
     end: "{{ln}}"
+    # give all literals their own scope, under keyword
     beginCaptures:
       1:
-        # give all literals their own scope, under keyword
-        name: keyword.execute.command.mcfunction
+        name: "#command"
     patterns:
       - include: "#generated.commands.execute"
 
@@ -168,13 +229,12 @@ repository:
       - include: "#unknown_command"
 
   generated.command.execute.run:
-    name: meta.run.execute.command.mcfunction
     # `execute run` is executable
-    begin: "(run){{cbx}}"
+    begin: "(run){{cbx_true}}"
     end: "{{ln}}"
     beginCaptures:
       1:
-        name: keyword.run.execute.command.mcfunction
+        name: "#subcommand"
     patterns:
       - include: "#generated.commands.execute.run"
 
@@ -184,13 +244,12 @@ repository:
       - include: "#generated.commands"
 
   generated.command.execute.as:
-    name: meta.as.execute.command.mcfunction
     # `execute as` is non-executable
-    begin: "(as){{cbnx}}"
+    begin: "(as){{cbx_false}}"
     end: "{{ln}}"
     beginCaptures:
       1:
-        name: keyword.as.execute.command.mcfunction
+        name: "#subcommand"
     patterns:
       - include: "#generated.commands.execute.as"
 
@@ -200,18 +259,144 @@ repository:
       - include: "#unknown_command"
 
   generated.command.execute.as.targets:
-    name: meta.targets.as.execute.command.mcfunction
     # `execute as <targets>` is executable
-    # TODO how to dive into argument parser?
-    begin: "{{base_selector}}{{cbx}}"
-    end: "{{ln}}"
-    beginCaptures:
-      1:
-        name: "#base_selector"
     patterns:
-      - include: "#generated.commands.execute.as.targets"
+      # unfortunately we cannot generalize these, because
+      # we need to keep the context of the parent command
+
+      # we can use basic `match` patterns for the simpler parsers (1-3)
+
+      # (1) selector without arguments
+      - begin: "{{basic_entity_selector}}{{cbx_true}}"
+        end: "{{ln}}"
+        beginCaptures:
+          1:
+            name: "#entity_selector.base"
+        patterns:
+          - include: "#generated.commands.execute.as.targets"
+
+      # (2) uuid
+      - begin: "{{uuid}}{{cbx_true}}"
+        end: "{{ln}}"
+        beginCaptures:
+          1:
+            name: "#target.uuid"
+        patterns:
+          - include: "#generated.commands.execute.as.targets"
+
+      # (3) player name
+      - begin: "{{player_name}}{{cbx_true}}"
+        end: "{{ln}}"
+        beginCaptures:
+          1:
+            name: "#target.player_name"
+        patterns:
+          - include: "#generated.commands.execute.as.targets"
+
+      # but more complex parsers will require further diving (4)
+
+      # (4) selector with arguments
+      - begin: "{{parameterized_entity_selector.begin}}"
+        end: "{{ln}}"
+        beginCaptures:
+          1:
+            name: "#entity_selector.base"
+          2:
+            name: "#entity_selector.bracket"
+        patterns:
+          # the ending brace pattern cannot be generalized,
+          # because it needs to return to a specific parent command
+          - begin: "{{parameterized_entity_selector.next}}{{cbx_true}}"
+            end: "{{ln}}"
+            beginCaptures:
+              1:
+                name: "#entity_selector.bracket"
+            patterns:
+              # now we can finally resume back to the command arguments
+              - include: "#generated.commands.execute.as.targets"
+
+          # this is where common selector patterns can be included
+          - include: "#entity_selector_arguments"
+
+          # this doesn't go in common selector patterns, because it invalidates
+          # rest of the line... which wouldn't make sense in other future
+          # potential scopes, like text components
+          - include: "#unknown_command"
+
+      - include: "#unknown_command"
 
   generated.commands.execute.as.targets:
     # redirect to `execute`
     patterns:
       - include: "#generated.commands.execute"
+
+  ##############################################################################
+  # GENERATED SELECTOR ARGUMENTS ###############################################
+  ##############################################################################
+
+  generated.selector_arguments:
+    # this is where the generator will inject selector argument patterns
+    # but we'll need to write the data file for these by hand...
+    patterns:
+      - include: "#generated.selector_argument.tag"
+      - include: "#generated.selector_argument.sort"
+      - include: "#generated.selector_argument.limit"
+      - include: "#generated.selector_argument.nbt"
+
+  generated.selector_argument.tag:
+    patterns:
+      - name: meta._.entity_selector.argument.tag.mcfunction
+        match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}(\w+)(?=[\]\,])'
+        captures:
+          1:
+            name: "#entity_selector.param"
+          2:
+            name: "#entity_selector.equals"
+          3:
+            name: "#entity_selector.not"
+          4:
+            name: "#word"
+
+  generated.selector_argument.sort:
+    patterns:
+      - name: meta._.entity_selector.argument.sort.mcfunction
+        match: '(sort){{pad}}(\=){{pad}}(arbitrary|furthest|nearest|random)(?=[\]\,])'
+        captures:
+          1:
+            name: "#entity_selector.param"
+          2:
+            name: "#entity_selector.equals"
+          3:
+            name: "#keyword"
+
+  generated.selector_argument.limit:
+    patterns:
+      - name: meta._.entity_selector.argument.limit.mcfunction
+        match: '(limit){{pad}}(\=){{pad}}(\d+)(?=[\]\,])'
+        captures:
+          1:
+            name: "#entity_selector.param"
+          2:
+            name: "#entity_selector.equals"
+          3:
+            name: "#numeric_constant"
+
+  generated.selector_argument.nbt:
+    patterns:
+      - name: meta._.entity_selector.argument.nbt.mcfunction
+        begin: '(nbt){{pad}}(\=){{pad}}(\!?){{pad}}(\{)'
+        end: '{{ln}}|(\})'
+        beginCaptures:
+          1:
+            name: "#entity_selector.param"
+          2:
+            name: "#entity_selector.equals"
+          3:
+            name: "#entity_selector.not"
+          4:
+            name: "#nbt.compound_bracket"
+        endCaptures:
+          1:
+            name: "#nbt.compound_bracket"
+        # TODO inner nbt patterns
+        contentName: constant.character.escape

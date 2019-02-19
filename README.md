@@ -11,10 +11,10 @@ This is a generic "context-free" grammar that does not target any particular ver
 
 ## Configure
 ### Version-agnostic grammar
-The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting. It is recommended that you use one of the version-specific grammars, if possible.
+The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting. It is recommended that you use one of the [version-specific grammars](version-specific-grammars) if possible.
 
 ### Version-specific grammars
-The version-specific grammars are partially generated based on Minecraft's generated data, which is provided only by Minecraft versions 1.13 and higher.
+The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher.
 
 #### VSCode
 You can easily choose which version of mcfunction to use by changing the `.mcfunction` extension association in your workspace settings:
@@ -61,6 +61,56 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
         - [x] [NBT compound arguments](https://i.imgur.com/JqWrpVm.png): `nbt`
         - [x] [Score arguments](https://i.imgur.com/L7f9wJ3.png): `scores`
         - [x] [Advancement arguments](https://i.imgur.com/yQj5Oye.png): `advancements`
+
+## Customization
+Scopes have been assigned with user customization in mind. If your editor allows scope overrides, this will make it easy to customize your own colours for a variety of scopes.
+
+### Customizing errors
+Short name  | Full scope name                           | Examples
+----------- | ----------------------------------------- | ----------
+`invalid`   | `invalid.illegal._.invalid.mcfunction`    | `execute (foo)`
+`underline` | `markup.underline._.underline.mcfunction` | `execute (foo)`
+
+### Customizing comments
+Short name                | Full scope name                                       | Examples
+------------------------- | ----------------------------------------------------- | ----------
+`comment`                 | `comment._.comment.mcfunction`                        | `# This is a comment`
+`comment.heading`         | `markup.heading._.heading.comment.mcfunction`         | `## Comment Heading`
+`comment.marker.name`     | `markup.bold._.name.marker.comment.mcfunction`        | `# (TODO): optimize selectors`
+`comment.marker.text`     | `comment._.text.marker.comment.mcfunction`            | `# TODO(: optimize selectors)`
+`comment.annotation.name` | `markup.heading._.name.annotation.comment.mcfunction` | `# (@returns) the number of blocks`
+`comment.annotation.text` | `comment._.text.annotation.comment.mcfunction`        | `# @returns( the number of blocks)`
+
+### Customizing commands
+Short name    | Full scope name                         | Examples
+------------- | --------------------------------------- | ----------
+`command`     | `keyword.control._.command.mcfunction`  | `(execute) as @a run (function)`
+`subcommand`  | `keyword.other._.subcommand.mcfunction` | `execute (as) @a (run) function`
+
+### Customizing selectors
+Short name                | Full scope name                                               | Examples
+------------------------- | ------------------------------------------------------------- | ----------
+`entity_selector.base`    | `support.class._.base.entity_selector.mcfunction`             | `@a`
+`entity_selector.bracket` | `support.class._.bracket.entity_selector.mcfunction`          | `[]`
+`entity_selector.equals`  | `support.class._.equals.entity_selector.mcfunction`           | `=`
+`entity_selector.comma`   | `support.class._.comma.entity_selector.mcfunction`            | `,`
+`entity_selector.not`     | `constant.character.escape._.not.entity_selector.mcfunction`  | `!`
+`entity_selector.param`   | `keyword.other._.param.entity_selector.mcfunction`            | `tag` / `type`
+
+### Customizing NBT
+Short name              | Full scope name                             | Examples
+----------------------- | ------------------------------------------- | ----------
+`nbt.compound_bracket`  | `storage._.compound_bracket.nbt.mcfunction` | `{}`
+`nbt.list_bracket`      | `storage._.list_bracket.nbt.mcfunction`     | `[]`
+
+### Other customizable scopes
+Short name            | Full scope name                                   | Examples
+--------------------- | ------------------------------------------------- | ----------
+`target.uuid`         | `support.class._.uuid.target.mcfunction`          | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
+`target.player_name`  | `support.class._.uuid.target.mcfunction`          | `Arcensoth` / `some_guy`
+`word`                | `string._.word.mcfunction`                        | `foo` / `foo_bar`
+`keyword`             | `keyword._.word.mcfunction`                       | `nearest` / `creative`
+`numeric_constant`    | `constant.numeric._.numeric_constant.mcfunction`  | `0` / `123` / `-99` / `001`
 
 ## Resources
 - https://github.com/Arcensoth/language-tmdemo

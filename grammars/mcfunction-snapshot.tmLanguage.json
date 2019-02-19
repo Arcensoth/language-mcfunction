@@ -19,7 +19,7 @@
     "comment": {
       "patterns": [
         {
-          "name": "meta.comment.mcfunction",
+          "name": "meta._.comment.mcfunction",
           "begin": "^[ \\t]*(?=\\#)",
           "end": "\\n",
           "patterns": [
@@ -47,58 +47,58 @@
       ]
     },
     "comment.heading": {
-      "name": "meta.heading.comment.mcfunction",
+      "name": "meta._.heading.comment.mcfunction",
       "match": "(##)[ \\t]*(.*)$",
       "captures": {
         "1": {
-          "name": "comment.comment.mcfunction"
+          "name": "comment._.comment.mcfunction"
         },
         "2": {
-          "name": "markup.heading.comment.mcfunction"
+          "name": "markup.heading._.heading.comment.mcfunction"
         }
       }
     },
     "comment.marker": {
-      "name": "meta.marker.comment.mcfunction",
+      "name": "meta._.marker.comment.mcfunction",
       "match": "(#)[ \\t]*((?:TODO|FIXME|XXX))(\\b.*)$",
       "captures": {
         "1": {
-          "name": "comment.comment.mcfunction"
+          "name": "comment._.comment.mcfunction"
         },
         "2": {
-          "name": "markup.bold.name.marker.comment.mcfunction"
+          "name": "markup.bold._.name.marker.comment.mcfunction"
         },
         "3": {
-          "name": "comment.text.marker.comment.mcfunction"
+          "name": "comment._.text.marker.comment.mcfunction"
         }
       }
     },
     "comment.annotation": {
-      "name": "meta.annotation.comment.mcfunction",
+      "name": "meta._.annotation.comment.mcfunction",
       "match": "(#)[ \\t]*(\\@\\w*)(\\b.*)$",
       "captures": {
         "1": {
-          "name": "comment.comment.mcfunction"
+          "name": "comment._.comment.mcfunction"
         },
         "2": {
-          "name": "markup.heading.name.annotation.comment.mcfunction"
+          "name": "markup.heading._.name.annotation.comment.mcfunction"
         },
         "3": {
-          "name": "comment.text.annotation.comment.mcfunction"
+          "name": "comment._.text.annotation.comment.mcfunction"
         }
       }
     },
     "comment.other": {
-      "name": "meta.other.comment.mcfunction",
+      "name": "meta._.other.comment.mcfunction",
       "match": "(#.*)$",
       "captures": {
         "1": {
-          "name": "comment.comment.mcfunction"
+          "name": "comment._.comment.mcfunction"
         }
       }
     },
     "command": {
-      "name": "meta.command.mcfunction",
+      "name": "meta._.command.mcfunction",
       "begin": "^[ \\t]*(?=[^\\s\\#])",
       "end": "\\n",
       "patterns": [
@@ -115,22 +115,50 @@
       ]
     },
     "unknown_command": {
-      "name": "meta.unknown_command.mcfunction",
-      "match": "(.*)$",
+      "name": "meta._.unknown_command.mcfunction",
+      "match": "((.*))$",
       "captures": {
         "1": {
-          "name": "invalid.mcfunction"
+          "name": "invalid.illegal._.invalid.mcfunction"
+        },
+        "2": {
+          "name": "markup.underline._.underline.mcfunction"
         }
       }
     },
     "unknown": {
-      "name": "meta.unknown.mcfunction",
-      "match": "^(.*)$",
+      "name": "meta._.unknown.mcfunction",
+      "match": "^((.*))$",
       "captures": {
         "1": {
-          "name": "invalid.mcfunction"
+          "name": "invalid.illegal._.invalid.mcfunction"
+        },
+        "2": {
+          "name": "markup.underline._.underline.mcfunction"
         }
       }
+    },
+    "entity_selector_arguments": {
+      "patterns": [
+        {
+          "name": "meta._.entity_selector.argument_separator.mcfunction",
+          "match": "(?<=[^\\[\\,])(\\,)(?=[^\\]\\,])",
+          "captures": {
+            "1": {
+              "name": "support.class._.comma.entity_selector.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "(?<=[\\[\\,]) +(?=[^\\]\\,])"
+        },
+        {
+          "match": "(?<=[^\\[\\,]) +(?=[\\]\\,])"
+        },
+        {
+          "include": "#generated.selector_arguments"
+        }
+      ]
     },
     "generated.commands": {
       "patterns": [
@@ -143,12 +171,11 @@
       ]
     },
     "generated.command.execute": {
-      "name": "meta.execute.command.mcfunction",
       "begin": "(execute) (?=[^\\s\\#])",
       "end": "(?=\\n)",
       "beginCaptures": {
         "1": {
-          "name": "keyword.execute.command.mcfunction"
+          "name": "keyword.control._.command.mcfunction"
         }
       },
       "patterns": [
@@ -171,12 +198,11 @@
       ]
     },
     "generated.command.execute.run": {
-      "name": "meta.run.execute.command.mcfunction",
       "begin": "(run)( |(?=\\n))",
       "end": "(?=\\n)",
       "beginCaptures": {
         "1": {
-          "name": "keyword.run.execute.command.mcfunction"
+          "name": "keyword.other._.subcommand.mcfunction"
         }
       },
       "patterns": [
@@ -193,12 +219,11 @@
       ]
     },
     "generated.command.execute.as": {
-      "name": "meta.as.execute.command.mcfunction",
       "begin": "(as) (?=[^\\s\\#])",
       "end": "(?=\\n)",
       "beginCaptures": {
         "1": {
-          "name": "keyword.as.execute.command.mcfunction"
+          "name": "keyword.other._.subcommand.mcfunction"
         }
       },
       "patterns": [
@@ -218,17 +243,85 @@
       ]
     },
     "generated.command.execute.as.targets": {
-      "name": "meta.targets.as.execute.command.mcfunction",
-      "begin": "(\\@[a-z])( |(?=\\n))",
-      "end": "(?=\\n)",
-      "beginCaptures": {
-        "1": {
-          "name": "support.class.base_selector.mcfunction"
-        }
-      },
       "patterns": [
         {
-          "include": "#generated.commands.execute.as.targets"
+          "begin": "(\\@[a-z])( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.entity_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.as.targets"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.as.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.as.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[a-z])(\\[)",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.entity_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.entity_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\])( |(?=\\n))",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.entity_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.as.targets"
+                }
+              ]
+            },
+            {
+              "include": "#entity_selector_arguments"
+            },
+            {
+              "include": "#unknown_command"
+            }
+          ]
+        },
+        {
+          "include": "#unknown_command"
         }
       ]
     },
@@ -236,6 +329,111 @@
       "patterns": [
         {
           "include": "#generated.commands.execute"
+        }
+      ]
+    },
+    "generated.selector_arguments": {
+      "patterns": [
+        {
+          "include": "#generated.selector_argument.tag"
+        },
+        {
+          "include": "#generated.selector_argument.sort"
+        },
+        {
+          "include": "#generated.selector_argument.limit"
+        },
+        {
+          "include": "#generated.selector_argument.nbt"
+        }
+      ]
+    },
+    "generated.selector_argument.tag": {
+      "patterns": [
+        {
+          "name": "meta._.entity_selector.argument.tag.mcfunction",
+          "match": "(tag) *(\\=) *(\\!?) *(\\w+)(?=[\\]\\,])",
+          "captures": {
+            "1": {
+              "name": "keyword.other._.param.entity_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.entity_selector.mcfunction"
+            },
+            "3": {
+              "name": "constant.character.escape._.not.entity_selector.mcfunction"
+            },
+            "4": {
+              "name": "string._.word.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "generated.selector_argument.sort": {
+      "patterns": [
+        {
+          "name": "meta._.entity_selector.argument.sort.mcfunction",
+          "match": "(sort) *(\\=) *(arbitrary|furthest|nearest|random)(?=[\\]\\,])",
+          "captures": {
+            "1": {
+              "name": "keyword.other._.param.entity_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.entity_selector.mcfunction"
+            },
+            "3": {
+              "name": "keyword._.word.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "generated.selector_argument.limit": {
+      "patterns": [
+        {
+          "name": "meta._.entity_selector.argument.limit.mcfunction",
+          "match": "(limit) *(\\=) *(\\d+)(?=[\\]\\,])",
+          "captures": {
+            "1": {
+              "name": "keyword.other._.param.entity_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.entity_selector.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric._.numeric_constant.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "generated.selector_argument.nbt": {
+      "patterns": [
+        {
+          "name": "meta._.entity_selector.argument.nbt.mcfunction",
+          "begin": "(nbt) *(\\=) *(\\!?) *(\\{)",
+          "end": "(?=\\n)|(\\})",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other._.param.entity_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.entity_selector.mcfunction"
+            },
+            "3": {
+              "name": "constant.character.escape._.not.entity_selector.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_bracket.nbt.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "storage._.compound_bracket.nbt.mcfunction"
+            }
+          },
+          "contentName": "constant.character.escape"
         }
       ]
     }
