@@ -196,7 +196,8 @@ repository:
       # consume whitespace from argument to separator
       - match: '(?<=[^\[\,]) +(?=[\]\,])'
 
-      # TODO what about `@e[ ]` case?
+      # special case for empty parameterized selectors, e.g. `@e[ ]`
+      - match: '(?<=\[) +(?=\])'
 
       - include: "#generated.selector_arguments"
 

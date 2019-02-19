@@ -84,6 +84,7 @@ repository:
             name: support.class._.comma.entity_selector.mcfunction
       - match: '(?<=[\[\,]) +(?=[^\]\,])'
       - match: '(?<=[^\[\,]) +(?=[\]\,])'
+      - match: '(?<=\[) +(?=\])'
       - include: '#generated.selector_arguments'
   generated.commands:
     patterns:

@@ -248,6 +248,10 @@
             <string>(?&lt;=[^\[\,]) +(?=[\]\,])</string>
           </dict>
           <dict>
+            <key>match</key>
+            <string>(?&lt;=\[) +(?=\])</string>
+          </dict>
+          <dict>
             <key>include</key>
             <string>#generated.selector_arguments</string>
           </dict>
