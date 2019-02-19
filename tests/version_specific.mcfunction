@@ -70,28 +70,8 @@ execute as @s[tag   =   foo,   tag   =   bar   ] run execute as @s run say hello
 execute as @s[   tag   =   foo    ,   tag   =   bar   ] run execute as @s run say hello
 execute as @s[tag   =   foo    ,   tag   =   bar] run execute as @s run say hello
 execute as @s[ tag = foo , tag = bar , tag = baz ] run execute as @s run say hello
-
-execute as @e[sort] run
-execute as @e[sort=] run
-execute as @e[sort=foo] run
-execute as @e[sort=nearest] run
-execute as @e[sort=nearestfoo] run
-execute as @e[sort=foonearest] run
-execute as @e[sort=!nearest] run
-execute as @e[ sort = nearest ] run
-
-execute as @e[limit] run
-execute as @e[limit=] run
-execute as @e[limit=foo] run
-execute as @e[limit=nearest] run
-execute as @e[limit=1] run
-execute as @e[limit=01] run
-execute as @e[limit=0.1] run
-execute as @e[limit=-1] run
-
 execute as @s[nbt={custom: true}] as @s run say hello
 execute as @s[nbt=!{custom: true}] as @s run say hello
-
 execute as @e[tag=foo, sort=nearest, nbt={custom: true}] run execute as @s run execute as @s run say hello
 
 # invalid
@@ -119,3 +99,31 @@ execute as @s[tag=foo,tag] run execute as @s run say hello
 execute as @s[tag=foo,tag=] run execute as @s run say hello
 execute as @s[tag=foo,tag,tag=bar] run execute as @s run say hello
 execute as @s[tag=foo,tag=,tag=bar] run execute as @s run say hello
+
+# valid
+execute as @e[sort=nearest] run
+execute as @e[ sort = nearest ] run
+execute as @e[  sort  =  nearest  ] run
+
+# invalid
+execute as @e[sort] run
+execute as @e[sort=] run
+execute as @e[sort=foo] run
+execute as @e[sort=nearestfoo] run
+execute as @e[sort=foonearest] run
+execute as @e[sort=!nearest] run
+
+# valid
+execute as @e[limit=1] run
+execute as @e[limit=01] run
+execute as @e[ limit = 1 ] run
+execute as @e[  limit  =  1  ] run
+
+# invalid
+execute as @e[limit] run
+execute as @e[limit=] run
+execute as @e[limit=foo] run
+execute as @e[limit=nearest] run
+execute as @e[limit=0.1] run
+execute as @e[limit=-1] run
+execute as @e[limit=!1] run

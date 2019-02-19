@@ -352,7 +352,7 @@
       "patterns": [
         {
           "name": "meta._.entity_selector.argument.tag.mcfunction",
-          "match": "(tag) *(\\=) *(\\!?) *(\\w+)(?=[\\]\\,])",
+          "match": "(tag) *(\\=) *(\\!?) *(\\w+) *(?=[\\]\\,])",
           "captures": {
             "1": {
               "name": "keyword.other._.param.entity_selector.mcfunction"
@@ -374,7 +374,7 @@
       "patterns": [
         {
           "name": "meta._.entity_selector.argument.sort.mcfunction",
-          "match": "(sort) *(\\=) *(arbitrary|furthest|nearest|random)(?=[\\]\\,])",
+          "match": "(sort) *(\\=) *(arbitrary|furthest|nearest|random) *(?=[\\]\\,])",
           "captures": {
             "1": {
               "name": "keyword.other._.param.entity_selector.mcfunction"
@@ -393,7 +393,7 @@
       "patterns": [
         {
           "name": "meta._.entity_selector.argument.limit.mcfunction",
-          "match": "(limit) *(\\=) *(\\d+)(?=[\\]\\,])",
+          "match": "(limit) *(\\=) *(\\d+) *(?=[\\]\\,])",
           "captures": {
             "1": {
               "name": "keyword.other._.param.entity_selector.mcfunction"

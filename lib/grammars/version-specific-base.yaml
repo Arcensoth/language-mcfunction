@@ -346,7 +346,7 @@ repository:
   generated.selector_argument.tag:
     patterns:
       - name: meta._.entity_selector.argument.tag.mcfunction
-        match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}(\w+)(?=[\]\,])'
+        match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}(\w+){{pad}}(?=[\]\,])'
         captures:
           1:
             name: "#entity_selector.param"
@@ -360,7 +360,7 @@ repository:
   generated.selector_argument.sort:
     patterns:
       - name: meta._.entity_selector.argument.sort.mcfunction
-        match: '(sort){{pad}}(\=){{pad}}(arbitrary|furthest|nearest|random)(?=[\]\,])'
+        match: '(sort){{pad}}(\=){{pad}}(arbitrary|furthest|nearest|random){{pad}}(?=[\]\,])'
         captures:
           1:
             name: "#entity_selector.param"
@@ -372,7 +372,7 @@ repository:
   generated.selector_argument.limit:
     patterns:
       - name: meta._.entity_selector.argument.limit.mcfunction
-        match: '(limit){{pad}}(\=){{pad}}(\d+)(?=[\]\,])'
+        match: '(limit){{pad}}(\=){{pad}}(\d+){{pad}}(?=[\]\,])'
         captures:
           1:
             name: "#entity_selector.param"
