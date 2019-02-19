@@ -6,6 +6,7 @@ import yaml = require("js-yaml");
 import { ExtendedLanguageGrammar, LanguageGrammar } from "./language-grammar";
 
 const FORMAT_PROPERTIES = ["match", "begin", "end"];
+const FORMAT_NAMES = ["name", "contentName"];
 const RECURSE_MAPS = ["captures", "beginCaptures", "endCaptures"];
 const RECURSE_LISTS = ["patterns"];
 
@@ -37,10 +38,12 @@ function updateNode(grammar: any, node: any) {
     }
   });
 
-  // format name, if applicable
-  if ("name" in node) {
-    node.name = formatName(grammar, node.name);
-  }
+  // format names (leaf-nodes) with name definitions
+  FORMAT_NAMES.forEach((key: string) => {
+    if (key in node) {
+      node[key] = formatName(grammar, node[key]);
+    }
+  });
 
   // process capture-includes
   if ("captures" in node) {
