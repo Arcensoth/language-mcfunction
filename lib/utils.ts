@@ -11,6 +11,9 @@ const RECURSE_MAPS = ["captures", "beginCaptures", "endCaptures"];
 const RECURSE_LISTS = ["patterns"];
 
 function formatProperty(grammar: any, s: string): string {
+  if (s.indexOf('{{') < 0) {
+    return s;
+  }
   let s2 = s;
   for (const key in grammar.variables) {
     const value = grammar.variables[key];
