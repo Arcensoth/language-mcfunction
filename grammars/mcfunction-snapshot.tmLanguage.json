@@ -170,7 +170,7 @@
           "name": "string._.word.mcfunction"
         },
         {
-          "begin": "(\\@[a-z])(\\[)",
+          "begin": "(\\@[parse])(\\[)",
           "end": "(?=\\n)|(\\])",
           "beginCaptures": {
             "1": {
@@ -195,7 +195,7 @@
           ]
         },
         {
-          "match": "(\\@[a-z])",
+          "match": "(\\@[parse])",
           "name": "support.class._.base.entity_selector.mcfunction"
         }
       ]
@@ -319,7 +319,7 @@
     "generated.command.execute.as.targets": {
       "patterns": [
         {
-          "begin": "(\\@[a-z])( |(?=\\n))",
+          "begin": "(\\@[parse])( |(?=\\n))",
           "end": "(?=\\n)",
           "beginCaptures": {
             "1": {
@@ -361,7 +361,7 @@
           ]
         },
         {
-          "begin": "(\\@[a-z])(\\[)",
+          "begin": "(\\@[parse])(\\[)",
           "end": "(?=\\n)",
           "beginCaptures": {
             "1": {

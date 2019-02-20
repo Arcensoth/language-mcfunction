@@ -68,7 +68,7 @@ variables:
   cbx_false: ' (?=[^\s\#])'
 
   # basic_entity_selector
-  basic_entity_selector: '(\@[a-z])'
+  basic_entity_selector: '(\@[parse])'
 
   # parameterized_entity_selector
   parameterized_entity_selector.base: "{{basic_entity_selector}}"
