@@ -253,7 +253,63 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#generated.selector_arguments</string>
+            <string>#generated.entity_selector_arguments</string>
+          </dict>
+        </array>
+      </dict>
+      <key>parser.minecraft.message</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>([^\@\n]+)</string>
+            <key>name</key>
+            <string>string._.word.mcfunction</string>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(\@[a-z])(\[)</string>
+            <key>end</key>
+            <string>(?=\n)|(\])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.base.entity_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.bracket.entity_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.bracket.entity_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#entity_selector_arguments</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#unknown_command</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\@[a-z])</string>
+            <key>name</key>
+            <string>support.class._.base.entity_selector.mcfunction</string>
           </dict>
         </array>
       </dict>
@@ -263,11 +319,61 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#generated.command.say</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#generated.command.execute</string>
           </dict>
           <dict>
             <key>include</key>
             <string>#unknown_command</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.say</key>
+      <dict>
+        <key>begin</key>
+        <string>(say) (?=[^\s\#])</string>
+        <key>end</key>
+        <string>(?=\n)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control._.command.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.commands.say</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.say</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.command.say.message</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#unknown_command</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.say.message</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#parser.minecraft.message</string>
           </dict>
         </array>
       </dict>
@@ -513,35 +619,35 @@
           </dict>
         </array>
       </dict>
-      <key>generated.selector_arguments</key>
+      <key>generated.entity_selector_arguments</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.selector_argument.tag</string>
+            <string>#generated.entity_selector_argument.tag</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#generated.selector_argument.sort</string>
+            <string>#generated.entity_selector_argument.sort</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#generated.selector_argument.limit</string>
+            <string>#generated.entity_selector_argument.limit</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#generated.selector_argument.nbt</string>
+            <string>#generated.entity_selector_argument.nbt</string>
           </dict>
         </array>
       </dict>
-      <key>generated.selector_argument.tag</key>
+      <key>generated.entity_selector_argument.tag</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.entity_selector.argument.tag.mcfunction</string>
+            <string>meta._.entity_selector_argument.tag.mcfunction</string>
             <key>match</key>
             <string>(tag) *(\=) *(\!?) *(\w+) *(?=[\]\,])</string>
             <key>captures</key>
@@ -570,13 +676,13 @@
           </dict>
         </array>
       </dict>
-      <key>generated.selector_argument.sort</key>
+      <key>generated.entity_selector_argument.sort</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.entity_selector.argument.sort.mcfunction</string>
+            <string>meta._.entity_selector_argument.sort.mcfunction</string>
             <key>match</key>
             <string>(sort) *(\=) *(arbitrary|furthest|nearest|random) *(?=[\]\,])</string>
             <key>captures</key>
@@ -600,13 +706,13 @@
           </dict>
         </array>
       </dict>
-      <key>generated.selector_argument.limit</key>
+      <key>generated.entity_selector_argument.limit</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.entity_selector.argument.limit.mcfunction</string>
+            <string>meta._.entity_selector_argument.limit.mcfunction</string>
             <key>match</key>
             <string>(limit) *(\=) *(\d+) *(?=[\]\,])</string>
             <key>captures</key>
@@ -630,13 +736,13 @@
           </dict>
         </array>
       </dict>
-      <key>generated.selector_argument.nbt</key>
+      <key>generated.entity_selector_argument.nbt</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.entity_selector.argument.nbt.mcfunction</string>
+            <string>meta._.entity_selector_argument.nbt.mcfunction</string>
             <key>begin</key>
             <string>(nbt) *(\=) *(\!?) *(\{)</string>
             <key>end</key>

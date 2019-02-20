@@ -159,17 +159,88 @@
           "match": "(?<=\\[) +(?=\\])"
         },
         {
-          "include": "#generated.selector_arguments"
+          "include": "#generated.entity_selector_arguments"
+        }
+      ]
+    },
+    "parser.minecraft.message": {
+      "patterns": [
+        {
+          "match": "([^\\@\\n]+)",
+          "name": "string._.word.mcfunction"
+        },
+        {
+          "begin": "(\\@[a-z])(\\[)",
+          "end": "(?=\\n)|(\\])",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.entity_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.entity_selector.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "support.class._.bracket.entity_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#entity_selector_arguments"
+            },
+            {
+              "include": "#unknown_command"
+            }
+          ]
+        },
+        {
+          "match": "(\\@[a-z])",
+          "name": "support.class._.base.entity_selector.mcfunction"
         }
       ]
     },
     "generated.commands": {
       "patterns": [
         {
+          "include": "#generated.command.say"
+        },
+        {
           "include": "#generated.command.execute"
         },
         {
           "include": "#unknown_command"
+        }
+      ]
+    },
+    "generated.command.say": {
+      "begin": "(say) (?=[^\\s\\#])",
+      "end": "(?=\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control._.command.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#generated.commands.say"
+        }
+      ]
+    },
+    "generated.commands.say": {
+      "patterns": [
+        {
+          "include": "#generated.command.say.message"
+        },
+        {
+          "include": "#unknown_command"
+        }
+      ]
+    },
+    "generated.command.say.message": {
+      "patterns": [
+        {
+          "include": "#parser.minecraft.message"
         }
       ]
     },
@@ -335,26 +406,26 @@
         }
       ]
     },
-    "generated.selector_arguments": {
+    "generated.entity_selector_arguments": {
       "patterns": [
         {
-          "include": "#generated.selector_argument.tag"
+          "include": "#generated.entity_selector_argument.tag"
         },
         {
-          "include": "#generated.selector_argument.sort"
+          "include": "#generated.entity_selector_argument.sort"
         },
         {
-          "include": "#generated.selector_argument.limit"
+          "include": "#generated.entity_selector_argument.limit"
         },
         {
-          "include": "#generated.selector_argument.nbt"
+          "include": "#generated.entity_selector_argument.nbt"
         }
       ]
     },
-    "generated.selector_argument.tag": {
+    "generated.entity_selector_argument.tag": {
       "patterns": [
         {
-          "name": "meta._.entity_selector.argument.tag.mcfunction",
+          "name": "meta._.entity_selector_argument.tag.mcfunction",
           "match": "(tag) *(\\=) *(\\!?) *(\\w+) *(?=[\\]\\,])",
           "captures": {
             "1": {
@@ -373,10 +444,10 @@
         }
       ]
     },
-    "generated.selector_argument.sort": {
+    "generated.entity_selector_argument.sort": {
       "patterns": [
         {
-          "name": "meta._.entity_selector.argument.sort.mcfunction",
+          "name": "meta._.entity_selector_argument.sort.mcfunction",
           "match": "(sort) *(\\=) *(arbitrary|furthest|nearest|random) *(?=[\\]\\,])",
           "captures": {
             "1": {
@@ -392,10 +463,10 @@
         }
       ]
     },
-    "generated.selector_argument.limit": {
+    "generated.entity_selector_argument.limit": {
       "patterns": [
         {
-          "name": "meta._.entity_selector.argument.limit.mcfunction",
+          "name": "meta._.entity_selector_argument.limit.mcfunction",
           "match": "(limit) *(\\=) *(\\d+) *(?=[\\]\\,])",
           "captures": {
             "1": {
@@ -411,10 +482,10 @@
         }
       ]
     },
-    "generated.selector_argument.nbt": {
+    "generated.entity_selector_argument.nbt": {
       "patterns": [
         {
-          "name": "meta._.entity_selector.argument.nbt.mcfunction",
+          "name": "meta._.entity_selector_argument.nbt.mcfunction",
           "begin": "(nbt) *(\\=) *(\\!?) *(\\{)",
           "end": "(?=\\n)|(\\})",
           "beginCaptures": {

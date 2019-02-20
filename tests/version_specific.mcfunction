@@ -127,3 +127,16 @@ execute as @e[limit=nearest] run
 execute as @e[limit=0.1] run
 execute as @e[limit=-1] run
 execute as @e[limit=!1] run
+
+# valid
+say hello
+say hello world
+say hello @e world
+say hello@eworld
+say hello@e[tag=foo]world
+
+# invalid
+say hello@e[world
+say hello@e[tag]world
+say hello@e[tag=]world
+

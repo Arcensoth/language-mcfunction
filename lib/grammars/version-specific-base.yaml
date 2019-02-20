@@ -199,7 +199,32 @@ repository:
       # special case for empty parameterized selectors, e.g. `@e[ ]`
       - match: '(?<=\[) +(?=\])'
 
-      - include: "#generated.selector_arguments"
+      - include: "#generated.entity_selector_arguments"
+
+  parser.minecraft.message:
+    patterns:
+      # pause when we see certain characters
+      - match: '([^\@\n]+)'
+        name: "#word"
+
+      # check for selectors with arguments
+      - begin: "{{parameterized_entity_selector.begin}}"
+        end: "{{ln}}|{{parameterized_entity_selector.next}}"
+        beginCaptures:
+          1:
+            name: "#entity_selector.base"
+          2:
+            name: "#entity_selector.bracket"
+        endCaptures:
+          1:
+            name: "#entity_selector.bracket"
+        patterns:
+          - include: "#entity_selector_arguments"
+          - include: "#unknown_command"
+
+      # check for selectors without arguments
+      - match: "{{basic_entity_selector}}"
+        name: "#entity_selector.base"
 
   ##############################################################################
   # GENERATED COMMANDS #########################################################
@@ -208,14 +233,35 @@ repository:
   generated.commands:
     # this is where the generator will inject command patterns
     patterns:
+      - include: "#generated.command.say"
       - include: "#generated.command.execute"
       - include: "#unknown_command"
+
+  generated.command.say:
+    begin: "(say){{cbx_false}}"
+    end: "{{ln}}"
+    beginCaptures:
+      1:
+        name: "#command"
+    patterns:
+      - include: "#generated.commands.say"
+
+  generated.commands.say:
+    patterns:
+      - include: "#generated.command.say.message"
+      - include: "#unknown_command"
+
+  generated.command.say.message:
+    # minecraft:message is an exception
+    # it just consume the rest of the line, attempting to
+    # parse various patterns (such as selectors) as it goes
+    patterns:
+      - include: "#parser.minecraft.message"
 
   generated.command.execute:
     # `execute` is non-executable
     begin: "(execute){{cbx_false}}"
     end: "{{ln}}"
-    # give all literals their own scope, under keyword
     beginCaptures:
       1:
         name: "#command"
@@ -335,18 +381,18 @@ repository:
   # GENERATED SELECTOR ARGUMENTS ###############################################
   ##############################################################################
 
-  generated.selector_arguments:
+  generated.entity_selector_arguments:
     # this is where the generator will inject selector argument patterns
     # but we'll need to write the data file for these by hand...
     patterns:
-      - include: "#generated.selector_argument.tag"
-      - include: "#generated.selector_argument.sort"
-      - include: "#generated.selector_argument.limit"
-      - include: "#generated.selector_argument.nbt"
+      - include: "#generated.entity_selector_argument.tag"
+      - include: "#generated.entity_selector_argument.sort"
+      - include: "#generated.entity_selector_argument.limit"
+      - include: "#generated.entity_selector_argument.nbt"
 
-  generated.selector_argument.tag:
+  generated.entity_selector_argument.tag:
     patterns:
-      - name: meta._.entity_selector.argument.tag.mcfunction
+      - name: meta._.entity_selector_argument.tag.mcfunction
         match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}(\w+){{pad}}(?=[\]\,])'
         captures:
           1:
@@ -358,9 +404,9 @@ repository:
           4:
             name: "#word"
 
-  generated.selector_argument.sort:
+  generated.entity_selector_argument.sort:
     patterns:
-      - name: meta._.entity_selector.argument.sort.mcfunction
+      - name: meta._.entity_selector_argument.sort.mcfunction
         match: '(sort){{pad}}(\=){{pad}}(arbitrary|furthest|nearest|random){{pad}}(?=[\]\,])'
         captures:
           1:
@@ -370,9 +416,9 @@ repository:
           3:
             name: "#keyword"
 
-  generated.selector_argument.limit:
+  generated.entity_selector_argument.limit:
     patterns:
-      - name: meta._.entity_selector.argument.limit.mcfunction
+      - name: meta._.entity_selector_argument.limit.mcfunction
         match: '(limit){{pad}}(\=){{pad}}(\d+){{pad}}(?=[\]\,])'
         captures:
           1:
@@ -382,9 +428,9 @@ repository:
           3:
             name: "#numeric_constant"
 
-  generated.selector_argument.nbt:
+  generated.entity_selector_argument.nbt:
     patterns:
-      - name: meta._.entity_selector.argument.nbt.mcfunction
+      - name: meta._.entity_selector_argument.nbt.mcfunction
         begin: '(nbt){{pad}}(\=){{pad}}(\!?){{pad}}(\{)'
         end: '{{ln}}|(\})'
         beginCaptures:
