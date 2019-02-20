@@ -14,20 +14,39 @@ function formatProperty(grammar: any, s: string): string {
   let s2 = s;
   for (const key in grammar.variables) {
     const value = grammar.variables[key];
+    if (!value) {
+      throw Error(
+        `Grammar "${grammar.name}" -> variables has no item named "${key}"`
+      );
+    }
     s2 = s2.replace(new RegExp("{{" + key + "}}", "g"), value);
   }
   return s2;
 }
 
 function formatName(grammar: any, name: string): string {
-  if (name.indexOf("#") === 0) {
-    return grammar.names[name.substring(1)];
+  if (name.indexOf("#") < 0) {
+    return name;
   }
-  return name;
+  const result = grammar.names[name.substring(1)];
+  if (!result) {
+    throw Error(
+      `Grammar "${grammar.name}" -> names has no item named "${name}"`
+    );
+  }
+  return result;
 }
 
 function getCaptures(grammar: any, name: string): any {
-  return grammar.capturesRepository[name.substring(1)];
+  const result = grammar.capturesRepository[name.substring(1)];
+  if (!result) {
+    throw Error(
+      `Grammar "${
+        grammar.name
+      }" -> capturesRespository has no item named "${name}"`
+    );
+  }
+  return result;
 }
 
 function updateNode(grammar: any, node: any) {
