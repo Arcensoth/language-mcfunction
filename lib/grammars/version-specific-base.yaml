@@ -226,6 +226,10 @@ repository:
       - match: "{{basic_entity_selector}}"
         name: "#entity_selector.base"
 
+      # catch characters that may have slipped through
+      - match: '([^\n])'
+        name: "#word"
+
   ##############################################################################
   # GENERATED COMMANDS #########################################################
   ##############################################################################

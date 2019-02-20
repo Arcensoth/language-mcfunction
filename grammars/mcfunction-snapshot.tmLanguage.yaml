@@ -105,6 +105,8 @@ repository:
           - include: '#unknown_command'
       - match: '(\@[parse])'
         name: support.class._.base.entity_selector.mcfunction
+      - match: '([^\n])'
+        name: string._.word.mcfunction
   generated.commands:
     patterns:
       - include: '#generated.command.say'

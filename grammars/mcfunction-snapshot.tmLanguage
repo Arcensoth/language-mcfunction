@@ -311,6 +311,12 @@
             <key>name</key>
             <string>support.class._.base.entity_selector.mcfunction</string>
           </dict>
+          <dict>
+            <key>match</key>
+            <string>([^\n])</string>
+            <key>name</key>
+            <string>string._.word.mcfunction</string>
+          </dict>
         </array>
       </dict>
       <key>generated.commands</key>
