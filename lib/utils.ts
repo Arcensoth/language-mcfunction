@@ -7,11 +7,12 @@ import { ExtendedLanguageGrammar, LanguageGrammar } from "./language-grammar";
 
 const FORMAT_PROPERTIES = ["match", "begin", "end"];
 const FORMAT_NAMES = ["name", "contentName"];
+const CAPTURE_INCLUDES = ["captures", "beginCaptures", "endCaptures"];
 const RECURSE_MAPS = ["captures", "beginCaptures", "endCaptures"];
 const RECURSE_LISTS = ["patterns"];
 
 function formatProperty(grammar: any, s: string): string {
-  if (s.indexOf('{{') < 0) {
+  if (s.indexOf("{{") < 0) {
     return s;
   }
   let s2 = s;
@@ -68,26 +69,28 @@ function updateNode(grammar: any, node: any) {
   });
 
   // process capture-includes
-  if ("captures" in node) {
-    if (typeof node.captures === "string") {
-      node.captures = getCaptures(grammar, node.captures);
-    } else if (node.captures instanceof Array) {
-      // merge dicts, let keys overlap in order
-      const newCaptures: { [key: number]: any } = {};
-      node.captures.forEach((entry: any) => {
-        const includeName = entry.include;
-        const includeValue: { [key: number]: any } = getCaptures(
-          grammar,
-          includeName
-        );
-        for (const groupKey in includeValue) {
-          const groupValue = includeValue[groupKey];
-          newCaptures[groupKey] = groupValue;
-        }
-      });
-      node.captures = newCaptures;
+  CAPTURE_INCLUDES.forEach((key: string) => {
+    if (key in node) {
+      if (typeof node[key] === "string") {
+        node[key] = getCaptures(grammar, node[key]);
+      } else if (node[key] instanceof Array) {
+        // merge dicts, let keys overlap in order
+        const newCaptures: { [key: number]: any } = {};
+        node[key].forEach((entry: any) => {
+          const includeName = entry.include;
+          const includeValue: { [key: number]: any } = getCaptures(
+            grammar,
+            includeName
+          );
+          for (const groupKey in includeValue) {
+            const groupValue = includeValue[groupKey];
+            newCaptures[groupKey] = groupValue;
+          }
+        });
+        node[key] = newCaptures;
+      }
     }
-  }
+  });
 
   // recurse into key-value children
   RECURSE_MAPS.forEach((key: string) => {
