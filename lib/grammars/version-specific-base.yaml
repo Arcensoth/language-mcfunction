@@ -33,15 +33,23 @@ names:
 
   # nbt scopes
   nbt.compound_bracket: storage._.compound_bracket.nbt.mcfunction
+  nbt.compound_colon: storage._.compound_colon.nbt.mcfunction
+  nbt.compound_comma: storage._.compound_colon.nbt.mcfunction
   nbt.list_bracket: storage._.list_bracket.nbt.mcfunction
+
+  # text component scopes
+  text_component.compound_property: string._.property.text_component.mcfunction
 
   # scopes for other types of arguments accepted by `minecraft:entity`
   target.uuid: support.class._.uuid.target.mcfunction
   target.player_name: support.class._.player_name.target.mcfunction
 
   # string scopes
+  string: string._.word.mcfunction
+  string_escape: constant.character.escape._.word.mcfunction
   word: string._.word.mcfunction
-  keyword: keyword._.word.mcfunction
+  keyword: keyword._.keyword.mcfunction
+  boolean: constant.numeric._.boolean.mcfunction
 
   # numeric scopes
   numeric_constant: constant.numeric._.numeric_constant.mcfunction
@@ -79,6 +87,8 @@ variables:
 
   hex_digit: "[0-9a-fA-F]"
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
+
+  boolean: "(true|false)"
 
   player_name: '(\w+)'
 
@@ -169,11 +179,6 @@ repository:
     patterns:
       - include: "#generated.commands"
 
-  unknown_command:
-    name: meta._.unknown_command.mcfunction
-    match: "((.*))$"
-    captures: "#underlined_error"
-
   unknown:
     # anything else gets caught here and highlighted as an error
     # in theory this should only ever happen for lines consisting entirely of whitespace
@@ -205,7 +210,7 @@ repository:
     patterns:
       # pause when we see certain characters
       - match: '([^\@\n]+)'
-        name: "#word"
+        name: "#string"
 
       # check for selectors with arguments
       - begin: "{{parameterized_entity_selector.begin}}"
@@ -220,7 +225,7 @@ repository:
             name: "#entity_selector.bracket"
         patterns:
           - include: "#entity_selector_arguments"
-          - include: "#unknown_command"
+          - include: "#error.unknown_command"
 
       # check for selectors without arguments
       - match: "{{basic_entity_selector}}"
@@ -228,7 +233,239 @@ repository:
 
       # catch characters that may have slipped through
       - match: '([^\n])'
-        name: "#word"
+        name: "#string"
+
+  ##############################################################################
+  # ERRORS #####################################################################
+  ##############################################################################
+
+  error.unknown_string:
+    # continue until the end of the string/line
+    patterns:
+      - match: '(([^\n\"]+))'
+        captures: "#underlined_error"
+
+  error.unknown_compound:
+    # continue until the end of the compound/line
+    patterns:
+      - match: '(([^\n\}]+))'
+        captures: "#underlined_error"
+
+  error.unknown_list:
+    # continue until the end of the list/line
+    patterns:
+      - match: '(([^\n\]]+))'
+        captures: "#underlined_error"
+
+  error.unknown_command:
+    # continue until the end of the line
+    name: meta._.unknown_command.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
+
+  ##############################################################################
+  # COMMON #####################################################################
+  ##############################################################################
+
+  common.double_quoted_string:
+    patterns:
+      # consume everything except for backslashes, double quotes, and newlines
+      - match: '[^\\\"\n]'
+        name: "#string"
+      # consume any escaped characters... except for newlines
+      - match: '\\[^\n]'
+        name: "#string_escape"
+      # consume a single backslash (implicitly followed by a newline) as an error
+      - match: '((\\))'
+        captures: "#underlined_error"
+      # anything else (newlines and unescaped double quotes) will be handed back to the parent scope
+
+  ##############################################################################
+  # TEXT COMPONENTS ############################################################
+  ##############################################################################
+
+  # TODO can the text component schema be version-controlled?
+
+  text_component:
+    patterns:
+      - include: "#text_component.string"
+      - include: "#text_component.list"
+      - include: "#text_component.compound"
+
+  text_component.string:
+    patterns:
+      - begin: '(\")'
+        end: '{{ln}}|(\")'
+        beginCaptures:
+          1:
+            name: "#string"
+        endCaptures:
+          1:
+            name: "#string"
+        patterns:
+          - include: "#common.double_quoted_string"
+          - include: "#error.unknown_string"
+
+  text_component.list:
+    patterns:
+      - begin: '(\[)'
+        end: '{{ln}}|(\])'
+        beginCaptures:
+          1:
+            name: "#nbt.list_bracket"
+        endCaptures:
+          1:
+            name: "#nbt.list_bracket"
+        patterns:
+          # NOTE how similar this is to selector arguments
+
+          # consume commas between values
+          - name: meta._.compound.text_component.property_separator.mcfunction
+            match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+            captures:
+              1:
+                name: "#nbt.compound_comma"
+
+          # consume whitespace from separator to value
+          - match: '(?<=[\[\,]) +(?=[^\]\,])'
+
+          # consume whitespace from value to separator
+          - match: '(?<=[^\[\,]) +(?=[\]\,])'
+
+          # special case for empty lists, e.g. `[ ]`
+          - match: '(?<=\[) +(?=\])'
+
+          - include: "#text_component.list_values"
+
+  text_component.list_values:
+    patterns:
+      - include: "#text_component.string"
+      - include: "#text_component.compound"
+      - include: "#error.unknown_list"
+
+  text_component.compound:
+    patterns:
+      - begin: '(\{)'
+        end: '{{ln}}|(\})'
+        beginCaptures:
+          1:
+            name: "#nbt.compound_bracket"
+        endCaptures:
+          1:
+            name: "#nbt.compound_bracket"
+        patterns:
+          # NOTE how similar this is to selector arguments
+
+          # consume commas between properties
+          - name: meta._.compound.text_component.property_separator.mcfunction
+            match: '(?<=[^\{\,])(\,)(?=[^\}\,])'
+            captures:
+              1:
+                name: "#nbt.compound_comma"
+
+          # consume whitespace from separator to property
+          - match: '(?<=[\{\,]) +(?=[^\}\,])'
+
+          # consume whitespace from property to separator
+          - match: '(?<=[^\{\,]) +(?=[\}\,])'
+
+          # special case for empty compounds, e.g. `{ }`
+          - match: '(?<=\{) +(?=\})'
+
+          - include: "#text_component.compound_properties"
+
+  text_component.compound_properties:
+    patterns:
+      # TODO implement remaining text component properties
+      - include: "#text_component.compound_property.bold"
+      - include: "#text_component.compound_property.text"
+      - include: "#text_component.compound_property.selector"
+      - include: "#error.unknown_compound"
+
+  text_component.compound_property.bold:
+    patterns:
+      - match: '(\")(bold)(\"){{pad}}(\:){{pad}}{{boolean}}'
+        captures:
+          1:
+            name: "#string"
+          2:
+            name: "#text_component.compound_property"
+          3:
+            name: "#string"
+          4:
+            name: "#nbt.compound_colon"
+          5:
+            name: "#boolean"
+
+  text_component.compound_property.text:
+    patterns:
+      - begin: '(\")(text)(\"){{pad}}(\:){{pad}}(\")'
+        end: '{{ln}}|(\")'
+        beginCaptures:
+          1:
+            name: "#string"
+          2:
+            name: "#text_component.compound_property"
+          3:
+            name: "#string"
+          4:
+            name: "#nbt.compound_colon"
+          5:
+            name: "#string"
+        endCaptures:
+          1:
+            name: "#string"
+        patterns:
+          - include: "#common.double_quoted_string"
+          - include: "#error.unknown_string"
+
+  text_component.compound_property.selector:
+    patterns:
+      - begin: '(\")(selector)(\"){{pad}}(\:){{pad}}(\")'
+        end: '{{ln}}|(\")'
+        beginCaptures:
+          1:
+            name: "#string"
+          2:
+            name: "#text_component.compound_property"
+          3:
+            name: "#string"
+          4:
+            name: "#nbt.compound_colon"
+          5:
+            name: "#string"
+        endCaptures:
+          1:
+            name: "#string"
+        patterns:
+          # (1) selector without arguments
+          - match: '{{basic_entity_selector}}(?=\")'
+            name: "#entity_selector.base"
+
+          # (2) uuid
+          - match: '{{uuid}}(?=\")'
+            name: "#target.uuid"
+
+          # (3) player name
+          - match: '{{player_name}}(?=\")'
+            name: "#target.player_name"
+
+          # (4) selector with arguments
+          - begin: "{{parameterized_entity_selector.begin}}"
+            end: '{{ln}}|(?=\")|{{parameterized_entity_selector.next}}'
+            beginCaptures:
+              1:
+                name: "#entity_selector.base"
+              2:
+                name: "#entity_selector.bracket"
+            endCaptures:
+              1:
+                name: "#entity_selector.bracket"
+            patterns:
+              - include: "#entity_selector_arguments"
+              - include: "#error.unknown_string"
+
+          - include: "#error.unknown_string"
 
   ##############################################################################
   # GENERATED COMMANDS #########################################################
@@ -238,8 +475,9 @@ repository:
     # this is where the generator will inject command patterns
     patterns:
       - include: "#generated.command.say"
+      - include: "#generated.command.tellraw"
       - include: "#generated.command.execute"
-      - include: "#unknown_command"
+      - include: "#error.unknown_command"
 
   generated.command.say:
     begin: "(say){{cbx_false}}"
@@ -253,7 +491,7 @@ repository:
   generated.commands.say:
     patterns:
       - include: "#generated.command.say.message"
-      - include: "#unknown_command"
+      - include: "#error.unknown_command"
 
   generated.command.say.message:
     # minecraft:message is an exception
@@ -261,6 +499,76 @@ repository:
     # parse various patterns (such as selectors) as it goes
     patterns:
       - include: "#parser.minecraft.message"
+
+  generated.command.tellraw:
+    begin: "(tellraw){{cbx_false}}"
+    end: "{{ln}}"
+    beginCaptures:
+      1:
+        name: "#command"
+    patterns:
+      - include: "#generated.commands.tellraw"
+
+  generated.commands.tellraw:
+    patterns:
+      - include: "#generated.command.tellraw.targets"
+      - include: "#error.unknown_command"
+
+  generated.command.tellraw.targets:
+    # NOTE this should only allow players, but checking that via regex is not viable
+    patterns:
+      # (1) selector without arguments
+      - begin: "{{basic_entity_selector}}{{cbx_false}}"
+        end: "{{ln}}"
+        beginCaptures:
+          1:
+            name: "#entity_selector.base"
+        patterns:
+          - include: "#generated.commands.tellraw.targets"
+
+      # (2) uuid
+      - begin: "{{uuid}}{{cbx_false}}"
+        end: "{{ln}}"
+        beginCaptures:
+          1:
+            name: "#target.uuid"
+        patterns:
+          - include: "#generated.commands.tellraw.targets"
+
+      # (3) player name
+      - begin: "{{player_name}}{{cbx_false}}"
+        end: "{{ln}}"
+        beginCaptures:
+          1:
+            name: "#target.player_name"
+        patterns:
+          - include: "#generated.commands.tellraw.targets"
+
+      # (4) selector with arguments
+      - begin: "{{parameterized_entity_selector.begin}}"
+        end: "{{ln}}"
+        beginCaptures:
+          1:
+            name: "#entity_selector.base"
+          2:
+            name: "#entity_selector.bracket"
+        patterns:
+          - begin: "{{parameterized_entity_selector.next}}{{cbx_false}}"
+            end: "{{ln}}"
+            beginCaptures:
+              1:
+                name: "#entity_selector.bracket"
+            patterns:
+              - include: "#generated.commands.tellraw.targets"
+          - include: "#entity_selector_arguments"
+          - include: "#error.unknown_command"
+
+      - include: "#error.unknown_command"
+
+  generated.commands.tellraw.targets:
+    patterns:
+      - include: "#text_component"
+      - include: "#error.unknown_command"
 
   generated.command.execute:
     # `execute` is non-executable
@@ -277,7 +585,7 @@ repository:
     patterns:
       - include: "#generated.command.execute.run"
       - include: "#generated.command.execute.as"
-      - include: "#unknown_command"
+      - include: "#error.unknown_command"
 
   generated.command.execute.run:
     # `execute run` is executable
@@ -307,7 +615,7 @@ repository:
   generated.commands.execute.as:
     patterns:
       - include: "#generated.command.execute.as.targets"
-      - include: "#unknown_command"
+      - include: "#error.unknown_command"
 
   generated.command.execute.as.targets:
     # `execute as <targets>` is executable
@@ -372,9 +680,9 @@ repository:
           # this doesn't go in common selector patterns, because it invalidates
           # rest of the line... which wouldn't make sense in other future
           # potential scopes, like text components
-          - include: "#unknown_command"
+          - include: "#error.unknown_command"
 
-      - include: "#unknown_command"
+      - include: "#error.unknown_command"
 
   generated.commands.execute.as.targets:
     # redirect to `execute`
@@ -382,8 +690,12 @@ repository:
       - include: "#generated.commands.execute"
 
   ##############################################################################
-  # GENERATED SELECTOR ARGUMENTS ###############################################
+  # GENERATED ENTITY SELECTOR ARGUMENTS ########################################
   ##############################################################################
+
+  # TODO can selector arguments and their types be version-controlled?
+
+  # TODO rename these to not be "generated" (similar to text components)
 
   generated.entity_selector_arguments:
     # this is where the generator will inject selector argument patterns

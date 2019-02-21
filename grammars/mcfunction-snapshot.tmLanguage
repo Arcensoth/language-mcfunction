@@ -181,26 +181,6 @@
           </dict>
         </array>
       </dict>
-      <key>unknown_command</key>
-      <dict>
-        <key>name</key>
-        <string>meta._.unknown_command.mcfunction</string>
-        <key>match</key>
-        <string>((.*))$</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>invalid.illegal._.invalid.mcfunction</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>markup.underline._.underline.mcfunction</string>
-          </dict>
-        </dict>
-      </dict>
       <key>unknown</key>
       <dict>
         <key>name</key>
@@ -301,7 +281,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#unknown_command</string>
+                <string>#error.unknown_command</string>
               </dict>
             </array>
           </dict>
@@ -319,6 +299,557 @@
           </dict>
         </array>
       </dict>
+      <key>error.unknown_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(([^\n\"]+))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>error.unknown_compound</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(([^\n\}]+))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>error.unknown_list</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(([^\n\]]+))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>error.unknown_command</key>
+      <dict>
+        <key>name</key>
+        <string>meta._.unknown_command.mcfunction</string>
+        <key>match</key>
+        <string>((.*))$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal._.invalid.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>markup.underline._.underline.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>common.double_quoted_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>[^\\\"\n]</string>
+            <key>name</key>
+            <string>string._.word.mcfunction</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\\[^\n]</string>
+            <key>name</key>
+            <string>constant.character.escape._.word.mcfunction</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>((\\))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#text_component.string</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.list</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.compound</string>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.double_quoted_string</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.unknown_string</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.list</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\[)</string>
+            <key>end</key>
+            <string>(?=\n)|(\])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.list_bracket.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.list_bracket.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>name</key>
+                <string>meta._.compound.text_component.property_separator.mcfunction</string>
+                <key>match</key>
+                <string>(?&lt;=[^\[\,])(\,)(?=[^\]\,])</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>storage._.compound_colon.nbt.mcfunction</string>
+                  </dict>
+                </dict>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(?&lt;=[\[\,]) +(?=[^\]\,])</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(?&lt;=[^\[\,]) +(?=[\]\,])</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(?&lt;=\[) +(?=\])</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#text_component.list_values</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.list_values</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#text_component.string</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.compound</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unknown_list</string>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.compound</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\{)</string>
+            <key>end</key>
+            <string>(?=\n)|(\})</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_bracket.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_bracket.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>name</key>
+                <string>meta._.compound.text_component.property_separator.mcfunction</string>
+                <key>match</key>
+                <string>(?&lt;=[^\{\,])(\,)(?=[^\}\,])</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>storage._.compound_colon.nbt.mcfunction</string>
+                  </dict>
+                </dict>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(?&lt;=[\{\,]) +(?=[^\}\,])</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(?&lt;=[^\{\,]) +(?=[\}\,])</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(?&lt;=\{) +(?=\})</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#text_component.compound_properties</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.compound_properties</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#text_component.compound_property.bold</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.compound_property.text</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.compound_property.selector</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unknown_compound</string>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.compound_property.bold</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(\")(bold)(\") *(\:) *(true|false)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.boolean.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.compound_property.text</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(text)(\") *(\:) *(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.double_quoted_string</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.unknown_string</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.compound_property.selector</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(selector)(\") *(\:) *(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>match</key>
+                <string>(\@[parse])(?=\")</string>
+                <key>name</key>
+                <string>support.class._.base.entity_selector.mcfunction</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\")</string>
+                <key>name</key>
+                <string>support.class._.uuid.target.mcfunction</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(\w+)(?=\")</string>
+                <key>name</key>
+                <string>support.class._.player_name.target.mcfunction</string>
+              </dict>
+              <dict>
+                <key>begin</key>
+                <string>(\@[parse])(\[)</string>
+                <key>end</key>
+                <string>(?=\n)|(?=\")|(\])</string>
+                <key>beginCaptures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>support.class._.base.entity_selector.mcfunction</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>support.class._.bracket.entity_selector.mcfunction</string>
+                  </dict>
+                </dict>
+                <key>endCaptures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>support.class._.bracket.entity_selector.mcfunction</string>
+                  </dict>
+                </dict>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#entity_selector_arguments</string>
+                  </dict>
+                  <dict>
+                    <key>include</key>
+                    <string>#error.unknown_string</string>
+                  </dict>
+                </array>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.unknown_string</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
       <key>generated.commands</key>
       <dict>
         <key>patterns</key>
@@ -329,11 +860,15 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#generated.command.tellraw</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#generated.command.execute</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#unknown_command</string>
+            <string>#error.unknown_command</string>
           </dict>
         </array>
       </dict>
@@ -369,7 +904,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#unknown_command</string>
+            <string>#error.unknown_command</string>
           </dict>
         </array>
       </dict>
@@ -380,6 +915,180 @@
           <dict>
             <key>include</key>
             <string>#parser.minecraft.message</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.tellraw</key>
+      <dict>
+        <key>begin</key>
+        <string>(tellraw) (?=[^\s\#])</string>
+        <key>end</key>
+        <string>(?=\n)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control._.command.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.commands.tellraw</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.tellraw</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.command.tellraw.targets</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unknown_command</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.tellraw.targets</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\@[parse]) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.base.entity_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.tellraw.targets</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.uuid.target.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.tellraw.targets</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(\w+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.player_name.target.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.tellraw.targets</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(\@[parse])(\[)</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.base.entity_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.bracket.entity_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>begin</key>
+                <string>(\]) (?=[^\s\#])</string>
+                <key>end</key>
+                <string>(?=\n)</string>
+                <key>beginCaptures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>support.class._.bracket.entity_selector.mcfunction</string>
+                  </dict>
+                </dict>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#generated.commands.tellraw.targets</string>
+                  </dict>
+                </array>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#entity_selector_arguments</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.unknown_command</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unknown_command</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.tellraw.targets</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#text_component</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unknown_command</string>
           </dict>
         </array>
       </dict>
@@ -419,7 +1128,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#unknown_command</string>
+            <string>#error.unknown_command</string>
           </dict>
         </array>
       </dict>
@@ -487,7 +1196,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#unknown_command</string>
+            <string>#error.unknown_command</string>
           </dict>
         </array>
       </dict>
@@ -605,13 +1314,13 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#unknown_command</string>
+                <string>#error.unknown_command</string>
               </dict>
             </array>
           </dict>
           <dict>
             <key>include</key>
-            <string>#unknown_command</string>
+            <string>#error.unknown_command</string>
           </dict>
         </array>
       </dict>
@@ -706,7 +1415,7 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>keyword._.word.mcfunction</string>
+                <string>keyword._.keyword.mcfunction</string>
               </dict>
             </dict>
           </dict>

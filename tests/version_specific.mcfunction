@@ -141,3 +141,27 @@ say hello@e[world
 say hello@e[tag]world
 say hello@e[tag=]world
 
+# valid
+tellraw @s {"selector": ""}
+tellraw @s {"text": "hello \"escaped\" world"}
+tellraw @s {"text": "boldly go", "bold": true}
+tellraw @s {"selector": "Arcensoth"}
+tellraw @s {"selector": "f7a39418-72ca-4bf2-bc7e-ba9df67a4707"}
+tellraw @s {"selector": "@s"}
+tellraw @s {"selector": "@e[sort=nearest, limit=1]"}
+tellraw @s ["Hello ", {"selector": "@e[sort=nearest, limit=1]"}, ", how are you?"]
+
+# invalid
+tellraw @s {"selector": "not a target"}
+tellraw @s {"text": "oh", "bold": "no"}
+tellraw @s {"unknown": "unknown text component key"}
+tellraw @s {"selector": "@e["}
+tellraw @s {"selector": "@e]"}
+tellraw @s {"selector": "@e[sort"}
+tellraw @s {"selector": "@e[sort]"}
+tellraw @s {"selector": "@e[sort="}
+tellraw @s {"selector": "@e[sort=foo"}
+tellraw @s {"selector": "@e[sort=foo]"}
+tellraw @s {"selector": "@e[sort=nearest"}
+tellraw @s {"selector": "@e[sort=nearest,"}
+tellraw @s {"selector": "@e[sort=nearest,]"}

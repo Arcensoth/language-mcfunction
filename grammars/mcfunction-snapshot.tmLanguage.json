@@ -114,18 +114,6 @@
         }
       ]
     },
-    "unknown_command": {
-      "name": "meta._.unknown_command.mcfunction",
-      "match": "((.*))$",
-      "captures": {
-        "1": {
-          "name": "invalid.illegal._.invalid.mcfunction"
-        },
-        "2": {
-          "name": "markup.underline._.underline.mcfunction"
-        }
-      }
-    },
     "unknown": {
       "name": "meta._.unknown.mcfunction",
       "match": "^((.*))$",
@@ -190,7 +178,7 @@
               "include": "#entity_selector_arguments"
             },
             {
-              "include": "#unknown_command"
+              "include": "#error.unknown_command"
             }
           ]
         },
@@ -204,16 +192,383 @@
         }
       ]
     },
+    "error.unknown_string": {
+      "patterns": [
+        {
+          "match": "(([^\\n\\\"]+))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "error.unknown_compound": {
+      "patterns": [
+        {
+          "match": "(([^\\n\\}]+))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "error.unknown_list": {
+      "patterns": [
+        {
+          "match": "(([^\\n\\]]+))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "error.unknown_command": {
+      "name": "meta._.unknown_command.mcfunction",
+      "match": "((.*))$",
+      "captures": {
+        "1": {
+          "name": "invalid.illegal._.invalid.mcfunction"
+        },
+        "2": {
+          "name": "markup.underline._.underline.mcfunction"
+        }
+      }
+    },
+    "common.double_quoted_string": {
+      "patterns": [
+        {
+          "match": "[^\\\\\\\"\\n]",
+          "name": "string._.word.mcfunction"
+        },
+        {
+          "match": "\\\\[^\\n]",
+          "name": "constant.character.escape._.word.mcfunction"
+        },
+        {
+          "match": "((\\\\))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "text_component": {
+      "patterns": [
+        {
+          "include": "#text_component.string"
+        },
+        {
+          "include": "#text_component.list"
+        },
+        {
+          "include": "#text_component.compound"
+        }
+      ]
+    },
+    "text_component.string": {
+      "patterns": [
+        {
+          "begin": "(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.word.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.word.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.double_quoted_string"
+            },
+            {
+              "include": "#error.unknown_string"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.list": {
+      "patterns": [
+        {
+          "begin": "(\\[)",
+          "end": "(?=\\n)|(\\])",
+          "beginCaptures": {
+            "1": {
+              "name": "storage._.list_bracket.nbt.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "storage._.list_bracket.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "name": "meta._.compound.text_component.property_separator.mcfunction",
+              "match": "(?<=[^\\[\\,])(\\,)(?=[^\\]\\,])",
+              "captures": {
+                "1": {
+                  "name": "storage._.compound_colon.nbt.mcfunction"
+                }
+              }
+            },
+            {
+              "match": "(?<=[\\[\\,]) +(?=[^\\]\\,])"
+            },
+            {
+              "match": "(?<=[^\\[\\,]) +(?=[\\]\\,])"
+            },
+            {
+              "match": "(?<=\\[) +(?=\\])"
+            },
+            {
+              "include": "#text_component.list_values"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.list_values": {
+      "patterns": [
+        {
+          "include": "#text_component.string"
+        },
+        {
+          "include": "#text_component.compound"
+        },
+        {
+          "include": "#error.unknown_list"
+        }
+      ]
+    },
+    "text_component.compound": {
+      "patterns": [
+        {
+          "begin": "(\\{)",
+          "end": "(?=\\n)|(\\})",
+          "beginCaptures": {
+            "1": {
+              "name": "storage._.compound_bracket.nbt.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "storage._.compound_bracket.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "name": "meta._.compound.text_component.property_separator.mcfunction",
+              "match": "(?<=[^\\{\\,])(\\,)(?=[^\\}\\,])",
+              "captures": {
+                "1": {
+                  "name": "storage._.compound_colon.nbt.mcfunction"
+                }
+              }
+            },
+            {
+              "match": "(?<=[\\{\\,]) +(?=[^\\}\\,])"
+            },
+            {
+              "match": "(?<=[^\\{\\,]) +(?=[\\}\\,])"
+            },
+            {
+              "match": "(?<=\\{) +(?=\\})"
+            },
+            {
+              "include": "#text_component.compound_properties"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.compound_properties": {
+      "patterns": [
+        {
+          "include": "#text_component.compound_property.bold"
+        },
+        {
+          "include": "#text_component.compound_property.text"
+        },
+        {
+          "include": "#text_component.compound_property.selector"
+        },
+        {
+          "include": "#error.unknown_compound"
+        }
+      ]
+    },
+    "text_component.compound_property.bold": {
+      "patterns": [
+        {
+          "match": "(\\\")(bold)(\\\") *(\\:) *(true|false)",
+          "captures": {
+            "1": {
+              "name": "string._.word.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.word.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            },
+            "5": {
+              "name": "constant.numeric._.boolean.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "text_component.compound_property.text": {
+      "patterns": [
+        {
+          "begin": "(\\\")(text)(\\\") *(\\:) *(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.word.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.word.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            },
+            "5": {
+              "name": "string._.word.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.word.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.double_quoted_string"
+            },
+            {
+              "include": "#error.unknown_string"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.compound_property.selector": {
+      "patterns": [
+        {
+          "begin": "(\\\")(selector)(\\\") *(\\:) *(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.word.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.word.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            },
+            "5": {
+              "name": "string._.word.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.word.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "match": "(\\@[parse])(?=\\\")",
+              "name": "support.class._.base.entity_selector.mcfunction"
+            },
+            {
+              "match": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\\\")",
+              "name": "support.class._.uuid.target.mcfunction"
+            },
+            {
+              "match": "(\\w+)(?=\\\")",
+              "name": "support.class._.player_name.target.mcfunction"
+            },
+            {
+              "begin": "(\\@[parse])(\\[)",
+              "end": "(?=\\n)|(?=\\\")|(\\])",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.base.entity_selector.mcfunction"
+                },
+                "2": {
+                  "name": "support.class._.bracket.entity_selector.mcfunction"
+                }
+              },
+              "endCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.entity_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#entity_selector_arguments"
+                },
+                {
+                  "include": "#error.unknown_string"
+                }
+              ]
+            },
+            {
+              "include": "#error.unknown_string"
+            }
+          ]
+        }
+      ]
+    },
     "generated.commands": {
       "patterns": [
         {
           "include": "#generated.command.say"
         },
         {
+          "include": "#generated.command.tellraw"
+        },
+        {
           "include": "#generated.command.execute"
         },
         {
-          "include": "#unknown_command"
+          "include": "#error.unknown_command"
         }
       ]
     },
@@ -237,7 +592,7 @@
           "include": "#generated.command.say.message"
         },
         {
-          "include": "#unknown_command"
+          "include": "#error.unknown_command"
         }
       ]
     },
@@ -245,6 +600,123 @@
       "patterns": [
         {
           "include": "#parser.minecraft.message"
+        }
+      ]
+    },
+    "generated.command.tellraw": {
+      "begin": "(tellraw) (?=[^\\s\\#])",
+      "end": "(?=\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control._.command.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#generated.commands.tellraw"
+        }
+      ]
+    },
+    "generated.commands.tellraw": {
+      "patterns": [
+        {
+          "include": "#generated.command.tellraw.targets"
+        },
+        {
+          "include": "#error.unknown_command"
+        }
+      ]
+    },
+    "generated.command.tellraw.targets": {
+      "patterns": [
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.entity_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.tellraw.targets"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.tellraw.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.tellraw.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.entity_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.entity_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.entity_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.tellraw.targets"
+                }
+              ]
+            },
+            {
+              "include": "#entity_selector_arguments"
+            },
+            {
+              "include": "#error.unknown_command"
+            }
+          ]
+        },
+        {
+          "include": "#error.unknown_command"
+        }
+      ]
+    },
+    "generated.commands.tellraw.targets": {
+      "patterns": [
+        {
+          "include": "#text_component"
+        },
+        {
+          "include": "#error.unknown_command"
         }
       ]
     },
@@ -271,7 +743,7 @@
           "include": "#generated.command.execute.as"
         },
         {
-          "include": "#unknown_command"
+          "include": "#error.unknown_command"
         }
       ]
     },
@@ -316,7 +788,7 @@
           "include": "#generated.command.execute.as.targets"
         },
         {
-          "include": "#unknown_command"
+          "include": "#error.unknown_command"
         }
       ]
     },
@@ -394,12 +866,12 @@
               "include": "#entity_selector_arguments"
             },
             {
-              "include": "#unknown_command"
+              "include": "#error.unknown_command"
             }
           ]
         },
         {
-          "include": "#unknown_command"
+          "include": "#error.unknown_command"
         }
       ]
     },
@@ -461,7 +933,7 @@
               "name": "support.class._.equals.entity_selector.mcfunction"
             },
             "3": {
-              "name": "keyword._.word.mcfunction"
+              "name": "keyword._.keyword.mcfunction"
             }
           }
         }
