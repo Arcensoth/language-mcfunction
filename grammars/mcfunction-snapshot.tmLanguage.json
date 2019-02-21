@@ -183,6 +183,115 @@
         }
       }
     },
+    "error.compound_value": {
+      "patterns": [
+        {
+          "include": "#error.compound"
+        },
+        {
+          "include": "#error.list"
+        },
+        {
+          "match": "(([^\\n\\{\\[\\,\\}]))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "error.compound": {
+      "patterns": [
+        {
+          "begin": "((\\{))",
+          "end": "((\\}))",
+          "beginCaptures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          },
+          "contentName": "invalid.illegal._.invalid.mcfunction",
+          "patterns": [
+            {
+              "include": "#error.compound"
+            },
+            {
+              "include": "#error.list"
+            },
+            {
+              "match": "(([^\\n\\{\\[\\}]))",
+              "captures": {
+                "1": {
+                  "name": "invalid.illegal._.invalid.mcfunction"
+                },
+                "2": {
+                  "name": "markup.underline._.underline.mcfunction"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "error.list": {
+      "patterns": [
+        {
+          "begin": "((\\[))",
+          "end": "((\\]))",
+          "beginCaptures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          },
+          "contentName": "invalid.illegal._.invalid.mcfunction",
+          "patterns": [
+            {
+              "include": "#error.compound"
+            },
+            {
+              "include": "#error.list"
+            },
+            {
+              "match": "(([^\\n\\{\\[\\]]))",
+              "captures": {
+                "1": {
+                  "name": "invalid.illegal._.invalid.mcfunction"
+                },
+                "2": {
+                  "name": "markup.underline._.underline.mcfunction"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
     "common.double_quoted_string.content": {
       "patterns": [
         {
@@ -250,6 +359,9 @@
     "text_component": {
       "patterns": [
         {
+          "include": "#text_component.boolean"
+        },
+        {
           "include": "#text_component.string"
         },
         {
@@ -257,6 +369,14 @@
         },
         {
           "include": "#text_component.compound"
+        }
+      ]
+    },
+    "text_component.boolean": {
+      "patterns": [
+        {
+          "match": "(true|false)",
+          "name": "constant.numeric._.boolean.mcfunction"
         }
       ]
     },
@@ -307,7 +427,7 @@
               "match": "(?<=[^\\[\\,])(\\,)(?=[^\\]\\,])",
               "captures": {
                 "1": {
-                  "name": "storage._.compound_colon.nbt.mcfunction"
+                  "name": "storage._.list_comma.nbt.mcfunction"
                 }
               }
             },
@@ -330,10 +450,7 @@
     "text_component.list_values": {
       "patterns": [
         {
-          "include": "#text_component.string"
-        },
-        {
-          "include": "#text_component.compound"
+          "include": "#text_component"
         },
         {
           "include": "#error.unknown_list"
@@ -361,7 +478,7 @@
               "match": "(?<=[^\\{\\,])(\\,)(?=[^\\}\\,])",
               "captures": {
                 "1": {
-                  "name": "storage._.compound_colon.nbt.mcfunction"
+                  "name": "storage._.compound_comma.nbt.mcfunction"
                 }
               }
             },
@@ -393,6 +510,9 @@
           "include": "#text_component.compound_property.selector"
         },
         {
+          "include": "#text_component.compound_property.extra"
+        },
+        {
           "include": "#error.unknown_compound"
         }
       ]
@@ -400,7 +520,8 @@
     "text_component.compound_property.bold": {
       "patterns": [
         {
-          "match": "(\\\")(bold)(\\\") *(\\:) *(true|false)",
+          "begin": "(\\\")(bold)(\\\") *(\\:) *",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
           "captures": {
             "1": {
               "name": "string._.word.mcfunction"
@@ -413,11 +534,16 @@
             },
             "4": {
               "name": "storage._.compound_colon.nbt.mcfunction"
-            },
-            "5": {
-              "name": "constant.numeric._.boolean.mcfunction"
             }
-          }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.boolean"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
         }
       ]
     },
@@ -526,6 +652,36 @@
             },
             {
               "include": "#error.unknown_string"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.compound_property.extra": {
+      "patterns": [
+        {
+          "begin": "(\\\")(extra)(\\\") *(\\:) *",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "captures": {
+            "1": {
+              "name": "string._.word.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.word.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.list"
+            },
+            {
+              "include": "#error.compound_value"
             }
           ]
         }

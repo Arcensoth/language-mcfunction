@@ -145,11 +145,14 @@ say hello@e[tag=]world
 tellraw @s {"selector": ""}
 tellraw @s {"text": "hello \"escaped\" world"}
 tellraw @s {"text": "boldly go", "bold": true}
+tellraw @s {"text": "boldly go", "bold": xtruex}
 tellraw @s {"selector": "Arcensoth"}
 tellraw @s {"selector": "f7a39418-72ca-4bf2-bc7e-ba9df67a4707"}
 tellraw @s {"selector": "@s"}
 tellraw @s {"selector": "@e[sort=nearest, limit=1]"}
 tellraw @s ["Hello ", {"selector": "@e[sort=nearest, limit=1]"}, ", how are you?"]
+tellraw @s ["a", ["b", {"text": "c"}, ["d"], "e"]]
+tellraw @s ["a", ["b", {"text": "c"}, ["d"], "e"], {"text":"f", "extra": [{"text": "g"}]}]
 
 # invalid
 tellraw @s {"selector": "not a target"}
@@ -165,3 +168,5 @@ tellraw @s {"selector": "@e[sort=foo]"}
 tellraw @s {"selector": "@e[sort=nearest"}
 tellraw @s {"selector": "@e[sort=nearest,"}
 tellraw @s {"selector": "@e[sort=nearest,]"}
+tellraw @s [{"extra": "x"}]
+tellraw @s [{"extra": {"foo": [0, [1, 2], 3]}}]

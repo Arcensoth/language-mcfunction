@@ -290,6 +290,173 @@
           </dict>
         </dict>
       </dict>
+      <key>error.compound_value</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#error.compound</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.list</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(([^\n\{\[\,\}]))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>error.compound</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>((\{))</string>
+            <key>end</key>
+            <string>((\}))</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+            <key>contentName</key>
+            <string>invalid.illegal._.invalid.mcfunction</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#error.compound</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.list</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(([^\n\{\[\}]))</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>invalid.illegal._.invalid.mcfunction</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>markup.underline._.underline.mcfunction</string>
+                  </dict>
+                </dict>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>error.list</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>((\[))</string>
+            <key>end</key>
+            <string>((\]))</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+            <key>contentName</key>
+            <string>invalid.illegal._.invalid.mcfunction</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#error.compound</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.list</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(([^\n\{\[\]]))</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>invalid.illegal._.invalid.mcfunction</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>markup.underline._.underline.mcfunction</string>
+                  </dict>
+                </dict>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
       <key>common.double_quoted_string.content</key>
       <dict>
         <key>patterns</key>
@@ -393,6 +560,10 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#text_component.boolean</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#text_component.string</string>
           </dict>
           <dict>
@@ -402,6 +573,18 @@
           <dict>
             <key>include</key>
             <string>#text_component.compound</string>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.boolean</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(true|false)</string>
+            <key>name</key>
+            <string>constant.numeric._.boolean.mcfunction</string>
           </dict>
         </array>
       </dict>
@@ -481,7 +664,7 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>storage._.compound_colon.nbt.mcfunction</string>
+                    <string>storage._.list_comma.nbt.mcfunction</string>
                   </dict>
                 </dict>
               </dict>
@@ -511,11 +694,7 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#text_component.string</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#text_component.compound</string>
+            <string>#text_component</string>
           </dict>
           <dict>
             <key>include</key>
@@ -560,7 +739,7 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>storage._.compound_colon.nbt.mcfunction</string>
+                    <string>storage._.compound_comma.nbt.mcfunction</string>
                   </dict>
                 </dict>
               </dict>
@@ -602,6 +781,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#text_component.compound_property.extra</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#error.unknown_compound</string>
           </dict>
         </array>
@@ -611,8 +794,10 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>match</key>
-            <string>(\")(bold)(\") *(\:) *(true|false)</string>
+            <key>begin</key>
+            <string>(\")(bold)(\") *(\:) *</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -635,12 +820,18 @@
                 <key>name</key>
                 <string>storage._.compound_colon.nbt.mcfunction</string>
               </dict>
-              <key>5</key>
-              <dict>
-                <key>name</key>
-                <string>constant.numeric._.boolean.mcfunction</string>
-              </dict>
             </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.boolean</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -809,6 +1000,52 @@
               <dict>
                 <key>include</key>
                 <string>#error.unknown_string</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.compound_property.extra</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(extra)(\") *(\:) *</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.word.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.list</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
               </dict>
             </array>
           </dict>

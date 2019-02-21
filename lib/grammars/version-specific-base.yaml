@@ -34,8 +34,9 @@ names:
   # nbt scopes
   nbt.compound_bracket: storage._.compound_bracket.nbt.mcfunction
   nbt.compound_colon: storage._.compound_colon.nbt.mcfunction
-  nbt.compound_comma: storage._.compound_colon.nbt.mcfunction
+  nbt.compound_comma: storage._.compound_comma.nbt.mcfunction
   nbt.list_bracket: storage._.list_bracket.nbt.mcfunction
+  nbt.list_comma: storage._.list_comma.nbt.mcfunction
 
   # text component scopes
   text_component.compound_property: string._.property.text_component.mcfunction
@@ -214,6 +215,41 @@ repository:
     match: "((.*))$"
     captures: "#underlined_error"
 
+  error.compound_value:
+    # continue recursively until we see a separator or terminal
+    # TODO how to assign multiple classes to content?
+    patterns:
+      - include: "#error.compound"
+      - include: "#error.list"
+      - match: '(([^\n\{\[\,\}]))'
+        captures: "#underlined_error"
+
+  error.compound:
+    patterns:
+      - begin: '((\{))'
+        end: '((\}))'
+        beginCaptures: "#underlined_error"
+        endCaptures: "#underlined_error"
+        contentName: "#invalid"
+        patterns:
+          - include: "#error.compound"
+          - include: "#error.list"
+          - match: '(([^\n\{\[\}]))'
+            captures: "#underlined_error"
+
+  error.list:
+    patterns:
+      - begin: '((\[))'
+        end: '((\]))'
+        beginCaptures: "#underlined_error"
+        endCaptures: "#underlined_error"
+        contentName: "#invalid"
+        patterns:
+          - include: "#error.compound"
+          - include: "#error.list"
+          - match: '(([^\n\{\[\]]))'
+            captures: "#underlined_error"
+
   ##############################################################################
   # COMMON PARSERS #############################################################
   ##############################################################################
@@ -272,9 +308,15 @@ repository:
 
   text_component:
     patterns:
+      - include: "#text_component.boolean"
       - include: "#text_component.string"
       - include: "#text_component.list"
       - include: "#text_component.compound"
+
+  text_component.boolean:
+    patterns:
+      - match: '(true|false)'
+        name: '#boolean'
 
   text_component.string:
     patterns:
@@ -308,7 +350,7 @@ repository:
             match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
             captures:
               1:
-                name: "#nbt.compound_comma"
+                name: "#nbt.list_comma"
 
           # consume whitespace from separator to value
           - match: '(?<=[\[\,]) +(?=[^\]\,])'
@@ -323,8 +365,7 @@ repository:
 
   text_component.list_values:
     patterns:
-      - include: "#text_component.string"
-      - include: "#text_component.compound"
+      - include: "#text_component"
       - include: "#error.unknown_list"
 
   text_component.compound:
@@ -364,11 +405,14 @@ repository:
       - include: "#text_component.compound_property.bold"
       - include: "#text_component.compound_property.text"
       - include: "#text_component.compound_property.selector"
+      - include: "#text_component.compound_property.extra"
       - include: "#error.unknown_compound"
 
   text_component.compound_property.bold:
+    # TODO this is actually worse now
     patterns:
-      - match: '(\")(bold)(\"){{pad}}(\:){{pad}}{{boolean}}'
+      - begin: '(\")(bold)(\"){{pad}}(\:){{pad}}'
+        end: '{{ln}}|(?={{pad}}[\,\}])'
         captures:
           1:
             name: "#string"
@@ -378,8 +422,9 @@ repository:
             name: "#string"
           4:
             name: "#nbt.compound_colon"
-          5:
-            name: "#boolean"
+        patterns:
+          - include: "#text_component.boolean"
+          - include: "#error.compound_value"
 
   text_component.compound_property.text:
     patterns:
@@ -450,6 +495,24 @@ repository:
               - include: "#error.unknown_string"
 
           - include: "#error.unknown_string"
+
+  # TODO we should reorganize the others like this (local value highlight)
+  text_component.compound_property.extra:
+    patterns:
+      - begin: '(\")(extra)(\"){{pad}}(\:){{pad}}'
+        end: '{{ln}}|(?={{pad}}[\,\}])'
+        captures:
+          1:
+            name: "#string"
+          2:
+            name: "#text_component.compound_property"
+          3:
+            name: "#string"
+          4:
+            name: "#nbt.compound_colon"
+        patterns:
+          - include: "#text_component.list"
+          - include: "#error.compound_value"
 
   ##############################################################################
   # GENERATED COMMANDS #########################################################
