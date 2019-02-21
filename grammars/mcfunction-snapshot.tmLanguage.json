@@ -126,72 +126,6 @@
         }
       }
     },
-    "entity_selector_arguments": {
-      "patterns": [
-        {
-          "name": "meta._.entity_selector.argument_separator.mcfunction",
-          "match": "(?<=[^\\[\\,])(\\,)(?=[^\\]\\,])",
-          "captures": {
-            "1": {
-              "name": "support.class._.comma.entity_selector.mcfunction"
-            }
-          }
-        },
-        {
-          "match": "(?<=[\\[\\,]) +(?=[^\\]\\,])"
-        },
-        {
-          "match": "(?<=[^\\[\\,]) +(?=[\\]\\,])"
-        },
-        {
-          "match": "(?<=\\[) +(?=\\])"
-        },
-        {
-          "include": "#generated.entity_selector_arguments"
-        }
-      ]
-    },
-    "parser.minecraft.message": {
-      "patterns": [
-        {
-          "match": "([^\\@\\n]+)",
-          "name": "string._.word.mcfunction"
-        },
-        {
-          "begin": "(\\@[parse])(\\[)",
-          "end": "(?=\\n)|(\\])",
-          "beginCaptures": {
-            "1": {
-              "name": "support.class._.base.entity_selector.mcfunction"
-            },
-            "2": {
-              "name": "support.class._.bracket.entity_selector.mcfunction"
-            }
-          },
-          "endCaptures": {
-            "1": {
-              "name": "support.class._.bracket.entity_selector.mcfunction"
-            }
-          },
-          "patterns": [
-            {
-              "include": "#entity_selector_arguments"
-            },
-            {
-              "include": "#error.unknown_command"
-            }
-          ]
-        },
-        {
-          "match": "(\\@[parse])",
-          "name": "support.class._.base.entity_selector.mcfunction"
-        },
-        {
-          "match": "([^\\n])",
-          "name": "string._.word.mcfunction"
-        }
-      ]
-    },
     "error.unknown_string": {
       "patterns": [
         {
@@ -249,7 +183,7 @@
         }
       }
     },
-    "common.double_quoted_string": {
+    "common.double_quoted_string.content": {
       "patterns": [
         {
           "match": "[^\\\\\\\"\\n]",
@@ -269,6 +203,47 @@
               "name": "markup.underline._.underline.mcfunction"
             }
           }
+        }
+      ]
+    },
+    "minecraft.message": {
+      "patterns": [
+        {
+          "match": "([^\\@\\n]+)",
+          "name": "string._.word.mcfunction"
+        },
+        {
+          "begin": "(\\@[parse])(\\[)",
+          "end": "(?=\\n)|(\\])",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.entity_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.entity_selector.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "support.class._.bracket.entity_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#entity_selector.content"
+            },
+            {
+              "include": "#error.unknown_command"
+            }
+          ]
+        },
+        {
+          "match": "(\\@[parse])",
+          "name": "support.class._.base.entity_selector.mcfunction"
+        },
+        {
+          "match": "([^\\n])",
+          "name": "string._.word.mcfunction"
         }
       ]
     },
@@ -302,7 +277,7 @@
           },
           "patterns": [
             {
-              "include": "#common.double_quoted_string"
+              "include": "#common.double_quoted_string.content"
             },
             {
               "include": "#error.unknown_string"
@@ -328,7 +303,7 @@
           },
           "patterns": [
             {
-              "name": "meta._.compound.text_component.property_separator.mcfunction",
+              "name": "meta._.list.text_component.property_separator.mcfunction",
               "match": "(?<=[^\\[\\,])(\\,)(?=[^\\]\\,])",
               "captures": {
                 "1": {
@@ -475,7 +450,7 @@
           },
           "patterns": [
             {
-              "include": "#common.double_quoted_string"
+              "include": "#common.double_quoted_string.content"
             },
             {
               "include": "#error.unknown_string"
@@ -542,7 +517,7 @@
               },
               "patterns": [
                 {
-                  "include": "#entity_selector_arguments"
+                  "include": "#entity_selector.content"
                 },
                 {
                   "include": "#error.unknown_string"
@@ -599,7 +574,7 @@
     "generated.command.say.message": {
       "patterns": [
         {
-          "include": "#parser.minecraft.message"
+          "include": "#minecraft.message"
         }
       ]
     },
@@ -698,7 +673,7 @@
               ]
             },
             {
-              "include": "#entity_selector_arguments"
+              "include": "#entity_selector.content"
             },
             {
               "include": "#error.unknown_command"
@@ -863,7 +838,7 @@
               ]
             },
             {
-              "include": "#entity_selector_arguments"
+              "include": "#entity_selector.content"
             },
             {
               "include": "#error.unknown_command"
@@ -882,26 +857,51 @@
         }
       ]
     },
-    "generated.entity_selector_arguments": {
+    "entity_selector.content": {
       "patterns": [
         {
-          "include": "#generated.entity_selector_argument.tag"
+          "name": "meta._.argument_separator.content.entity_selector.mcfunction",
+          "match": "(?<=[^\\[\\,])(\\,)(?=[^\\]\\,])",
+          "captures": {
+            "1": {
+              "name": "support.class._.comma.entity_selector.mcfunction"
+            }
+          }
         },
         {
-          "include": "#generated.entity_selector_argument.sort"
+          "match": "(?<=[\\[\\,]) +(?=[^\\]\\,])"
         },
         {
-          "include": "#generated.entity_selector_argument.limit"
+          "match": "(?<=[^\\[\\,]) +(?=[\\]\\,])"
         },
         {
-          "include": "#generated.entity_selector_argument.nbt"
+          "match": "(?<=\\[) +(?=\\])"
+        },
+        {
+          "include": "#entity_selector.arguments"
         }
       ]
     },
-    "generated.entity_selector_argument.tag": {
+    "entity_selector.arguments": {
       "patterns": [
         {
-          "name": "meta._.entity_selector_argument.tag.mcfunction",
+          "include": "#entity_selector.content.argument.tag"
+        },
+        {
+          "include": "#entity_selector.content.argument.sort"
+        },
+        {
+          "include": "#entity_selector.content.argument.limit"
+        },
+        {
+          "include": "#entity_selector.content.argument.nbt"
+        }
+      ]
+    },
+    "entity_selector.content.argument.tag": {
+      "patterns": [
+        {
+          "name": "meta._.tag.argument.content.entity_selector.mcfunction",
           "match": "(tag) *(\\=) *(\\!?) *(\\w+) *(?=[\\]\\,])",
           "captures": {
             "1": {
@@ -920,10 +920,10 @@
         }
       ]
     },
-    "generated.entity_selector_argument.sort": {
+    "entity_selector.content.argument.sort": {
       "patterns": [
         {
-          "name": "meta._.entity_selector_argument.sort.mcfunction",
+          "name": "meta._.sort.argument.content.entity_selector.mcfunction",
           "match": "(sort) *(\\=) *(arbitrary|furthest|nearest|random) *(?=[\\]\\,])",
           "captures": {
             "1": {
@@ -939,10 +939,10 @@
         }
       ]
     },
-    "generated.entity_selector_argument.limit": {
+    "entity_selector.content.argument.limit": {
       "patterns": [
         {
-          "name": "meta._.entity_selector_argument.limit.mcfunction",
+          "name": "meta._.limit.argument.content.entity_selector.mcfunction",
           "match": "(limit) *(\\=) *(\\d+) *(?=[\\]\\,])",
           "captures": {
             "1": {
@@ -958,10 +958,10 @@
         }
       ]
     },
-    "generated.entity_selector_argument.nbt": {
+    "entity_selector.content.argument.nbt": {
       "patterns": [
         {
-          "name": "meta._.entity_selector_argument.nbt.mcfunction",
+          "name": "meta._.nbt.argument.content.entity_selector.mcfunction",
           "begin": "(nbt) *(\\=) *(\\!?) *(\\{)",
           "end": "(?=\\n)|(\\})",
           "beginCaptures": {

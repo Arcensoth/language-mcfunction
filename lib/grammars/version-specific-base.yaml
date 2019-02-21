@@ -186,55 +186,6 @@ repository:
     match: "^((.*))$"
     captures: "#underlined_error"
 
-  entity_selector_arguments:
-    patterns:
-      # consume commas between arguments
-      - name: meta._.entity_selector.argument_separator.mcfunction
-        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
-        captures:
-          1:
-            name: "#entity_selector.comma"
-
-      # consume whitespace from separator to argument
-      - match: '(?<=[\[\,]) +(?=[^\]\,])'
-
-      # consume whitespace from argument to separator
-      - match: '(?<=[^\[\,]) +(?=[\]\,])'
-
-      # special case for empty parameterized selectors, e.g. `@e[ ]`
-      - match: '(?<=\[) +(?=\])'
-
-      - include: "#generated.entity_selector_arguments"
-
-  parser.minecraft.message:
-    patterns:
-      # pause when we see certain characters
-      - match: '([^\@\n]+)'
-        name: "#string"
-
-      # check for selectors with arguments
-      - begin: "{{parameterized_entity_selector.begin}}"
-        end: "{{ln}}|{{parameterized_entity_selector.next}}"
-        beginCaptures:
-          1:
-            name: "#entity_selector.base"
-          2:
-            name: "#entity_selector.bracket"
-        endCaptures:
-          1:
-            name: "#entity_selector.bracket"
-        patterns:
-          - include: "#entity_selector_arguments"
-          - include: "#error.unknown_command"
-
-      # check for selectors without arguments
-      - match: "{{basic_entity_selector}}"
-        name: "#entity_selector.base"
-
-      # catch characters that may have slipped through
-      - match: '([^\n])'
-        name: "#string"
-
   ##############################################################################
   # ERRORS #####################################################################
   ##############################################################################
@@ -264,10 +215,10 @@ repository:
     captures: "#underlined_error"
 
   ##############################################################################
-  # COMMON #####################################################################
+  # COMMON PARSERS #############################################################
   ##############################################################################
 
-  common.double_quoted_string:
+  common.double_quoted_string.content:
     patterns:
       # consume everything except for backslashes, double quotes, and newlines
       - match: '[^\\\"\n]'
@@ -279,6 +230,39 @@ repository:
       - match: '((\\))'
         captures: "#underlined_error"
       # anything else (newlines and unescaped double quotes) will be handed back to the parent scope
+
+  ##############################################################################
+  # MINECRAFT PARSERS ##########################################################
+  ##############################################################################
+
+  minecraft.message:
+    patterns:
+      # pause when we see certain characters
+      - match: '([^\@\n]+)'
+        name: "#string"
+
+      # check for selectors with arguments
+      - begin: "{{parameterized_entity_selector.begin}}"
+        end: "{{ln}}|{{parameterized_entity_selector.next}}"
+        beginCaptures:
+          1:
+            name: "#entity_selector.base"
+          2:
+            name: "#entity_selector.bracket"
+        endCaptures:
+          1:
+            name: "#entity_selector.bracket"
+        patterns:
+          - include: "#entity_selector.content"
+          - include: "#error.unknown_command"
+
+      # check for selectors without arguments
+      - match: "{{basic_entity_selector}}"
+        name: "#entity_selector.base"
+
+      # catch characters that may have slipped through
+      - match: '([^\n])'
+        name: "#string"
 
   ##############################################################################
   # TEXT COMPONENTS ############################################################
@@ -303,7 +287,7 @@ repository:
           1:
             name: "#string"
         patterns:
-          - include: "#common.double_quoted_string"
+          - include: "#common.double_quoted_string.content"
           - include: "#error.unknown_string"
 
   text_component.list:
@@ -320,7 +304,7 @@ repository:
           # NOTE how similar this is to selector arguments
 
           # consume commas between values
-          - name: meta._.compound.text_component.property_separator.mcfunction
+          - name: meta._.list.text_component.property_separator.mcfunction
             match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
             captures:
               1:
@@ -416,7 +400,7 @@ repository:
           1:
             name: "#string"
         patterns:
-          - include: "#common.double_quoted_string"
+          - include: "#common.double_quoted_string.content"
           - include: "#error.unknown_string"
 
   text_component.compound_property.selector:
@@ -462,7 +446,7 @@ repository:
               1:
                 name: "#entity_selector.bracket"
             patterns:
-              - include: "#entity_selector_arguments"
+              - include: "#entity_selector.content"
               - include: "#error.unknown_string"
 
           - include: "#error.unknown_string"
@@ -498,7 +482,7 @@ repository:
     # it just consume the rest of the line, attempting to
     # parse various patterns (such as selectors) as it goes
     patterns:
-      - include: "#parser.minecraft.message"
+      - include: "#minecraft.message"
 
   generated.command.tellraw:
     begin: "(tellraw){{cbx_false}}"
@@ -560,7 +544,7 @@ repository:
                 name: "#entity_selector.bracket"
             patterns:
               - include: "#generated.commands.tellraw.targets"
-          - include: "#entity_selector_arguments"
+          - include: "#entity_selector.content"
           - include: "#error.unknown_command"
 
       - include: "#error.unknown_command"
@@ -675,7 +659,7 @@ repository:
               - include: "#generated.commands.execute.as.targets"
 
           # this is where common selector patterns can be included
-          - include: "#entity_selector_arguments"
+          - include: "#entity_selector.content"
 
           # this doesn't go in common selector patterns, because it invalidates
           # rest of the line... which wouldn't make sense in other future
@@ -690,25 +674,43 @@ repository:
       - include: "#generated.commands.execute"
 
   ##############################################################################
-  # GENERATED ENTITY SELECTOR ARGUMENTS ########################################
+  # ENTITY SELECTORS ###########################################################
   ##############################################################################
 
   # TODO can selector arguments and their types be version-controlled?
 
-  # TODO rename these to not be "generated" (similar to text components)
+  entity_selector.content:
+    patterns:
+      # consume commas between arguments
+      - name: meta._.argument_separator.content.entity_selector.mcfunction
+        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+        captures:
+          1:
+            name: "#entity_selector.comma"
 
-  generated.entity_selector_arguments:
+      # consume whitespace from separator to argument
+      - match: '(?<=[\[\,]) +(?=[^\]\,])'
+
+      # consume whitespace from argument to separator
+      - match: '(?<=[^\[\,]) +(?=[\]\,])'
+
+      # special case for empty parameterized selectors, e.g. `@e[ ]`
+      - match: '(?<=\[) +(?=\])'
+
+      - include: "#entity_selector.arguments"
+
+  entity_selector.arguments:
     # this is where the generator will inject selector argument patterns
     # but we'll need to write the data file for these by hand...
     patterns:
-      - include: "#generated.entity_selector_argument.tag"
-      - include: "#generated.entity_selector_argument.sort"
-      - include: "#generated.entity_selector_argument.limit"
-      - include: "#generated.entity_selector_argument.nbt"
+      - include: "#entity_selector.content.argument.tag"
+      - include: "#entity_selector.content.argument.sort"
+      - include: "#entity_selector.content.argument.limit"
+      - include: "#entity_selector.content.argument.nbt"
 
-  generated.entity_selector_argument.tag:
+  entity_selector.content.argument.tag:
     patterns:
-      - name: meta._.entity_selector_argument.tag.mcfunction
+      - name: meta._.tag.argument.content.entity_selector.mcfunction
         match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}(\w+){{pad}}(?=[\]\,])'
         captures:
           1:
@@ -720,9 +722,9 @@ repository:
           4:
             name: "#word"
 
-  generated.entity_selector_argument.sort:
+  entity_selector.content.argument.sort:
     patterns:
-      - name: meta._.entity_selector_argument.sort.mcfunction
+      - name: meta._.sort.argument.content.entity_selector.mcfunction
         match: '(sort){{pad}}(\=){{pad}}(arbitrary|furthest|nearest|random){{pad}}(?=[\]\,])'
         captures:
           1:
@@ -732,9 +734,9 @@ repository:
           3:
             name: "#keyword"
 
-  generated.entity_selector_argument.limit:
+  entity_selector.content.argument.limit:
     patterns:
-      - name: meta._.entity_selector_argument.limit.mcfunction
+      - name: meta._.limit.argument.content.entity_selector.mcfunction
         match: '(limit){{pad}}(\=){{pad}}(\d+){{pad}}(?=[\]\,])'
         captures:
           1:
@@ -744,9 +746,9 @@ repository:
           3:
             name: "#numeric_constant"
 
-  generated.entity_selector_argument.nbt:
+  entity_selector.content.argument.nbt:
     patterns:
-      - name: meta._.entity_selector_argument.nbt.mcfunction
+      - name: meta._.nbt.argument.content.entity_selector.mcfunction
         begin: '(nbt){{pad}}(\=){{pad}}(\!?){{pad}}(\{)'
         end: '{{ln}}|(\})'
         beginCaptures:

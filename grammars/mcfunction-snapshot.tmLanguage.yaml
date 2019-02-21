@@ -71,38 +71,6 @@ repository:
         name: invalid.illegal._.invalid.mcfunction
       '2':
         name: markup.underline._.underline.mcfunction
-  entity_selector_arguments:
-    patterns:
-      - name: meta._.entity_selector.argument_separator.mcfunction
-        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
-        captures:
-          '1':
-            name: support.class._.comma.entity_selector.mcfunction
-      - match: '(?<=[\[\,]) +(?=[^\]\,])'
-      - match: '(?<=[^\[\,]) +(?=[\]\,])'
-      - match: '(?<=\[) +(?=\])'
-      - include: '#generated.entity_selector_arguments'
-  parser.minecraft.message:
-    patterns:
-      - match: '([^\@\n]+)'
-        name: string._.word.mcfunction
-      - begin: '(\@[parse])(\[)'
-        end: '(?=\n)|(\])'
-        beginCaptures:
-          '1':
-            name: support.class._.base.entity_selector.mcfunction
-          '2':
-            name: support.class._.bracket.entity_selector.mcfunction
-        endCaptures:
-          '1':
-            name: support.class._.bracket.entity_selector.mcfunction
-        patterns:
-          - include: '#entity_selector_arguments'
-          - include: '#error.unknown_command'
-      - match: '(\@[parse])'
-        name: support.class._.base.entity_selector.mcfunction
-      - match: '([^\n])'
-        name: string._.word.mcfunction
   error.unknown_string:
     patterns:
       - match: '(([^\n\"]+))'
@@ -119,7 +87,7 @@ repository:
     name: meta._.unknown_command.mcfunction
     match: ((.*))$
     captures: *ref_0
-  common.double_quoted_string:
+  common.double_quoted_string.content:
     patterns:
       - match: '[^\\\"\n]'
         name: string._.word.mcfunction
@@ -127,6 +95,27 @@ repository:
         name: constant.character.escape._.word.mcfunction
       - match: ((\\))
         captures: *ref_0
+  minecraft.message:
+    patterns:
+      - match: '([^\@\n]+)'
+        name: string._.word.mcfunction
+      - begin: '(\@[parse])(\[)'
+        end: '(?=\n)|(\])'
+        beginCaptures:
+          '1':
+            name: support.class._.base.entity_selector.mcfunction
+          '2':
+            name: support.class._.bracket.entity_selector.mcfunction
+        endCaptures:
+          '1':
+            name: support.class._.bracket.entity_selector.mcfunction
+        patterns:
+          - include: '#entity_selector.content'
+          - include: '#error.unknown_command'
+      - match: '(\@[parse])'
+        name: support.class._.base.entity_selector.mcfunction
+      - match: '([^\n])'
+        name: string._.word.mcfunction
   text_component:
     patterns:
       - include: '#text_component.string'
@@ -143,7 +132,7 @@ repository:
           '1':
             name: string._.word.mcfunction
         patterns:
-          - include: '#common.double_quoted_string'
+          - include: '#common.double_quoted_string.content'
           - include: '#error.unknown_string'
   text_component.list:
     patterns:
@@ -156,7 +145,7 @@ repository:
           '1':
             name: storage._.list_bracket.nbt.mcfunction
         patterns:
-          - name: meta._.compound.text_component.property_separator.mcfunction
+          - name: meta._.list.text_component.property_separator.mcfunction
             match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
             captures:
               '1':
@@ -229,7 +218,7 @@ repository:
           '1':
             name: string._.word.mcfunction
         patterns:
-          - include: '#common.double_quoted_string'
+          - include: '#common.double_quoted_string.content'
           - include: '#error.unknown_string'
   text_component.compound_property.selector:
     patterns:
@@ -267,7 +256,7 @@ repository:
               '1':
                 name: support.class._.bracket.entity_selector.mcfunction
             patterns:
-              - include: '#entity_selector_arguments'
+              - include: '#entity_selector.content'
               - include: '#error.unknown_string'
           - include: '#error.unknown_string'
   generated.commands:
@@ -290,7 +279,7 @@ repository:
       - include: '#error.unknown_command'
   generated.command.say.message:
     patterns:
-      - include: '#parser.minecraft.message'
+      - include: '#minecraft.message'
   generated.command.tellraw:
     begin: '(tellraw) (?=[^\s\#])'
     end: (?=\n)
@@ -341,7 +330,7 @@ repository:
                 name: support.class._.bracket.entity_selector.mcfunction
             patterns:
               - include: '#generated.commands.tellraw.targets'
-          - include: '#entity_selector_arguments'
+          - include: '#entity_selector.content'
           - include: '#error.unknown_command'
       - include: '#error.unknown_command'
   generated.commands.tellraw.targets:
@@ -422,21 +411,32 @@ repository:
                 name: support.class._.bracket.entity_selector.mcfunction
             patterns:
               - include: '#generated.commands.execute.as.targets'
-          - include: '#entity_selector_arguments'
+          - include: '#entity_selector.content'
           - include: '#error.unknown_command'
       - include: '#error.unknown_command'
   generated.commands.execute.as.targets:
     patterns:
       - include: '#generated.commands.execute'
-  generated.entity_selector_arguments:
+  entity_selector.content:
     patterns:
-      - include: '#generated.entity_selector_argument.tag'
-      - include: '#generated.entity_selector_argument.sort'
-      - include: '#generated.entity_selector_argument.limit'
-      - include: '#generated.entity_selector_argument.nbt'
-  generated.entity_selector_argument.tag:
+      - name: meta._.argument_separator.content.entity_selector.mcfunction
+        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+        captures:
+          '1':
+            name: support.class._.comma.entity_selector.mcfunction
+      - match: '(?<=[\[\,]) +(?=[^\]\,])'
+      - match: '(?<=[^\[\,]) +(?=[\]\,])'
+      - match: '(?<=\[) +(?=\])'
+      - include: '#entity_selector.arguments'
+  entity_selector.arguments:
     patterns:
-      - name: meta._.entity_selector_argument.tag.mcfunction
+      - include: '#entity_selector.content.argument.tag'
+      - include: '#entity_selector.content.argument.sort'
+      - include: '#entity_selector.content.argument.limit'
+      - include: '#entity_selector.content.argument.nbt'
+  entity_selector.content.argument.tag:
+    patterns:
+      - name: meta._.tag.argument.content.entity_selector.mcfunction
         match: '(tag) *(\=) *(\!?) *(\w+) *(?=[\]\,])'
         captures:
           '1':
@@ -447,9 +447,9 @@ repository:
             name: constant.character.escape._.not.entity_selector.mcfunction
           '4':
             name: string._.word.mcfunction
-  generated.entity_selector_argument.sort:
+  entity_selector.content.argument.sort:
     patterns:
-      - name: meta._.entity_selector_argument.sort.mcfunction
+      - name: meta._.sort.argument.content.entity_selector.mcfunction
         match: '(sort) *(\=) *(arbitrary|furthest|nearest|random) *(?=[\]\,])'
         captures:
           '1':
@@ -458,9 +458,9 @@ repository:
             name: support.class._.equals.entity_selector.mcfunction
           '3':
             name: keyword._.keyword.mcfunction
-  generated.entity_selector_argument.limit:
+  entity_selector.content.argument.limit:
     patterns:
-      - name: meta._.entity_selector_argument.limit.mcfunction
+      - name: meta._.limit.argument.content.entity_selector.mcfunction
         match: '(limit) *(\=) *(\d+) *(?=[\]\,])'
         captures:
           '1':
@@ -469,9 +469,9 @@ repository:
             name: support.class._.equals.entity_selector.mcfunction
           '3':
             name: constant.numeric._.numeric_constant.mcfunction
-  generated.entity_selector_argument.nbt:
+  entity_selector.content.argument.nbt:
     patterns:
-      - name: meta._.entity_selector_argument.nbt.mcfunction
+      - name: meta._.nbt.argument.content.entity_selector.mcfunction
         begin: '(nbt) *(\=) *(\!?) *(\{)'
         end: '(?=\n)|(\})'
         beginCaptures:
