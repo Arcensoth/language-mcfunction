@@ -312,6 +312,76 @@ repository:
         patterns:
           - include: '#text_component.list'
           - include: '#error.compound_value'
+  target_selector.content:
+    patterns:
+      - name: meta._.argument_separator.content.target_selector.mcfunction
+        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+        captures:
+          '1':
+            name: support.class._.comma.target_selector.mcfunction
+      - match: '(?<=[\[\,]) +(?=[^\]\,])'
+      - match: '(?<=[^\[\,]) +(?=[\]\,])'
+      - match: '(?<=\[) +(?=\])'
+      - include: '#target_selector.arguments'
+  target_selector.arguments:
+    patterns:
+      - include: '#target_selector.content.argument.tag'
+      - include: '#target_selector.content.argument.sort'
+      - include: '#target_selector.content.argument.limit'
+      - include: '#target_selector.content.argument.nbt'
+  target_selector.content.argument.tag:
+    patterns:
+      - name: meta._.tag.argument.content.target_selector.mcfunction
+        match: '(tag) *(\=) *(\!?) *(\w+) *(?=[\]\,])'
+        captures:
+          '1':
+            name: keyword.other._.param.target_selector.mcfunction
+          '2':
+            name: support.class._.equals.target_selector.mcfunction
+          '3':
+            name: constant.character.escape._.not.target_selector.mcfunction
+          '4':
+            name: string._.word.mcfunction
+  target_selector.content.argument.sort:
+    patterns:
+      - name: meta._.sort.argument.content.target_selector.mcfunction
+        match: '(sort) *(\=) *(arbitrary|furthest|nearest|random) *(?=[\]\,])'
+        captures:
+          '1':
+            name: keyword.other._.param.target_selector.mcfunction
+          '2':
+            name: support.class._.equals.target_selector.mcfunction
+          '3':
+            name: keyword._.keyword.mcfunction
+  target_selector.content.argument.limit:
+    patterns:
+      - name: meta._.limit.argument.content.target_selector.mcfunction
+        match: '(limit) *(\=) *(\d+) *(?=[\]\,])'
+        captures:
+          '1':
+            name: keyword.other._.param.target_selector.mcfunction
+          '2':
+            name: support.class._.equals.target_selector.mcfunction
+          '3':
+            name: constant.numeric._.numeric_constant.mcfunction
+  target_selector.content.argument.nbt:
+    patterns:
+      - name: meta._.nbt.argument.content.target_selector.mcfunction
+        begin: '(nbt) *(\=) *(\!?) *(\{)'
+        end: '(?=\n)|(\})'
+        beginCaptures:
+          '1':
+            name: keyword.other._.param.target_selector.mcfunction
+          '2':
+            name: support.class._.equals.target_selector.mcfunction
+          '3':
+            name: constant.character.escape._.not.target_selector.mcfunction
+          '4':
+            name: storage._.compound_bracket.nbt.mcfunction
+        endCaptures:
+          '1':
+            name: storage._.compound_bracket.nbt.mcfunction
+        contentName: constant.character.escape
   generated.commands:
     patterns:
       - include: '#generated.command.say'
@@ -470,73 +540,3 @@ repository:
   generated.commands.execute.as.targets:
     patterns:
       - include: '#generated.commands.execute'
-  target_selector.content:
-    patterns:
-      - name: meta._.argument_separator.content.target_selector.mcfunction
-        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
-        captures:
-          '1':
-            name: support.class._.comma.target_selector.mcfunction
-      - match: '(?<=[\[\,]) +(?=[^\]\,])'
-      - match: '(?<=[^\[\,]) +(?=[\]\,])'
-      - match: '(?<=\[) +(?=\])'
-      - include: '#target_selector.arguments'
-  target_selector.arguments:
-    patterns:
-      - include: '#target_selector.content.argument.tag'
-      - include: '#target_selector.content.argument.sort'
-      - include: '#target_selector.content.argument.limit'
-      - include: '#target_selector.content.argument.nbt'
-  target_selector.content.argument.tag:
-    patterns:
-      - name: meta._.tag.argument.content.target_selector.mcfunction
-        match: '(tag) *(\=) *(\!?) *(\w+) *(?=[\]\,])'
-        captures:
-          '1':
-            name: keyword.other._.param.target_selector.mcfunction
-          '2':
-            name: support.class._.equals.target_selector.mcfunction
-          '3':
-            name: constant.character.escape._.not.target_selector.mcfunction
-          '4':
-            name: string._.word.mcfunction
-  target_selector.content.argument.sort:
-    patterns:
-      - name: meta._.sort.argument.content.target_selector.mcfunction
-        match: '(sort) *(\=) *(arbitrary|furthest|nearest|random) *(?=[\]\,])'
-        captures:
-          '1':
-            name: keyword.other._.param.target_selector.mcfunction
-          '2':
-            name: support.class._.equals.target_selector.mcfunction
-          '3':
-            name: keyword._.keyword.mcfunction
-  target_selector.content.argument.limit:
-    patterns:
-      - name: meta._.limit.argument.content.target_selector.mcfunction
-        match: '(limit) *(\=) *(\d+) *(?=[\]\,])'
-        captures:
-          '1':
-            name: keyword.other._.param.target_selector.mcfunction
-          '2':
-            name: support.class._.equals.target_selector.mcfunction
-          '3':
-            name: constant.numeric._.numeric_constant.mcfunction
-  target_selector.content.argument.nbt:
-    patterns:
-      - name: meta._.nbt.argument.content.target_selector.mcfunction
-        begin: '(nbt) *(\=) *(\!?) *(\{)'
-        end: '(?=\n)|(\})'
-        beginCaptures:
-          '1':
-            name: keyword.other._.param.target_selector.mcfunction
-          '2':
-            name: support.class._.equals.target_selector.mcfunction
-          '3':
-            name: constant.character.escape._.not.target_selector.mcfunction
-          '4':
-            name: storage._.compound_bracket.nbt.mcfunction
-        endCaptures:
-          '1':
-            name: storage._.compound_bracket.nbt.mcfunction
-        contentName: constant.character.escape

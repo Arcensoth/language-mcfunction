@@ -515,6 +515,99 @@ repository:
           - include: "#error.compound_value"
 
   ##############################################################################
+  # TARGET SELECTORS ###########################################################
+  ##############################################################################
+
+  # TODO can selector arguments and their types be version-controlled?
+
+  target_selector.content:
+    patterns:
+      # consume commas between arguments
+      - name: meta._.argument_separator.content.target_selector.mcfunction
+        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+        captures:
+          1:
+            name: "#target_selector.comma"
+
+      # consume whitespace from separator to argument
+      - match: '(?<=[\[\,]) +(?=[^\]\,])'
+
+      # consume whitespace from argument to separator
+      - match: '(?<=[^\[\,]) +(?=[\]\,])'
+
+      # special case for empty parameterized selectors, e.g. `@e[ ]`
+      - match: '(?<=\[) +(?=\])'
+
+      - include: "#target_selector.arguments"
+
+  target_selector.arguments:
+    # this is where the generator will inject selector argument patterns
+    # but we'll need to write the data file for these by hand...
+    patterns:
+      - include: "#target_selector.content.argument.tag"
+      - include: "#target_selector.content.argument.sort"
+      - include: "#target_selector.content.argument.limit"
+      - include: "#target_selector.content.argument.nbt"
+
+  target_selector.content.argument.tag:
+    patterns:
+      - name: meta._.tag.argument.content.target_selector.mcfunction
+        match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}(\w+){{pad}}(?=[\]\,])'
+        captures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#target_selector.not"
+          4:
+            name: "#word"
+
+  target_selector.content.argument.sort:
+    patterns:
+      - name: meta._.sort.argument.content.target_selector.mcfunction
+        match: '(sort){{pad}}(\=){{pad}}(arbitrary|furthest|nearest|random){{pad}}(?=[\]\,])'
+        captures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#keyword"
+
+  target_selector.content.argument.limit:
+    patterns:
+      - name: meta._.limit.argument.content.target_selector.mcfunction
+        match: '(limit){{pad}}(\=){{pad}}(\d+){{pad}}(?=[\]\,])'
+        captures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#numeric_constant"
+
+  target_selector.content.argument.nbt:
+    patterns:
+      - name: meta._.nbt.argument.content.target_selector.mcfunction
+        begin: '(nbt){{pad}}(\=){{pad}}(\!?){{pad}}(\{)'
+        end: '{{ln}}|(\})'
+        beginCaptures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#target_selector.not"
+          4:
+            name: "#nbt.compound_bracket"
+        endCaptures:
+          1:
+            name: "#nbt.compound_bracket"
+        # TODO inner nbt patterns
+        contentName: constant.character.escape
+
+  ##############################################################################
   # GENERATED COMMANDS #########################################################
   ##############################################################################
 
@@ -735,96 +828,3 @@ repository:
     # redirect to `execute`
     patterns:
       - include: "#generated.commands.execute"
-
-  ##############################################################################
-  # TARGET SELECTORS ###########################################################
-  ##############################################################################
-
-  # TODO can selector arguments and their types be version-controlled?
-
-  target_selector.content:
-    patterns:
-      # consume commas between arguments
-      - name: meta._.argument_separator.content.target_selector.mcfunction
-        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
-        captures:
-          1:
-            name: "#target_selector.comma"
-
-      # consume whitespace from separator to argument
-      - match: '(?<=[\[\,]) +(?=[^\]\,])'
-
-      # consume whitespace from argument to separator
-      - match: '(?<=[^\[\,]) +(?=[\]\,])'
-
-      # special case for empty parameterized selectors, e.g. `@e[ ]`
-      - match: '(?<=\[) +(?=\])'
-
-      - include: "#target_selector.arguments"
-
-  target_selector.arguments:
-    # this is where the generator will inject selector argument patterns
-    # but we'll need to write the data file for these by hand...
-    patterns:
-      - include: "#target_selector.content.argument.tag"
-      - include: "#target_selector.content.argument.sort"
-      - include: "#target_selector.content.argument.limit"
-      - include: "#target_selector.content.argument.nbt"
-
-  target_selector.content.argument.tag:
-    patterns:
-      - name: meta._.tag.argument.content.target_selector.mcfunction
-        match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}(\w+){{pad}}(?=[\]\,])'
-        captures:
-          1:
-            name: "#target_selector.param"
-          2:
-            name: "#target_selector.equals"
-          3:
-            name: "#target_selector.not"
-          4:
-            name: "#word"
-
-  target_selector.content.argument.sort:
-    patterns:
-      - name: meta._.sort.argument.content.target_selector.mcfunction
-        match: '(sort){{pad}}(\=){{pad}}(arbitrary|furthest|nearest|random){{pad}}(?=[\]\,])'
-        captures:
-          1:
-            name: "#target_selector.param"
-          2:
-            name: "#target_selector.equals"
-          3:
-            name: "#keyword"
-
-  target_selector.content.argument.limit:
-    patterns:
-      - name: meta._.limit.argument.content.target_selector.mcfunction
-        match: '(limit){{pad}}(\=){{pad}}(\d+){{pad}}(?=[\]\,])'
-        captures:
-          1:
-            name: "#target_selector.param"
-          2:
-            name: "#target_selector.equals"
-          3:
-            name: "#numeric_constant"
-
-  target_selector.content.argument.nbt:
-    patterns:
-      - name: meta._.nbt.argument.content.target_selector.mcfunction
-        begin: '(nbt){{pad}}(\=){{pad}}(\!?){{pad}}(\{)'
-        end: '{{ln}}|(\})'
-        beginCaptures:
-          1:
-            name: "#target_selector.param"
-          2:
-            name: "#target_selector.equals"
-          3:
-            name: "#target_selector.not"
-          4:
-            name: "#nbt.compound_bracket"
-        endCaptures:
-          1:
-            name: "#nbt.compound_bracket"
-        # TODO inner nbt patterns
-        contentName: constant.character.escape
