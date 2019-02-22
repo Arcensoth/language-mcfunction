@@ -296,11 +296,11 @@
       "patterns": [
         {
           "match": "[^\\\\\\\"\\n]",
-          "name": "string._.word.mcfunction"
+          "name": "string._.string.mcfunction"
         },
         {
           "match": "\\\\[^\\n]",
-          "name": "constant.character.escape._.word.mcfunction"
+          "name": "constant.character.escape._.string_escape.mcfunction"
         },
         {
           "match": "((\\\\))",
@@ -319,27 +319,27 @@
       "patterns": [
         {
           "match": "([^\\@\\n]+)",
-          "name": "string._.word.mcfunction"
+          "name": "string._.string.mcfunction"
         },
         {
           "begin": "(\\@[parse])(\\[)",
           "end": "(?=\\n)|(\\])",
           "beginCaptures": {
             "1": {
-              "name": "support.class._.base.entity_selector.mcfunction"
+              "name": "support.class._.base.target_selector.mcfunction"
             },
             "2": {
-              "name": "support.class._.bracket.entity_selector.mcfunction"
+              "name": "support.class._.bracket.target_selector.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "support.class._.bracket.entity_selector.mcfunction"
+              "name": "support.class._.bracket.target_selector.mcfunction"
             }
           },
           "patterns": [
             {
-              "include": "#entity_selector.content"
+              "include": "#target_selector.content"
             },
             {
               "include": "#error.unknown_command"
@@ -348,11 +348,11 @@
         },
         {
           "match": "(\\@[parse])",
-          "name": "support.class._.base.entity_selector.mcfunction"
+          "name": "support.class._.base.target_selector.mcfunction"
         },
         {
           "match": "([^\\n])",
-          "name": "string._.word.mcfunction"
+          "name": "string._.string.mcfunction"
         }
       ]
     },
@@ -387,12 +387,12 @@
           "end": "(?=\\n)|(\\\")",
           "beginCaptures": {
             "1": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             }
           },
           "patterns": [
@@ -524,13 +524,13 @@
           "end": "(?=\\n)|(?= *[\\,\\}])",
           "captures": {
             "1": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             },
             "2": {
               "name": "string._.property.text_component.mcfunction"
             },
             "3": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             },
             "4": {
               "name": "storage._.compound_colon.nbt.mcfunction"
@@ -554,24 +554,24 @@
           "end": "(?=\\n)|(\\\")",
           "beginCaptures": {
             "1": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             },
             "2": {
               "name": "string._.property.text_component.mcfunction"
             },
             "3": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             },
             "4": {
               "name": "storage._.compound_colon.nbt.mcfunction"
             },
             "5": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             }
           },
           "patterns": [
@@ -592,30 +592,30 @@
           "end": "(?=\\n)|(\\\")",
           "beginCaptures": {
             "1": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             },
             "2": {
               "name": "string._.property.text_component.mcfunction"
             },
             "3": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             },
             "4": {
               "name": "storage._.compound_colon.nbt.mcfunction"
             },
             "5": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             }
           },
           "endCaptures": {
             "1": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             }
           },
           "patterns": [
             {
               "match": "(\\@[parse])(?=\\\")",
-              "name": "support.class._.base.entity_selector.mcfunction"
+              "name": "support.class._.base.target_selector.mcfunction"
             },
             {
               "match": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\\\")",
@@ -630,20 +630,20 @@
               "end": "(?=\\n)|(?=\\\")|(\\])",
               "beginCaptures": {
                 "1": {
-                  "name": "support.class._.base.entity_selector.mcfunction"
+                  "name": "support.class._.base.target_selector.mcfunction"
                 },
                 "2": {
-                  "name": "support.class._.bracket.entity_selector.mcfunction"
+                  "name": "support.class._.bracket.target_selector.mcfunction"
                 }
               },
               "endCaptures": {
                 "1": {
-                  "name": "support.class._.bracket.entity_selector.mcfunction"
+                  "name": "support.class._.bracket.target_selector.mcfunction"
                 }
               },
               "patterns": [
                 {
-                  "include": "#entity_selector.content"
+                  "include": "#target_selector.content"
                 },
                 {
                   "include": "#error.unknown_string"
@@ -664,13 +664,13 @@
           "end": "(?=\\n)|(?= *[\\,\\}])",
           "captures": {
             "1": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             },
             "2": {
               "name": "string._.property.text_component.mcfunction"
             },
             "3": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.string.mcfunction"
             },
             "4": {
               "name": "storage._.compound_colon.nbt.mcfunction"
@@ -765,7 +765,7 @@
           "end": "(?=\\n)",
           "beginCaptures": {
             "1": {
-              "name": "support.class._.base.entity_selector.mcfunction"
+              "name": "support.class._.base.target_selector.mcfunction"
             }
           },
           "patterns": [
@@ -807,10 +807,10 @@
           "end": "(?=\\n)",
           "beginCaptures": {
             "1": {
-              "name": "support.class._.base.entity_selector.mcfunction"
+              "name": "support.class._.base.target_selector.mcfunction"
             },
             "2": {
-              "name": "support.class._.bracket.entity_selector.mcfunction"
+              "name": "support.class._.bracket.target_selector.mcfunction"
             }
           },
           "patterns": [
@@ -819,7 +819,7 @@
               "end": "(?=\\n)",
               "beginCaptures": {
                 "1": {
-                  "name": "support.class._.bracket.entity_selector.mcfunction"
+                  "name": "support.class._.bracket.target_selector.mcfunction"
                 }
               },
               "patterns": [
@@ -829,7 +829,7 @@
               ]
             },
             {
-              "include": "#entity_selector.content"
+              "include": "#target_selector.content"
             },
             {
               "include": "#error.unknown_command"
@@ -930,7 +930,7 @@
           "end": "(?=\\n)",
           "beginCaptures": {
             "1": {
-              "name": "support.class._.base.entity_selector.mcfunction"
+              "name": "support.class._.base.target_selector.mcfunction"
             }
           },
           "patterns": [
@@ -972,10 +972,10 @@
           "end": "(?=\\n)",
           "beginCaptures": {
             "1": {
-              "name": "support.class._.base.entity_selector.mcfunction"
+              "name": "support.class._.base.target_selector.mcfunction"
             },
             "2": {
-              "name": "support.class._.bracket.entity_selector.mcfunction"
+              "name": "support.class._.bracket.target_selector.mcfunction"
             }
           },
           "patterns": [
@@ -984,7 +984,7 @@
               "end": "(?=\\n)",
               "beginCaptures": {
                 "1": {
-                  "name": "support.class._.bracket.entity_selector.mcfunction"
+                  "name": "support.class._.bracket.target_selector.mcfunction"
                 }
               },
               "patterns": [
@@ -994,7 +994,7 @@
               ]
             },
             {
-              "include": "#entity_selector.content"
+              "include": "#target_selector.content"
             },
             {
               "include": "#error.unknown_command"
@@ -1013,14 +1013,14 @@
         }
       ]
     },
-    "entity_selector.content": {
+    "target_selector.content": {
       "patterns": [
         {
-          "name": "meta._.argument_separator.content.entity_selector.mcfunction",
+          "name": "meta._.argument_separator.content.target_selector.mcfunction",
           "match": "(?<=[^\\[\\,])(\\,)(?=[^\\]\\,])",
           "captures": {
             "1": {
-              "name": "support.class._.comma.entity_selector.mcfunction"
+              "name": "support.class._.comma.target_selector.mcfunction"
             }
           }
         },
@@ -1034,40 +1034,40 @@
           "match": "(?<=\\[) +(?=\\])"
         },
         {
-          "include": "#entity_selector.arguments"
+          "include": "#target_selector.arguments"
         }
       ]
     },
-    "entity_selector.arguments": {
+    "target_selector.arguments": {
       "patterns": [
         {
-          "include": "#entity_selector.content.argument.tag"
+          "include": "#target_selector.content.argument.tag"
         },
         {
-          "include": "#entity_selector.content.argument.sort"
+          "include": "#target_selector.content.argument.sort"
         },
         {
-          "include": "#entity_selector.content.argument.limit"
+          "include": "#target_selector.content.argument.limit"
         },
         {
-          "include": "#entity_selector.content.argument.nbt"
+          "include": "#target_selector.content.argument.nbt"
         }
       ]
     },
-    "entity_selector.content.argument.tag": {
+    "target_selector.content.argument.tag": {
       "patterns": [
         {
-          "name": "meta._.tag.argument.content.entity_selector.mcfunction",
+          "name": "meta._.tag.argument.content.target_selector.mcfunction",
           "match": "(tag) *(\\=) *(\\!?) *(\\w+) *(?=[\\]\\,])",
           "captures": {
             "1": {
-              "name": "keyword.other._.param.entity_selector.mcfunction"
+              "name": "keyword.other._.param.target_selector.mcfunction"
             },
             "2": {
-              "name": "support.class._.equals.entity_selector.mcfunction"
+              "name": "support.class._.equals.target_selector.mcfunction"
             },
             "3": {
-              "name": "constant.character.escape._.not.entity_selector.mcfunction"
+              "name": "constant.character.escape._.not.target_selector.mcfunction"
             },
             "4": {
               "name": "string._.word.mcfunction"
@@ -1076,17 +1076,17 @@
         }
       ]
     },
-    "entity_selector.content.argument.sort": {
+    "target_selector.content.argument.sort": {
       "patterns": [
         {
-          "name": "meta._.sort.argument.content.entity_selector.mcfunction",
+          "name": "meta._.sort.argument.content.target_selector.mcfunction",
           "match": "(sort) *(\\=) *(arbitrary|furthest|nearest|random) *(?=[\\]\\,])",
           "captures": {
             "1": {
-              "name": "keyword.other._.param.entity_selector.mcfunction"
+              "name": "keyword.other._.param.target_selector.mcfunction"
             },
             "2": {
-              "name": "support.class._.equals.entity_selector.mcfunction"
+              "name": "support.class._.equals.target_selector.mcfunction"
             },
             "3": {
               "name": "keyword._.keyword.mcfunction"
@@ -1095,17 +1095,17 @@
         }
       ]
     },
-    "entity_selector.content.argument.limit": {
+    "target_selector.content.argument.limit": {
       "patterns": [
         {
-          "name": "meta._.limit.argument.content.entity_selector.mcfunction",
+          "name": "meta._.limit.argument.content.target_selector.mcfunction",
           "match": "(limit) *(\\=) *(\\d+) *(?=[\\]\\,])",
           "captures": {
             "1": {
-              "name": "keyword.other._.param.entity_selector.mcfunction"
+              "name": "keyword.other._.param.target_selector.mcfunction"
             },
             "2": {
-              "name": "support.class._.equals.entity_selector.mcfunction"
+              "name": "support.class._.equals.target_selector.mcfunction"
             },
             "3": {
               "name": "constant.numeric._.numeric_constant.mcfunction"
@@ -1114,21 +1114,21 @@
         }
       ]
     },
-    "entity_selector.content.argument.nbt": {
+    "target_selector.content.argument.nbt": {
       "patterns": [
         {
-          "name": "meta._.nbt.argument.content.entity_selector.mcfunction",
+          "name": "meta._.nbt.argument.content.target_selector.mcfunction",
           "begin": "(nbt) *(\\=) *(\\!?) *(\\{)",
           "end": "(?=\\n)|(\\})",
           "beginCaptures": {
             "1": {
-              "name": "keyword.other._.param.entity_selector.mcfunction"
+              "name": "keyword.other._.param.target_selector.mcfunction"
             },
             "2": {
-              "name": "support.class._.equals.entity_selector.mcfunction"
+              "name": "support.class._.equals.target_selector.mcfunction"
             },
             "3": {
-              "name": "constant.character.escape._.not.entity_selector.mcfunction"
+              "name": "constant.character.escape._.not.target_selector.mcfunction"
             },
             "4": {
               "name": "storage._.compound_bracket.nbt.mcfunction"

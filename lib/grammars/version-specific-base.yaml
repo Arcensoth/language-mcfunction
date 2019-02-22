@@ -23,13 +23,13 @@ names:
   command: keyword.control._.command.mcfunction
   subcommand: keyword.other._.subcommand.mcfunction
 
-  # entity selector scopes
-  entity_selector.base: support.class._.base.entity_selector.mcfunction
-  entity_selector.bracket: support.class._.bracket.entity_selector.mcfunction
-  entity_selector.equals: support.class._.equals.entity_selector.mcfunction
-  entity_selector.comma: support.class._.comma.entity_selector.mcfunction
-  entity_selector.not: constant.character.escape._.not.entity_selector.mcfunction
-  entity_selector.param: keyword.other._.param.entity_selector.mcfunction
+  # target selector scopes
+  target_selector.base: support.class._.base.target_selector.mcfunction
+  target_selector.bracket: support.class._.bracket.target_selector.mcfunction
+  target_selector.equals: support.class._.equals.target_selector.mcfunction
+  target_selector.comma: support.class._.comma.target_selector.mcfunction
+  target_selector.not: constant.character.escape._.not.target_selector.mcfunction
+  target_selector.param: keyword.other._.param.target_selector.mcfunction
 
   # nbt scopes
   nbt.compound_bracket: storage._.compound_bracket.nbt.mcfunction
@@ -46,8 +46,8 @@ names:
   target.player_name: support.class._.player_name.target.mcfunction
 
   # string scopes
-  string: string._.word.mcfunction
-  string_escape: constant.character.escape._.word.mcfunction
+  string: string._.string.mcfunction
+  string_escape: constant.character.escape._.string_escape.mcfunction
   word: string._.word.mcfunction
   keyword: keyword._.keyword.mcfunction
   boolean: constant.numeric._.boolean.mcfunction
@@ -76,15 +76,15 @@ variables:
   # command_border_executable_false
   cbx_false: ' (?=[^\s\#])'
 
-  # basic_entity_selector
-  basic_entity_selector: '(\@[parse])'
+  # basic_target_selector
+  basic_target_selector: '(\@[parse])'
 
-  # parameterized_entity_selector
-  parameterized_entity_selector.base: "{{basic_entity_selector}}"
-  parameterized_entity_selector.args_l: '(\[)'
-  parameterized_entity_selector.args_r: '(\])'
-  parameterized_entity_selector.begin: "{{parameterized_entity_selector.base}}{{parameterized_entity_selector.args_l}}"
-  parameterized_entity_selector.next: "{{parameterized_entity_selector.args_r}}"
+  # parameterized_target_selector
+  parameterized_target_selector.base: "{{basic_target_selector}}"
+  parameterized_target_selector.args_l: '(\[)'
+  parameterized_target_selector.args_r: '(\])'
+  parameterized_target_selector.begin: "{{parameterized_target_selector.base}}{{parameterized_target_selector.args_l}}"
+  parameterized_target_selector.next: "{{parameterized_target_selector.args_r}}"
 
   hex_digit: "[0-9a-fA-F]"
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
@@ -278,23 +278,23 @@ repository:
         name: "#string"
 
       # check for selectors with arguments
-      - begin: "{{parameterized_entity_selector.begin}}"
-        end: "{{ln}}|{{parameterized_entity_selector.next}}"
+      - begin: "{{parameterized_target_selector.begin}}"
+        end: "{{ln}}|{{parameterized_target_selector.next}}"
         beginCaptures:
           1:
-            name: "#entity_selector.base"
+            name: "#target_selector.base"
           2:
-            name: "#entity_selector.bracket"
+            name: "#target_selector.bracket"
         endCaptures:
           1:
-            name: "#entity_selector.bracket"
+            name: "#target_selector.bracket"
         patterns:
-          - include: "#entity_selector.content"
+          - include: "#target_selector.content"
           - include: "#error.unknown_command"
 
       # check for selectors without arguments
-      - match: "{{basic_entity_selector}}"
-        name: "#entity_selector.base"
+      - match: "{{basic_target_selector}}"
+        name: "#target_selector.base"
 
       # catch characters that may have slipped through
       - match: '([^\n])'
@@ -468,8 +468,8 @@ repository:
             name: "#string"
         patterns:
           # (1) selector without arguments
-          - match: '{{basic_entity_selector}}(?=\")'
-            name: "#entity_selector.base"
+          - match: '{{basic_target_selector}}(?=\")'
+            name: "#target_selector.base"
 
           # (2) uuid
           - match: '{{uuid}}(?=\")'
@@ -480,18 +480,18 @@ repository:
             name: "#target.player_name"
 
           # (4) selector with arguments
-          - begin: "{{parameterized_entity_selector.begin}}"
-            end: '{{ln}}|(?=\")|{{parameterized_entity_selector.next}}'
+          - begin: "{{parameterized_target_selector.begin}}"
+            end: '{{ln}}|(?=\")|{{parameterized_target_selector.next}}'
             beginCaptures:
               1:
-                name: "#entity_selector.base"
+                name: "#target_selector.base"
               2:
-                name: "#entity_selector.bracket"
+                name: "#target_selector.bracket"
             endCaptures:
               1:
-                name: "#entity_selector.bracket"
+                name: "#target_selector.bracket"
             patterns:
-              - include: "#entity_selector.content"
+              - include: "#target_selector.content"
               - include: "#error.unknown_string"
 
           - include: "#error.unknown_string"
@@ -565,11 +565,11 @@ repository:
     # NOTE this should only allow players, but checking that via regex is not viable
     patterns:
       # (1) selector without arguments
-      - begin: "{{basic_entity_selector}}{{cbx_false}}"
+      - begin: "{{basic_target_selector}}{{cbx_false}}"
         end: "{{ln}}"
         beginCaptures:
           1:
-            name: "#entity_selector.base"
+            name: "#target_selector.base"
         patterns:
           - include: "#generated.commands.tellraw.targets"
 
@@ -592,22 +592,22 @@ repository:
           - include: "#generated.commands.tellraw.targets"
 
       # (4) selector with arguments
-      - begin: "{{parameterized_entity_selector.begin}}"
+      - begin: "{{parameterized_target_selector.begin}}"
         end: "{{ln}}"
         beginCaptures:
           1:
-            name: "#entity_selector.base"
+            name: "#target_selector.base"
           2:
-            name: "#entity_selector.bracket"
+            name: "#target_selector.bracket"
         patterns:
-          - begin: "{{parameterized_entity_selector.next}}{{cbx_false}}"
+          - begin: "{{parameterized_target_selector.next}}{{cbx_false}}"
             end: "{{ln}}"
             beginCaptures:
               1:
-                name: "#entity_selector.bracket"
+                name: "#target_selector.bracket"
             patterns:
               - include: "#generated.commands.tellraw.targets"
-          - include: "#entity_selector.content"
+          - include: "#target_selector.content"
           - include: "#error.unknown_command"
 
       - include: "#error.unknown_command"
@@ -673,11 +673,11 @@ repository:
       # we can use basic `match` patterns for the simpler parsers (1-3)
 
       # (1) selector without arguments
-      - begin: "{{basic_entity_selector}}{{cbx_true}}"
+      - begin: "{{basic_target_selector}}{{cbx_true}}"
         end: "{{ln}}"
         beginCaptures:
           1:
-            name: "#entity_selector.base"
+            name: "#target_selector.base"
         patterns:
           - include: "#generated.commands.execute.as.targets"
 
@@ -702,27 +702,27 @@ repository:
       # but more complex parsers will require further diving (4)
 
       # (4) selector with arguments
-      - begin: "{{parameterized_entity_selector.begin}}"
+      - begin: "{{parameterized_target_selector.begin}}"
         end: "{{ln}}"
         beginCaptures:
           1:
-            name: "#entity_selector.base"
+            name: "#target_selector.base"
           2:
-            name: "#entity_selector.bracket"
+            name: "#target_selector.bracket"
         patterns:
           # the ending brace pattern cannot be generalized,
           # because it needs to return to a specific parent command
-          - begin: "{{parameterized_entity_selector.next}}{{cbx_true}}"
+          - begin: "{{parameterized_target_selector.next}}{{cbx_true}}"
             end: "{{ln}}"
             beginCaptures:
               1:
-                name: "#entity_selector.bracket"
+                name: "#target_selector.bracket"
             patterns:
               # now we can finally resume back to the command arguments
               - include: "#generated.commands.execute.as.targets"
 
           # this is where common selector patterns can be included
-          - include: "#entity_selector.content"
+          - include: "#target_selector.content"
 
           # this doesn't go in common selector patterns, because it invalidates
           # rest of the line... which wouldn't make sense in other future
@@ -737,19 +737,19 @@ repository:
       - include: "#generated.commands.execute"
 
   ##############################################################################
-  # ENTITY SELECTORS ###########################################################
+  # TARGET SELECTORS ###########################################################
   ##############################################################################
 
   # TODO can selector arguments and their types be version-controlled?
 
-  entity_selector.content:
+  target_selector.content:
     patterns:
       # consume commas between arguments
-      - name: meta._.argument_separator.content.entity_selector.mcfunction
+      - name: meta._.argument_separator.content.target_selector.mcfunction
         match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
         captures:
           1:
-            name: "#entity_selector.comma"
+            name: "#target_selector.comma"
 
       # consume whitespace from separator to argument
       - match: '(?<=[\[\,]) +(?=[^\]\,])'
@@ -760,67 +760,67 @@ repository:
       # special case for empty parameterized selectors, e.g. `@e[ ]`
       - match: '(?<=\[) +(?=\])'
 
-      - include: "#entity_selector.arguments"
+      - include: "#target_selector.arguments"
 
-  entity_selector.arguments:
+  target_selector.arguments:
     # this is where the generator will inject selector argument patterns
     # but we'll need to write the data file for these by hand...
     patterns:
-      - include: "#entity_selector.content.argument.tag"
-      - include: "#entity_selector.content.argument.sort"
-      - include: "#entity_selector.content.argument.limit"
-      - include: "#entity_selector.content.argument.nbt"
+      - include: "#target_selector.content.argument.tag"
+      - include: "#target_selector.content.argument.sort"
+      - include: "#target_selector.content.argument.limit"
+      - include: "#target_selector.content.argument.nbt"
 
-  entity_selector.content.argument.tag:
+  target_selector.content.argument.tag:
     patterns:
-      - name: meta._.tag.argument.content.entity_selector.mcfunction
+      - name: meta._.tag.argument.content.target_selector.mcfunction
         match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}(\w+){{pad}}(?=[\]\,])'
         captures:
           1:
-            name: "#entity_selector.param"
+            name: "#target_selector.param"
           2:
-            name: "#entity_selector.equals"
+            name: "#target_selector.equals"
           3:
-            name: "#entity_selector.not"
+            name: "#target_selector.not"
           4:
             name: "#word"
 
-  entity_selector.content.argument.sort:
+  target_selector.content.argument.sort:
     patterns:
-      - name: meta._.sort.argument.content.entity_selector.mcfunction
+      - name: meta._.sort.argument.content.target_selector.mcfunction
         match: '(sort){{pad}}(\=){{pad}}(arbitrary|furthest|nearest|random){{pad}}(?=[\]\,])'
         captures:
           1:
-            name: "#entity_selector.param"
+            name: "#target_selector.param"
           2:
-            name: "#entity_selector.equals"
+            name: "#target_selector.equals"
           3:
             name: "#keyword"
 
-  entity_selector.content.argument.limit:
+  target_selector.content.argument.limit:
     patterns:
-      - name: meta._.limit.argument.content.entity_selector.mcfunction
+      - name: meta._.limit.argument.content.target_selector.mcfunction
         match: '(limit){{pad}}(\=){{pad}}(\d+){{pad}}(?=[\]\,])'
         captures:
           1:
-            name: "#entity_selector.param"
+            name: "#target_selector.param"
           2:
-            name: "#entity_selector.equals"
+            name: "#target_selector.equals"
           3:
             name: "#numeric_constant"
 
-  entity_selector.content.argument.nbt:
+  target_selector.content.argument.nbt:
     patterns:
-      - name: meta._.nbt.argument.content.entity_selector.mcfunction
+      - name: meta._.nbt.argument.content.target_selector.mcfunction
         begin: '(nbt){{pad}}(\=){{pad}}(\!?){{pad}}(\{)'
         end: '{{ln}}|(\})'
         beginCaptures:
           1:
-            name: "#entity_selector.param"
+            name: "#target_selector.param"
           2:
-            name: "#entity_selector.equals"
+            name: "#target_selector.equals"
           3:
-            name: "#entity_selector.not"
+            name: "#target_selector.not"
           4:
             name: "#nbt.compound_bracket"
         endCaptures:

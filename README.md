@@ -90,27 +90,38 @@ Short name    | Full scope name                         | Examples
 ### Customizing selectors
 Short name                | Full scope name                                               | Examples
 ------------------------- | ------------------------------------------------------------- | ----------
-`entity_selector.base`    | `support.class._.base.entity_selector.mcfunction`             | `@a`
-`entity_selector.bracket` | `support.class._.bracket.entity_selector.mcfunction`          | `[]`
-`entity_selector.equals`  | `support.class._.equals.entity_selector.mcfunction`           | `=`
-`entity_selector.comma`   | `support.class._.comma.entity_selector.mcfunction`            | `,`
-`entity_selector.not`     | `constant.character.escape._.not.entity_selector.mcfunction`  | `!`
-`entity_selector.param`   | `keyword.other._.param.entity_selector.mcfunction`            | `tag` / `type`
+`target_selector.base`    | `support.class._.base.target_selector.mcfunction`             | `@a`
+`target_selector.bracket` | `support.class._.bracket.target_selector.mcfunction`          | `[]`
+`target_selector.equals`  | `support.class._.equals.target_selector.mcfunction`           | `=`
+`target_selector.comma`   | `support.class._.comma.target_selector.mcfunction`            | `,`
+`target_selector.not`     | `constant.character.escape._.not.target_selector.mcfunction`  | `!`
+`target_selector.param`   | `keyword.other._.param.target_selector.mcfunction`            | `tag` / `type`
 
 ### Customizing NBT
 Short name              | Full scope name                             | Examples
 ----------------------- | ------------------------------------------- | ----------
 `nbt.compound_bracket`  | `storage._.compound_bracket.nbt.mcfunction` | `{}`
+`nbt.compound_colon`    | `storage._.compound_colon.nbt.mcfunction`   | `:`
+`nbt.compound_comma`    | `storage._.compound_comma.nbt.mcfunction`   | `,`
 `nbt.list_bracket`      | `storage._.list_bracket.nbt.mcfunction`     | `[]`
+`nbt.list_comma`        | `storage._.list_comma.nbt.mcfunction`       | `,`
+
+### Customizing text components
+Short name                          | Full scope name                               | Examples
+----------------------------------- | --------------------------------------------- | ----------
+`text_component.compound_property`  | `string._.property.text_component.mcfunction` | `text` / `color` / `selector`
 
 ### Other customizable scopes
-Short name            | Full scope name                                   | Examples
---------------------- | ------------------------------------------------- | ----------
-`target.uuid`         | `support.class._.uuid.target.mcfunction`          | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
-`target.player_name`  | `support.class._.uuid.target.mcfunction`          | `Arcensoth` / `some_guy`
-`word`                | `string._.word.mcfunction`                        | `foo` / `foo_bar`
-`keyword`             | `keyword._.word.mcfunction`                       | `nearest` / `creative`
-`numeric_constant`    | `constant.numeric._.numeric_constant.mcfunction`  | `0` / `123` / `-99` / `001`
+Short name            | Full scope name                                         | Examples
+--------------------- | ------------------------------------------------------- | ----------
+`target.uuid`         | `support.class._.uuid.target.mcfunction`                | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
+`target.player_name`  | `support.class._.uuid.target.mcfunction`                | `Arcensoth` / `some_guy`
+`string`              | `string._.string.mcfunction`                            | `"hello world"`
+`string_escape`       | `constant.character.escape._.string_escape.mcfunction`  | `\n`
+`word`                | `string._.word.mcfunction`                              | `foo` / `foo_bar`
+`keyword`             | `keyword._.word.mcfunction`                             | `nearest` / `creative`
+`boolean`             | `constant.numeric._.boolean.mcfunction`                 | `true` / `false`
+`numeric_constant`    | `constant.numeric._.numeric_constant.mcfunction`        | `0` / `123` / `-99` / `001`
 
 ## Resources
 - https://github.com/Arcensoth/language-tmdemo

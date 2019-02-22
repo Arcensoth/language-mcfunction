@@ -465,13 +465,13 @@
             <key>match</key>
             <string>[^\\\"\n]</string>
             <key>name</key>
-            <string>string._.word.mcfunction</string>
+            <string>string._.string.mcfunction</string>
           </dict>
           <dict>
             <key>match</key>
             <string>\\[^\n]</string>
             <key>name</key>
-            <string>constant.character.escape._.word.mcfunction</string>
+            <string>constant.character.escape._.string_escape.mcfunction</string>
           </dict>
           <dict>
             <key>match</key>
@@ -500,7 +500,7 @@
             <key>match</key>
             <string>([^\@\n]+)</string>
             <key>name</key>
-            <string>string._.word.mcfunction</string>
+            <string>string._.string.mcfunction</string>
           </dict>
           <dict>
             <key>begin</key>
@@ -512,12 +512,12 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.base.entity_selector.mcfunction</string>
+                <string>support.class._.base.target_selector.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.bracket.entity_selector.mcfunction</string>
+                <string>support.class._.bracket.target_selector.mcfunction</string>
               </dict>
             </dict>
             <key>endCaptures</key>
@@ -525,14 +525,14 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.bracket.entity_selector.mcfunction</string>
+                <string>support.class._.bracket.target_selector.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
             <array>
               <dict>
                 <key>include</key>
-                <string>#entity_selector.content</string>
+                <string>#target_selector.content</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -544,13 +544,13 @@
             <key>match</key>
             <string>(\@[parse])</string>
             <key>name</key>
-            <string>support.class._.base.entity_selector.mcfunction</string>
+            <string>support.class._.base.target_selector.mcfunction</string>
           </dict>
           <dict>
             <key>match</key>
             <string>([^\n])</string>
             <key>name</key>
-            <string>string._.word.mcfunction</string>
+            <string>string._.string.mcfunction</string>
           </dict>
         </array>
       </dict>
@@ -602,7 +602,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
             </dict>
             <key>endCaptures</key>
@@ -610,7 +610,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -803,7 +803,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
@@ -813,7 +813,7 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
               <key>4</key>
               <dict>
@@ -849,7 +849,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
@@ -859,7 +859,7 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
               <key>4</key>
               <dict>
@@ -869,7 +869,7 @@
               <key>5</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
             </dict>
             <key>endCaptures</key>
@@ -877,7 +877,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -908,7 +908,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
@@ -918,7 +918,7 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
               <key>4</key>
               <dict>
@@ -928,7 +928,7 @@
               <key>5</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
             </dict>
             <key>endCaptures</key>
@@ -936,7 +936,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -945,7 +945,7 @@
                 <key>match</key>
                 <string>(\@[parse])(?=\")</string>
                 <key>name</key>
-                <string>support.class._.base.entity_selector.mcfunction</string>
+                <string>support.class._.base.target_selector.mcfunction</string>
               </dict>
               <dict>
                 <key>match</key>
@@ -969,12 +969,12 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>support.class._.base.entity_selector.mcfunction</string>
+                    <string>support.class._.base.target_selector.mcfunction</string>
                   </dict>
                   <key>2</key>
                   <dict>
                     <key>name</key>
-                    <string>support.class._.bracket.entity_selector.mcfunction</string>
+                    <string>support.class._.bracket.target_selector.mcfunction</string>
                   </dict>
                 </dict>
                 <key>endCaptures</key>
@@ -982,14 +982,14 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>support.class._.bracket.entity_selector.mcfunction</string>
+                    <string>support.class._.bracket.target_selector.mcfunction</string>
                   </dict>
                 </dict>
                 <key>patterns</key>
                 <array>
                   <dict>
                     <key>include</key>
-                    <string>#entity_selector.content</string>
+                    <string>#target_selector.content</string>
                   </dict>
                   <dict>
                     <key>include</key>
@@ -1019,7 +1019,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
@@ -1029,7 +1029,7 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.string.mcfunction</string>
               </dict>
               <key>4</key>
               <dict>
@@ -1169,7 +1169,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.base.entity_selector.mcfunction</string>
+                <string>support.class._.base.target_selector.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1232,12 +1232,12 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.base.entity_selector.mcfunction</string>
+                <string>support.class._.base.target_selector.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.bracket.entity_selector.mcfunction</string>
+                <string>support.class._.bracket.target_selector.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1252,7 +1252,7 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>support.class._.bracket.entity_selector.mcfunction</string>
+                    <string>support.class._.bracket.target_selector.mcfunction</string>
                   </dict>
                 </dict>
                 <key>patterns</key>
@@ -1265,7 +1265,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#entity_selector.content</string>
+                <string>#target_selector.content</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -1415,7 +1415,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.base.entity_selector.mcfunction</string>
+                <string>support.class._.base.target_selector.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1478,12 +1478,12 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.base.entity_selector.mcfunction</string>
+                <string>support.class._.base.target_selector.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.bracket.entity_selector.mcfunction</string>
+                <string>support.class._.bracket.target_selector.mcfunction</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -1498,7 +1498,7 @@
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>support.class._.bracket.entity_selector.mcfunction</string>
+                    <string>support.class._.bracket.target_selector.mcfunction</string>
                   </dict>
                 </dict>
                 <key>patterns</key>
@@ -1511,7 +1511,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#entity_selector.content</string>
+                <string>#target_selector.content</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -1535,13 +1535,13 @@
           </dict>
         </array>
       </dict>
-      <key>entity_selector.content</key>
+      <key>target_selector.content</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.argument_separator.content.entity_selector.mcfunction</string>
+            <string>meta._.argument_separator.content.target_selector.mcfunction</string>
             <key>match</key>
             <string>(?&lt;=[^\[\,])(\,)(?=[^\]\,])</string>
             <key>captures</key>
@@ -1549,7 +1549,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.comma.entity_selector.mcfunction</string>
+                <string>support.class._.comma.target_selector.mcfunction</string>
               </dict>
             </dict>
           </dict>
@@ -1567,39 +1567,39 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#entity_selector.arguments</string>
+            <string>#target_selector.arguments</string>
           </dict>
         </array>
       </dict>
-      <key>entity_selector.arguments</key>
+      <key>target_selector.arguments</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
-            <string>#entity_selector.content.argument.tag</string>
+            <string>#target_selector.content.argument.tag</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#entity_selector.content.argument.sort</string>
+            <string>#target_selector.content.argument.sort</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#entity_selector.content.argument.limit</string>
+            <string>#target_selector.content.argument.limit</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#entity_selector.content.argument.nbt</string>
+            <string>#target_selector.content.argument.nbt</string>
           </dict>
         </array>
       </dict>
-      <key>entity_selector.content.argument.tag</key>
+      <key>target_selector.content.argument.tag</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.tag.argument.content.entity_selector.mcfunction</string>
+            <string>meta._.tag.argument.content.target_selector.mcfunction</string>
             <key>match</key>
             <string>(tag) *(\=) *(\!?) *(\w+) *(?=[\]\,])</string>
             <key>captures</key>
@@ -1607,17 +1607,17 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.other._.param.entity_selector.mcfunction</string>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.equals.entity_selector.mcfunction</string>
+                <string>support.class._.equals.target_selector.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>constant.character.escape._.not.entity_selector.mcfunction</string>
+                <string>constant.character.escape._.not.target_selector.mcfunction</string>
               </dict>
               <key>4</key>
               <dict>
@@ -1628,13 +1628,13 @@
           </dict>
         </array>
       </dict>
-      <key>entity_selector.content.argument.sort</key>
+      <key>target_selector.content.argument.sort</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.sort.argument.content.entity_selector.mcfunction</string>
+            <string>meta._.sort.argument.content.target_selector.mcfunction</string>
             <key>match</key>
             <string>(sort) *(\=) *(arbitrary|furthest|nearest|random) *(?=[\]\,])</string>
             <key>captures</key>
@@ -1642,12 +1642,12 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.other._.param.entity_selector.mcfunction</string>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.equals.entity_selector.mcfunction</string>
+                <string>support.class._.equals.target_selector.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1658,13 +1658,13 @@
           </dict>
         </array>
       </dict>
-      <key>entity_selector.content.argument.limit</key>
+      <key>target_selector.content.argument.limit</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.limit.argument.content.entity_selector.mcfunction</string>
+            <string>meta._.limit.argument.content.target_selector.mcfunction</string>
             <key>match</key>
             <string>(limit) *(\=) *(\d+) *(?=[\]\,])</string>
             <key>captures</key>
@@ -1672,12 +1672,12 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.other._.param.entity_selector.mcfunction</string>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.equals.entity_selector.mcfunction</string>
+                <string>support.class._.equals.target_selector.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1688,13 +1688,13 @@
           </dict>
         </array>
       </dict>
-      <key>entity_selector.content.argument.nbt</key>
+      <key>target_selector.content.argument.nbt</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.nbt.argument.content.entity_selector.mcfunction</string>
+            <string>meta._.nbt.argument.content.target_selector.mcfunction</string>
             <key>begin</key>
             <string>(nbt) *(\=) *(\!?) *(\{)</string>
             <key>end</key>
@@ -1704,17 +1704,17 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.other._.param.entity_selector.mcfunction</string>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>support.class._.equals.entity_selector.mcfunction</string>
+                <string>support.class._.equals.target_selector.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>constant.character.escape._.not.entity_selector.mcfunction</string>
+                <string>constant.character.escape._.not.target_selector.mcfunction</string>
               </dict>
               <key>4</key>
               <dict>
