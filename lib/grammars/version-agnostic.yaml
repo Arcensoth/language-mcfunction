@@ -274,6 +274,7 @@ repository:
       - include: "#command.token.nbt_path"
       - include: "#command.token.unquoted_string"
       - include: "#command.token.quoted_string"
+      - include: "#command.token.single_quoted_string"
       - include: "#command.token.unknown"
 
   command.token.selector_without_arguments:
@@ -468,6 +469,16 @@ repository:
             name: "#quoted_string"
         patterns:
           - include: "#common.quoted_string"
+      - begin: "(\\')"
+        end: "{{lookahead_newline}}|(\\')"
+        beginCaptures:
+          1:
+            name: "#quoted_string"
+        endCaptures:
+          1:
+            name: "#quoted_string"
+        patterns:
+          - include: "#common.single_quoted_string"
       - match: "{{boolean}}"
         name: "#boolean"
       - match: "{{number}}"
@@ -503,6 +514,21 @@ repository:
 
     patterns:
       - include: "#common.quoted_string"
+
+  command.token.single_quoted_string:
+    name: meta.command.token.single_quoted_string.mcfunction
+    begin: "{{command_token_l}}(\\')"
+    end: "{{lookahead_newline}}|(\\')({{not_command_token_delim}}*)"
+    beginCaptures:
+      1:
+        name: "#quoted_string"
+    endCaptures:
+      1:
+        name: "#quoted_string"
+      2:
+        name: "#error"
+    patterns:
+      - include: "#common.single_quoted_string"
 
   command.token.block_predicate:
     # This whole thing is going to look a lot like selector arguments.
@@ -594,6 +620,7 @@ repository:
           - include: "#selector.argument.boolean"
           - include: "#selector.argument.unquoted_string"
           - include: "#selector.argument.quoted_string"
+          - include: "#selector.argument.single_quoted_string"
           - include: "#selector.argument.property_map"
           - include: "#selector.argument.nbt_compound"
           - include: "#selector.argument.unknown"
@@ -792,6 +819,21 @@ repository:
     patterns:
       - include: "#common.quoted_string"
 
+  selector.argument.single_quoted_string:
+    name: meta.selector.argument.single_quoted_string.mcfunction
+    begin: "(\\')"
+    end: "{{lookahead_newline}}|(\\')([^\\]\\,\\n]*)"
+    beginCaptures:
+      1:
+        name: "#quoted_string"
+    endCaptures:
+      1:
+        name: "#quoted_string"
+      2:
+        name: "#error"
+    patterns:
+      - include: "#common.single_quoted_string"
+
   selector.argument.property_map:
     name: meta.selector.argument.property_map.mcfunction
     # we need to try and distinguish this from an nbt argument
@@ -887,12 +929,21 @@ repository:
   common.quoted_string:
     patterns:
       # consume everything except for backslashes, quotes, and newlines
-      - name: "#quoted_string"
-        match: '[^\\\"\n]'
+      - match: '[^\\\"\n]'
+        name: "#quoted_string"
       # consume any escaped characters... except for newlines
-      - name: "#quoted_string_escape"
-        match: '\\[^\n]'
+      - match: '\\[^\n]'
+        name: "#quoted_string_escape"
       # consume a single backslash (implicitly followed by a newline) as an error
-      - name: "#error"
-        match: '\\'
+      - match: '\\'
+        name: "#error"
       # anything else will be handed back to the parent scope
+
+  common.single_quoted_string:
+    patterns:
+      - match: "[^\\\\\\'\\n]"
+        name: "#quoted_string"
+      - match: '\\[^\n]'
+        name: "#quoted_string_escape"
+      - match: '\\'
+        name: "#error"

@@ -125,6 +125,15 @@ execute as @a[tag=foo,name="foo, bar"] as @s run
 execute as @a[tag=foo,name="escaped \" quote"] as @s run
 execute as @a[  tag  =  foo  ,  name  =  "  lots of space  "  ,  tag  =  bar  ] as @s run
 
+# test valid single quoted string argument
+execute as @a[tag=foo,name='[',tag=bar] as @s run
+execute as @a[tag=foo,name=']',tag=bar] as @s run
+execute as @a[tag=foo,name='[]',tag=bar] as @s run
+execute as @a[tag=foo,name='[[]]',tag=bar] as @s run
+execute as @a[tag=foo,name='foo, bar'] as @s run
+execute as @a[tag=foo,name='escaped \' quote'] as @s run
+execute as @a[  tag  =  foo  ,  name  =  '  lots of space  '  ,  tag  =  bar  ] as @s run
+
 # test valid nbt argument
 execute as @e[nbt={PortalCooldown:0}] run
 execute as @e[nbt={ PortalCooldown : 0 }] run

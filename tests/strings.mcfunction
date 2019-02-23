@@ -28,17 +28,26 @@ data get entity @s My.Tag[0]
 
 # quoted string
 say "hello world"
+say "hello ' world"
+say 'hello world'
+say 'hello " world'
 
 # quoted string escaped
 say "hello \" world"
+say 'hello \' world'
 
 # quoted string with trailing characters
 say "oh oh"bad
+say 'oh oh'bad
 
 # quoted string with terminal backslash
 say "uh oh\
+say 'uh oh\
 
 # quoted string unbounded
 say "uh oh
 # this should be a comment, otherwise
 # the quoted string is probably leaking
+
+say 'uh oh
+# same here

@@ -18,6 +18,8 @@ setblock ~ ~ ~ minecraft:dispenser[facing=up]{Items: [{id: "minecraft:diamond", 
 tag @s add my.tag
 datapack enable "hello world"
 datapack enable "escape \" me"
+datapack enable 'single quotes'
+give @s minecraft:diamond_sword{display: {Name: '"My Custom Sword"'}}
 execute as f7a39418-72ca-4bf2-bc7e-ba9df67a4707 run say hello
 execute as 0-0-0-0-0 run say goodbye
 execute as @a[sort=nearest]

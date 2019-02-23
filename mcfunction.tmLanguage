@@ -256,6 +256,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#command.token.single_quoted_string</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#command.token.unknown</string>
           </dict>
         </array>
@@ -765,6 +769,35 @@
             </array>
           </dict>
           <dict>
+            <key>begin</key>
+            <string>(\')</string>
+            <key>end</key>
+            <string>(?=\n)|(\')</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string.quoted.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string.quoted.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.single_quoted_string</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
             <key>match</key>
             <string>(true|false)</string>
             <key>name</key>
@@ -824,6 +857,43 @@
           <dict>
             <key>include</key>
             <string>#common.quoted_string</string>
+          </dict>
+        </array>
+      </dict>
+      <key>command.token.single_quoted_string</key>
+      <dict>
+        <key>name</key>
+        <string>meta.command.token.single_quoted_string.mcfunction</string>
+        <key>begin</key>
+        <string>(?&lt;= )(\')</string>
+        <key>end</key>
+        <string>(?=\n)|(\')([^ \n]*)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>string.quoted.mcfunction</string>
+          </dict>
+        </dict>
+        <key>endCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>string.quoted.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.single_quoted_string</string>
           </dict>
         </array>
       </dict>
@@ -960,6 +1030,10 @@
               <dict>
                 <key>include</key>
                 <string>#selector.argument.quoted_string</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#selector.argument.single_quoted_string</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -1524,6 +1598,43 @@
           </dict>
         </array>
       </dict>
+      <key>selector.argument.single_quoted_string</key>
+      <dict>
+        <key>name</key>
+        <string>meta.selector.argument.single_quoted_string.mcfunction</string>
+        <key>begin</key>
+        <string>(\')</string>
+        <key>end</key>
+        <string>(?=\n)|(\')([^\]\,\n]*)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>string.quoted.mcfunction</string>
+          </dict>
+        </dict>
+        <key>endCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>string.quoted.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.single_quoted_string</string>
+          </dict>
+        </array>
+      </dict>
       <key>selector.argument.property_map</key>
       <dict>
         <key>name</key>
@@ -1767,22 +1878,46 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>name</key>
-            <string>string.quoted.mcfunction</string>
             <key>match</key>
             <string>[^\\\"\n]</string>
+            <key>name</key>
+            <string>string.quoted.mcfunction</string>
           </dict>
           <dict>
-            <key>name</key>
-            <string>constant.character.escape.mcfunction</string>
             <key>match</key>
             <string>\\[^\n]</string>
+            <key>name</key>
+            <string>constant.character.escape.mcfunction</string>
           </dict>
           <dict>
-            <key>name</key>
-            <string>invalid.illegal.mcfunction</string>
             <key>match</key>
             <string>\\</string>
+            <key>name</key>
+            <string>invalid.illegal.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.single_quoted_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>[^\\\'\n]</string>
+            <key>name</key>
+            <string>string.quoted.mcfunction</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\\[^\n]</string>
+            <key>name</key>
+            <string>constant.character.escape.mcfunction</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\\</string>
+            <key>name</key>
+            <string>invalid.illegal.mcfunction</string>
           </dict>
         </array>
       </dict>

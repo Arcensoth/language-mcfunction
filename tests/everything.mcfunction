@@ -74,6 +74,8 @@ tag @s add my.tag
 
 datapack enable "hello world"
 datapack enable "escape \" me"
+datapack enable 'hello world'
+datapack enable 'escape \' me'
 
 execute as f7a39418-72ca-4bf2-bc7e-ba9df67a4707 run
 execute as 0-0-0-0-0 run
@@ -151,3 +153,6 @@ execute as @a[advancements={minecraft:story/obtain_armor={iron_helmet=true}}] ru
 execute as @a[advancements={minecraft:story/obtain_armor={iron_helmet=true, gold_helmet=false}}] run
 execute as @a[advancements={minecraft:story/form_obsidian=true, minecraft:story/follow_ender_eye=true}] run
 execute as @a[advancements={minecraft:story/form_obsidian={foo=true, bar=false},minecraft:story/follow_ender_eye={foo=false, bar=true}}] run
+
+give @s diamond_sword{display: {Name: '"My Custom Sword"'}}
+give @s minecraft:diamond_sword{display: {Name: '"My Custom Sword"'}}
