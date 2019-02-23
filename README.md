@@ -96,6 +96,12 @@ Short name                | Full scope name                                     
 `target_selector.comma`   | `support.class._.comma.target_selector.mcfunction`            | `,`
 `target_selector.not`     | `constant.character.escape._.not.target_selector.mcfunction`  | `!`
 `target_selector.param`   | `keyword.other._.param.target_selector.mcfunction`            | `tag` / `type`
+`score_map.bracket`       | `support.class._.bracket.score_map.mcfunction`                | `{}`
+`score_map.equals`        | `support.class._.equals.score_map.mcfunction`                 | `=`
+`score_map.comma`         | `support.class._.comma.score_map.mcfunction`                  | `,`
+`advancement_map.bracket` | `support.class._.bracket.advancement_map.mcfunction`          | `{}`
+`advancement_map.equals`  | `support.class._.equals.advancement_map.mcfunction`           | `=`
+`advancement_map.comma`   | `support.class._.comma.advancement_map.mcfunction`            | `,`
 
 ### Customizing NBT
 Short name              | Full scope name                             | Examples
@@ -111,17 +117,39 @@ Short name                          | Full scope name                           
 ----------------------------------- | --------------------------------------------- | ----------
 `text_component.compound_property`  | `string._.property.text_component.mcfunction` | `text` / `color` / `selector`
 
+### Customizing resource locations
+Short name                    | Full scope name                                                 | Examples
+----------------------------- | --------------------------------------------------------------- | ----------
+`resource_location.namespace` | `entity.name.function._.namespace.resource_location.mcfunction` | `#(mypack):some/resource`
+`resource_location.hash`      | `entity.name.function._.hash.resource_location.mcfunction`      | `(#)mypack:some/resource`
+`resource_location.colon`     | `entity.name.function._.colon.resource_location.mcfunction`     | `#mypack(:)some/resource`
+`resource_location.path`      | `entity.name.function._.path.resource_location.mcfunction`      | `#mypack:(some/resource)`
+
+### Customizing strings
+Short name              | Full scope name                                         | Examples
+----------------------- | ------------------------------------------------------- | ----------
+`string`                | `string._.string.mcfunction`                            | `("hello world")`
+`string_escape`         | `constant.character.escape._.string_escape.mcfunction`  | `"hello(\n)newline"`
+`word`                  | `string._.word.mcfunction`                              | `foo` / `foo_bar`
+`keyword`               | `keyword._.word.mcfunction`                             | `nearest` / `creative`
+`entity_tag`            | `string._.entity_tag.mcfunction`                        | `mypack.some.tag`
+`scoreboard_team`       | `string._.scoreboard_team.mcfunction`                   | `mypack.blue`
+`scoreboard_objective`  | `string._.scoreboard_objective.mcfunction`              | `mypack.points`
+
+### Customizing numbers
+Short name        | Full scope name                               | Examples
+----------------- | --------------------------------------------- | ----------
+`number`          | `constant.numeric._.number.mcfunction`        | `0` / `123` / `-99`
+`range.minimum`   | `constant.numeric._.minimum.range.mcfunction` | `(10)..20`
+`range.maximum`   | `constant.numeric._.maximum.range.mcfunction` | `10..(20)`
+`range.ellipsis`  | `keyword.control._.ellipsis.range.mcfunction` | `10(..)20`
+
 ### Other customizable scopes
 Short name            | Full scope name                                         | Examples
 --------------------- | ------------------------------------------------------- | ----------
 `target.uuid`         | `support.class._.uuid.target.mcfunction`                | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
 `target.player_name`  | `support.class._.uuid.target.mcfunction`                | `Arcensoth` / `some_guy`
-`string`              | `string._.string.mcfunction`                            | `"hello world"`
-`string_escape`       | `constant.character.escape._.string_escape.mcfunction`  | `\n`
-`word`                | `string._.word.mcfunction`                              | `foo` / `foo_bar`
-`keyword`             | `keyword._.word.mcfunction`                             | `nearest` / `creative`
 `boolean`             | `constant.numeric._.boolean.mcfunction`                 | `true` / `false`
-`numeric_constant`    | `constant.numeric._.numeric_constant.mcfunction`        | `0` / `123` / `-99` / `001`
 
 ## Resources
 - https://github.com/Arcensoth/language-tmdemo

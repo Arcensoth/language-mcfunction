@@ -38,22 +38,46 @@ names:
   nbt.list_bracket: storage._.list_bracket.nbt.mcfunction
   nbt.list_comma: storage._.list_comma.nbt.mcfunction
 
+  # score map scopes
+  score_map.bracket: support.class._.bracket.score_map.mcfunction
+  score_map.equals: support.class._.equals.score_map.mcfunction
+  score_map.comma: support.class._.comma.score_map.mcfunction
+
+  # advancement map scopes
+  advancement_map.bracket: support.class._.bracket.advancement_map.mcfunction
+  advancement_map.equals: support.class._.equals.advancement_map.mcfunction
+  advancement_map.comma: support.class._.comma.advancement_map.mcfunction
+
   # text component scopes
   text_component.compound_property: string._.property.text_component.mcfunction
 
-  # scopes for other types of arguments accepted by `minecraft:entity`
-  target.uuid: support.class._.uuid.target.mcfunction
-  target.player_name: support.class._.player_name.target.mcfunction
+  # resource location scopes
+  resource_location.namespace: entity.name.function._.namespace.resource_location.mcfunction
+  resource_location.hash: entity.name.function._.hash.resource_location.mcfunction
+  resource_location.colon: entity.name.function._.colon.resource_location.mcfunction
+  resource_location.path: entity.name.function._.path.resource_location.mcfunction
 
   # string scopes
   string: string._.string.mcfunction
   string_escape: constant.character.escape._.string_escape.mcfunction
   word: string._.word.mcfunction
   keyword: keyword._.keyword.mcfunction
-  boolean: constant.numeric._.boolean.mcfunction
+  entity_tag: string._.entity_tag.mcfunction
+  scoreboard_team: string._.scoreboard_team.mcfunction
+  scoreboard_objective: string._.scoreboard_objective.mcfunction
 
   # numeric scopes
-  numeric_constant: constant.numeric._.numeric_constant.mcfunction
+  number: constant.numeric._.number.mcfunction
+  range.minimum: constant.numeric._.minimum.range.mcfunction
+  range.maximum: constant.numeric._.maximum.range.mcfunction
+  range.ellipsis: keyword.control._.ellipsis.range.mcfunction
+
+  # scopes for other types of arguments accepted by `minecraft:entity`
+  target.uuid: support.class._.uuid.target.mcfunction
+  target.player_name: support.class._.player_name.target.mcfunction
+
+  # other scopes
+  boolean: constant.numeric._.boolean.mcfunction
 
 variables:
   # padding
@@ -83,15 +107,28 @@ variables:
   parameterized_target_selector.base: "{{basic_target_selector}}"
   parameterized_target_selector.args_l: '(\[)'
   parameterized_target_selector.args_r: '(\])'
-  parameterized_target_selector.begin: "{{parameterized_target_selector.base}}{{parameterized_target_selector.args_l}}"
+  parameterized_target_selector.begin: '{{parameterized_target_selector.base}}{{parameterized_target_selector.args_l}}(?={{pad}}[\w\]])'
   parameterized_target_selector.next: "{{parameterized_target_selector.args_r}}"
+
+  integer: '(\-?\d*)'
+  positive_integer: '(0*[1-9]\d*)'
+  double: '(\-?\d*\.?\d+)'
+
+  boolean: "(true|false)"
 
   hex_digit: "[0-9a-fA-F]"
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
 
-  boolean: "(true|false)"
-
   player_name: '(\w+)'
+
+  word: '([\w\.\-\+]+)'
+
+  entity_tag: "{{word}}"
+  scoreboard_team: "{{word}}"
+  scoreboard_objective: "{{word}}"
+
+  selector_gamemode_choices: "(survival|creative|adventure|spectator)"
+  selector_sort_choices: "(arbitrary|furthest|nearest|random)"
 
 patterns:
   - include: "#comment"
@@ -104,6 +141,14 @@ capturesRepository:
       name: "#invalid"
     2:
       name: "#underline"
+
+  range:
+    1:
+      name: "#range.minimum"
+    2:
+      name: "#range.ellipsis"
+    3:
+      name: "#range.maximum"
 
 repository:
   comment:
@@ -254,6 +299,37 @@ repository:
   # COMMON PARSERS #############################################################
   ##############################################################################
 
+  common.unquoted_string:
+    patterns:
+      - match: "{{word}}"
+        name: "#word"
+
+  common.double_quoted_string:
+    patterns:
+      - begin: '(\")'
+        end: '{{ln}}|(\")'
+        beginCaptures:
+          1:
+            name: "#string"
+        endCaptures:
+          1:
+            name: "#string"
+        patterns:
+          - include: "#common.double_quoted_string.content"
+
+  common.single_quoted_string:
+    patterns:
+      - begin: "(\\')"
+        end: "{{ln}}|(\\')"
+        beginCaptures:
+          1:
+            name: "#string"
+        endCaptures:
+          1:
+            name: "#string"
+        patterns:
+          - include: "#common.single_quoted_string.content"
+
   common.double_quoted_string.content:
     patterns:
       # consume everything except for backslashes, double quotes, and newlines
@@ -267,11 +343,83 @@ repository:
         captures: "#underlined_error"
       # anything else (newlines and unescaped double quotes) will be handed back to the parent scope
 
-  ##############################################################################
-  # MINECRAFT PARSERS ##########################################################
-  ##############################################################################
+  common.single_quoted_string.content:
+    patterns:
+      - match: "[^\\\\\\'\\n]"
+        name: "#string"
+      - match: '\\[^\n]'
+        name: "#string_escape"
+      - match: '((\\))'
+        captures: "#underlined_error"
 
-  minecraft.message:
+  common.quoted_string:
+    patterns:
+      - include: "#common.double_quoted_string"
+      - include: "#common.single_quoted_string"
+
+  common.quotable_string:
+    patterns:
+      - include: "#common.quoted_string"
+      - include: "#common.unquoted_string"
+
+  common.integer_range:
+    patterns:
+      # right-side optional
+      - match: '{{integer}}(\.\.){{integer}}?'
+        captures: "#range"
+      # left-side optional
+      - match: '{{integer}}?(\.\.){{integer}}'
+        captures: "#range"
+      # exact number
+      - match: '{{integer}}'
+        name: '#number'
+      # elevate `..` and any other cases to parent
+
+  common.double_range:
+    patterns:
+      # right-side optional
+      - match: '{{double}}(\.\.){{double}}?'
+        captures: "#range"
+      # left-side optional
+      - match: '{{double}}?(\.\.){{double}}'
+        captures: "#range"
+      # exact number
+      - match: '{{double}}'
+        name: '#number'
+      # elevate `..` and any other cases to parent
+
+  common.resource_location:
+    # TODO refine resource location patterns
+    patterns:
+      - match: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
+        captures:
+          1:
+            name: "#resource_location.namespace"
+          2:
+            name: "#resource_location.colon"
+          3:
+            name: "#resource_location.path"
+
+  common.tagged_resource_location:
+    # TODO refine tagged resource location patterns
+    patterns:
+      - match: '(\#)([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
+        captures:
+          1:
+            name: "#resource_location.hash"
+          2:
+            name: "#resource_location.namespace"
+          3:
+            name: "#resource_location.colon"
+          4:
+            name: "#resource_location.path"
+
+  common.taggable_resource_location:
+    patterns:
+      - include: "#common.tagged_resource_location"
+      - include: "#common.resource_location"
+
+  common.message:
     patterns:
       # pause when we see certain characters
       - match: '([^\@\n]+)'
@@ -301,10 +449,37 @@ repository:
         name: "#string"
 
   ##############################################################################
+  # NBT ########################################################################
+  ##############################################################################
+
+  nbt.compound.content:
+    # FIXME nbt compound patterns
+    patterns:
+      - match: '[^\n\}]+'
+        name: string.regexp._.todo.mcfunction
+
+  ##############################################################################
+  # MAPS #######################################################################
+  ##############################################################################
+
+  score_map.content:
+    # FIXME score map patterns
+    patterns:
+      - match: '[^\n\}]+'
+        name: string.regexp._.todo.mcfunction
+
+  advancement_map.content:
+    # FIXME advancement map patterns
+    patterns:
+      - match: '[^\n\}]+'
+        name: string.regexp._.todo.mcfunction
+
+  ##############################################################################
   # TEXT COMPONENTS ############################################################
   ##############################################################################
 
-  # TODO can the text component schema be version-controlled?
+  # TODO consider version-controlling and generating text component properties
+  # we could do this based on a json schema
 
   text_component:
     patterns:
@@ -315,10 +490,11 @@ repository:
 
   text_component.boolean:
     patterns:
-      - match: '(true|false)'
-        name: '#boolean'
+      - match: "(true|false)"
+        name: "#boolean"
 
   text_component.string:
+    # TODO isn't this the same as a normal double-quoted string?
     patterns:
       - begin: '(\")'
         end: '{{ln}}|(\")'
@@ -401,7 +577,7 @@ repository:
 
   text_component.compound_properties:
     patterns:
-      # TODO implement remaining text component properties
+      # FIXME implement remaining text component properties
       - include: "#text_component.compound_property.bold"
       - include: "#text_component.compound_property.text"
       - include: "#text_component.compound_property.selector"
@@ -409,7 +585,7 @@ repository:
       - include: "#error.unknown_compound"
 
   text_component.compound_property.bold:
-    # TODO this is actually worse now
+    # FIXME simplify boolean value
     patterns:
       - begin: '(\")(bold)(\"){{pad}}(\:){{pad}}'
         end: '{{ln}}|(?={{pad}}[\,\}])'
@@ -518,19 +694,19 @@ repository:
   # TARGET SELECTORS ###########################################################
   ##############################################################################
 
-  # TODO can selector arguments and their types be version-controlled?
+  # TODO consider version-controlling and generating target selector arguments
 
   target_selector.content:
     patterns:
-      # consume commas between arguments
+      # consume commas from argument value to argument key
       - name: meta._.argument_separator.content.target_selector.mcfunction
-        match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+        match: '(?<=[^\[\,])(\,)(?={{pad}}\w)'
         captures:
           1:
             name: "#target_selector.comma"
 
-      # consume whitespace from separator to argument
-      - match: '(?<=[\[\,]) +(?=[^\]\,])'
+      # consume whitespace from separator to argument key
+      - match: '(?<=[\[\,]) +(?=\w)'
 
       # consume whitespace from argument to separator
       - match: '(?<=[^\[\,]) +(?=[\]\,])'
@@ -544,15 +720,78 @@ repository:
     # this is where the generator will inject selector argument patterns
     # but we'll need to write the data file for these by hand...
     patterns:
+      - include: "#target_selector.content.argument.xyz"
+      - include: "#target_selector.content.argument.dxyz"
+      - include: "#target_selector.content.argument.xy_rotation"
+      - include: "#target_selector.content.argument.distance"
+      - include: "#target_selector.content.argument.team"
       - include: "#target_selector.content.argument.tag"
+      - include: "#target_selector.content.argument.name"
+      - include: "#target_selector.content.argument.type"
+      - include: "#target_selector.content.argument.level"
+      - include: "#target_selector.content.argument.gamemode"
       - include: "#target_selector.content.argument.sort"
       - include: "#target_selector.content.argument.limit"
+      - include: "#target_selector.content.argument.scores"
+      - include: "#target_selector.content.argument.advancements"
       - include: "#target_selector.content.argument.nbt"
 
-  target_selector.content.argument.tag:
+  target_selector.content.argument.xyz:
     patterns:
-      - name: meta._.tag.argument.content.target_selector.mcfunction
-        match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}(\w+){{pad}}(?=[\]\,])'
+      - name: meta._.xyz.argument.content.target_selector.mcfunction
+        match: '(x|y|z){{pad}}(\=){{pad}}{{double}}{{pad}}(?=[\]\,])'
+        captures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#number"
+
+  target_selector.content.argument.dxyz:
+    patterns:
+      - name: meta._.dxyz.argument.content.target_selector.mcfunction
+        match: '(dx|dy|dz){{pad}}(\=){{pad}}{{double}}{{pad}}(?=[\]\,])'
+        captures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#number"
+
+  target_selector.content.argument.xy_rotation:
+    patterns:
+      - name: meta._.xy_rotation.argument.content.target_selector.mcfunction
+        begin: '(x_rotation|y_rotation){{pad}}(\=){{pad}}(?=[^\n\]\,])'
+        end: '{{ln}}|{{pad}}(?=[\]\,])'
+        beginCaptures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+        patterns:
+          - include: "#common.double_range"
+          - include: "#error.unknown_command"
+
+  target_selector.content.argument.distance:
+    patterns:
+      - name: meta._.distance.argument.content.target_selector.mcfunction
+        begin: '(distance){{pad}}(\=){{pad}}(?=[^\n\]\,])'
+        end: '{{ln}}|{{pad}}(?=[\]\,])'
+        beginCaptures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+        patterns:
+          - include: "#common.double_range"
+          - include: "#error.unknown_command"
+
+  target_selector.content.argument.team:
+    patterns:
+      - name: meta._.team.argument.content.target_selector.mcfunction
+        match: '(team){{pad}}(\=){{pad}}(\!?){{pad}}{{scoreboard_team}}?{{pad}}(?=[\]\,])'
         captures:
           1:
             name: "#target_selector.param"
@@ -561,12 +800,86 @@ repository:
           3:
             name: "#target_selector.not"
           4:
-            name: "#word"
+            name: "#scoreboard_team"
+
+  target_selector.content.argument.tag:
+    patterns:
+      - name: meta._.tag.argument.content.target_selector.mcfunction
+        match: '(tag){{pad}}(\=){{pad}}(\!?){{pad}}{{entity_tag}}?{{pad}}(?=[\]\,])'
+        captures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#target_selector.not"
+          4:
+            name: "#entity_tag"
+
+  target_selector.content.argument.name:
+    patterns:
+      - name: meta._.name.argument.content.target_selector.mcfunction
+        begin: '(name){{pad}}(\=){{pad}}(\!?){{pad}}'
+        end: '{{ln}}|{{pad}}(?=[\]\,])'
+        beginCaptures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#target_selector.not"
+        patterns:
+          - include: "#common.quotable_string"
+          - include: "#error.unknown_command"
+
+  target_selector.content.argument.type:
+    patterns:
+      - name: meta._.type.argument.content.target_selector.mcfunction
+        begin: '(type){{pad}}(\=){{pad}}(\!?){{pad}}(?=[^\n\]\,])'
+        end: '{{ln}}|{{pad}}(?=[\]\,])'
+        beginCaptures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#target_selector.not"
+        patterns:
+          - include: "#common.taggable_resource_location"
+          - include: "#error.unknown_command"
+
+  target_selector.content.argument.level:
+    patterns:
+      - name: meta._.level.argument.content.target_selector.mcfunction
+        begin: '(level){{pad}}(\=){{pad}}(?=[^\n\]\,])'
+        end: '{{ln}}|{{pad}}(?=[\]\,])'
+        beginCaptures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+        patterns:
+          - include: "#common.integer_range"
+          - include: "#error.unknown_command"
+
+  target_selector.content.argument.gamemode:
+    patterns:
+      - name: meta._.gamemode.argument.content.target_selector.mcfunction
+        match: '(gamemode){{pad}}(\=){{pad}}(\!?){{pad}}{{selector_gamemode_choices}}{{pad}}(?=[\]\,])'
+        captures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#target_selector.not"
+          4:
+            name: "#keyword"
 
   target_selector.content.argument.sort:
     patterns:
       - name: meta._.sort.argument.content.target_selector.mcfunction
-        match: '(sort){{pad}}(\=){{pad}}(arbitrary|furthest|nearest|random){{pad}}(?=[\]\,])'
+        match: '(sort){{pad}}(\=){{pad}}{{selector_sort_choices}}{{pad}}(?=[\]\,])'
         captures:
           1:
             name: "#target_selector.param"
@@ -578,20 +891,56 @@ repository:
   target_selector.content.argument.limit:
     patterns:
       - name: meta._.limit.argument.content.target_selector.mcfunction
-        match: '(limit){{pad}}(\=){{pad}}(\d+){{pad}}(?=[\]\,])'
+        match: '(limit){{pad}}(\=){{pad}}{{positive_integer}}{{pad}}(?=[\]\,])'
         captures:
           1:
             name: "#target_selector.param"
           2:
             name: "#target_selector.equals"
           3:
-            name: "#numeric_constant"
+            name: "#number"
+
+  target_selector.content.argument.scores:
+    patterns:
+      - name: meta._.scores.argument.content.target_selector.mcfunction
+        begin: '(scores){{pad}}(\=){{pad}}(\{)'
+        end: '{{ln}}|(\}){{pad}}(?=[\]\,])'
+        beginCaptures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#score_map.bracket"
+        endCaptures:
+          1:
+            name: "#score_map.bracket"
+        patterns:
+          - include: "#score_map.content"
+
+  target_selector.content.argument.advancements:
+    patterns:
+      - name: meta._.advancements.argument.content.target_selector.mcfunction
+        begin: '(advancements){{pad}}(\=){{pad}}(\{)'
+        end: '{{ln}}|(\}){{pad}}(?=[\]\,])'
+        beginCaptures:
+          1:
+            name: "#target_selector.param"
+          2:
+            name: "#target_selector.equals"
+          3:
+            name: "#advancement_map.bracket"
+        endCaptures:
+          1:
+            name: "#advancement_map.bracket"
+        patterns:
+          - include: "#advancement_map.content"
 
   target_selector.content.argument.nbt:
     patterns:
       - name: meta._.nbt.argument.content.target_selector.mcfunction
         begin: '(nbt){{pad}}(\=){{pad}}(\!?){{pad}}(\{)'
-        end: '{{ln}}|(\})'
+        end: '{{ln}}|(\}){{pad}}(?=[\]\,])'
         beginCaptures:
           1:
             name: "#target_selector.param"
@@ -604,8 +953,8 @@ repository:
         endCaptures:
           1:
             name: "#nbt.compound_bracket"
-        # TODO inner nbt patterns
-        contentName: constant.character.escape
+        patterns:
+          - include: "#nbt.compound.content"
 
   ##############################################################################
   # GENERATED COMMANDS #########################################################
@@ -638,7 +987,7 @@ repository:
     # it just consume the rest of the line, attempting to
     # parse various patterns (such as selectors) as it goes
     patterns:
-      - include: "#minecraft.message"
+      - include: "#common.message"
 
   generated.command.tellraw:
     begin: "(tellraw){{cbx_false}}"

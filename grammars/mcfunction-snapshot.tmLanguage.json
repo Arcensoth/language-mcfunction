@@ -292,6 +292,60 @@
         }
       ]
     },
+    "common.unquoted_string": {
+      "patterns": [
+        {
+          "match": "([\\w\\.\\-\\+]+)",
+          "name": "string._.word.mcfunction"
+        }
+      ]
+    },
+    "common.double_quoted_string": {
+      "patterns": [
+        {
+          "begin": "(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.double_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
+    "common.single_quoted_string": {
+      "patterns": [
+        {
+          "begin": "(\\')",
+          "end": "(?=\\n)|(\\')",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.single_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
     "common.double_quoted_string.content": {
       "patterns": [
         {
@@ -315,14 +369,178 @@
         }
       ]
     },
-    "minecraft.message": {
+    "common.single_quoted_string.content": {
+      "patterns": [
+        {
+          "match": "[^\\\\\\'\\n]",
+          "name": "string._.string.mcfunction"
+        },
+        {
+          "match": "\\\\[^\\n]",
+          "name": "constant.character.escape._.string_escape.mcfunction"
+        },
+        {
+          "match": "((\\\\))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "common.quoted_string": {
+      "patterns": [
+        {
+          "include": "#common.double_quoted_string"
+        },
+        {
+          "include": "#common.single_quoted_string"
+        }
+      ]
+    },
+    "common.quotable_string": {
+      "patterns": [
+        {
+          "include": "#common.quoted_string"
+        },
+        {
+          "include": "#common.unquoted_string"
+        }
+      ]
+    },
+    "common.integer_range": {
+      "patterns": [
+        {
+          "match": "(\\-?\\d*)(\\.\\.)(\\-?\\d*)?",
+          "captures": {
+            "1": {
+              "name": "constant.numeric._.minimum.range.mcfunction"
+            },
+            "2": {
+              "name": "keyword.control._.ellipsis.range.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric._.maximum.range.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "(\\-?\\d*)?(\\.\\.)(\\-?\\d*)",
+          "captures": {
+            "1": {
+              "name": "constant.numeric._.minimum.range.mcfunction"
+            },
+            "2": {
+              "name": "keyword.control._.ellipsis.range.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric._.maximum.range.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "(\\-?\\d*)",
+          "name": "constant.numeric._.number.mcfunction"
+        }
+      ]
+    },
+    "common.double_range": {
+      "patterns": [
+        {
+          "match": "(\\-?\\d*\\.?\\d+)(\\.\\.)(\\-?\\d*\\.?\\d+)?",
+          "captures": {
+            "1": {
+              "name": "constant.numeric._.minimum.range.mcfunction"
+            },
+            "2": {
+              "name": "keyword.control._.ellipsis.range.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric._.maximum.range.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)",
+          "captures": {
+            "1": {
+              "name": "constant.numeric._.minimum.range.mcfunction"
+            },
+            "2": {
+              "name": "keyword.control._.ellipsis.range.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric._.maximum.range.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "(\\-?\\d*\\.?\\d+)",
+          "name": "constant.numeric._.number.mcfunction"
+        }
+      ]
+    },
+    "common.resource_location": {
+      "patterns": [
+        {
+          "match": "([a-z0-9_\\.\\-]+)?(\\:)?([a-z0-9_\\.\\-\\/]+)",
+          "captures": {
+            "1": {
+              "name": "entity.name.function._.namespace.resource_location.mcfunction"
+            },
+            "2": {
+              "name": "entity.name.function._.colon.resource_location.mcfunction"
+            },
+            "3": {
+              "name": "entity.name.function._.path.resource_location.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "common.tagged_resource_location": {
+      "patterns": [
+        {
+          "match": "(\\#)([a-z0-9_\\.\\-]+)?(\\:)?([a-z0-9_\\.\\-\\/]+)",
+          "captures": {
+            "1": {
+              "name": "entity.name.function._.hash.resource_location.mcfunction"
+            },
+            "2": {
+              "name": "entity.name.function._.namespace.resource_location.mcfunction"
+            },
+            "3": {
+              "name": "entity.name.function._.colon.resource_location.mcfunction"
+            },
+            "4": {
+              "name": "entity.name.function._.path.resource_location.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "common.taggable_resource_location": {
+      "patterns": [
+        {
+          "include": "#common.tagged_resource_location"
+        },
+        {
+          "include": "#common.resource_location"
+        }
+      ]
+    },
+    "common.message": {
       "patterns": [
         {
           "match": "([^\\@\\n]+)",
           "name": "string._.string.mcfunction"
         },
         {
-          "begin": "(\\@[parse])(\\[)",
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
           "end": "(?=\\n)|(\\])",
           "beginCaptures": {
             "1": {
@@ -353,6 +571,30 @@
         {
           "match": "([^\\n])",
           "name": "string._.string.mcfunction"
+        }
+      ]
+    },
+    "nbt.compound.content": {
+      "patterns": [
+        {
+          "match": "[^\\n\\}]+",
+          "name": "string.regexp._.todo.mcfunction"
+        }
+      ]
+    },
+    "score_map.content": {
+      "patterns": [
+        {
+          "match": "[^\\n\\}]+",
+          "name": "string.regexp._.todo.mcfunction"
+        }
+      ]
+    },
+    "advancement_map.content": {
+      "patterns": [
+        {
+          "match": "[^\\n\\}]+",
+          "name": "string.regexp._.todo.mcfunction"
         }
       ]
     },
@@ -626,7 +868,7 @@
               "name": "support.class._.player_name.target.mcfunction"
             },
             {
-              "begin": "(\\@[parse])(\\[)",
+              "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
               "end": "(?=\\n)|(?=\\\")|(\\])",
               "beginCaptures": {
                 "1": {
@@ -691,7 +933,7 @@
       "patterns": [
         {
           "name": "meta._.argument_separator.content.target_selector.mcfunction",
-          "match": "(?<=[^\\[\\,])(\\,)(?=[^\\]\\,])",
+          "match": "(?<=[^\\[\\,])(\\,)(?= *\\w)",
           "captures": {
             "1": {
               "name": "support.class._.comma.target_selector.mcfunction"
@@ -699,7 +941,7 @@
           }
         },
         {
-          "match": "(?<=[\\[\\,]) +(?=[^\\]\\,])"
+          "match": "(?<=[\\[\\,]) +(?=\\w)"
         },
         {
           "match": "(?<=[^\\[\\,]) +(?=[\\]\\,])"
@@ -715,7 +957,34 @@
     "target_selector.arguments": {
       "patterns": [
         {
+          "include": "#target_selector.content.argument.xyz"
+        },
+        {
+          "include": "#target_selector.content.argument.dxyz"
+        },
+        {
+          "include": "#target_selector.content.argument.xy_rotation"
+        },
+        {
+          "include": "#target_selector.content.argument.distance"
+        },
+        {
+          "include": "#target_selector.content.argument.team"
+        },
+        {
           "include": "#target_selector.content.argument.tag"
+        },
+        {
+          "include": "#target_selector.content.argument.name"
+        },
+        {
+          "include": "#target_selector.content.argument.type"
+        },
+        {
+          "include": "#target_selector.content.argument.level"
+        },
+        {
+          "include": "#target_selector.content.argument.gamemode"
         },
         {
           "include": "#target_selector.content.argument.sort"
@@ -724,15 +993,109 @@
           "include": "#target_selector.content.argument.limit"
         },
         {
+          "include": "#target_selector.content.argument.scores"
+        },
+        {
+          "include": "#target_selector.content.argument.advancements"
+        },
+        {
           "include": "#target_selector.content.argument.nbt"
         }
       ]
     },
-    "target_selector.content.argument.tag": {
+    "target_selector.content.argument.xyz": {
       "patterns": [
         {
-          "name": "meta._.tag.argument.content.target_selector.mcfunction",
-          "match": "(tag) *(\\=) *(\\!?) *(\\w+) *(?=[\\]\\,])",
+          "name": "meta._.xyz.argument.content.target_selector.mcfunction",
+          "match": "(x|y|z) *(\\=) *(\\-?\\d*\\.?\\d+) *(?=[\\]\\,])",
+          "captures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "target_selector.content.argument.dxyz": {
+      "patterns": [
+        {
+          "name": "meta._.dxyz.argument.content.target_selector.mcfunction",
+          "match": "(dx|dy|dz) *(\\=) *(\\-?\\d*\\.?\\d+) *(?=[\\]\\,])",
+          "captures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "target_selector.content.argument.xy_rotation": {
+      "patterns": [
+        {
+          "name": "meta._.xy_rotation.argument.content.target_selector.mcfunction",
+          "begin": "(x_rotation|y_rotation) *(\\=) *(?=[^\\n\\]\\,])",
+          "end": "(?=\\n)| *(?=[\\]\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.double_range"
+            },
+            {
+              "include": "#error.unknown_command"
+            }
+          ]
+        }
+      ]
+    },
+    "target_selector.content.argument.distance": {
+      "patterns": [
+        {
+          "name": "meta._.distance.argument.content.target_selector.mcfunction",
+          "begin": "(distance) *(\\=) *(?=[^\\n\\]\\,])",
+          "end": "(?=\\n)| *(?=[\\]\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.double_range"
+            },
+            {
+              "include": "#error.unknown_command"
+            }
+          ]
+        }
+      ]
+    },
+    "target_selector.content.argument.team": {
+      "patterns": [
+        {
+          "name": "meta._.team.argument.content.target_selector.mcfunction",
+          "match": "(team) *(\\=) *(\\!?) *([\\w\\.\\-\\+]+)? *(?=[\\]\\,])",
           "captures": {
             "1": {
               "name": "keyword.other._.param.target_selector.mcfunction"
@@ -744,7 +1107,132 @@
               "name": "constant.character.escape._.not.target_selector.mcfunction"
             },
             "4": {
-              "name": "string._.word.mcfunction"
+              "name": "string._.scoreboard_team.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "target_selector.content.argument.tag": {
+      "patterns": [
+        {
+          "name": "meta._.tag.argument.content.target_selector.mcfunction",
+          "match": "(tag) *(\\=) *(\\!?) *([\\w\\.\\-\\+]+)? *(?=[\\]\\,])",
+          "captures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            },
+            "3": {
+              "name": "constant.character.escape._.not.target_selector.mcfunction"
+            },
+            "4": {
+              "name": "string._.entity_tag.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "target_selector.content.argument.name": {
+      "patterns": [
+        {
+          "name": "meta._.name.argument.content.target_selector.mcfunction",
+          "begin": "(name) *(\\=) *(\\!?) *",
+          "end": "(?=\\n)| *(?=[\\]\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            },
+            "3": {
+              "name": "constant.character.escape._.not.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.quotable_string"
+            },
+            {
+              "include": "#error.unknown_command"
+            }
+          ]
+        }
+      ]
+    },
+    "target_selector.content.argument.type": {
+      "patterns": [
+        {
+          "name": "meta._.type.argument.content.target_selector.mcfunction",
+          "begin": "(type) *(\\=) *(\\!?) *(?=[^\\n\\]\\,])",
+          "end": "(?=\\n)| *(?=[\\]\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            },
+            "3": {
+              "name": "constant.character.escape._.not.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.taggable_resource_location"
+            },
+            {
+              "include": "#error.unknown_command"
+            }
+          ]
+        }
+      ]
+    },
+    "target_selector.content.argument.level": {
+      "patterns": [
+        {
+          "name": "meta._.level.argument.content.target_selector.mcfunction",
+          "begin": "(level) *(\\=) *(?=[^\\n\\]\\,])",
+          "end": "(?=\\n)| *(?=[\\]\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.integer_range"
+            },
+            {
+              "include": "#error.unknown_command"
+            }
+          ]
+        }
+      ]
+    },
+    "target_selector.content.argument.gamemode": {
+      "patterns": [
+        {
+          "name": "meta._.gamemode.argument.content.target_selector.mcfunction",
+          "match": "(gamemode) *(\\=) *(\\!?) *(survival|creative|adventure|spectator) *(?=[\\]\\,])",
+          "captures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            },
+            "3": {
+              "name": "constant.character.escape._.not.target_selector.mcfunction"
+            },
+            "4": {
+              "name": "keyword._.keyword.mcfunction"
             }
           }
         }
@@ -773,7 +1261,7 @@
       "patterns": [
         {
           "name": "meta._.limit.argument.content.target_selector.mcfunction",
-          "match": "(limit) *(\\=) *(\\d+) *(?=[\\]\\,])",
+          "match": "(limit) *(\\=) *(0*[1-9]\\d*) *(?=[\\]\\,])",
           "captures": {
             "1": {
               "name": "keyword.other._.param.target_selector.mcfunction"
@@ -782,9 +1270,69 @@
               "name": "support.class._.equals.target_selector.mcfunction"
             },
             "3": {
-              "name": "constant.numeric._.numeric_constant.mcfunction"
+              "name": "constant.numeric._.number.mcfunction"
             }
           }
+        }
+      ]
+    },
+    "target_selector.content.argument.scores": {
+      "patterns": [
+        {
+          "name": "meta._.scores.argument.content.target_selector.mcfunction",
+          "begin": "(scores) *(\\=) *(\\{)",
+          "end": "(?=\\n)|(\\}) *(?=[\\]\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            },
+            "3": {
+              "name": "support.class._.bracket.score_map.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "support.class._.bracket.score_map.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#score_map.content"
+            }
+          ]
+        }
+      ]
+    },
+    "target_selector.content.argument.advancements": {
+      "patterns": [
+        {
+          "name": "meta._.advancements.argument.content.target_selector.mcfunction",
+          "begin": "(advancements) *(\\=) *(\\{)",
+          "end": "(?=\\n)|(\\}) *(?=[\\]\\,])",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other._.param.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.equals.target_selector.mcfunction"
+            },
+            "3": {
+              "name": "support.class._.bracket.advancement_map.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "support.class._.bracket.advancement_map.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#advancement_map.content"
+            }
+          ]
         }
       ]
     },
@@ -793,7 +1341,7 @@
         {
           "name": "meta._.nbt.argument.content.target_selector.mcfunction",
           "begin": "(nbt) *(\\=) *(\\!?) *(\\{)",
-          "end": "(?=\\n)|(\\})",
+          "end": "(?=\\n)|(\\}) *(?=[\\]\\,])",
           "beginCaptures": {
             "1": {
               "name": "keyword.other._.param.target_selector.mcfunction"
@@ -813,7 +1361,11 @@
               "name": "storage._.compound_bracket.nbt.mcfunction"
             }
           },
-          "contentName": "constant.character.escape"
+          "patterns": [
+            {
+              "include": "#nbt.compound.content"
+            }
+          ]
         }
       ]
     },
@@ -860,7 +1412,7 @@
     "generated.command.say.message": {
       "patterns": [
         {
-          "include": "#minecraft.message"
+          "include": "#common.message"
         }
       ]
     },
@@ -933,7 +1485,7 @@
           ]
         },
         {
-          "begin": "(\\@[parse])(\\[)",
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
           "end": "(?=\\n)",
           "beginCaptures": {
             "1": {
@@ -1098,7 +1650,7 @@
           ]
         },
         {
-          "begin": "(\\@[parse])(\\[)",
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
           "end": "(?=\\n)",
           "beginCaptures": {
             "1": {

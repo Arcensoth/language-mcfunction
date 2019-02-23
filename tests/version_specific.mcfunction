@@ -12,7 +12,7 @@
 #
 # @returns The number of entities hit by the ray.
 
-# TODO something really important
+# TODO not really a todo
 
 execute
 execute foo
@@ -39,13 +39,12 @@ execute as @s run execute
 execute as @s run execute foo
 execute as @s run execute as @s run
 
+# valid
 execute as @s run execute as @s run say hello
 execute as 0-0-0-0-0 run execute as @s run say hello
 execute as f7a39418-72ca-4bf2-bc7e-ba9df67a4707 run execute as @s run say hello
 execute as Arcensoth run execute as @s run say hello
 execute as some_guy run execute as @s run say hello
-
-# valid
 execute as @s[] run execute as @s run say hello
 execute as @s[ ] run execute as @s run say hello
 execute as @s[tag=foo] run execute as @s run say hello
@@ -75,30 +74,37 @@ execute as @s[nbt=!{custom: true}] as @s run say hello
 execute as @e[tag=foo, sort=nearest, nbt={custom: true}] run execute as @s run execute as @s run say hello
 
 # invalid
+execute as @s[
+execute as @s[ 
+execute as @s[sort=nearest,
+execute as @s[sort=nearest, 
+execute as @s[ run say hello
 execute as @s[]run execute as @s run say hello
 execute as @s[ ]run execute as @s run say hello
 execute as @s [] run execute as @s run say hello
 execute as @s [ ] run execute as @s run say hello
-execute as @s[foo] run execute as @s run say hello
-execute as @s[foo ] run execute as @s run say hello
-execute as @s[ foo] run execute as @s run say hello
-execute as @s[ foo ] run execute as @s run say hello
+execute as @s[nearest] run execute as @s run say hello
+execute as @s[nearest ] run execute as @s run say hello
+execute as @s[ nearest] run execute as @s run say hello
+execute as @s[ nearest ] run execute as @s run say hello
 execute as @s[,] run execute as @s run say hello
 execute as @s[ ,] run execute as @s run say hello
 execute as @s[, ] run execute as @s run say hello
 execute as @s[ , ] run execute as @s run say hello
-execute as @s[,tag=foo] run execute as @s run say hello
-execute as @s[ ,tag=foo] run execute as @s run say hello
-execute as @s[tag,tag=foo] run execute as @s run say hello
-execute as @s[tag ,tag=foo] run execute as @s run say hello
-execute as @s[tag=,tag=foo] run execute as @s run say hello
-execute as @s[tag=foo,] run execute as @s run say hello
-execute as @s[tag=foo ,, tag=bar] run execute as @s run say hello
-execute as @s[tag=foo , , tag=bar] run execute as @s run say hello
-execute as @s[tag=foo,tag] run execute as @s run say hello
-execute as @s[tag=foo,tag=] run execute as @s run say hello
-execute as @s[tag=foo,tag,tag=bar] run execute as @s run say hello
-execute as @s[tag=foo,tag=,tag=bar] run execute as @s run say hello
+execute as @s[,sort=nearest] run execute as @s run say hello
+execute as @s[ ,sort=nearest] run execute as @s run say hello
+execute as @s[ ,sort=nearest] run execute as @s run say hello
+execute as @s[sort,sort=nearest] run execute as @s run say hello
+execute as @s[sort ,sort=nearest] run execute as @s run say hello
+execute as @s[sort=,sort=nearest] run execute as @s run say hello
+execute as @s[sort=nearest,] run execute as @s run say hello
+execute as @s[sort=nearest, ] run execute as @s run say hello
+execute as @s[sort=nearest ,, sort=bar] run execute as @s run say hello
+execute as @s[sort=nearest , , sort=bar] run execute as @s run say hello
+execute as @s[sort=nearest,sort] run execute as @s run say hello
+execute as @s[sort=nearest,sort=] run execute as @s run say hello
+execute as @s[sort=nearest,sort,sort=bar] run execute as @s run say hello
+execute as @s[sort=nearest,sort=,sort=bar] run execute as @s run say hello
 
 # valid
 execute as @e[sort=nearest] run
@@ -138,14 +144,13 @@ say @@e[tag=x,tag=!x]e
 
 # invalid
 say hello@e[world
-say hello@e[tag]world
-say hello@e[tag=]world
+say hello@e[sort]world
+say hello@e[sort=]world
 
 # valid
 tellraw @s {"selector": ""}
 tellraw @s {"text": "hello \"escaped\" world"}
 tellraw @s {"text": "boldly go", "bold": true}
-tellraw @s {"text": "boldly go", "bold": xtruex}
 tellraw @s {"selector": "Arcensoth"}
 tellraw @s {"selector": "f7a39418-72ca-4bf2-bc7e-ba9df67a4707"}
 tellraw @s {"selector": "@s"}
@@ -170,3 +175,35 @@ tellraw @s {"selector": "@e[sort=nearest,"}
 tellraw @s {"selector": "@e[sort=nearest,]"}
 tellraw @s [{"extra": "x"}]
 tellraw @s [{"extra": {"foo": [0, [1, 2], 3]}}]
+
+# valid
+execute as @e[team=] run say hi
+execute as @e[team=!] run say hi
+execute as @e[team=foo] run say hi
+execute as @e[team=!foo] run say hi
+execute as @e[team=foo.bar] run say hi
+execute as @e[team=!foo.bar] run say hi
+
+# valid
+execute as @e[tag=] run say hi
+execute as @e[tag=!] run say hi
+execute as @e[tag=foo] run say hi
+execute as @e[tag=!foo] run say hi
+execute as @e[tag=foo.bar] run say hi
+execute as @e[tag=!foo.bar] run say hi
+
+# valid
+execute as @e[name=] run say hi
+execute as @e[name=!] run say hi
+execute as @e[name=foo] run say hi
+execute as @e[name=!foo] run say hi
+execute as @e[name=""] run say hi
+execute as @e[name="foo bar"] run say hi
+execute as @e[name=!"foo bar"] run say hi
+execute as @e[name="foo \" bar"] run say hi
+execute as @e[name="foo ' bar"] run say hi
+execute as @e[name=''] run say hi
+execute as @e[name='foo bar'] run say hi
+execute as @e[name=!'foo bar'] run say hi
+execute as @e[name='foo \' bar'] run say hi
+execute as @e[name='foo " bar'] run say hi

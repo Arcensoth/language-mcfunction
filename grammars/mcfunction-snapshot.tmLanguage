@@ -457,6 +457,88 @@
           </dict>
         </array>
       </dict>
+      <key>common.unquoted_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>([\w\.\-\+]+)</string>
+            <key>name</key>
+            <string>string._.word.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.double_quoted_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.double_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>common.single_quoted_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\')</string>
+            <key>end</key>
+            <string>(?=\n)|(\')</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.single_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
       <key>common.double_quoted_string.content</key>
       <dict>
         <key>patterns</key>
@@ -492,7 +574,257 @@
           </dict>
         </array>
       </dict>
-      <key>minecraft.message</key>
+      <key>common.single_quoted_string.content</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>[^\\\'\n]</string>
+            <key>name</key>
+            <string>string._.string.mcfunction</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\\[^\n]</string>
+            <key>name</key>
+            <string>constant.character.escape._.string_escape.mcfunction</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>((\\))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>common.quoted_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.double_quoted_string</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#common.single_quoted_string</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.quotable_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.quoted_string</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#common.unquoted_string</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.integer_range</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(\-?\d*)(\.\.)(\-?\d*)?</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.minimum.range.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.ellipsis.range.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.maximum.range.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\-?\d*)?(\.\.)(\-?\d*)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.minimum.range.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.ellipsis.range.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.maximum.range.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\-?\d*)</string>
+            <key>name</key>
+            <string>constant.numeric._.number.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.double_range</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(\-?\d*\.?\d+)(\.\.)(\-?\d*\.?\d+)?</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.minimum.range.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.ellipsis.range.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.maximum.range.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.minimum.range.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.ellipsis.range.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.maximum.range.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\-?\d*\.?\d+)</string>
+            <key>name</key>
+            <string>constant.numeric._.number.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.resource_location</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.namespace.resource_location.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.colon.resource_location.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.path.resource_location.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>common.tagged_resource_location</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(\#)([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.hash.resource_location.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.namespace.resource_location.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.colon.resource_location.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.path.resource_location.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>common.taggable_resource_location</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.tagged_resource_location</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#common.resource_location</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.message</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -504,7 +836,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\@[parse])(\[)</string>
+            <string>(\@[parse])(\[)(?= *[\w\]])</string>
             <key>end</key>
             <string>(?=\n)|(\])</string>
             <key>beginCaptures</key>
@@ -551,6 +883,42 @@
             <string>([^\n])</string>
             <key>name</key>
             <string>string._.string.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
+      <key>nbt.compound.content</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>[^\n\}]+</string>
+            <key>name</key>
+            <string>string.regexp._.todo.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
+      <key>score_map.content</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>[^\n\}]+</string>
+            <key>name</key>
+            <string>string.regexp._.todo.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
+      <key>advancement_map.content</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>[^\n\}]+</string>
+            <key>name</key>
+            <string>string.regexp._.todo.mcfunction</string>
           </dict>
         </array>
       </dict>
@@ -961,7 +1329,7 @@
               </dict>
               <dict>
                 <key>begin</key>
-                <string>(\@[parse])(\[)</string>
+                <string>(\@[parse])(\[)(?= *[\w\]])</string>
                 <key>end</key>
                 <string>(?=\n)|(?=\")|(\])</string>
                 <key>beginCaptures</key>
@@ -1059,7 +1427,7 @@
             <key>name</key>
             <string>meta._.argument_separator.content.target_selector.mcfunction</string>
             <key>match</key>
-            <string>(?&lt;=[^\[\,])(\,)(?=[^\]\,])</string>
+            <string>(?&lt;=[^\[\,])(\,)(?= *\w)</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1071,7 +1439,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>(?&lt;=[\[\,]) +(?=[^\]\,])</string>
+            <string>(?&lt;=[\[\,]) +(?=\w)</string>
           </dict>
           <dict>
             <key>match</key>
@@ -1093,7 +1461,43 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#target_selector.content.argument.xyz</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#target_selector.content.argument.dxyz</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#target_selector.content.argument.xy_rotation</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#target_selector.content.argument.distance</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#target_selector.content.argument.team</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#target_selector.content.argument.tag</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#target_selector.content.argument.name</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#target_selector.content.argument.type</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#target_selector.content.argument.level</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#target_selector.content.argument.gamemode</string>
           </dict>
           <dict>
             <key>include</key>
@@ -1105,19 +1509,163 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#target_selector.content.argument.scores</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#target_selector.content.argument.advancements</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#target_selector.content.argument.nbt</string>
           </dict>
         </array>
       </dict>
-      <key>target_selector.content.argument.tag</key>
+      <key>target_selector.content.argument.xyz</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>name</key>
-            <string>meta._.tag.argument.content.target_selector.mcfunction</string>
+            <string>meta._.xyz.argument.content.target_selector.mcfunction</string>
             <key>match</key>
-            <string>(tag) *(\=) *(\!?) *(\w+) *(?=[\]\,])</string>
+            <string>(x|y|z) *(\=) *(\-?\d*\.?\d+) *(?=[\]\,])</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.dxyz</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.dxyz.argument.content.target_selector.mcfunction</string>
+            <key>match</key>
+            <string>(dx|dy|dz) *(\=) *(\-?\d*\.?\d+) *(?=[\]\,])</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.xy_rotation</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.xy_rotation.argument.content.target_selector.mcfunction</string>
+            <key>begin</key>
+            <string>(x_rotation|y_rotation) *(\=) *(?=[^\n\]\,])</string>
+            <key>end</key>
+            <string>(?=\n)| *(?=[\]\,])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.double_range</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.unknown_command</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.distance</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.distance.argument.content.target_selector.mcfunction</string>
+            <key>begin</key>
+            <string>(distance) *(\=) *(?=[^\n\]\,])</string>
+            <key>end</key>
+            <string>(?=\n)| *(?=[\]\,])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.double_range</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.unknown_command</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.team</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.team.argument.content.target_selector.mcfunction</string>
+            <key>match</key>
+            <string>(team) *(\=) *(\!?) *([\w\.\-\+]+)? *(?=[\]\,])</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1138,7 +1686,201 @@
               <key>4</key>
               <dict>
                 <key>name</key>
-                <string>string._.word.mcfunction</string>
+                <string>string._.scoreboard_team.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.tag</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.tag.argument.content.target_selector.mcfunction</string>
+            <key>match</key>
+            <string>(tag) *(\=) *(\!?) *([\w\.\-\+]+)? *(?=[\]\,])</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.character.escape._.not.target_selector.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>string._.entity_tag.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.name</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.name.argument.content.target_selector.mcfunction</string>
+            <key>begin</key>
+            <string>(name) *(\=) *(\!?) *</string>
+            <key>end</key>
+            <string>(?=\n)| *(?=[\]\,])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.character.escape._.not.target_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.quotable_string</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.unknown_command</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.type</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.type.argument.content.target_selector.mcfunction</string>
+            <key>begin</key>
+            <string>(type) *(\=) *(\!?) *(?=[^\n\]\,])</string>
+            <key>end</key>
+            <string>(?=\n)| *(?=[\]\,])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.character.escape._.not.target_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.taggable_resource_location</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.unknown_command</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.level</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.level.argument.content.target_selector.mcfunction</string>
+            <key>begin</key>
+            <string>(level) *(\=) *(?=[^\n\]\,])</string>
+            <key>end</key>
+            <string>(?=\n)| *(?=[\]\,])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.integer_range</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.unknown_command</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.gamemode</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.gamemode.argument.content.target_selector.mcfunction</string>
+            <key>match</key>
+            <string>(gamemode) *(\=) *(\!?) *(survival|creative|adventure|spectator) *(?=[\]\,])</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.character.escape._.not.target_selector.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>keyword._.keyword.mcfunction</string>
               </dict>
             </dict>
           </dict>
@@ -1182,7 +1924,7 @@
             <key>name</key>
             <string>meta._.limit.argument.content.target_selector.mcfunction</string>
             <key>match</key>
-            <string>(limit) *(\=) *(\d+) *(?=[\]\,])</string>
+            <string>(limit) *(\=) *(0*[1-9]\d*) *(?=[\]\,])</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1198,9 +1940,103 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>constant.numeric._.numeric_constant.mcfunction</string>
+                <string>constant.numeric._.number.mcfunction</string>
               </dict>
             </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.scores</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.scores.argument.content.target_selector.mcfunction</string>
+            <key>begin</key>
+            <string>(scores) *(\=) *(\{)</string>
+            <key>end</key>
+            <string>(?=\n)|(\}) *(?=[\]\,])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.bracket.score_map.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.bracket.score_map.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#score_map.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>target_selector.content.argument.advancements</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.advancements.argument.content.target_selector.mcfunction</string>
+            <key>begin</key>
+            <string>(advancements) *(\=) *(\{)</string>
+            <key>end</key>
+            <string>(?=\n)|(\}) *(?=[\]\,])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other._.param.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.equals.target_selector.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.bracket.advancement_map.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.bracket.advancement_map.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#advancement_map.content</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -1214,7 +2050,7 @@
             <key>begin</key>
             <string>(nbt) *(\=) *(\!?) *(\{)</string>
             <key>end</key>
-            <string>(?=\n)|(\})</string>
+            <string>(?=\n)|(\}) *(?=[\]\,])</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -1246,8 +2082,13 @@
                 <string>storage._.compound_bracket.nbt.mcfunction</string>
               </dict>
             </dict>
-            <key>contentName</key>
-            <string>constant.character.escape</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#nbt.compound.content</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -1315,7 +2156,7 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#minecraft.message</string>
+            <string>#common.message</string>
           </dict>
         </array>
       </dict>
@@ -1424,7 +2265,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\@[parse])(\[)</string>
+            <string>(\@[parse])(\[)(?= *[\w\]])</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -1670,7 +2511,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\@[parse])(\[)</string>
+            <string>(\@[parse])(\[)(?= *[\w\]])</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
