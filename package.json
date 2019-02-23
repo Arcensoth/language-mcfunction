@@ -15,6 +15,11 @@
   "categories": [
     "Programming Languages"
   ],
+  "keywords": [
+    "minecraft",
+    "mcfunction",
+    "datapack"
+  ],
   "contributes": {
     "languages": [
       {
