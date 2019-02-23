@@ -67,7 +67,6 @@ repository:
       - include: '#command.token.selector_with_arguments'
       - include: '#command.token.selector_without_arguments'
       - include: '#command.token.block_predicate'
-      - include: '#command.token.tagged_block_predicate'
       - include: '#command.token.resource_location'
       - include: '#command.token.tagged_resource_location'
       - include: '#command.token.range'
@@ -92,7 +91,7 @@ repository:
   command.token.resource_location:
     name: meta.command.token.resource_location.mcfunction
     match: '(?<= )([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(?=[ \n])'
-    captures: &ref_3
+    captures: &ref_1
       '1':
         name: entity.name.function.mcfunction
       '2':
@@ -102,7 +101,7 @@ repository:
   command.token.tagged_resource_location:
     name: meta.command.token.tagged_resource_location.mcfunction
     match: '(?<= )(\#)([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(?=[ \n])'
-    captures: &ref_4
+    captures: &ref_0
       '1':
         name: entity.name.function.mcfunction
       '2':
@@ -124,7 +123,7 @@ repository:
   command.token.number:
     name: meta.command.token.number.mcfunction
     match: '(?<= )(\-?\d*\.?\d+)(?=[ \n])'
-    captures: &ref_0
+    captures: &ref_2
       '1':
         name: constant.numeric.mcfunction
   command.token.coordinate:
@@ -138,7 +137,7 @@ repository:
   command.token.boolean:
     name: meta.command.token.boolean.mcfunction
     match: '(?<= )(true|false)(?=[ \n])'
-    captures: &ref_1
+    captures: &ref_3
       '1':
         name: constant.numeric.mcfunction
   command.token.operation:
@@ -150,7 +149,7 @@ repository:
   command.token.literal:
     name: meta.command.token.literal.mcfunction
     match: '(?<= )([a-z_][a-z0-9_]*)(?=[ \n])'
-    captures: &ref_2
+    captures: &ref_4
       '1':
         name: entity.name.mcfunction
   command.token.uuid:
@@ -297,46 +296,13 @@ repository:
       - include: '#common.quoted_string'
   command.token.block_predicate:
     name: meta.command.token.block_predicate.mcfunction
-    begin: '(?<= )([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(\[)'
-    end: '(?=\n)|(\])([^ \n]*)'
-    beginCaptures:
-      '1':
-        name: entity.name.function.mcfunction
-      '2':
-        name: entity.name.function.mcfunction
-      '3':
-        name: entity.name.function.mcfunction
-      '4':
-        name: variable.language.mcfunction
+    begin: '(?<= )(?=(\#)?([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(\[|\{))'
+    end: '(?=\n)|(?:(?<=\])(?!\{)|(?<=\}))([^ \n]*)'
     endCaptures:
       '1':
-        name: variable.language.mcfunction
-      '2':
         name: invalid.illegal.mcfunction
     patterns:
-      - include: '#block_predicate.arguments'
-  command.token.tagged_block_predicate:
-    name: meta.command.token.tagged_block_predicate.mcfunction
-    begin: '(?<= )(\#)([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(\[)'
-    end: '(?=\n)|(\])([^ \n]*)'
-    beginCaptures:
-      '1':
-        name: entity.name.function.mcfunction
-      '2':
-        name: entity.name.function.mcfunction
-      '3':
-        name: entity.name.function.mcfunction
-      '4':
-        name: entity.name.function.mcfunction
-      '5':
-        name: variable.language.mcfunction
-    endCaptures:
-      '1':
-        name: variable.language.mcfunction
-      '2':
-        name: invalid.illegal.mcfunction
-    patterns:
-      - include: '#block_predicate.arguments'
+      - include: '#block_predicate'
   command.token.selector_with_arguments:
     name: meta.command.token.selector_with_arguments.mcfunction
     begin: '(?<= )(\@[a-z])(\[)'
@@ -433,6 +399,32 @@ repository:
   nbt_path.index:
     patterns:
       - include: '#nbt.list'
+  block_predicate:
+    patterns:
+      - match: '(\#)([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)'
+        captures: *ref_0
+      - match: '([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)'
+        captures: *ref_1
+      - begin: '(\[)'
+        end: '(\])'
+        beginCaptures:
+          '1':
+            name: variable.language.mcfunction
+        endCaptures:
+          '1':
+            name: variable.language.mcfunction
+        patterns:
+          - include: '#block_predicate.arguments'
+      - begin: '(\{)'
+        end: '(\})'
+        beginCaptures:
+          '1':
+            name: variable.language.mcfunction
+        endCaptures:
+          '1':
+            name: variable.language.mcfunction
+        patterns:
+          - include: '#nbt.compound'
   block_predicate.arguments:
     patterns:
       - name: meta.block_predicate.argument_spacing.mcfunction
@@ -457,23 +449,23 @@ repository:
   block_predicate.argument.number:
     name: meta.block_predicate.argument.number.mcfunction
     match: '(\-?\d*\.?\d+)(?= *[\,\]\n])'
-    captures: *ref_0
+    captures: *ref_2
   block_predicate.argument.boolean:
     name: meta.block_predicate.argument.boolean.mcfunction
     match: '(true|false)(?= *[\,\]\n])'
-    captures: *ref_1
+    captures: *ref_3
   block_predicate.argument.literal:
     name: meta.block_predicate.argument.literal.mcfunction
     match: '([a-z_][a-z0-9_]*)(?= *[\,\]\n])'
-    captures: *ref_2
+    captures: *ref_4
   selector.argument.resource_location:
     name: meta.selector.argument.resource_location.mcfunction
     match: '([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(?= *[\,\]\n])'
-    captures: *ref_3
+    captures: *ref_1
   selector.argument.tagged_resource_location:
     name: meta.selector.argument.tagged_resource_location.mcfunction
     match: '(\#)([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(?= *[\,\]\n])'
-    captures: *ref_4
+    captures: *ref_0
   selector.argument.range:
     name: meta.selector.argument.range.mcfunction
     match: '(\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)?(?= *[\,\]\n])'
@@ -481,11 +473,11 @@ repository:
   selector.argument.number:
     name: meta.selector.argument.number.mcfunction
     match: '(\-?\d*\.?\d+)(?= *[\,\]\n])'
-    captures: *ref_0
+    captures: *ref_2
   selector.argument.boolean:
     name: meta.selector.argument.boolean.mcfunction
     match: '(true|false)(?= *[\,\]\n])'
-    captures: *ref_1
+    captures: *ref_3
   selector.argument.unquoted_string:
     name: meta.selector.argument.unquoted_string.mcfunction
     match: '([\w\.\-\#\$\%]+)(?= *[\,\]\n])'
@@ -571,11 +563,11 @@ repository:
   property_map.values:
     patterns:
       - match: (true|false)
-        captures: *ref_1
+        captures: *ref_3
       - match: (\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)?
         captures: *ref_5
       - match: (\-?\d*\.?\d+)
-        captures: *ref_0
+        captures: *ref_2
       - begin: '(\{) *'
         end: '(?=\n)|(\})([^\}\,\n]*)'
         beginCaptures:

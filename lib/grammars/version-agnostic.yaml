@@ -74,8 +74,6 @@ variables:
   resource_path: "({{resource_path_nc}})"
 
   # resource locations: namespace + path
-  # TODO improve resource location validity
-  # resource_location: '{{component}}(\:)({{component_nc}}(?:\/{{component_nc}})*)'
   resource_location_nc: '{{component_nc}}\:{{resource_path_nc}}'
   resource_location: '{{component}}(\:){{resource_path}}'
 
@@ -88,7 +86,6 @@ variables:
   fakeplayer: '([\#\$\%][\w\.\-]+)'
 
   # unquoted strings are like literals with additional available characters
-  # TODO check what the game allows for word-type string arguments
   unquoted_string: '([\w\.\-\#\$\%]+)'
 
   # a tagged resource location is a resource location prefaced with `#`
@@ -139,7 +136,6 @@ capturesRepository:
       name: "#tagged_resource_path"
 
   range:
-    # TODO catch `..` error case
     1:
       # the number on the left side
       name: "#numeric_altered"
@@ -264,7 +260,6 @@ repository:
       - include: "#command.token.selector_with_arguments"
       - include: "#command.token.selector_without_arguments"
       - include: "#command.token.block_predicate"
-      - include: "#command.token.tagged_block_predicate"
       - include: "#command.token.resource_location"
       - include: "#command.token.tagged_resource_location"
       - include: "#command.token.range"
@@ -486,8 +481,6 @@ repository:
     # quoted strings are a recursive format captured between the quotes
     name: meta.command.token.quoted_string.mcfunction
 
-    # TODO how do we highlight the whole thing as an error, if any part of it fails?
-
     # begin whenever we see a quote
     begin: '{{command_token_l}}(\")'
 
@@ -516,66 +509,18 @@ repository:
 
     name: meta.command.token.block_predicate.mcfunction
 
-    # Begin whenever we see a resource location followed by an opening square brace.
-    begin: '{{command_token_l}}{{resource_location}}(\[)'
+    # Begin whenever we see a resource location followed by an opening bracket.
+    begin: '{{command_token_l}}(?=(\#)?{{resource_location}}(\[|\{))'
 
     # Similar to selector arguments; end in several cases.
-    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
-
-    beginCaptures:
-      # TODO refactor repeated code (groups 1-3)
-      1:
-        # the namespace
-        name: "#resource_namespace"
-      2:
-        # the `:`
-        name: "#namespace_separator"
-      3:
-        # the path
-        name: "#resource_path"
-      4:
-        # the opening brace
-        name: "#block_predicate_delims"
+    end: '{{lookahead_newline}}|(?:(?<=\])(?!\{)|(?<=\}))({{not_command_token_delim}}*)'
 
     endCaptures:
       1:
-        name: "#block_predicate_delims"
-      2:
         name: "#error"
 
     patterns:
-      - include: "#block_predicate.arguments"
-
-  command.token.tagged_block_predicate:
-    # Same as without a tag... all for a different colour.
-    # TODO can we reduce the amount of repeated code here?
-    name: meta.command.token.tagged_block_predicate.mcfunction
-    begin: '{{command_token_l}}{{tagged_resource_location}}(\[)'
-    end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
-    beginCaptures:
-      # TODO refactor repeated code (groups 1-4)
-      1:
-        # the `#`
-        name: "#tagged_resource_namespace"
-      2:
-        # the namespace
-        name: "#tagged_resource_namespace"
-      3:
-        # the `:`
-        name: "#namespace_separator"
-      4:
-        # the path
-        name: "#tagged_resource_path"
-      5:
-        # the opening brace
-        name: "#block_predicate_delims"
-    endCaptures:
-      1:
-        name: "#block_predicate_delims"
-      2:
-        name: "#error"
-    patterns:
-      - include: "#block_predicate.arguments"
+      - include: "#block_predicate"
 
   command.token.selector_with_arguments:
     name: meta.command.token.selector_with_arguments.mcfunction
@@ -729,6 +674,33 @@ repository:
     patterns:
       # TODO this isn't really an index
       - include: "#nbt.list"
+
+  block_predicate:
+    patterns:
+      - match: "{{tagged_resource_location}}"
+        captures: "#tagged_resource_location"
+      - match: "{{resource_location}}"
+        captures: "#resource_location"
+      - begin: '(\[)'
+        end: '(\])'
+        beginCaptures:
+          1:
+            name: "#block_predicate_delims"
+        endCaptures:
+          1:
+            name: "#block_predicate_delims"
+        patterns:
+          - include: "#block_predicate.arguments"
+      - begin: '(\{)'
+        end: '(\})'
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+        endCaptures:
+          1:
+            name: "#nbt_delims"
+        patterns:
+          - include: "#nbt.compound"
 
   block_predicate.arguments:
     patterns:

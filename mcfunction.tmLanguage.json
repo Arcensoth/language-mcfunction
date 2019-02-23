@@ -128,9 +128,6 @@
           "include": "#command.token.block_predicate"
         },
         {
-          "include": "#command.token.tagged_block_predicate"
-        },
-        {
           "include": "#command.token.resource_location"
         },
         {
@@ -534,68 +531,16 @@
     },
     "command.token.block_predicate": {
       "name": "meta.command.token.block_predicate.mcfunction",
-      "begin": "(?<= )([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(\\[)",
-      "end": "(?=\\n)|(\\])([^ \\n]*)",
-      "beginCaptures": {
-        "1": {
-          "name": "entity.name.function.mcfunction"
-        },
-        "2": {
-          "name": "entity.name.function.mcfunction"
-        },
-        "3": {
-          "name": "entity.name.function.mcfunction"
-        },
-        "4": {
-          "name": "variable.language.mcfunction"
-        }
-      },
+      "begin": "(?<= )(?=(\\#)?([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(\\[|\\{))",
+      "end": "(?=\\n)|(?:(?<=\\])(?!\\{)|(?<=\\}))([^ \\n]*)",
       "endCaptures": {
         "1": {
-          "name": "variable.language.mcfunction"
-        },
-        "2": {
           "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
         {
-          "include": "#block_predicate.arguments"
-        }
-      ]
-    },
-    "command.token.tagged_block_predicate": {
-      "name": "meta.command.token.tagged_block_predicate.mcfunction",
-      "begin": "(?<= )(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(\\[)",
-      "end": "(?=\\n)|(\\])([^ \\n]*)",
-      "beginCaptures": {
-        "1": {
-          "name": "entity.name.function.mcfunction"
-        },
-        "2": {
-          "name": "entity.name.function.mcfunction"
-        },
-        "3": {
-          "name": "entity.name.function.mcfunction"
-        },
-        "4": {
-          "name": "entity.name.function.mcfunction"
-        },
-        "5": {
-          "name": "variable.language.mcfunction"
-        }
-      },
-      "endCaptures": {
-        "1": {
-          "name": "variable.language.mcfunction"
-        },
-        "2": {
-          "name": "invalid.illegal.mcfunction"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#block_predicate.arguments"
+          "include": "#block_predicate"
         }
       ]
     },
@@ -777,6 +722,79 @@
       "patterns": [
         {
           "include": "#nbt.list"
+        }
+      ]
+    },
+    "block_predicate": {
+      "patterns": [
+        {
+          "match": "(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.mcfunction"
+            },
+            "2": {
+              "name": "entity.name.function.mcfunction"
+            },
+            "3": {
+              "name": "entity.name.function.mcfunction"
+            },
+            "4": {
+              "name": "entity.name.function.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.mcfunction"
+            },
+            "2": {
+              "name": "entity.name.function.mcfunction"
+            },
+            "3": {
+              "name": "entity.name.function.mcfunction"
+            }
+          }
+        },
+        {
+          "begin": "(\\[)",
+          "end": "(\\])",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.language.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "variable.language.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#block_predicate.arguments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\{)",
+          "end": "(\\})",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.language.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "variable.language.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#nbt.compound"
+            }
+          ]
         }
       ]
     },

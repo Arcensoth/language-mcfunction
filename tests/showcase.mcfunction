@@ -14,6 +14,7 @@ execute positioned 10 ~10 -10
 execute positioned 10 ^0.5 -10
 execute if block ~ ~ ~ minecraft:oak_leaves[persistent=true]
 execute if block ~ ~ ~ #minecraft:leaves[distance=5,persistent=false]
+setblock ~ ~ ~ minecraft:dispenser[facing=up]{Items: [{id: "minecraft:diamond", Count: 1}]}
 tag @s add my.tag
 datapack enable "hello world"
 datapack enable "escape \" me"

@@ -64,6 +64,11 @@ execute if block ~ ~ ~ minecraft:oak_leaves[persistent=false] run
 execute if block ~ ~ ~ minecraft:oak_leaves[distance=5,persistent=true] run
 execute if block ~ ~ ~ #minecraft:leaves[distance=5] run
 execute if block ~ ~ ~ #minecraft:leaves[distance=5,persistent=true] run
+setblock ~ ~ ~ mypack:foo{foo:bar} destroy
+setblock ~ ~ ~ mypack:foo{foo: bar} destroy
+setblock ~ ~ ~ mypack:foo[facing=up]{foo: bar} destroy
+setblock ~ ~ ~ mypack:foo[facing = up]{foo: bar} destroy
+setblock ~ ~ ~ minecraft:dispenser[facing=up]{Items: [{id: "minecraft:diamond", Count: 1}]}
 
 tag @s add my.tag
 
