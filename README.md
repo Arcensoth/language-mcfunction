@@ -1,7 +1,7 @@
 # language-mcfunction
 Language grammars and syntax highlighting for mcfunction files.
 
-[![Showcase](https://i.imgur.com/3mpF4an.png)](https://i.imgur.com/3mpF4an.png)
+[![Showcase](https://i.imgur.com/Rz845y3.png)](https://i.imgur.com/Rz845y3.png)
 
 This is a generic "context-free" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
 
@@ -44,6 +44,7 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
     - [x] [Block predicates](https://i.imgur.com/7QpQsi6.png): `minecraft:dispenser[facing=up]`
     - [x] [Unquoted strings](https://i.imgur.com/82vSj6Q.png): `mypack.some.tag` / `mypack.custom_crafting_marker`
     - [x] [Quoted strings with escaping](https://i.imgur.com/3Ns8MzH.png): `"hello world"` / `"CustomName With Spaces"`
+    - [x] [Single-quoted strings](https://i.imgur.com/6BtgTvu.png): `'hello world'` / `'{"text": "hello world"}'`
     - [x] [NBT compounds/lists](https://i.imgur.com/ISjyX3Z.png): `{ Fire: 20s , NoGravity: true, Tags: [ "mytag" ] }`
     - [x] [NBT paths](https://i.imgur.com/DVPvepj.png): `SelectedItem.Count` / `RecordItem.tag.mycustomtag`
     - [x] [JSON/text components](https://i.imgur.com/5cJVdhc.png): `{"text": "hello world", "color": "blue"}`
