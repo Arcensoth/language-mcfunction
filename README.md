@@ -1,6 +1,9 @@
 # language-mcfunction
 Language grammars and syntax highlighting for mcfunction files.
 
+[![vscode-version-badge]](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction)
+[![discord-chat-badge]](https://discord.gg/QAFXFtZ)
+
 This project provides two types of grammars: the default, [version-agnostic grammar](#version-agnostic-grammar) (shown below), and WIP [version-specific grammars](#version-specific-grammars).
 
 [![Showcase](https://i.imgur.com/Rz845y3.png)](https://i.imgur.com/Rz845y3.png)
@@ -171,3 +174,6 @@ Short name            | Full scope name                                         
 - https://gist.github.com/Aerijo/b8c82d647db783187804e86fa0a604a1
 - https://macromates.com/manual/en/language_grammars
 - https://regex101.com/
+
+[vscode-version-badge]: https://img.shields.io/visual-studio-marketplace/v/arcensoth.language-mcfunction.svg?logo=visual-studio-code
+[discord-chat-badge]: https://img.shields.io/discord/154777837382008833.svg?color=%237289DA&label=chat&logo=discord&logoColor=%23FFFFFF
