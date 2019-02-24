@@ -1,9 +1,9 @@
 # language-mcfunction
 Language grammars and syntax highlighting for mcfunction files.
 
-[![Showcase](https://i.imgur.com/Rz845y3.png)](https://i.imgur.com/Rz845y3.png)
+This project provides two types of grammars: the default, [version-agnostic grammar](#version-agnostic-grammar) (shown below), and WIP [version-specific grammars](#version-specific-grammars).
 
-This is a generic "context-free" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
+[![Showcase](https://i.imgur.com/Rz845y3.png)](https://i.imgur.com/Rz845y3.png)
 
 ## Install
 - VSCode: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
@@ -11,12 +11,16 @@ This is a generic "context-free" grammar that does not target any particular ver
 
 ## Configure
 ### Version-agnostic grammar
+This is a generic "version-agnostic" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
+
 The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting.
 
-### Version-specific grammars
-The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher. They have context-sensitive highlighting and command validation comparable to the in-game command bar.
+In the future, the [version-specific grammars](#version-specific-grammars) will be preferred when available.
 
-**Be aware that the version-specific grammars are currently under heavy development.** They are incomplete and experimental. They do not yet support the same feature set as the version-agnostic grammar.
+### Version-specific grammars
+> **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar](#version-agnostic-grammar). Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
+
+The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher. They have context-sensitive highlighting and command validation comparable to the in-game command bar.
 
 #### VSCode
 You can easily choose which version of mcfunction to use by changing the `.mcfunction` extension association in your workspace settings:
@@ -68,7 +72,7 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
         - [x] [Advancement arguments](https://i.imgur.com/yQj5Oye.png): `advancements`
 
 ## Customization
-Currently available for the version-specific grammars.
+Currently available for the [version-specific grammars](#version-specific-grammars).
 
 Scopes have been assigned with user customization in mind. If your editor allows scope overrides, this will make it easy to customize your own colours for a variety of scopes.
 
