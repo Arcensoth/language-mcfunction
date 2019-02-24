@@ -3,11 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.8.0-dev]
+## [0.8.0] - 2019-02-23
+- Added important information to the readme
 
 ## [0.7.0] - 2019-02-23
-- Add support for single-quoted strings
-- Add support for block predicates with NBT
+- Added support for single-quoted strings
+- Added support for block predicates with NBT
 - Adjusted comment highlighting
 - Adjusted colour classes
 - Overhauled grammar generation scheme
