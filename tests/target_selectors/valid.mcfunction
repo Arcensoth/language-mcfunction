@@ -28,6 +28,8 @@ execute as @s[   tag   =   foo    ,   tag   =   bar   ] run execute as @s run sa
 execute as @s[tag   =   foo    ,   tag   =   bar] run execute as @s run say hello
 execute as @s[ tag = foo , tag = bar , tag = baz ] run execute as @s run say hello
 execute as @s[nbt={custom: true}] as @s run say hello
+execute as @s[nbt={foo: {bar: []}}] as @s run say hello
+execute as @s[nbt={foo: {bar: [{baz: {}}]}}] as @s run say hello
 execute as @s[nbt=!{custom: true}] as @s run say hello
 execute as @e[tag=foo, sort=nearest, nbt={custom: true}] run execute as @s run execute as @s run say hello
 

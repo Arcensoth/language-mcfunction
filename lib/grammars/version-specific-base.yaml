@@ -22,6 +22,7 @@ names:
   # command scopes
   command: keyword.control._.command.mcfunction
   subcommand: keyword.other._.subcommand.mcfunction
+  command.slash: keyword.control._.command.mcfunction
 
   # target selector scopes
   target_selector.base: support.class._.base.target_selector.mcfunction
@@ -39,17 +40,22 @@ names:
   nbt.list_comma: storage._.list_comma.nbt.mcfunction
 
   # score map scopes
-  score_map.bracket: support.class._.bracket.score_map.mcfunction
-  score_map.equals: support.class._.equals.score_map.mcfunction
-  score_map.comma: support.class._.comma.score_map.mcfunction
+  score_map.bracket: storage._.bracket.score_map.mcfunction
+  score_map.equals: storage._.equals.score_map.mcfunction
+  score_map.comma: storage._.comma.score_map.mcfunction
 
   # advancement map scopes
-  advancement_map.bracket: support.class._.bracket.advancement_map.mcfunction
-  advancement_map.equals: support.class._.equals.advancement_map.mcfunction
-  advancement_map.comma: support.class._.comma.advancement_map.mcfunction
+  advancement_map.bracket: storage._.bracket.advancement_map.mcfunction
+  advancement_map.equals: storage._.equals.advancement_map.mcfunction
+  advancement_map.comma: storage._.comma.advancement_map.mcfunction
 
   # text component scopes
-  text_component.compound_property: string._.property.text_component.mcfunction
+  text_component.bracket: storage._.bracket.text_component.mcfunction
+  text_component.colon: storage._.colon.text_component.mcfunction
+  text_component.comma: storage._.comma.text_component.mcfunction
+  text_component.property: string._.property.text_component.mcfunction
+  text_component.property.color: string._.color.property.text_component.mcfunction
+  text_component.property.keybind: string._.keybind.property.text_component.mcfunction
 
   # resource location scopes
   resource_location.namespace: entity.name.function._.namespace.resource_location.mcfunction
@@ -77,6 +83,10 @@ names:
   target.player_name: support.class._.player_name.target.mcfunction
 
   # other scopes
+  generic.dict.bracket: storage._.bracket.dict.generic.mcfunction
+  generic.dict.content: string._.content.dict.generic.mcfunction
+  generic.list.bracket: storage._.bracket.list.generic.mcfunction
+  generic.list.content: string._.content.list.generic.mcfunction
   boolean: constant.numeric._.boolean.mcfunction
 
 variables:
@@ -99,6 +109,27 @@ variables:
   # it will then be highlighted as an error
   # command_border_executable_false
   cbx_false: ' (?=[^\s\#])'
+
+  # text_component_property
+  tc.p.begin_l: '(\")'
+  tc.p.begin_r: '(\"){{pad}}(\:){{pad}}(?=[^\s\,\}])'
+  tc.p.end: '{{ln}}|(?={{pad}}[\,\}])'
+
+  # dictionary/compound
+  dict.begin: '(\{)'
+  dict.end: '{{ln}}|(\})'
+
+  # list
+  list.begin: '(\[)'
+  list.end: '{{ln}}|(\])'
+
+  # double_quoted_string
+  dqs.begin: '(\")'
+  dqs.end: '{{ln}}|(\")'
+
+  # single_quoted_string
+  sqs.begin: "(\\')"
+  sqs.end: "{{ln}}|(\\')"
 
   # basic_target_selector
   basic_target_selector: '(\@[parse])'
@@ -130,6 +161,9 @@ variables:
   selector_gamemode_choices: "(survival|creative|adventure|spectator)"
   selector_sort_choices: "(arbitrary|furthest|nearest|random)"
 
+  text_component.colors: (black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|dark_gray|blue|green|aqua|red|light_purple|yellow|white)
+  text_component.keybinds: '(key\.forward|key\.left|key\.back|key\.right|key\.jump|key\.sneak|key\.sprint|key\.inventory|key\.swapHands|key\.drop|key\.use|key\.attack|key\.pickItem|key\.chat|key\.playerlist|key\.command|key\.screenshot|key\.togglePerspective|key\.smoothCamera|key\.fullscreen|key\.spectatorOutlines|key\.hotbar\.1|key\.hotbar\.2|key\.hotbar\.3|key\.hotbar\.4|key\.hotbar\.5|key\.hotbar\.6|key\.hotbar\.7|key\.hotbar\.8|key\.hotbar\.9|key\.saveToolbarActivator|key\.loadToolbarActivator)'
+
 patterns:
   - include: "#comment"
   - include: "#command"
@@ -142,6 +176,30 @@ capturesRepository:
     2:
       name: "#underline"
 
+  quoted_string.begin:
+    1:
+      name: "#string"
+
+  quoted_string.end:
+    1:
+      name: "#string"
+
+  dict.begin:
+    1:
+      name: "#generic.dict.bracket"
+
+  dict.end:
+    1:
+      name: "#generic.dict.bracket"
+
+  list.begin:
+    1:
+      name: "#generic.list.bracket"
+
+  list.end:
+    1:
+      name: "#generic.list.bracket"
+
   range:
     1:
       name: "#range.minimum"
@@ -149,6 +207,32 @@ capturesRepository:
       name: "#range.ellipsis"
     3:
       name: "#range.maximum"
+
+  text_component.property:
+    1:
+      name: "#string"
+    2:
+      name: "#text_component.property"
+    3:
+      name: "#string"
+    4:
+      name: "#nbt.compound_colon"
+
+  text_component.dict.begin:
+    1:
+      name: "#text_component.bracket"
+
+  text_component.dict.end:
+    1:
+      name: "#text_component.bracket"
+
+  text_component.list.begin:
+    1:
+      name: "#text_component.bracket"
+
+  text_component.list.end:
+    1:
+      name: "#text_component.bracket"
 
 repository:
   comment:
@@ -272,7 +356,7 @@ repository:
   error.compound:
     patterns:
       - begin: '((\{))'
-        end: '((\}))'
+        end: '{{ln}}|((\}))'
         beginCaptures: "#underlined_error"
         endCaptures: "#underlined_error"
         contentName: "#invalid"
@@ -285,7 +369,7 @@ repository:
   error.list:
     patterns:
       - begin: '((\[))'
-        end: '((\]))'
+        end: '{{ln}}|((\]))'
         beginCaptures: "#underlined_error"
         endCaptures: "#underlined_error"
         contentName: "#invalid"
@@ -299,6 +383,62 @@ repository:
   # COMMON PARSERS #############################################################
   ##############################################################################
 
+  common.block:
+    patterns:
+      - match: '[^\n\{\}\[\]]+'
+        name: "#generic.dict.content"
+      - begin: "{{dict.begin}}"
+        end: "{{dict.end}}"
+        beginCaptures: "#dict.begin"
+        endCaptures: "#dict.end"
+        patterns:
+          - include: "#common.block"
+      - begin: "{{list.begin}}"
+        end: "{{list.end}}"
+        beginCaptures: "#list.begin"
+        endCaptures: "#list.end"
+        patterns:
+          - include: "#common.block"
+
+  common.dict.whitespace:
+    patterns:
+      # consume commas between key-values
+      # - match: '(?<=[^\{\,])(\,)(?=[^\}\,])'
+      #   captures:
+      #     1:
+      #       name: "#dict.comma"
+
+      # consume whitespace from separator to key
+      - match: '(?<=[\{\,]) +(?=[^\}\,])'
+
+      # consume whitespace from value to separator
+      - match: '(?<=[^\{\,]) +(?=[\}\,])'
+
+      # special case for empty dicts, e.g. `{ }`
+      - match: '(?<=\{) +(?=\})'
+
+  common.list.whitespace:
+    patterns:
+      # consume commas between values
+      # - match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+      #   captures:
+      #     1:
+      #       name: "#list.comma"
+
+      # consume whitespace from separator to value
+      - match: '(?<=[\[\,]) +(?=[^\]\,])'
+
+      # consume whitespace from value to separator
+      - match: '(?<=[^\[\,]) +(?=[\]\,])'
+
+      # special case for empty lists, e.g. `[ ]`
+      - match: '(?<=\[) +(?=\])'
+
+  common.boolean:
+    patterns:
+      - match: '(?<!\w){{boolean}}(?!\w)'
+        name: "#boolean"
+
   common.unquoted_string:
     patterns:
       - match: "{{word}}"
@@ -306,27 +446,19 @@ repository:
 
   common.double_quoted_string:
     patterns:
-      - begin: '(\")'
-        end: '{{ln}}|(\")'
-        beginCaptures:
-          1:
-            name: "#string"
-        endCaptures:
-          1:
-            name: "#string"
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
         patterns:
           - include: "#common.double_quoted_string.content"
 
   common.single_quoted_string:
     patterns:
-      - begin: "(\\')"
-        end: "{{ln}}|(\\')"
-        beginCaptures:
-          1:
-            name: "#string"
-        endCaptures:
-          1:
-            name: "#string"
+      - begin: "{{sqs.begin}}"
+        end: "{{sqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
         patterns:
           - include: "#common.single_quoted_string.content"
 
@@ -371,8 +503,8 @@ repository:
       - match: '{{integer}}?(\.\.){{integer}}'
         captures: "#range"
       # exact number
-      - match: '{{integer}}'
-        name: '#number'
+      - match: "{{integer}}"
+        name: "#number"
       # elevate `..` and any other cases to parent
 
   common.double_range:
@@ -384,8 +516,8 @@ repository:
       - match: '{{double}}?(\.\.){{double}}'
         captures: "#range"
       # exact number
-      - match: '{{double}}'
-        name: '#number'
+      - match: "{{double}}"
+        name: "#number"
       # elevate `..` and any other cases to parent
 
   common.resource_location:
@@ -455,8 +587,7 @@ repository:
   nbt.compound.content:
     # FIXME nbt compound patterns
     patterns:
-      - match: '[^\n\}]+'
-        name: string.regexp._.todo.mcfunction
+      - include: "#common.block"
 
   ##############################################################################
   # MAPS #######################################################################
@@ -465,14 +596,12 @@ repository:
   score_map.content:
     # FIXME score map patterns
     patterns:
-      - match: '[^\n\}]+'
-        name: string.regexp._.todo.mcfunction
+      - include: "#common.block"
 
   advancement_map.content:
     # FIXME advancement map patterns
     patterns:
-      - match: '[^\n\}]+'
-        name: string.regexp._.todo.mcfunction
+      - include: "#common.block"
 
   ##############################################################################
   # TEXT COMPONENTS ############################################################
@@ -486,57 +615,109 @@ repository:
       - include: "#text_component.boolean"
       - include: "#text_component.string"
       - include: "#text_component.list"
-      - include: "#text_component.compound"
+      - include: "#text_component.dict"
 
   text_component.boolean:
-    patterns:
-      - match: "(true|false)"
-        name: "#boolean"
+    - include: "#common.boolean"
 
   text_component.string:
-    # TODO isn't this the same as a normal double-quoted string?
     patterns:
-      - begin: '(\")'
-        end: '{{ln}}|(\")'
+      - include: "#common.double_quoted_string"
+
+  text_component.string.color:
+    patterns:
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - match: "{{text_component.colors}}"
+            name: "#text_component.property.color"
+          - include: "#error.unknown_string"
+
+  text_component.string.keybind:
+    patterns:
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - match: "{{text_component.keybinds}}"
+            name: "#text_component.property.keybind"
+          - include: "#error.unknown_string"
+
+  text_component.string.insertion:
+    patterns:
+      - begin: '{{dqs.begin}}(\/)'
+        end: "{{dqs.end}}"
         beginCaptures:
           1:
             name: "#string"
+          2:
+            name: '#command.slash'
+        endCaptures: "#quoted_string.end"
+        patterns:
+          # TODO local error highlighting for commands
+          - include: '#commands'
+      - include: "#common.double_quoted_string"
+
+  text_component.string.selector:
+    patterns:
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - include: "#text_component.string.selector.content"
+          - include: "#error.unknown_string"
+
+  text_component.string.selector.content:
+    patterns:
+      # (1) selector without arguments
+      - match: '{{basic_target_selector}}(?=\")'
+        name: "#target_selector.base"
+
+      # (2) uuid
+      - match: '{{uuid}}(?=\")'
+        name: "#target.uuid"
+
+      # (3) player name
+      - match: '{{player_name}}(?=\")'
+        name: "#target.player_name"
+
+      # (4) selector with arguments
+      - begin: "{{parameterized_target_selector.begin}}"
+        end: '{{ln}}|(?=\")|{{parameterized_target_selector.next}}'
+        beginCaptures:
+          1:
+            name: "#target_selector.base"
+          2:
+            name: "#target_selector.bracket"
         endCaptures:
           1:
-            name: "#string"
+            name: "#target_selector.bracket"
         patterns:
-          - include: "#common.double_quoted_string.content"
+          - include: "#target_selector.content"
           - include: "#error.unknown_string"
+
+  text_component.list_common:
+    patterns:
+      # consume commas between values
+      - match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+        captures:
+          1:
+            name: "#text_component.comma"
+      # consume whitespace
+      - include: "#common.list.whitespace"
 
   text_component.list:
     patterns:
-      - begin: '(\[)'
-        end: '{{ln}}|(\])'
-        beginCaptures:
-          1:
-            name: "#nbt.list_bracket"
-        endCaptures:
-          1:
-            name: "#nbt.list_bracket"
+      - begin: "{{list.begin}}"
+        end: "{{list.end}}"
+        beginCaptures: "#text_component.list.begin"
+        endCaptures: "#text_component.list.end"
         patterns:
-          # NOTE how similar this is to selector arguments
-
-          # consume commas between values
-          - name: meta._.list.text_component.property_separator.mcfunction
-            match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
-            captures:
-              1:
-                name: "#nbt.list_comma"
-
-          # consume whitespace from separator to value
-          - match: '(?<=[\[\,]) +(?=[^\]\,])'
-
-          # consume whitespace from value to separator
-          - match: '(?<=[^\[\,]) +(?=[\]\,])'
-
-          # special case for empty lists, e.g. `[ ]`
-          - match: '(?<=\[) +(?=\])'
-
+          - include: "#text_component.list_common"
           - include: "#text_component.list_values"
 
   text_component.list_values:
@@ -544,151 +725,174 @@ repository:
       - include: "#text_component"
       - include: "#error.unknown_list"
 
-  text_component.compound:
+  text_component.dict_common:
     patterns:
-      - begin: '(\{)'
-        end: '{{ln}}|(\})'
-        beginCaptures:
-          1:
-            name: "#nbt.compound_bracket"
-        endCaptures:
-          1:
-            name: "#nbt.compound_bracket"
-        patterns:
-          # NOTE how similar this is to selector arguments
-
-          # consume commas between properties
-          - name: meta._.compound.text_component.property_separator.mcfunction
-            match: '(?<=[^\{\,])(\,)(?=[^\}\,])'
-            captures:
-              1:
-                name: "#nbt.compound_comma"
-
-          # consume whitespace from separator to property
-          - match: '(?<=[\{\,]) +(?=[^\}\,])'
-
-          # consume whitespace from property to separator
-          - match: '(?<=[^\{\,]) +(?=[\}\,])'
-
-          # special case for empty compounds, e.g. `{ }`
-          - match: '(?<=\{) +(?=\})'
-
-          - include: "#text_component.compound_properties"
-
-  text_component.compound_properties:
-    patterns:
-      # FIXME implement remaining text component properties
-      - include: "#text_component.compound_property.bold"
-      - include: "#text_component.compound_property.text"
-      - include: "#text_component.compound_property.selector"
-      - include: "#text_component.compound_property.extra"
-      - include: "#error.unknown_compound"
-
-  text_component.compound_property.bold:
-    # FIXME simplify boolean value
-    patterns:
-      - begin: '(\")(bold)(\"){{pad}}(\:){{pad}}'
-        end: '{{ln}}|(?={{pad}}[\,\}])'
+      # consume commas between key-values
+      - match: '(?<=[^\{\,])(\,)(?=[^\}\,])'
         captures:
           1:
-            name: "#string"
-          2:
-            name: "#text_component.compound_property"
-          3:
-            name: "#string"
-          4:
-            name: "#nbt.compound_colon"
+            name: "#text_component.comma"
+      # consume whitespace
+      - include: "#common.dict.whitespace"
+
+  text_component.dict:
+    patterns:
+      - begin: "{{dict.begin}}"
+        end: "{{dict.end}}"
+        beginCaptures: "#text_component.dict.begin"
+        endCaptures: "#text_component.dict.end"
+        patterns:
+          - include: "#text_component.dict_common"
+          - include: "#text_component.properties"
+
+  text_component.dict.score:
+    patterns:
+      - begin: "{{dict.begin}}"
+        end: "{{dict.end}}"
+        beginCaptures: "#text_component.dict.begin"
+        endCaptures: "#text_component.dict.end"
+        patterns:
+          - include: "#text_component.dict_common"
+          - include: "#text_component.properties.score"
+
+  text_component.dict.clickEvent:
+    patterns:
+      - begin: "{{dict.begin}}"
+        end: "{{dict.end}}"
+        beginCaptures: "#text_component.dict.begin"
+        endCaptures: "#text_component.dict.end"
+        patterns:
+          - include: "#text_component.dict_common"
+          - include: "#text_component.properties.clickEvent"
+
+  text_component.dict.hoverEvent:
+    patterns:
+      - begin: "{{dict.begin}}"
+        end: "{{dict.end}}"
+        beginCaptures: "#text_component.dict.begin"
+        endCaptures: "#text_component.dict.end"
+        patterns:
+          - include: "#text_component.dict_common"
+          - include: "#text_component.properties.hoverEvent"
+
+  text_component.properties:
+    patterns:
+      - include: "#text_component.property.b_i_u_s_o"
+      - include: "#text_component.property.color"
+      - include: "#text_component.property.text_translate"
+      - include: "#text_component.property.extra_with"
+      - include: "#text_component.property.selector"
+      - include: "#text_component.property.score"
+      - include: "#text_component.property.keybind"
+      - include: "#text_component.property.insertion"
+      - include: "#text_component.property.clickEvent"
+      - include: "#text_component.property.hoverEvent"
+      - include: "#error.unknown_compound"
+
+  text_component.property.b_i_u_s_o:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(bold|italic|underlined|strikethrough|obfuscated){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
         patterns:
           - include: "#text_component.boolean"
           - include: "#error.compound_value"
 
-  text_component.compound_property.text:
+  text_component.property.text_translate:
     patterns:
-      - begin: '(\")(text)(\"){{pad}}(\:){{pad}}(\")'
-        end: '{{ln}}|(\")'
-        beginCaptures:
-          1:
-            name: "#string"
-          2:
-            name: "#text_component.compound_property"
-          3:
-            name: "#string"
-          4:
-            name: "#nbt.compound_colon"
-          5:
-            name: "#string"
-        endCaptures:
-          1:
-            name: "#string"
+      - begin: "{{tc.p.begin_l}}(text|translate){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
         patterns:
-          - include: "#common.double_quoted_string.content"
-          - include: "#error.unknown_string"
+          - include: "#text_component.string"
+          - include: "#error.compound_value"
 
-  text_component.compound_property.selector:
+  text_component.property.color:
     patterns:
-      - begin: '(\")(selector)(\"){{pad}}(\:){{pad}}(\")'
-        end: '{{ln}}|(\")'
-        beginCaptures:
-          1:
-            name: "#string"
-          2:
-            name: "#text_component.compound_property"
-          3:
-            name: "#string"
-          4:
-            name: "#nbt.compound_colon"
-          5:
-            name: "#string"
-        endCaptures:
-          1:
-            name: "#string"
+      - begin: "{{tc.p.begin_l}}(color){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
         patterns:
-          # (1) selector without arguments
-          - match: '{{basic_target_selector}}(?=\")'
-            name: "#target_selector.base"
+          - include: "#text_component.string.color"
+          - include: "#error.compound_value"
 
-          # (2) uuid
-          - match: '{{uuid}}(?=\")'
-            name: "#target.uuid"
-
-          # (3) player name
-          - match: '{{player_name}}(?=\")'
-            name: "#target.player_name"
-
-          # (4) selector with arguments
-          - begin: "{{parameterized_target_selector.begin}}"
-            end: '{{ln}}|(?=\")|{{parameterized_target_selector.next}}'
-            beginCaptures:
-              1:
-                name: "#target_selector.base"
-              2:
-                name: "#target_selector.bracket"
-            endCaptures:
-              1:
-                name: "#target_selector.bracket"
-            patterns:
-              - include: "#target_selector.content"
-              - include: "#error.unknown_string"
-
-          - include: "#error.unknown_string"
-
-  # TODO we should reorganize the others like this (local value highlight)
-  text_component.compound_property.extra:
+  text_component.property.extra_with:
     patterns:
-      - begin: '(\")(extra)(\"){{pad}}(\:){{pad}}'
-        end: '{{ln}}|(?={{pad}}[\,\}])'
-        captures:
-          1:
-            name: "#string"
-          2:
-            name: "#text_component.compound_property"
-          3:
-            name: "#string"
-          4:
-            name: "#nbt.compound_colon"
+      - begin: "{{tc.p.begin_l}}(extra|with){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
         patterns:
           - include: "#text_component.list"
           - include: "#error.compound_value"
+
+  text_component.property.selector:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(selector){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.selector"
+          - include: "#error.compound_value"
+
+  text_component.property.score:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(score){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.dict.score"
+          - include: "#error.compound_value"
+
+  text_component.property.keybind:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(keybind){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.keybind"
+          - include: "#error.compound_value"
+
+  text_component.property.insertion:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(insertion){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.insertion"
+          - include: "#error.compound_value"
+
+  text_component.property.clickEvent:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(clickEvent){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.dict.clickEvent"
+          - include: "#error.compound_value"
+
+  text_component.property.hoverEvent:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(hoverEvent){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.dict.hoverEvent"
+          - include: "#error.compound_value"
+
+  text_component.properties.score:
+    patterns:
+      # FIXME implement score sub-properties
+      - include: "#error.unknown_compound"
+
+  text_component.properties.clickEvent:
+    patterns:
+      # FIXME implement clickEvent sub-properties
+      - include: "#error.unknown_compound"
+
+  text_component.properties.hoverEvent:
+    patterns:
+      # FIXME implement hoverEvent sub-properties
+      - include: "#error.unknown_compound"
 
   ##############################################################################
   # TARGET SELECTORS ###########################################################
@@ -697,6 +901,9 @@ repository:
   # TODO consider version-controlling and generating target selector arguments
 
   target_selector.content:
+    # NOTE Selectors are syntactically similar to dictionaries.
+    # Unfortunately we cannot reuse common.dict here because selector arguments
+    # require special handling with their character sets and terminals.
     patterns:
       # consume commas from argument value to argument key
       - name: meta._.argument_separator.content.target_selector.mcfunction
@@ -717,8 +924,6 @@ repository:
       - include: "#target_selector.arguments"
 
   target_selector.arguments:
-    # this is where the generator will inject selector argument patterns
-    # but we'll need to write the data file for these by hand...
     patterns:
       - include: "#target_selector.content.argument.xyz"
       - include: "#target_selector.content.argument.dxyz"
@@ -1004,7 +1209,7 @@ repository:
       - include: "#error.unknown_command"
 
   generated.command.tellraw.targets:
-    # NOTE this should only allow players, but checking that via regex is not viable
+    # this should only allow players, but using regex is not viable
     patterns:
       # (1) selector without arguments
       - begin: "{{basic_target_selector}}{{cbx_false}}"

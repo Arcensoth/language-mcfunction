@@ -96,7 +96,7 @@ repository:
   error.compound:
     patterns:
       - begin: '((\{))'
-        end: '((\}))'
+        end: '(?=\n)|((\}))'
         beginCaptures: *ref_0
         endCaptures: *ref_0
         contentName: invalid.illegal._.invalid.mcfunction
@@ -108,7 +108,7 @@ repository:
   error.list:
     patterns:
       - begin: '((\[))'
-        end: '((\]))'
+        end: '(?=\n)|((\]))'
         beginCaptures: *ref_0
         endCaptures: *ref_0
         contentName: invalid.illegal._.invalid.mcfunction
@@ -117,6 +117,44 @@ repository:
           - include: '#error.list'
           - match: '(([^\n\{\[\]]))'
             captures: *ref_0
+  common.block:
+    patterns:
+      - match: '[^\n\{\}\[\]]+'
+        name: string._.content.dict.generic.mcfunction
+      - begin: '(\{)'
+        end: '(?=\n)|(\})'
+        beginCaptures:
+          '1':
+            name: storage._.bracket.dict.generic.mcfunction
+        endCaptures:
+          '1':
+            name: storage._.bracket.dict.generic.mcfunction
+        patterns:
+          - include: '#common.block'
+      - begin: '(\[)'
+        end: '(?=\n)|(\])'
+        beginCaptures:
+          '1':
+            name: storage._.bracket.list.generic.mcfunction
+        endCaptures:
+          '1':
+            name: storage._.bracket.list.generic.mcfunction
+        patterns:
+          - include: '#common.block'
+  common.dict.whitespace:
+    patterns:
+      - match: '(?<=[\{\,]) +(?=[^\}\,])'
+      - match: '(?<=[^\{\,]) +(?=[\}\,])'
+      - match: '(?<=\{) +(?=\})'
+  common.list.whitespace:
+    patterns:
+      - match: '(?<=[\[\,]) +(?=[^\]\,])'
+      - match: '(?<=[^\[\,]) +(?=[\]\,])'
+      - match: '(?<=\[) +(?=\])'
+  common.boolean:
+    patterns:
+      - match: (?<!\w)(true|false)(?!\w)
+        name: constant.numeric._.boolean.mcfunction
   common.unquoted_string:
     patterns:
       - match: '([\w\.\-\+]+)'
@@ -125,10 +163,10 @@ repository:
     patterns:
       - begin: (\")
         end: (?=\n)|(\")
-        beginCaptures:
+        beginCaptures: &ref_1
           '1':
             name: string._.string.mcfunction
-        endCaptures:
+        endCaptures: &ref_2
           '1':
             name: string._.string.mcfunction
         patterns:
@@ -137,12 +175,8 @@ repository:
     patterns:
       - begin: (\')
         end: (?=\n)|(\')
-        beginCaptures:
-          '1':
-            name: string._.string.mcfunction
-        endCaptures:
-          '1':
-            name: string._.string.mcfunction
+        beginCaptures: *ref_1
+        endCaptures: *ref_2
         patterns:
           - include: '#common.single_quoted_string.content'
   common.double_quoted_string.content:
@@ -172,7 +206,7 @@ repository:
   common.integer_range:
     patterns:
       - match: (\-?\d*)(\.\.)(\-?\d*)?
-        captures: &ref_1
+        captures: &ref_3
           '1':
             name: constant.numeric._.minimum.range.mcfunction
           '2':
@@ -180,15 +214,15 @@ repository:
           '3':
             name: constant.numeric._.maximum.range.mcfunction
       - match: (\-?\d*)?(\.\.)(\-?\d*)
-        captures: *ref_1
+        captures: *ref_3
       - match: (\-?\d*)
         name: constant.numeric._.number.mcfunction
   common.double_range:
     patterns:
       - match: (\-?\d*\.?\d+)(\.\.)(\-?\d*\.?\d+)?
-        captures: *ref_1
+        captures: *ref_3
       - match: (\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)
-        captures: *ref_1
+        captures: *ref_3
       - match: (\-?\d*\.?\d+)
         name: constant.numeric._.number.mcfunction
   common.resource_location:
@@ -240,95 +274,180 @@ repository:
         name: string._.string.mcfunction
   nbt.compound.content:
     patterns:
-      - match: '[^\n\}]+'
-        name: string.regexp._.todo.mcfunction
+      - include: '#common.block'
   score_map.content:
     patterns:
-      - match: '[^\n\}]+'
-        name: string.regexp._.todo.mcfunction
+      - include: '#common.block'
   advancement_map.content:
     patterns:
-      - match: '[^\n\}]+'
-        name: string.regexp._.todo.mcfunction
+      - include: '#common.block'
   text_component:
     patterns:
       - include: '#text_component.boolean'
       - include: '#text_component.string'
       - include: '#text_component.list'
-      - include: '#text_component.compound'
+      - include: '#text_component.dict'
   text_component.boolean:
-    patterns:
-      - match: (true|false)
-        name: constant.numeric._.boolean.mcfunction
+    - include: '#common.boolean'
   text_component.string:
     patterns:
+      - include: '#common.double_quoted_string'
+  text_component.string.color:
+    patterns:
       - begin: (\")
+        end: (?=\n)|(\")
+        beginCaptures: *ref_1
+        endCaptures: *ref_2
+        patterns:
+          - match: >-
+              (black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|dark_gray|blue|green|aqua|red|light_purple|yellow|white)
+            name: string._.color.property.text_component.mcfunction
+          - include: '#error.unknown_string'
+  text_component.string.keybind:
+    patterns:
+      - begin: (\")
+        end: (?=\n)|(\")
+        beginCaptures: *ref_1
+        endCaptures: *ref_2
+        patterns:
+          - match: >-
+              (key\.forward|key\.left|key\.back|key\.right|key\.jump|key\.sneak|key\.sprint|key\.inventory|key\.swapHands|key\.drop|key\.use|key\.attack|key\.pickItem|key\.chat|key\.playerlist|key\.command|key\.screenshot|key\.togglePerspective|key\.smoothCamera|key\.fullscreen|key\.spectatorOutlines|key\.hotbar\.1|key\.hotbar\.2|key\.hotbar\.3|key\.hotbar\.4|key\.hotbar\.5|key\.hotbar\.6|key\.hotbar\.7|key\.hotbar\.8|key\.hotbar\.9|key\.saveToolbarActivator|key\.loadToolbarActivator)
+            name: string._.keybind.property.text_component.mcfunction
+          - include: '#error.unknown_string'
+  text_component.string.insertion:
+    patterns:
+      - begin: (\")(\/)
         end: (?=\n)|(\")
         beginCaptures:
           '1':
             name: string._.string.mcfunction
+          '2':
+            name: keyword.control._.command.mcfunction
+        endCaptures: *ref_2
+        patterns:
+          - include: '#commands'
+      - include: '#common.double_quoted_string'
+  text_component.string.selector:
+    patterns:
+      - begin: (\")
+        end: (?=\n)|(\")
+        beginCaptures: *ref_1
+        endCaptures: *ref_2
+        patterns:
+          - include: '#text_component.string.selector.content'
+          - include: '#error.unknown_string'
+  text_component.string.selector.content:
+    patterns:
+      - match: '(\@[parse])(?=\")'
+        name: support.class._.base.target_selector.mcfunction
+      - match: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\")'
+        name: support.class._.uuid.target.mcfunction
+      - match: (\w+)(?=\")
+        name: support.class._.player_name.target.mcfunction
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: '(?=\n)|(?=\")|(\])'
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
         endCaptures:
           '1':
-            name: string._.string.mcfunction
+            name: support.class._.bracket.target_selector.mcfunction
         patterns:
-          - include: '#common.double_quoted_string.content'
+          - include: '#target_selector.content'
           - include: '#error.unknown_string'
+  text_component.list_common:
+    patterns:
+      - match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
+        captures:
+          '1':
+            name: storage._.comma.text_component.mcfunction
+      - include: '#common.list.whitespace'
   text_component.list:
     patterns:
       - begin: '(\[)'
         end: '(?=\n)|(\])'
         beginCaptures:
           '1':
-            name: storage._.list_bracket.nbt.mcfunction
+            name: storage._.bracket.text_component.mcfunction
         endCaptures:
           '1':
-            name: storage._.list_bracket.nbt.mcfunction
+            name: storage._.bracket.text_component.mcfunction
         patterns:
-          - name: meta._.list.text_component.property_separator.mcfunction
-            match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
-            captures:
-              '1':
-                name: storage._.list_comma.nbt.mcfunction
-          - match: '(?<=[\[\,]) +(?=[^\]\,])'
-          - match: '(?<=[^\[\,]) +(?=[\]\,])'
-          - match: '(?<=\[) +(?=\])'
+          - include: '#text_component.list_common'
           - include: '#text_component.list_values'
   text_component.list_values:
     patterns:
       - include: '#text_component'
       - include: '#error.unknown_list'
-  text_component.compound:
+  text_component.dict_common:
+    patterns:
+      - match: '(?<=[^\{\,])(\,)(?=[^\}\,])'
+        captures:
+          '1':
+            name: storage._.comma.text_component.mcfunction
+      - include: '#common.dict.whitespace'
+  text_component.dict:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures:
+        beginCaptures: &ref_4
           '1':
-            name: storage._.compound_bracket.nbt.mcfunction
-        endCaptures:
+            name: storage._.bracket.text_component.mcfunction
+        endCaptures: &ref_5
           '1':
-            name: storage._.compound_bracket.nbt.mcfunction
+            name: storage._.bracket.text_component.mcfunction
         patterns:
-          - name: meta._.compound.text_component.property_separator.mcfunction
-            match: '(?<=[^\{\,])(\,)(?=[^\}\,])'
-            captures:
-              '1':
-                name: storage._.compound_comma.nbt.mcfunction
-          - match: '(?<=[\{\,]) +(?=[^\}\,])'
-          - match: '(?<=[^\{\,]) +(?=[\}\,])'
-          - match: '(?<=\{) +(?=\})'
-          - include: '#text_component.compound_properties'
-  text_component.compound_properties:
+          - include: '#text_component.dict_common'
+          - include: '#text_component.properties'
+  text_component.dict.score:
     patterns:
-      - include: '#text_component.compound_property.bold'
-      - include: '#text_component.compound_property.text'
-      - include: '#text_component.compound_property.selector'
-      - include: '#text_component.compound_property.extra'
+      - begin: '(\{)'
+        end: '(?=\n)|(\})'
+        beginCaptures: *ref_4
+        endCaptures: *ref_5
+        patterns:
+          - include: '#text_component.dict_common'
+          - include: '#text_component.properties.score'
+  text_component.dict.clickEvent:
+    patterns:
+      - begin: '(\{)'
+        end: '(?=\n)|(\})'
+        beginCaptures: *ref_4
+        endCaptures: *ref_5
+        patterns:
+          - include: '#text_component.dict_common'
+          - include: '#text_component.properties.clickEvent'
+  text_component.dict.hoverEvent:
+    patterns:
+      - begin: '(\{)'
+        end: '(?=\n)|(\})'
+        beginCaptures: *ref_4
+        endCaptures: *ref_5
+        patterns:
+          - include: '#text_component.dict_common'
+          - include: '#text_component.properties.hoverEvent'
+  text_component.properties:
+    patterns:
+      - include: '#text_component.property.b_i_u_s_o'
+      - include: '#text_component.property.color'
+      - include: '#text_component.property.text_translate'
+      - include: '#text_component.property.extra_with'
+      - include: '#text_component.property.selector'
+      - include: '#text_component.property.score'
+      - include: '#text_component.property.keybind'
+      - include: '#text_component.property.insertion'
+      - include: '#text_component.property.clickEvent'
+      - include: '#text_component.property.hoverEvent'
       - include: '#error.unknown_compound'
-  text_component.compound_property.bold:
+  text_component.property.b_i_u_s_o:
     patterns:
-      - begin: '(\")(bold)(\") *(\:) *'
+      - begin: >-
+          (\")(bold|italic|underlined|strikethrough|obfuscated)(\") *(\:)
+          *(?=[^\s\,\}])
         end: '(?=\n)|(?= *[\,\}])'
-        captures:
+        beginCaptures: &ref_6
           '1':
             name: string._.string.mcfunction
           '2':
@@ -340,82 +459,87 @@ repository:
         patterns:
           - include: '#text_component.boolean'
           - include: '#error.compound_value'
-  text_component.compound_property.text:
+  text_component.property.text_translate:
     patterns:
-      - begin: '(\")(text)(\") *(\:) *(\")'
-        end: (?=\n)|(\")
-        beginCaptures:
-          '1':
-            name: string._.string.mcfunction
-          '2':
-            name: string._.property.text_component.mcfunction
-          '3':
-            name: string._.string.mcfunction
-          '4':
-            name: storage._.compound_colon.nbt.mcfunction
-          '5':
-            name: string._.string.mcfunction
-        endCaptures:
-          '1':
-            name: string._.string.mcfunction
-        patterns:
-          - include: '#common.double_quoted_string.content'
-          - include: '#error.unknown_string'
-  text_component.compound_property.selector:
-    patterns:
-      - begin: '(\")(selector)(\") *(\:) *(\")'
-        end: (?=\n)|(\")
-        beginCaptures:
-          '1':
-            name: string._.string.mcfunction
-          '2':
-            name: string._.property.text_component.mcfunction
-          '3':
-            name: string._.string.mcfunction
-          '4':
-            name: storage._.compound_colon.nbt.mcfunction
-          '5':
-            name: string._.string.mcfunction
-        endCaptures:
-          '1':
-            name: string._.string.mcfunction
-        patterns:
-          - match: '(\@[parse])(?=\")'
-            name: support.class._.base.target_selector.mcfunction
-          - match: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\")'
-            name: support.class._.uuid.target.mcfunction
-          - match: (\w+)(?=\")
-            name: support.class._.player_name.target.mcfunction
-          - begin: '(\@[parse])(\[)(?= *[\w\]])'
-            end: '(?=\n)|(?=\")|(\])'
-            beginCaptures:
-              '1':
-                name: support.class._.base.target_selector.mcfunction
-              '2':
-                name: support.class._.bracket.target_selector.mcfunction
-            endCaptures:
-              '1':
-                name: support.class._.bracket.target_selector.mcfunction
-            patterns:
-              - include: '#target_selector.content'
-              - include: '#error.unknown_string'
-          - include: '#error.unknown_string'
-  text_component.compound_property.extra:
-    patterns:
-      - begin: '(\")(extra)(\") *(\:) *'
+      - begin: '(\")(text|translate)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        captures:
-          '1':
-            name: string._.string.mcfunction
-          '2':
-            name: string._.property.text_component.mcfunction
-          '3':
-            name: string._.string.mcfunction
-          '4':
-            name: storage._.compound_colon.nbt.mcfunction
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#text_component.string'
+          - include: '#error.compound_value'
+  text_component.property.color:
+    patterns:
+      - begin: '(\")(color)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#text_component.string.color'
+          - include: '#error.compound_value'
+  text_component.property.extra_with:
+    patterns:
+      - begin: '(\")(extra|with)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_6
         patterns:
           - include: '#text_component.list'
           - include: '#error.compound_value'
+  text_component.property.selector:
+    patterns:
+      - begin: '(\")(selector)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#text_component.string.selector'
+          - include: '#error.compound_value'
+  text_component.property.score:
+    patterns:
+      - begin: '(\")(score)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#text_component.dict.score'
+          - include: '#error.compound_value'
+  text_component.property.keybind:
+    patterns:
+      - begin: '(\")(keybind)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#text_component.string.keybind'
+          - include: '#error.compound_value'
+  text_component.property.insertion:
+    patterns:
+      - begin: '(\")(insertion)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#text_component.string.insertion'
+          - include: '#error.compound_value'
+  text_component.property.clickEvent:
+    patterns:
+      - begin: '(\")(clickEvent)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#text_component.dict.clickEvent'
+          - include: '#error.compound_value'
+  text_component.property.hoverEvent:
+    patterns:
+      - begin: '(\")(hoverEvent)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#text_component.dict.hoverEvent'
+          - include: '#error.compound_value'
+  text_component.properties.score:
+    patterns:
+      - include: '#error.unknown_compound'
+  text_component.properties.clickEvent:
+    patterns:
+      - include: '#error.unknown_compound'
+  text_component.properties.hoverEvent:
+    patterns:
+      - include: '#error.unknown_compound'
   target_selector.content:
     patterns:
       - name: meta._.argument_separator.content.target_selector.mcfunction
@@ -609,10 +733,10 @@ repository:
           '2':
             name: support.class._.equals.target_selector.mcfunction
           '3':
-            name: support.class._.bracket.score_map.mcfunction
+            name: storage._.bracket.score_map.mcfunction
         endCaptures:
           '1':
-            name: support.class._.bracket.score_map.mcfunction
+            name: storage._.bracket.score_map.mcfunction
         patterns:
           - include: '#score_map.content'
   target_selector.content.argument.advancements:
@@ -626,10 +750,10 @@ repository:
           '2':
             name: support.class._.equals.target_selector.mcfunction
           '3':
-            name: support.class._.bracket.advancement_map.mcfunction
+            name: storage._.bracket.advancement_map.mcfunction
         endCaptures:
           '1':
-            name: support.class._.bracket.advancement_map.mcfunction
+            name: storage._.bracket.advancement_map.mcfunction
         patterns:
           - include: '#advancement_map.content'
   target_selector.content.argument.nbt:

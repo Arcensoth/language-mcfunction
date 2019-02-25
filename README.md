@@ -96,10 +96,11 @@ Short name                | Full scope name                                     
 `comment.annotation.text` | `comment._.text.annotation.comment.mcfunction`        | `# @returns( the number of blocks)`
 
 ### Customizing commands
-Short name    | Full scope name                         | Examples
-------------- | --------------------------------------- | ----------
-`command`     | `keyword.control._.command.mcfunction`  | `(execute) as @a run (function)`
-`subcommand`  | `keyword.other._.subcommand.mcfunction` | `execute (as) @a (run) function`
+Short name      | Full scope name                         | Examples
+--------------- | --------------------------------------- | ----------
+`command`       | `keyword.control._.command.mcfunction`  | `(execute) as @a run (function)`
+`subcommand`    | `keyword.other._.subcommand.mcfunction` | `execute (as) @a (run) function`
+`command.slash` | `keyword.control._.command.mcfunction`  | `/`
 
 ### Customizing selectors
 Short name                | Full scope name                                               | Examples
@@ -110,12 +111,12 @@ Short name                | Full scope name                                     
 `target_selector.comma`   | `support.class._.comma.target_selector.mcfunction`            | `,`
 `target_selector.not`     | `constant.character.escape._.not.target_selector.mcfunction`  | `!`
 `target_selector.param`   | `keyword.other._.param.target_selector.mcfunction`            | `tag` / `type`
-`score_map.bracket`       | `support.class._.bracket.score_map.mcfunction`                | `{}`
-`score_map.equals`        | `support.class._.equals.score_map.mcfunction`                 | `=`
-`score_map.comma`         | `support.class._.comma.score_map.mcfunction`                  | `,`
-`advancement_map.bracket` | `support.class._.bracket.advancement_map.mcfunction`          | `{}`
-`advancement_map.equals`  | `support.class._.equals.advancement_map.mcfunction`           | `=`
-`advancement_map.comma`   | `support.class._.comma.advancement_map.mcfunction`            | `,`
+`score_map.bracket`       | `storage._.bracket.score_map.mcfunction`                      | `{}`
+`score_map.equals`        | `storage._.equals.score_map.mcfunction`                       | `=`
+`score_map.comma`         | `storage._.comma.score_map.mcfunction`                        | `,`
+`advancement_map.bracket` | `storage._.bracket.advancement_map.mcfunction`                | `{}`
+`advancement_map.equals`  | `storage._.equals.advancement_map.mcfunction`                 | `=`
+`advancement_map.comma`   | `storage._.comma.advancement_map.mcfunction`                  | `,`
 
 ### Customizing NBT
 Short name              | Full scope name                             | Examples
@@ -127,9 +128,14 @@ Short name              | Full scope name                             | Examples
 `nbt.list_comma`        | `storage._.list_comma.nbt.mcfunction`       | `,`
 
 ### Customizing text components
-Short name                          | Full scope name                               | Examples
------------------------------------ | --------------------------------------------- | ----------
-`text_component.compound_property`  | `string._.property.text_component.mcfunction` | `text` / `color` / `selector`
+Short name                        | Full scope name                                       | Examples
+--------------------------------- | ----------------------------------------------------- | ----------
+`text_component.bracket`          | `storage._.bracket.text_component.mcfunction`         | `{}[]`
+`text_component.colon`            | `storage._.colon.text_component.mcfunction`           | `:`
+`text_component.comma`            | `storage._.comma.text_component.mcfunction`           | `,`
+`text_component.property`         | `string._.property.text_component.mcfunction`         | `text` / `color` / `selector`
+`text_component.property.color`   | `string._.color.property.text_component.mcfunction`   | `red` / `green` / `blue`
+`text_component.property.keybind` | `string._.keybind.property.text_component.mcfunction` | `key.drop`
 
 ### Customizing resource locations
 Short name                    | Full scope name                                                 | Examples
@@ -159,11 +165,15 @@ Short name        | Full scope name                               | Examples
 `range.ellipsis`  | `keyword.control._.ellipsis.range.mcfunction` | `10(..)20`
 
 ### Other customizable scopes
-Short name            | Full scope name                                         | Examples
---------------------- | ------------------------------------------------------- | ----------
-`target.uuid`         | `support.class._.uuid.target.mcfunction`                | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
-`target.player_name`  | `support.class._.uuid.target.mcfunction`                | `Arcensoth` / `some_guy`
-`boolean`             | `constant.numeric._.boolean.mcfunction`                 | `true` / `false`
+Short name              | Full scope name                             | Examples
+----------------------- | --------------------------------------------| ----------
+`target.uuid`           | `support.class._.uuid.target.mcfunction`    | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
+`target.player_name`    | `support.class._.uuid.target.mcfunction`    | `Arcensoth` / `some_guy`
+`boolean`               | `constant.numeric._.boolean.mcfunction`     | `true` / `false`
+`generic.dict.bracket`  | `storage._.bracket.dict.generic.mcfunction` | `({) key: value (})`
+`generic.dict.content`  | `string._.content.dict.generic.mcfunction`  | `{( key: value )}`
+`generic.list.bracket`  | `storage._.bracket.list.generic.mcfunction` | `([) item, item (])`
+`generic.list.content`  | `string._.content.list.generic.mcfunction`  | `[( item, item )]`
 
 ## Resources
 - https://github.com/Arcensoth/language-tmdemo
