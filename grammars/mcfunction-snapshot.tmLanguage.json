@@ -502,6 +502,79 @@
         }
       ]
     },
+    "common.position": {
+      "patterns": [
+        {
+          "include": "#common.position.abs_rel"
+        },
+        {
+          "include": "#common.position.local"
+        }
+      ]
+    },
+    "common.position.abs_rel": {
+      "patterns": [
+        {
+          "match": "(?:(\\~)(\\-?\\d*\\.?\\d+)?|(\\-?\\d*\\.?\\d+)) (?:(\\~)(\\-?\\d*\\.?\\d+)?|(\\-?\\d*\\.?\\d+)) (?:(\\~)(\\-?\\d*\\.?\\d+)?|(\\-?\\d*\\.?\\d+))",
+          "captures": {
+            "1": {
+              "name": "keyword.control._.operator.relative.position.mcfunction"
+            },
+            "2": {
+              "name": "constant.numeric._.number.relative.position.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric._.number.absolute.position.mcfunction"
+            },
+            "4": {
+              "name": "keyword.control._.operator.relative.position.mcfunction"
+            },
+            "5": {
+              "name": "constant.numeric._.number.relative.position.mcfunction"
+            },
+            "6": {
+              "name": "constant.numeric._.number.absolute.position.mcfunction"
+            },
+            "7": {
+              "name": "keyword.control._.operator.relative.position.mcfunction"
+            },
+            "8": {
+              "name": "constant.numeric._.number.relative.position.mcfunction"
+            },
+            "9": {
+              "name": "constant.numeric._.number.absolute.position.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "common.position.local": {
+      "patterns": [
+        {
+          "match": "(\\^)(\\-?\\d*\\.?\\d+)? (\\^)(\\-?\\d*\\.?\\d+)? (\\^)(\\-?\\d*\\.?\\d+)?",
+          "captures": {
+            "1": {
+              "name": "keyword.control._.operator.local.position.mcfunction"
+            },
+            "2": {
+              "name": "constant.numeric._.number.local.position.mcfunction"
+            },
+            "3": {
+              "name": "keyword.control._.operator.local.position.mcfunction"
+            },
+            "4": {
+              "name": "constant.numeric._.number.local.position.mcfunction"
+            },
+            "5": {
+              "name": "keyword.control._.operator.local.position.mcfunction"
+            },
+            "6": {
+              "name": "constant.numeric._.number.local.position.mcfunction"
+            }
+          }
+        }
+      ]
+    },
     "common.unquoted_string": {
       "patterns": [
         {
@@ -821,11 +894,13 @@
         }
       ]
     },
-    "text_component.boolean": [
-      {
-        "include": "#common.boolean"
-      }
-    ],
+    "text_component.boolean": {
+      "patterns": [
+        {
+          "include": "#common.boolean"
+        }
+      ]
+    },
     "text_component.string": {
       "patterns": [
         {
@@ -887,7 +962,7 @@
         }
       ]
     },
-    "text_component.string.insertion": {
+    "text_component.string.command": {
       "patterns": [
         {
           "begin": "(\\\")(\\/)",
@@ -916,7 +991,7 @@
         }
       ]
     },
-    "text_component.string.selector": {
+    "text_component.string.target": {
       "patterns": [
         {
           "begin": "(\\\")",
@@ -933,7 +1008,7 @@
           },
           "patterns": [
             {
-              "include": "#text_component.string.selector.content"
+              "include": "#text_component.string.target.content"
             },
             {
               "include": "#error.double_quoted_string.content"
@@ -942,7 +1017,7 @@
         }
       ]
     },
-    "text_component.string.selector.content": {
+    "text_component.string.target.content": {
       "patterns": [
         {
           "match": "(?<=\\\")(\\@[parse])(?=\\\")",
@@ -980,6 +1055,120 @@
               "include": "#error.double_quoted_string.content"
             }
           ]
+        }
+      ]
+    },
+    "text_component.string.nbt": {
+      "patterns": [
+        {
+          "begin": "(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.nbt.content"
+            },
+            {
+              "include": "#error.double_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.string.nbt.content": {
+      "patterns": []
+    },
+    "text_component.string.position": {
+      "patterns": [
+        {
+          "begin": "(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.position.content"
+            },
+            {
+              "include": "#error.double_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.string.position.content": {
+      "patterns": [
+        {
+          "match": "(?<=\\\")(?:(\\~)(\\-?\\d*\\.?\\d+)?|(\\-?\\d*\\.?\\d+)) (?:(\\~)(\\-?\\d*\\.?\\d+)?|(\\-?\\d*\\.?\\d+)) (?:(\\~)(\\-?\\d*\\.?\\d+)?|(\\-?\\d*\\.?\\d+))(?=\\\")",
+          "captures": {
+            "1": {
+              "name": "keyword.control._.operator.relative.position.mcfunction"
+            },
+            "2": {
+              "name": "constant.numeric._.number.relative.position.mcfunction"
+            },
+            "3": {
+              "name": "constant.numeric._.number.absolute.position.mcfunction"
+            },
+            "4": {
+              "name": "keyword.control._.operator.relative.position.mcfunction"
+            },
+            "5": {
+              "name": "constant.numeric._.number.relative.position.mcfunction"
+            },
+            "6": {
+              "name": "constant.numeric._.number.absolute.position.mcfunction"
+            },
+            "7": {
+              "name": "keyword.control._.operator.relative.position.mcfunction"
+            },
+            "8": {
+              "name": "constant.numeric._.number.relative.position.mcfunction"
+            },
+            "9": {
+              "name": "constant.numeric._.number.absolute.position.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "(?<=\\\")(\\^)(\\-?\\d*\\.?\\d+)? (\\^)(\\-?\\d*\\.?\\d+)? (\\^)(\\-?\\d*\\.?\\d+)?(?=\\\")",
+          "captures": {
+            "1": {
+              "name": "keyword.control._.operator.local.position.mcfunction"
+            },
+            "2": {
+              "name": "constant.numeric._.number.local.position.mcfunction"
+            },
+            "3": {
+              "name": "keyword.control._.operator.local.position.mcfunction"
+            },
+            "4": {
+              "name": "constant.numeric._.number.local.position.mcfunction"
+            },
+            "5": {
+              "name": "keyword.control._.operator.local.position.mcfunction"
+            },
+            "6": {
+              "name": "constant.numeric._.number.local.position.mcfunction"
+            }
+          }
         }
       ]
     },
@@ -1186,6 +1375,18 @@
           "include": "#text_component.property.hoverEvent"
         },
         {
+          "include": "#text_component.property.nbt"
+        },
+        {
+          "include": "#text_component.property.entity"
+        },
+        {
+          "include": "#text_component.property.block"
+        },
+        {
+          "include": "#text_component.property.interpret"
+        },
+        {
           "include": "#error.compound_value"
         }
       ]
@@ -1331,7 +1532,7 @@
           },
           "patterns": [
             {
-              "include": "#text_component.string.selector"
+              "include": "#text_component.string.target"
             },
             {
               "include": "#error.compound_value"
@@ -1421,7 +1622,7 @@
           },
           "patterns": [
             {
-              "include": "#text_component.string.insertion"
+              "include": "#text_component.string.command"
             },
             {
               "include": "#error.compound_value"
@@ -1482,6 +1683,126 @@
           "patterns": [
             {
               "include": "#text_component.dict.hoverEvent"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.property.nbt": {
+      "patterns": [
+        {
+          "begin": "(\\\")(nbt)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.nbt"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.property.entity": {
+      "patterns": [
+        {
+          "begin": "(\\\")(entity)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.target"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.property.block": {
+      "patterns": [
+        {
+          "begin": "(\\\")(block)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.position"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.property.interpret": {
+      "patterns": [
+        {
+          "begin": "(\\\")(interpret)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.boolean"
             },
             {
               "include": "#error.compound_value"

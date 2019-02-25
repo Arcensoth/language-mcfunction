@@ -88,6 +88,23 @@ tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_entity", "value": "{
 tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_entity", "value": "{name: \"Skylinerw\", id: \"Not a valid UUID\"}"}}
 tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_item", "value": "{id: 'minecraft:stone', tag: {display: {Lore: ['Lore line 1', 'Lore line 2']}}}"}}
 
+# "nbt", "entity", "block", and "interpret"
+tellraw @s {"entity": "@s", "nbt": "SelectedItem"}
+tellraw @s {"entity": "@s", "nbt": "SelectedItem.tag"}
+tellraw @s {"entity": "@e[sort=nearest, limit=1]", "nbt": "SelectedItem.tag.display"}
+tellraw @s {"entity": "@s", "nbt": "SelectedItem.tag.display.Name", "interpret": true}
+tellraw @s {"block": "~ ~-1 ~", "nbt": "RecordItem"}
+tellraw @s {"block": "~ ~-1 ~", "nbt": "RecordItem.tag"}
+tellraw @s {"block": "~ ~-1 ~", "nbt": "RecordItem.tag.display"}
+tellraw @s {"block": "10 20 30", "nbt": "RecordItem"}
+tellraw @s {"block": "10 ~20 30", "nbt": "RecordItem"}
+tellraw @s {"block": "10 ~ 30", "nbt": "RecordItem"}
+tellraw @s {"block": "~10 20 ~30", "nbt": "RecordItem"}
+tellraw @s {"block": "~10 ~20 ~30", "nbt": "RecordItem"}
+tellraw @s {"block": "~ ~ ~", "nbt": "RecordItem"}
+tellraw @s {"block": "^10 ^20 ^30", "nbt": "RecordItem"}
+tellraw @s {"block": "^10 ^ ^30", "nbt": "RecordItem"}
+
 # nested lists
 tellraw @s ["Hello ", {"selector": "@e[sort=nearest, limit=1]"}, ", how are you?"]
 tellraw @s ["Hello ", {"selector": "@e[sort=nearest, limit=1]"}, ", how are you?"]

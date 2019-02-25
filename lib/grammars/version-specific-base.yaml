@@ -77,6 +77,11 @@ names:
   range.minimum: constant.numeric._.minimum.range.mcfunction
   range.maximum: constant.numeric._.maximum.range.mcfunction
   range.ellipsis: keyword.control._.ellipsis.range.mcfunction
+  position.absolute.number: constant.numeric._.number.absolute.position.mcfunction
+  position.relative.operator: keyword.control._.operator.relative.position.mcfunction
+  position.relative.number: constant.numeric._.number.relative.position.mcfunction
+  position.local.operator: keyword.control._.operator.local.position.mcfunction
+  position.local.number: constant.numeric._.number.local.position.mcfunction
 
   # scopes for other types of arguments accepted by `minecraft:entity`
   target.uuid: support.class._.uuid.target.mcfunction
@@ -141,9 +146,18 @@ variables:
   parameterized_target_selector.begin: '{{parameterized_target_selector.base}}{{parameterized_target_selector.args_l}}(?={{pad}}[\w\]])'
   parameterized_target_selector.next: "{{parameterized_target_selector.args_r}}"
 
+  # numbers
   integer: '(\-?\d*)'
   positive_integer: '(0*[1-9]\d*)'
   double: '(\-?\d*\.?\d+)'
+
+  # various coordinates and positions
+  coordinate.absolute: "{{double}}"
+  coordinate.relative: '(\~){{double}}?'
+  coordinate.local: '(\^){{double}}?'
+  coordinate.abs_rel: "(?:{{coordinate.relative}}|{{coordinate.absolute}})"
+  position.abs_rel: "{{coordinate.abs_rel}} {{coordinate.abs_rel}} {{coordinate.abs_rel}}"
+  position.local: "{{coordinate.local}} {{coordinate.local}} {{coordinate.local}}"
 
   boolean: "(true|false)"
 
@@ -175,6 +189,40 @@ capturesRepository:
       name: "#invalid"
     2:
       name: "#underline"
+
+  position.abs_rel:
+    1:
+      name: "#position.relative.operator"
+    2:
+      name: "#position.relative.number"
+    3:
+      name: "#position.absolute.number"
+    4:
+      name: "#position.relative.operator"
+    5:
+      name: "#position.relative.number"
+    6:
+      name: "#position.absolute.number"
+    7:
+      name: "#position.relative.operator"
+    8:
+      name: "#position.relative.number"
+    9:
+      name: "#position.absolute.number"
+
+  position.local:
+    1:
+      name: "#position.local.operator"
+    2:
+      name: "#position.local.number"
+    3:
+      name: "#position.local.operator"
+    4:
+      name: "#position.local.number"
+    5:
+      name: "#position.local.operator"
+    6:
+      name: "#position.local.number"
 
   quoted_string.begin:
     1:
@@ -479,6 +527,21 @@ repository:
       - match: '(?<!\w){{boolean}}(?!\w)'
         name: "#boolean"
 
+  common.position:
+    patterns:
+      - include: "#common.position.abs_rel"
+      - include: "#common.position.local"
+
+  common.position.abs_rel:
+    patterns:
+      - match: "{{position.abs_rel}}"
+        captures: "#position.abs_rel"
+
+  common.position.local:
+    patterns:
+      - match: "{{position.local}}"
+        captures: "#position.local"
+
   common.unquoted_string:
     patterns:
       - match: "{{word}}"
@@ -658,7 +721,8 @@ repository:
       - include: "#text_component.dict"
 
   text_component.boolean:
-    - include: "#common.boolean"
+    patterns:
+      - include: "#common.boolean"
 
   text_component.string:
     patterns:
@@ -686,7 +750,7 @@ repository:
             name: "#text_component.property.keybind"
           - include: "#error.double_quoted_string.content"
 
-  text_component.string.insertion:
+  text_component.string.command:
     patterns:
       - begin: '{{dqs.begin}}(\/)'
         end: "{{dqs.end}}"
@@ -701,17 +765,17 @@ repository:
           - include: "#commands"
       - include: "#common.double_quoted_string"
 
-  text_component.string.selector:
+  text_component.string.target:
     patterns:
       - begin: "{{dqs.begin}}"
         end: "{{dqs.end}}"
         beginCaptures: "#quoted_string.begin"
         endCaptures: "#quoted_string.end"
         patterns:
-          - include: "#text_component.string.selector.content"
+          - include: "#text_component.string.target.content"
           - include: "#error.double_quoted_string.content"
 
-  text_component.string.selector.content:
+  text_component.string.target.content:
     patterns:
       # (1) selector without arguments
       - match: '(?<=\"){{basic_target_selector}}(?=\")'
@@ -739,6 +803,37 @@ repository:
         patterns:
           - include: "#target_selector.content"
           - include: "#error.double_quoted_string.content"
+
+  text_component.string.nbt:
+    patterns:
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - include: "#text_component.string.nbt.content"
+          - include: "#error.double_quoted_string.content"
+
+  text_component.string.nbt.content:
+    # FIXME implement nbt path
+    patterns: []
+
+  text_component.string.position:
+    patterns:
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - include: "#text_component.string.position.content"
+          - include: "#error.double_quoted_string.content"
+
+  text_component.string.position.content:
+    patterns:
+      - match: '(?<=\"){{position.abs_rel}}(?=\")'
+        captures: "#position.abs_rel"
+      - match: '(?<=\"){{position.local}}(?=\")'
+        captures: "#position.local"
 
   text_component.list_common:
     patterns:
@@ -817,6 +912,7 @@ repository:
 
   text_component.properties:
     patterns:
+      # 1.13
       - include: "#text_component.property.b_i_u_s_o"
       - include: "#text_component.property.color"
       - include: "#text_component.property.text_translate"
@@ -827,6 +923,13 @@ repository:
       - include: "#text_component.property.insertion"
       - include: "#text_component.property.clickEvent"
       - include: "#text_component.property.hoverEvent"
+
+      # 1.14
+      - include: "#text_component.property.nbt"
+      - include: "#text_component.property.entity"
+      - include: "#text_component.property.block"
+      - include: "#text_component.property.interpret"
+
       - include: "#error.compound_value"
 
   text_component.property.b_i_u_s_o:
@@ -871,7 +974,7 @@ repository:
         end: "{{tc.p.end}}"
         beginCaptures: "#text_component.property"
         patterns:
-          - include: "#text_component.string.selector"
+          - include: "#text_component.string.target"
           - include: "#error.compound_value"
 
   text_component.property.score:
@@ -898,7 +1001,7 @@ repository:
         end: "{{tc.p.end}}"
         beginCaptures: "#text_component.property"
         patterns:
-          - include: "#text_component.string.insertion"
+          - include: "#text_component.string.command"
           - include: "#error.compound_value"
 
   text_component.property.clickEvent:
@@ -917,6 +1020,42 @@ repository:
         beginCaptures: "#text_component.property"
         patterns:
           - include: "#text_component.dict.hoverEvent"
+          - include: "#error.compound_value"
+
+  text_component.property.nbt:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(nbt){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.nbt"
+          - include: "#error.compound_value"
+
+  text_component.property.entity:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(entity){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.target"
+          - include: "#error.compound_value"
+
+  text_component.property.block:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(block){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.position"
+          - include: "#error.compound_value"
+
+  text_component.property.interpret:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(interpret){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.boolean"
           - include: "#error.compound_value"
 
   text_component.properties.score:

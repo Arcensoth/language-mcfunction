@@ -157,12 +157,17 @@ Short name              | Full scope name                                       
 `scoreboard_objective`  | `string._.scoreboard_objective.mcfunction`              | `mypack.points`
 
 ### Customizing numbers
-Short name        | Full scope name                               | Examples
------------------ | --------------------------------------------- | ----------
-`number`          | `constant.numeric._.number.mcfunction`        | `0` / `123` / `-99`
-`range.minimum`   | `constant.numeric._.minimum.range.mcfunction` | `(10)..20`
-`range.maximum`   | `constant.numeric._.maximum.range.mcfunction` | `10..(20)`
-`range.ellipsis`  | `keyword.control._.ellipsis.range.mcfunction` | `10(..)20`
+Short name                    | Full scope name                                             | Examples
+----------------------------- | ----------------------------------------------------------- | ----------
+`number`                      | `constant.numeric._.number.mcfunction`                      | `0` / `123` / `-99`
+`range.minimum`               | `constant.numeric._.minimum.range.mcfunction`               | `(10)..20`
+`range.maximum`               | `constant.numeric._.maximum.range.mcfunction`               | `10..(20)`
+`range.ellipsis`              | `keyword.control._.ellipsis.range.mcfunction`               | `10(..)20`
+`position.absolute.number`    | `constant.numeric._.number.absolute.position.mcfunction`    | `(10) ~20 (30)`
+`position.relative.operator`  | `keyword.control._.operator.relative.position.mcfunction`   | `10 (~)20 30`
+`position.relative.number`    | `constant.numeric._.number.relative.position.mcfunction`    | `10 ~(20) 30`
+`position.local.operator`     | `keyword.control._.operator.local.position.mcfunction`      | `(^)10 (^)20 (^)30`
+`position.local.number`       | `constant.numeric._.number.local.position.mcfunction`       | `^(10) ^(20) ^(30)`
 
 ### Other customizable scopes
 Short name              | Full scope name                             | Examples

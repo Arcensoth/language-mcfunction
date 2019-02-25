@@ -88,3 +88,13 @@ tellraw @s {"selector": "@e[sort=nearest,"}
 tellraw @s {"selector": "@e[sort=nearest,]"}
 tellraw @s [{"extra": "x"}]
 tellraw @s [{"extra": {"foo": [0, [1, 2], 3]}}]
+
+tellraw @s {"block": "", "nbt": "RecordItem"}
+tellraw @s {"block": "no", "nbt": "RecordItem"}
+tellraw @s {"block": true, "nbt": "RecordItem"}
+tellraw @s {"block": 0, "nbt": "RecordItem"}
+tellraw @s {"block": 1 2 3, "nbt": "RecordItem"}
+tellraw @s {"block": "10 20", "nbt": "RecordItem"}
+tellraw @s {"block": "^10 20 30", "nbt": "RecordItem"}
+tellraw @s {"block": "10 ^20 30", "nbt": "RecordItem"}
+tellraw @s {"block": "10 20 ^30", "nbt": "RecordItem"}

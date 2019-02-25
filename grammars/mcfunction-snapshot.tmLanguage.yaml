@@ -192,6 +192,51 @@ repository:
     patterns:
       - match: (?<!\w)(true|false)(?!\w)
         name: constant.numeric._.boolean.mcfunction
+  common.position:
+    patterns:
+      - include: '#common.position.abs_rel'
+      - include: '#common.position.local'
+  common.position.abs_rel:
+    patterns:
+      - match: >-
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+        captures: &ref_4
+          '1':
+            name: keyword.control._.operator.relative.position.mcfunction
+          '2':
+            name: constant.numeric._.number.relative.position.mcfunction
+          '3':
+            name: constant.numeric._.number.absolute.position.mcfunction
+          '4':
+            name: keyword.control._.operator.relative.position.mcfunction
+          '5':
+            name: constant.numeric._.number.relative.position.mcfunction
+          '6':
+            name: constant.numeric._.number.absolute.position.mcfunction
+          '7':
+            name: keyword.control._.operator.relative.position.mcfunction
+          '8':
+            name: constant.numeric._.number.relative.position.mcfunction
+          '9':
+            name: constant.numeric._.number.absolute.position.mcfunction
+  common.position.local:
+    patterns:
+      - match: (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?
+        captures: &ref_5
+          '1':
+            name: keyword.control._.operator.local.position.mcfunction
+          '2':
+            name: constant.numeric._.number.local.position.mcfunction
+          '3':
+            name: keyword.control._.operator.local.position.mcfunction
+          '4':
+            name: constant.numeric._.number.local.position.mcfunction
+          '5':
+            name: keyword.control._.operator.local.position.mcfunction
+          '6':
+            name: constant.numeric._.number.local.position.mcfunction
   common.unquoted_string:
     patterns:
       - match: '([\w\.\-\+]+)'
@@ -325,7 +370,8 @@ repository:
       - include: '#text_component.list'
       - include: '#text_component.dict'
   text_component.boolean:
-    - include: '#common.boolean'
+    patterns:
+      - include: '#common.boolean'
   text_component.string:
     patterns:
       - include: '#common.double_quoted_string'
@@ -351,7 +397,7 @@ repository:
               (key\.forward|key\.left|key\.back|key\.right|key\.jump|key\.sneak|key\.sprint|key\.inventory|key\.swapHands|key\.drop|key\.use|key\.attack|key\.pickItem|key\.chat|key\.playerlist|key\.command|key\.screenshot|key\.togglePerspective|key\.smoothCamera|key\.fullscreen|key\.spectatorOutlines|key\.hotbar\.1|key\.hotbar\.2|key\.hotbar\.3|key\.hotbar\.4|key\.hotbar\.5|key\.hotbar\.6|key\.hotbar\.7|key\.hotbar\.8|key\.hotbar\.9|key\.saveToolbarActivator|key\.loadToolbarActivator)
             name: string._.keybind.property.text_component.mcfunction
           - include: '#error.double_quoted_string.content'
-  text_component.string.insertion:
+  text_component.string.command:
     patterns:
       - begin: (\")(\/)
         end: (?=\n)|(\")
@@ -364,16 +410,16 @@ repository:
         patterns:
           - include: '#commands'
       - include: '#common.double_quoted_string'
-  text_component.string.selector:
+  text_component.string.target:
     patterns:
       - begin: (\")
         end: (?=\n)|(\")
         beginCaptures: *ref_1
         endCaptures: *ref_2
         patterns:
-          - include: '#text_component.string.selector.content'
+          - include: '#text_component.string.target.content'
           - include: '#error.double_quoted_string.content'
-  text_component.string.selector.content:
+  text_component.string.target.content:
     patterns:
       - match: '(?<=\")(\@[parse])(?=\")'
         name: support.class._.base.target_selector.mcfunction
@@ -394,6 +440,37 @@ repository:
         patterns:
           - include: '#target_selector.content'
           - include: '#error.double_quoted_string.content'
+  text_component.string.nbt:
+    patterns:
+      - begin: (\")
+        end: (?=\n)|(\")
+        beginCaptures: *ref_1
+        endCaptures: *ref_2
+        patterns:
+          - include: '#text_component.string.nbt.content'
+          - include: '#error.double_quoted_string.content'
+  text_component.string.nbt.content:
+    patterns: []
+  text_component.string.position:
+    patterns:
+      - begin: (\")
+        end: (?=\n)|(\")
+        beginCaptures: *ref_1
+        endCaptures: *ref_2
+        patterns:
+          - include: '#text_component.string.position.content'
+          - include: '#error.double_quoted_string.content'
+  text_component.string.position.content:
+    patterns:
+      - match: >-
+          (?<=\")(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))(?=\")
+        captures: *ref_4
+      - match: >-
+          (?<=\")(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?
+          (\^)(\-?\d*\.?\d+)?(?=\")
+        captures: *ref_5
   text_component.list_common:
     patterns:
       - match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
@@ -429,10 +506,10 @@ repository:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures: &ref_4
+        beginCaptures: &ref_6
           '1':
             name: storage._.bracket.text_component.mcfunction
-        endCaptures: &ref_5
+        endCaptures: &ref_7
           '1':
             name: storage._.bracket.text_component.mcfunction
         patterns:
@@ -442,8 +519,8 @@ repository:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures: *ref_4
-        endCaptures: *ref_5
+        beginCaptures: *ref_6
+        endCaptures: *ref_7
         patterns:
           - include: '#text_component.dict_common'
           - include: '#text_component.properties.score'
@@ -451,8 +528,8 @@ repository:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures: *ref_4
-        endCaptures: *ref_5
+        beginCaptures: *ref_6
+        endCaptures: *ref_7
         patterns:
           - include: '#text_component.dict_common'
           - include: '#text_component.properties.clickEvent'
@@ -460,8 +537,8 @@ repository:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures: *ref_4
-        endCaptures: *ref_5
+        beginCaptures: *ref_6
+        endCaptures: *ref_7
         patterns:
           - include: '#text_component.dict_common'
           - include: '#text_component.properties.hoverEvent'
@@ -477,6 +554,10 @@ repository:
       - include: '#text_component.property.insertion'
       - include: '#text_component.property.clickEvent'
       - include: '#text_component.property.hoverEvent'
+      - include: '#text_component.property.nbt'
+      - include: '#text_component.property.entity'
+      - include: '#text_component.property.block'
+      - include: '#text_component.property.interpret'
       - include: '#error.compound_value'
   text_component.property.b_i_u_s_o:
     patterns:
@@ -484,7 +565,7 @@ repository:
           (\")(bold|italic|underlined|strikethrough|obfuscated)(\") *(\:)
           *(?=[^\s\,\}])
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: &ref_6
+        beginCaptures: &ref_8
           '1':
             name: string._.string.mcfunction
           '2':
@@ -500,7 +581,7 @@ repository:
     patterns:
       - begin: '(\")(text|translate)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_6
+        beginCaptures: *ref_8
         patterns:
           - include: '#text_component.string'
           - include: '#error.compound_value'
@@ -508,7 +589,7 @@ repository:
     patterns:
       - begin: '(\")(color)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_6
+        beginCaptures: *ref_8
         patterns:
           - include: '#text_component.string.color'
           - include: '#error.compound_value'
@@ -516,7 +597,7 @@ repository:
     patterns:
       - begin: '(\")(extra|with)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_6
+        beginCaptures: *ref_8
         patterns:
           - include: '#text_component.list'
           - include: '#error.compound_value'
@@ -524,15 +605,15 @@ repository:
     patterns:
       - begin: '(\")(selector)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_6
+        beginCaptures: *ref_8
         patterns:
-          - include: '#text_component.string.selector'
+          - include: '#text_component.string.target'
           - include: '#error.compound_value'
   text_component.property.score:
     patterns:
       - begin: '(\")(score)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_6
+        beginCaptures: *ref_8
         patterns:
           - include: '#text_component.dict.score'
           - include: '#error.compound_value'
@@ -540,7 +621,7 @@ repository:
     patterns:
       - begin: '(\")(keybind)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_6
+        beginCaptures: *ref_8
         patterns:
           - include: '#text_component.string.keybind'
           - include: '#error.compound_value'
@@ -548,15 +629,15 @@ repository:
     patterns:
       - begin: '(\")(insertion)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_6
+        beginCaptures: *ref_8
         patterns:
-          - include: '#text_component.string.insertion'
+          - include: '#text_component.string.command'
           - include: '#error.compound_value'
   text_component.property.clickEvent:
     patterns:
       - begin: '(\")(clickEvent)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_6
+        beginCaptures: *ref_8
         patterns:
           - include: '#text_component.dict.clickEvent'
           - include: '#error.compound_value'
@@ -564,9 +645,41 @@ repository:
     patterns:
       - begin: '(\")(hoverEvent)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_6
+        beginCaptures: *ref_8
         patterns:
           - include: '#text_component.dict.hoverEvent'
+          - include: '#error.compound_value'
+  text_component.property.nbt:
+    patterns:
+      - begin: '(\")(nbt)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_8
+        patterns:
+          - include: '#text_component.string.nbt'
+          - include: '#error.compound_value'
+  text_component.property.entity:
+    patterns:
+      - begin: '(\")(entity)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_8
+        patterns:
+          - include: '#text_component.string.target'
+          - include: '#error.compound_value'
+  text_component.property.block:
+    patterns:
+      - begin: '(\")(block)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_8
+        patterns:
+          - include: '#text_component.string.position'
+          - include: '#error.compound_value'
+  text_component.property.interpret:
+    patterns:
+      - begin: '(\")(interpret)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_8
+        patterns:
+          - include: '#text_component.boolean'
           - include: '#error.compound_value'
   text_component.properties.score:
     patterns:

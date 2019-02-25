@@ -770,6 +770,121 @@
           </dict>
         </array>
       </dict>
+      <key>common.position</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.position.abs_rel</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#common.position.local</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.position.abs_rel</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.relative.position.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.relative.position.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.absolute.position.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.relative.position.mcfunction</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.relative.position.mcfunction</string>
+              </dict>
+              <key>6</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.absolute.position.mcfunction</string>
+              </dict>
+              <key>7</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.relative.position.mcfunction</string>
+              </dict>
+              <key>8</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.relative.position.mcfunction</string>
+              </dict>
+              <key>9</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.absolute.position.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>common.position.local</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.local.position.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.local.position.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.local.position.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.local.position.mcfunction</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.local.position.mcfunction</string>
+              </dict>
+              <key>6</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.local.position.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
       <key>common.unquoted_string</key>
       <dict>
         <key>patterns</key>
@@ -1252,12 +1367,15 @@
         </array>
       </dict>
       <key>text_component.boolean</key>
-      <array>
-        <dict>
-          <key>include</key>
-          <string>#common.boolean</string>
-        </dict>
-      </array>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.boolean</string>
+          </dict>
+        </array>
+      </dict>
       <key>text_component.string</key>
       <dict>
         <key>patterns</key>
@@ -1350,7 +1468,7 @@
           </dict>
         </array>
       </dict>
-      <key>text_component.string.insertion</key>
+      <key>text_component.string.command</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -1394,7 +1512,7 @@
           </dict>
         </array>
       </dict>
-      <key>text_component.string.selector</key>
+      <key>text_component.string.target</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -1423,7 +1541,7 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#text_component.string.selector.content</string>
+                <string>#text_component.string.target.content</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -1433,7 +1551,7 @@
           </dict>
         </array>
       </dict>
-      <key>text_component.string.selector.content</key>
+      <key>text_component.string.target.content</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -1492,6 +1610,184 @@
                 <string>#error.double_quoted_string.content</string>
               </dict>
             </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.string.nbt</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.nbt.content</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.double_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.string.nbt.content</key>
+      <dict>
+        <key>patterns</key>
+        <array/>
+      </dict>
+      <key>text_component.string.position</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.position.content</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.double_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.string.position.content</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(?&lt;=\")(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))(?=\")</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.relative.position.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.relative.position.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.absolute.position.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.relative.position.mcfunction</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.relative.position.mcfunction</string>
+              </dict>
+              <key>6</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.absolute.position.mcfunction</string>
+              </dict>
+              <key>7</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.relative.position.mcfunction</string>
+              </dict>
+              <key>8</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.relative.position.mcfunction</string>
+              </dict>
+              <key>9</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.absolute.position.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(?&lt;=\")(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?(?=\")</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.local.position.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.local.position.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.local.position.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.local.position.mcfunction</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.local.position.mcfunction</string>
+              </dict>
+              <key>6</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.local.position.mcfunction</string>
+              </dict>
+            </dict>
           </dict>
         </array>
       </dict>
@@ -1794,6 +2090,22 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#text_component.property.nbt</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.property.entity</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.property.block</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.property.interpret</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#error.compound_value</string>
           </dict>
         </array>
@@ -2018,7 +2330,7 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#text_component.string.selector</string>
+                <string>#text_component.string.target</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -2156,7 +2468,7 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#text_component.string.insertion</string>
+                <string>#text_component.string.command</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -2249,6 +2561,190 @@
               <dict>
                 <key>include</key>
                 <string>#text_component.dict.hoverEvent</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.nbt</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(nbt)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.nbt</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.entity</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(entity)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.target</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.block</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(block)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.position</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.interpret</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(interpret)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.boolean</string>
               </dict>
               <dict>
                 <key>include</key>
