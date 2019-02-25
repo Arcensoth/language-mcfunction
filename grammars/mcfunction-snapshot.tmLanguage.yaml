@@ -71,56 +71,91 @@ repository:
         name: invalid.illegal._.invalid.mcfunction
       '2':
         name: markup.underline._.underline.mcfunction
-  error.unknown_string:
-    patterns:
-      - match: '(([^\n\"]+))'
-        captures: *ref_0
-  error.unknown_compound:
-    patterns:
-      - match: '(([^\n\}]+))'
-        captures: *ref_0
-  error.unknown_list:
-    patterns:
-      - match: '(([^\n\]]+))'
-        captures: *ref_0
-  error.unknown_command:
+  error.command_line:
     name: meta._.unknown_command.mcfunction
     match: ((.*))$
     captures: *ref_0
   error.compound_value:
     patterns:
-      - include: '#error.compound'
-      - include: '#error.list'
-      - match: '(([^\n\{\[\,\}]))'
+      - include: '#error.block_value'
+      - match: '(([^\n\}\,]))'
         captures: *ref_0
-  error.compound:
+  error.list_value:
+    patterns:
+      - include: '#error.block_value'
+      - match: '(([^\n\]\,]))'
+        captures: *ref_0
+  error.block_value:
+    patterns:
+      - include: '#error.dict'
+      - include: '#error.list'
+      - include: '#error.quoted_string'
+  error.block:
+    patterns:
+      - match: '(([^\n\{\}\[\]\"\'']+))'
+        captures: *ref_0
+      - include: '#error.block_value'
+  error.dict:
     patterns:
       - begin: '((\{))'
-        end: '(?=\n)|((\}))'
+        end: '((?=\n)|(\}))'
         beginCaptures: *ref_0
         endCaptures: *ref_0
-        contentName: invalid.illegal._.invalid.mcfunction
         patterns:
-          - include: '#error.compound'
-          - include: '#error.list'
-          - match: '(([^\n\{\[\}]))'
-            captures: *ref_0
+          - include: '#error.block'
   error.list:
     patterns:
       - begin: '((\[))'
-        end: '(?=\n)|((\]))'
+        end: '((?=\n)|(\]))'
         beginCaptures: *ref_0
         endCaptures: *ref_0
-        contentName: invalid.illegal._.invalid.mcfunction
         patterns:
-          - include: '#error.compound'
-          - include: '#error.list'
-          - match: '(([^\n\{\[\]]))'
-            captures: *ref_0
+          - include: '#error.block'
+  error.quoted_string:
+    patterns:
+      - include: '#error.double_quoted_string'
+      - include: '#error.single_quoted_string'
+  error.double_quoted_string:
+    patterns:
+      - begin: ((\"))
+        end: ((?=\n)|(\"))
+        beginCaptures: *ref_0
+        endCaptures: *ref_0
+        patterns:
+          - include: '#error.double_quoted_string.content'
+  error.single_quoted_string:
+    patterns:
+      - begin: ((\'))
+        end: ((?=\n)|(\'))
+        beginCaptures: *ref_0
+        endCaptures: *ref_0
+        patterns:
+          - include: '#error.single_quoted_string.content'
+  error.double_quoted_string.content:
+    patterns:
+      - match: '(([^\\\"\n]))'
+        captures: *ref_0
+      - match: '((\\[^\n]))'
+        captures: *ref_0
+      - match: ((\\))
+        captures: *ref_0
+  error.single_quoted_string.content:
+    patterns:
+      - match: '(([^\\\''\n]))'
+        captures: *ref_0
+      - match: '((\\[^\n]))'
+        captures: *ref_0
+      - match: ((\\))
+        captures: *ref_0
   common.block:
     patterns:
-      - match: '[^\n\{\}\[\]]+'
+      - match: '[^\n\{\}\[\]\"\'']+'
         name: string._.content.dict.generic.mcfunction
+      - include: '#common.dict'
+      - include: '#common.list'
+      - include: '#common.quoted_string'
+  common.dict:
+    patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
         beginCaptures:
@@ -131,6 +166,8 @@ repository:
             name: storage._.bracket.dict.generic.mcfunction
         patterns:
           - include: '#common.block'
+  common.list:
+    patterns:
       - begin: '(\[)'
         end: '(?=\n)|(\])'
         beginCaptures:
@@ -267,7 +304,7 @@ repository:
             name: support.class._.bracket.target_selector.mcfunction
         patterns:
           - include: '#target_selector.content'
-          - include: '#error.unknown_command'
+          - include: '#error.command_line'
       - match: '(\@[parse])'
         name: support.class._.base.target_selector.mcfunction
       - match: '([^\n])'
@@ -302,7 +339,7 @@ repository:
           - match: >-
               (black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|dark_gray|blue|green|aqua|red|light_purple|yellow|white)
             name: string._.color.property.text_component.mcfunction
-          - include: '#error.unknown_string'
+          - include: '#error.double_quoted_string.content'
   text_component.string.keybind:
     patterns:
       - begin: (\")
@@ -313,7 +350,7 @@ repository:
           - match: >-
               (key\.forward|key\.left|key\.back|key\.right|key\.jump|key\.sneak|key\.sprint|key\.inventory|key\.swapHands|key\.drop|key\.use|key\.attack|key\.pickItem|key\.chat|key\.playerlist|key\.command|key\.screenshot|key\.togglePerspective|key\.smoothCamera|key\.fullscreen|key\.spectatorOutlines|key\.hotbar\.1|key\.hotbar\.2|key\.hotbar\.3|key\.hotbar\.4|key\.hotbar\.5|key\.hotbar\.6|key\.hotbar\.7|key\.hotbar\.8|key\.hotbar\.9|key\.saveToolbarActivator|key\.loadToolbarActivator)
             name: string._.keybind.property.text_component.mcfunction
-          - include: '#error.unknown_string'
+          - include: '#error.double_quoted_string.content'
   text_component.string.insertion:
     patterns:
       - begin: (\")(\/)
@@ -335,17 +372,17 @@ repository:
         endCaptures: *ref_2
         patterns:
           - include: '#text_component.string.selector.content'
-          - include: '#error.unknown_string'
+          - include: '#error.double_quoted_string.content'
   text_component.string.selector.content:
     patterns:
-      - match: '(\@[parse])(?=\")'
+      - match: '(?<=\")(\@[parse])(?=\")'
         name: support.class._.base.target_selector.mcfunction
-      - match: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\")'
+      - match: '(?<=\")([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\")'
         name: support.class._.uuid.target.mcfunction
-      - match: (\w+)(?=\")
+      - match: (?<=\")(\w+)(?=\")
         name: support.class._.player_name.target.mcfunction
-      - begin: '(\@[parse])(\[)(?= *[\w\]])'
-        end: '(?=\n)|(?=\")|(\])'
+      - begin: '(?<=\")(\@[parse])(\[)(?= *[\w\]])'
+        end: '(?=\n)|(?=\")|(\])(?=\")'
         beginCaptures:
           '1':
             name: support.class._.base.target_selector.mcfunction
@@ -356,7 +393,7 @@ repository:
             name: support.class._.bracket.target_selector.mcfunction
         patterns:
           - include: '#target_selector.content'
-          - include: '#error.unknown_string'
+          - include: '#error.double_quoted_string.content'
   text_component.list_common:
     patterns:
       - match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
@@ -380,7 +417,7 @@ repository:
   text_component.list_values:
     patterns:
       - include: '#text_component'
-      - include: '#error.unknown_list'
+      - include: '#error.list_value'
   text_component.dict_common:
     patterns:
       - match: '(?<=[^\{\,])(\,)(?=[^\}\,])'
@@ -440,7 +477,7 @@ repository:
       - include: '#text_component.property.insertion'
       - include: '#text_component.property.clickEvent'
       - include: '#text_component.property.hoverEvent'
-      - include: '#error.unknown_compound'
+      - include: '#error.compound_value'
   text_component.property.b_i_u_s_o:
     patterns:
       - begin: >-
@@ -533,13 +570,13 @@ repository:
           - include: '#error.compound_value'
   text_component.properties.score:
     patterns:
-      - include: '#error.unknown_compound'
+      - include: '#error.compound_value'
   text_component.properties.clickEvent:
     patterns:
-      - include: '#error.unknown_compound'
+      - include: '#error.compound_value'
   text_component.properties.hoverEvent:
     patterns:
-      - include: '#error.unknown_compound'
+      - include: '#error.compound_value'
   target_selector.content:
     patterns:
       - name: meta._.argument_separator.content.target_selector.mcfunction
@@ -602,7 +639,7 @@ repository:
             name: support.class._.equals.target_selector.mcfunction
         patterns:
           - include: '#common.double_range'
-          - include: '#error.unknown_command'
+          - include: '#error.command_line'
   target_selector.content.argument.distance:
     patterns:
       - name: meta._.distance.argument.content.target_selector.mcfunction
@@ -615,7 +652,7 @@ repository:
             name: support.class._.equals.target_selector.mcfunction
         patterns:
           - include: '#common.double_range'
-          - include: '#error.unknown_command'
+          - include: '#error.command_line'
   target_selector.content.argument.team:
     patterns:
       - name: meta._.team.argument.content.target_selector.mcfunction
@@ -656,7 +693,7 @@ repository:
             name: constant.character.escape._.not.target_selector.mcfunction
         patterns:
           - include: '#common.quotable_string'
-          - include: '#error.unknown_command'
+          - include: '#error.command_line'
   target_selector.content.argument.type:
     patterns:
       - name: meta._.type.argument.content.target_selector.mcfunction
@@ -671,7 +708,7 @@ repository:
             name: constant.character.escape._.not.target_selector.mcfunction
         patterns:
           - include: '#common.taggable_resource_location'
-          - include: '#error.unknown_command'
+          - include: '#error.command_line'
   target_selector.content.argument.level:
     patterns:
       - name: meta._.level.argument.content.target_selector.mcfunction
@@ -684,7 +721,7 @@ repository:
             name: support.class._.equals.target_selector.mcfunction
         patterns:
           - include: '#common.integer_range'
-          - include: '#error.unknown_command'
+          - include: '#error.command_line'
   target_selector.content.argument.gamemode:
     patterns:
       - name: meta._.gamemode.argument.content.target_selector.mcfunction
@@ -780,7 +817,7 @@ repository:
       - include: '#generated.command.say'
       - include: '#generated.command.tellraw'
       - include: '#generated.command.execute'
-      - include: '#error.unknown_command'
+      - include: '#error.command_line'
   generated.command.say:
     begin: '(say) (?=[^\s\#])'
     end: (?=\n)
@@ -792,7 +829,7 @@ repository:
   generated.commands.say:
     patterns:
       - include: '#generated.command.say.message'
-      - include: '#error.unknown_command'
+      - include: '#error.command_line'
   generated.command.say.message:
     patterns:
       - include: '#common.message'
@@ -807,7 +844,7 @@ repository:
   generated.commands.tellraw:
     patterns:
       - include: '#generated.command.tellraw.targets'
-      - include: '#error.unknown_command'
+      - include: '#error.command_line'
   generated.command.tellraw.targets:
     patterns:
       - begin: '(\@[parse]) (?=[^\s\#])'
@@ -847,12 +884,12 @@ repository:
             patterns:
               - include: '#generated.commands.tellraw.targets'
           - include: '#target_selector.content'
-          - include: '#error.unknown_command'
-      - include: '#error.unknown_command'
+          - include: '#error.command_line'
+      - include: '#error.command_line'
   generated.commands.tellraw.targets:
     patterns:
       - include: '#text_component'
-      - include: '#error.unknown_command'
+      - include: '#error.command_line'
   generated.command.execute:
     begin: '(execute) (?=[^\s\#])'
     end: (?=\n)
@@ -865,7 +902,7 @@ repository:
     patterns:
       - include: '#generated.command.execute.run'
       - include: '#generated.command.execute.as'
-      - include: '#error.unknown_command'
+      - include: '#error.command_line'
   generated.command.execute.run:
     begin: (run)( |(?=\n))
     end: (?=\n)
@@ -888,7 +925,7 @@ repository:
   generated.commands.execute.as:
     patterns:
       - include: '#generated.command.execute.as.targets'
-      - include: '#error.unknown_command'
+      - include: '#error.command_line'
   generated.command.execute.as.targets:
     patterns:
       - begin: '(\@[parse])( |(?=\n))'
@@ -928,8 +965,8 @@ repository:
             patterns:
               - include: '#generated.commands.execute.as.targets'
           - include: '#target_selector.content'
-          - include: '#error.unknown_command'
-      - include: '#error.unknown_command'
+          - include: '#error.command_line'
+      - include: '#error.command_line'
   generated.commands.execute.as.targets:
     patterns:
       - include: '#generated.commands.execute'

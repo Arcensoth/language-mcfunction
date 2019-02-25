@@ -320,25 +320,7 @@ repository:
   # ERRORS #####################################################################
   ##############################################################################
 
-  error.unknown_string:
-    # continue until the end of the string/line
-    patterns:
-      - match: '(([^\n\"]+))'
-        captures: "#underlined_error"
-
-  error.unknown_compound:
-    # continue until the end of the compound/line
-    patterns:
-      - match: '(([^\n\}]+))'
-        captures: "#underlined_error"
-
-  error.unknown_list:
-    # continue until the end of the list/line
-    patterns:
-      - match: '(([^\n\]]+))'
-        captures: "#underlined_error"
-
-  error.unknown_command:
+  error.command_line:
     # continue until the end of the line
     name: meta._.unknown_command.mcfunction
     match: "((.*))$"
@@ -346,38 +328,87 @@ repository:
 
   error.compound_value:
     # continue recursively until we see a separator or terminal
-    # TODO how to assign multiple classes to content?
     patterns:
-      - include: "#error.compound"
-      - include: "#error.list"
-      - match: '(([^\n\{\[\,\}]))'
+      - include: "#error.block_value"
+      - match: '(([^\n\}\,]))'
         captures: "#underlined_error"
 
-  error.compound:
+  error.list_value:
     patterns:
-      - begin: '((\{))'
-        end: '{{ln}}|((\}))'
+      - include: "#error.block_value"
+      - match: '(([^\n\]\,]))'
+        captures: "#underlined_error"
+
+  error.block_value:
+    patterns:
+      - include: "#error.dict"
+      - include: "#error.list"
+      - include: "#error.quoted_string"
+
+  error.block:
+    patterns:
+      - match: "(([^\\n\\{\\}\\[\\]\\\"\\']+))"
+        captures: "#underlined_error"
+      - include: "#error.block_value"
+
+  error.dict:
+    patterns:
+      - begin: "({{dict.begin}})"
+        end: "({{dict.end}})"
         beginCaptures: "#underlined_error"
         endCaptures: "#underlined_error"
-        contentName: "#invalid"
         patterns:
-          - include: "#error.compound"
-          - include: "#error.list"
-          - match: '(([^\n\{\[\}]))'
-            captures: "#underlined_error"
+          - include: "#error.block"
 
   error.list:
     patterns:
-      - begin: '((\[))'
-        end: '{{ln}}|((\]))'
+      - begin: "({{list.begin}})"
+        end: "({{list.end}})"
         beginCaptures: "#underlined_error"
         endCaptures: "#underlined_error"
-        contentName: "#invalid"
         patterns:
-          - include: "#error.compound"
-          - include: "#error.list"
-          - match: '(([^\n\{\[\]]))'
-            captures: "#underlined_error"
+          - include: "#error.block"
+
+  error.quoted_string:
+    patterns:
+      - include: "#error.double_quoted_string"
+      - include: "#error.single_quoted_string"
+
+  error.double_quoted_string:
+    patterns:
+      - begin: "({{dqs.begin}})"
+        end: "({{dqs.end}})"
+        beginCaptures: "#underlined_error"
+        endCaptures: "#underlined_error"
+        patterns:
+          - include: "#error.double_quoted_string.content"
+
+  error.single_quoted_string:
+    patterns:
+      - begin: "({{sqs.begin}})"
+        end: "({{sqs.end}})"
+        beginCaptures: "#underlined_error"
+        endCaptures: "#underlined_error"
+        patterns:
+          - include: "#error.single_quoted_string.content"
+
+  error.double_quoted_string.content:
+    patterns:
+      - match: '(([^\\\"\n]))'
+        captures: "#underlined_error"
+      - match: '((\\[^\n]))'
+        captures: "#underlined_error"
+      - match: '((\\))'
+        captures: "#underlined_error"
+
+  error.single_quoted_string.content:
+    patterns:
+      - match: "(([^\\\\\\'\\n]))"
+        captures: "#underlined_error"
+      - match: '((\\[^\n]))'
+        captures: "#underlined_error"
+      - match: '((\\))'
+        captures: "#underlined_error"
 
   ##############################################################################
   # COMMON PARSERS #############################################################
@@ -385,14 +416,23 @@ repository:
 
   common.block:
     patterns:
-      - match: '[^\n\{\}\[\]]+'
+      - match: "[^\\n\\{\\}\\[\\]\\\"\\']+"
         name: "#generic.dict.content"
+      - include: "#common.dict"
+      - include: "#common.list"
+      - include: "#common.quoted_string"
+
+  common.dict:
+    patterns:
       - begin: "{{dict.begin}}"
         end: "{{dict.end}}"
         beginCaptures: "#dict.begin"
         endCaptures: "#dict.end"
         patterns:
           - include: "#common.block"
+
+  common.list:
+    patterns:
       - begin: "{{list.begin}}"
         end: "{{list.end}}"
         beginCaptures: "#list.begin"
@@ -570,7 +610,7 @@ repository:
             name: "#target_selector.bracket"
         patterns:
           - include: "#target_selector.content"
-          - include: "#error.unknown_command"
+          - include: "#error.command_line"
 
       # check for selectors without arguments
       - match: "{{basic_target_selector}}"
@@ -633,7 +673,7 @@ repository:
         patterns:
           - match: "{{text_component.colors}}"
             name: "#text_component.property.color"
-          - include: "#error.unknown_string"
+          - include: "#error.double_quoted_string.content"
 
   text_component.string.keybind:
     patterns:
@@ -644,7 +684,7 @@ repository:
         patterns:
           - match: "{{text_component.keybinds}}"
             name: "#text_component.property.keybind"
-          - include: "#error.unknown_string"
+          - include: "#error.double_quoted_string.content"
 
   text_component.string.insertion:
     patterns:
@@ -654,11 +694,11 @@ repository:
           1:
             name: "#string"
           2:
-            name: '#command.slash'
+            name: "#command.slash"
         endCaptures: "#quoted_string.end"
         patterns:
           # TODO local error highlighting for commands
-          - include: '#commands'
+          - include: "#commands"
       - include: "#common.double_quoted_string"
 
   text_component.string.selector:
@@ -669,25 +709,25 @@ repository:
         endCaptures: "#quoted_string.end"
         patterns:
           - include: "#text_component.string.selector.content"
-          - include: "#error.unknown_string"
+          - include: "#error.double_quoted_string.content"
 
   text_component.string.selector.content:
     patterns:
       # (1) selector without arguments
-      - match: '{{basic_target_selector}}(?=\")'
+      - match: '(?<=\"){{basic_target_selector}}(?=\")'
         name: "#target_selector.base"
 
       # (2) uuid
-      - match: '{{uuid}}(?=\")'
+      - match: '(?<=\"){{uuid}}(?=\")'
         name: "#target.uuid"
 
       # (3) player name
-      - match: '{{player_name}}(?=\")'
+      - match: '(?<=\"){{player_name}}(?=\")'
         name: "#target.player_name"
 
       # (4) selector with arguments
-      - begin: "{{parameterized_target_selector.begin}}"
-        end: '{{ln}}|(?=\")|{{parameterized_target_selector.next}}'
+      - begin: '(?<=\"){{parameterized_target_selector.begin}}'
+        end: '{{ln}}|(?=\")|{{parameterized_target_selector.next}}(?=\")'
         beginCaptures:
           1:
             name: "#target_selector.base"
@@ -698,7 +738,7 @@ repository:
             name: "#target_selector.bracket"
         patterns:
           - include: "#target_selector.content"
-          - include: "#error.unknown_string"
+          - include: "#error.double_quoted_string.content"
 
   text_component.list_common:
     patterns:
@@ -723,7 +763,7 @@ repository:
   text_component.list_values:
     patterns:
       - include: "#text_component"
-      - include: "#error.unknown_list"
+      - include: "#error.list_value"
 
   text_component.dict_common:
     patterns:
@@ -787,7 +827,7 @@ repository:
       - include: "#text_component.property.insertion"
       - include: "#text_component.property.clickEvent"
       - include: "#text_component.property.hoverEvent"
-      - include: "#error.unknown_compound"
+      - include: "#error.compound_value"
 
   text_component.property.b_i_u_s_o:
     patterns:
@@ -882,17 +922,17 @@ repository:
   text_component.properties.score:
     patterns:
       # FIXME implement score sub-properties
-      - include: "#error.unknown_compound"
+      - include: "#error.compound_value"
 
   text_component.properties.clickEvent:
     patterns:
       # FIXME implement clickEvent sub-properties
-      - include: "#error.unknown_compound"
+      - include: "#error.compound_value"
 
   text_component.properties.hoverEvent:
     patterns:
       # FIXME implement hoverEvent sub-properties
-      - include: "#error.unknown_compound"
+      - include: "#error.compound_value"
 
   ##############################################################################
   # TARGET SELECTORS ###########################################################
@@ -977,7 +1017,7 @@ repository:
             name: "#target_selector.equals"
         patterns:
           - include: "#common.double_range"
-          - include: "#error.unknown_command"
+          - include: "#error.command_line"
 
   target_selector.content.argument.distance:
     patterns:
@@ -991,7 +1031,7 @@ repository:
             name: "#target_selector.equals"
         patterns:
           - include: "#common.double_range"
-          - include: "#error.unknown_command"
+          - include: "#error.command_line"
 
   target_selector.content.argument.team:
     patterns:
@@ -1035,7 +1075,7 @@ repository:
             name: "#target_selector.not"
         patterns:
           - include: "#common.quotable_string"
-          - include: "#error.unknown_command"
+          - include: "#error.command_line"
 
   target_selector.content.argument.type:
     patterns:
@@ -1051,7 +1091,7 @@ repository:
             name: "#target_selector.not"
         patterns:
           - include: "#common.taggable_resource_location"
-          - include: "#error.unknown_command"
+          - include: "#error.command_line"
 
   target_selector.content.argument.level:
     patterns:
@@ -1065,7 +1105,7 @@ repository:
             name: "#target_selector.equals"
         patterns:
           - include: "#common.integer_range"
-          - include: "#error.unknown_command"
+          - include: "#error.command_line"
 
   target_selector.content.argument.gamemode:
     patterns:
@@ -1171,7 +1211,7 @@ repository:
       - include: "#generated.command.say"
       - include: "#generated.command.tellraw"
       - include: "#generated.command.execute"
-      - include: "#error.unknown_command"
+      - include: "#error.command_line"
 
   generated.command.say:
     begin: "(say){{cbx_false}}"
@@ -1185,7 +1225,7 @@ repository:
   generated.commands.say:
     patterns:
       - include: "#generated.command.say.message"
-      - include: "#error.unknown_command"
+      - include: "#error.command_line"
 
   generated.command.say.message:
     # minecraft:message is an exception
@@ -1206,7 +1246,7 @@ repository:
   generated.commands.tellraw:
     patterns:
       - include: "#generated.command.tellraw.targets"
-      - include: "#error.unknown_command"
+      - include: "#error.command_line"
 
   generated.command.tellraw.targets:
     # this should only allow players, but using regex is not viable
@@ -1255,14 +1295,14 @@ repository:
             patterns:
               - include: "#generated.commands.tellraw.targets"
           - include: "#target_selector.content"
-          - include: "#error.unknown_command"
+          - include: "#error.command_line"
 
-      - include: "#error.unknown_command"
+      - include: "#error.command_line"
 
   generated.commands.tellraw.targets:
     patterns:
       - include: "#text_component"
-      - include: "#error.unknown_command"
+      - include: "#error.command_line"
 
   generated.command.execute:
     # `execute` is non-executable
@@ -1279,7 +1319,7 @@ repository:
     patterns:
       - include: "#generated.command.execute.run"
       - include: "#generated.command.execute.as"
-      - include: "#error.unknown_command"
+      - include: "#error.command_line"
 
   generated.command.execute.run:
     # `execute run` is executable
@@ -1309,7 +1349,7 @@ repository:
   generated.commands.execute.as:
     patterns:
       - include: "#generated.command.execute.as.targets"
-      - include: "#error.unknown_command"
+      - include: "#error.command_line"
 
   generated.command.execute.as.targets:
     # `execute as <targets>` is executable
@@ -1374,9 +1414,9 @@ repository:
           # this doesn't go in common selector patterns, because it invalidates
           # rest of the line... which wouldn't make sense in other future
           # potential scopes, like text components
-          - include: "#error.unknown_command"
+          - include: "#error.command_line"
 
-      - include: "#error.unknown_command"
+      - include: "#error.command_line"
 
   generated.commands.execute.as.targets:
     # redirect to `execute`

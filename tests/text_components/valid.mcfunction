@@ -71,7 +71,7 @@ tellraw @s {"insertion": "/execute as @a run say hello @e[sort=nearest, limit=1]
 # "score"
 tellraw @s {"score": {"name": "@p", "objective": "TEST"}}
 tellraw @s {"score": {"name": "*", "objective": "TEST"}}
-tellraw @s {"score": {"name": "@p", "objective": "TEST","value":"hello"}}
+tellraw @s {"score": {"name": "@p", "objective": "TEST", "value":"hello"}}
 
 # "clickEvent"
 tellraw @s {"text":"Click", "clickEvent": {"action": "open_url", "value": "http://google.com"}}
@@ -79,15 +79,17 @@ tellraw @s {"text":"Click", "clickEvent": {"action": "run_command", "value": "/s
 tellraw @s {"text":"Click", "clickEvent": {"action": "suggest_command", "value": "Text replaced"}}
 
 # "hoverEvent"
-tellraw @s {"text":"Hover", "hoverEvent": {"action": "show_text", "value": "Basic string"}}
-tellraw @s {"text":"Hover", "hoverEvent": {"action": "show_text", "value":["",{ "text":"Text\n","color":"green","underlined":true},"component"]}}
-tellraw @s {"text":"Hover", "hoverEvent": {"action": "show_achievement", "value": "achievement.openInventory"}}
-tellraw @s {"text":"Hover", "hoverEvent": {"action": "show_achievement", "value": "stat.walkOneCm"}}
-tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_item", "value": "{id:\"minecraft:stone\",tag:{display:{Lore:[\"Lore line 1\",\"Lore line 2\"]}}}"}}
-tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_entity", "value": "{name:\"Skylinerw\",type:\"Creeper\",id:\"00000000-0000-0000-0000-000000000000\"}"}}
-tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_entity", "value": "{name:\"Skylinerw\",id:\"Not a valid UUID\"}"}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_text", "value": "Basic string"}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_text", "value": ["", { "text": "Text\n", "color": "green", "underlined": true}, "component"]}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_achievement", "value": "achievement.openInventory"}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_achievement", "value": "stat.walkOneCm"}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_item", "value": "{id: \"minecraft:stone\", tag: {display: {Lore: [\"Lore line 1\", \"Lore line 2\"]}}}"}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_entity", "value": "{name: \"Skylinerw\", type: \"Creeper\", id: \"00000000-0000-0000-0000-000000000000\"}"}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_entity", "value": "{name: \"Skylinerw\", id: \"Not a valid UUID\"}"}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_item", "value": "{id: 'minecraft:stone', tag: {display: {Lore: ['Lore line 1', 'Lore line 2']}}}"}}
 
 # nested lists
+tellraw @s ["Hello ", {"selector": "@e[sort=nearest, limit=1]"}, ", how are you?"]
 tellraw @s ["Hello ", {"selector": "@e[sort=nearest, limit=1]"}, ", how are you?"]
 tellraw @s ["a", ["b", {"text": "c"}, ["d"], "e"]]
 tellraw @s ["a", ["b", {"text": "c"}, ["d"], "e"], {"text":"f", "extra": [{"text": "g"}]}]

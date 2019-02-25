@@ -126,52 +126,7 @@
         }
       }
     },
-    "error.unknown_string": {
-      "patterns": [
-        {
-          "match": "(([^\\n\\\"]+))",
-          "captures": {
-            "1": {
-              "name": "invalid.illegal._.invalid.mcfunction"
-            },
-            "2": {
-              "name": "markup.underline._.underline.mcfunction"
-            }
-          }
-        }
-      ]
-    },
-    "error.unknown_compound": {
-      "patterns": [
-        {
-          "match": "(([^\\n\\}]+))",
-          "captures": {
-            "1": {
-              "name": "invalid.illegal._.invalid.mcfunction"
-            },
-            "2": {
-              "name": "markup.underline._.underline.mcfunction"
-            }
-          }
-        }
-      ]
-    },
-    "error.unknown_list": {
-      "patterns": [
-        {
-          "match": "(([^\\n\\]]+))",
-          "captures": {
-            "1": {
-              "name": "invalid.illegal._.invalid.mcfunction"
-            },
-            "2": {
-              "name": "markup.underline._.underline.mcfunction"
-            }
-          }
-        }
-      ]
-    },
-    "error.unknown_command": {
+    "error.command_line": {
       "name": "meta._.unknown_command.mcfunction",
       "match": "((.*))$",
       "captures": {
@@ -186,13 +141,10 @@
     "error.compound_value": {
       "patterns": [
         {
-          "include": "#error.compound"
+          "include": "#error.block_value"
         },
         {
-          "include": "#error.list"
-        },
-        {
-          "match": "(([^\\n\\{\\[\\,\\}]))",
+          "match": "(([^\\n\\}\\,]))",
           "captures": {
             "1": {
               "name": "invalid.illegal._.invalid.mcfunction"
@@ -204,11 +156,60 @@
         }
       ]
     },
-    "error.compound": {
+    "error.list_value": {
+      "patterns": [
+        {
+          "include": "#error.block_value"
+        },
+        {
+          "match": "(([^\\n\\]\\,]))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "error.block_value": {
+      "patterns": [
+        {
+          "include": "#error.dict"
+        },
+        {
+          "include": "#error.list"
+        },
+        {
+          "include": "#error.quoted_string"
+        }
+      ]
+    },
+    "error.block": {
+      "patterns": [
+        {
+          "match": "(([^\\n\\{\\}\\[\\]\\\"\\']+))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        },
+        {
+          "include": "#error.block_value"
+        }
+      ]
+    },
+    "error.dict": {
       "patterns": [
         {
           "begin": "((\\{))",
-          "end": "(?=\\n)|((\\}))",
+          "end": "((?=\\n)|(\\}))",
           "beginCaptures": {
             "1": {
               "name": "invalid.illegal._.invalid.mcfunction"
@@ -225,24 +226,9 @@
               "name": "markup.underline._.underline.mcfunction"
             }
           },
-          "contentName": "invalid.illegal._.invalid.mcfunction",
           "patterns": [
             {
-              "include": "#error.compound"
-            },
-            {
-              "include": "#error.list"
-            },
-            {
-              "match": "(([^\\n\\{\\[\\}]))",
-              "captures": {
-                "1": {
-                  "name": "invalid.illegal._.invalid.mcfunction"
-                },
-                "2": {
-                  "name": "markup.underline._.underline.mcfunction"
-                }
-              }
+              "include": "#error.block"
             }
           ]
         }
@@ -252,7 +238,7 @@
       "patterns": [
         {
           "begin": "((\\[))",
-          "end": "(?=\\n)|((\\]))",
+          "end": "((?=\\n)|(\\]))",
           "beginCaptures": {
             "1": {
               "name": "invalid.illegal._.invalid.mcfunction"
@@ -269,35 +255,175 @@
               "name": "markup.underline._.underline.mcfunction"
             }
           },
-          "contentName": "invalid.illegal._.invalid.mcfunction",
           "patterns": [
             {
-              "include": "#error.compound"
-            },
-            {
-              "include": "#error.list"
-            },
-            {
-              "match": "(([^\\n\\{\\[\\]]))",
-              "captures": {
-                "1": {
-                  "name": "invalid.illegal._.invalid.mcfunction"
-                },
-                "2": {
-                  "name": "markup.underline._.underline.mcfunction"
-                }
-              }
+              "include": "#error.block"
             }
           ]
+        }
+      ]
+    },
+    "error.quoted_string": {
+      "patterns": [
+        {
+          "include": "#error.double_quoted_string"
+        },
+        {
+          "include": "#error.single_quoted_string"
+        }
+      ]
+    },
+    "error.double_quoted_string": {
+      "patterns": [
+        {
+          "begin": "((\\\"))",
+          "end": "((?=\\n)|(\\\"))",
+          "beginCaptures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#error.double_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
+    "error.single_quoted_string": {
+      "patterns": [
+        {
+          "begin": "((\\'))",
+          "end": "((?=\\n)|(\\'))",
+          "beginCaptures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#error.single_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
+    "error.double_quoted_string.content": {
+      "patterns": [
+        {
+          "match": "(([^\\\\\\\"\\n]))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "((\\\\[^\\n]))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "((\\\\))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "error.single_quoted_string.content": {
+      "patterns": [
+        {
+          "match": "(([^\\\\\\'\\n]))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "((\\\\[^\\n]))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "((\\\\))",
+          "captures": {
+            "1": {
+              "name": "invalid.illegal._.invalid.mcfunction"
+            },
+            "2": {
+              "name": "markup.underline._.underline.mcfunction"
+            }
+          }
         }
       ]
     },
     "common.block": {
       "patterns": [
         {
-          "match": "[^\\n\\{\\}\\[\\]]+",
+          "match": "[^\\n\\{\\}\\[\\]\\\"\\']+",
           "name": "string._.content.dict.generic.mcfunction"
         },
+        {
+          "include": "#common.dict"
+        },
+        {
+          "include": "#common.list"
+        },
+        {
+          "include": "#common.quoted_string"
+        }
+      ]
+    },
+    "common.dict": {
+      "patterns": [
         {
           "begin": "(\\{)",
           "end": "(?=\\n)|(\\})",
@@ -316,7 +442,11 @@
               "include": "#common.block"
             }
           ]
-        },
+        }
+      ]
+    },
+    "common.list": {
+      "patterns": [
         {
           "begin": "(\\[)",
           "end": "(?=\\n)|(\\])",
@@ -640,7 +770,7 @@
               "include": "#target_selector.content"
             },
             {
-              "include": "#error.unknown_command"
+              "include": "#error.command_line"
             }
           ]
         },
@@ -724,7 +854,7 @@
               "name": "string._.color.property.text_component.mcfunction"
             },
             {
-              "include": "#error.unknown_string"
+              "include": "#error.double_quoted_string.content"
             }
           ]
         }
@@ -751,7 +881,7 @@
               "name": "string._.keybind.property.text_component.mcfunction"
             },
             {
-              "include": "#error.unknown_string"
+              "include": "#error.double_quoted_string.content"
             }
           ]
         }
@@ -806,7 +936,7 @@
               "include": "#text_component.string.selector.content"
             },
             {
-              "include": "#error.unknown_string"
+              "include": "#error.double_quoted_string.content"
             }
           ]
         }
@@ -815,20 +945,20 @@
     "text_component.string.selector.content": {
       "patterns": [
         {
-          "match": "(\\@[parse])(?=\\\")",
+          "match": "(?<=\\\")(\\@[parse])(?=\\\")",
           "name": "support.class._.base.target_selector.mcfunction"
         },
         {
-          "match": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\\\")",
+          "match": "(?<=\\\")([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\\\")",
           "name": "support.class._.uuid.target.mcfunction"
         },
         {
-          "match": "(\\w+)(?=\\\")",
+          "match": "(?<=\\\")(\\w+)(?=\\\")",
           "name": "support.class._.player_name.target.mcfunction"
         },
         {
-          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
-          "end": "(?=\\n)|(?=\\\")|(\\])",
+          "begin": "(?<=\\\")(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)|(?=\\\")|(\\])(?=\\\")",
           "beginCaptures": {
             "1": {
               "name": "support.class._.base.target_selector.mcfunction"
@@ -847,7 +977,7 @@
               "include": "#target_selector.content"
             },
             {
-              "include": "#error.unknown_string"
+              "include": "#error.double_quoted_string.content"
             }
           ]
         }
@@ -900,7 +1030,7 @@
           "include": "#text_component"
         },
         {
-          "include": "#error.unknown_list"
+          "include": "#error.list_value"
         }
       ]
     },
@@ -1056,7 +1186,7 @@
           "include": "#text_component.property.hoverEvent"
         },
         {
-          "include": "#error.unknown_compound"
+          "include": "#error.compound_value"
         }
       ]
     },
@@ -1363,21 +1493,21 @@
     "text_component.properties.score": {
       "patterns": [
         {
-          "include": "#error.unknown_compound"
+          "include": "#error.compound_value"
         }
       ]
     },
     "text_component.properties.clickEvent": {
       "patterns": [
         {
-          "include": "#error.unknown_compound"
+          "include": "#error.compound_value"
         }
       ]
     },
     "text_component.properties.hoverEvent": {
       "patterns": [
         {
-          "include": "#error.unknown_compound"
+          "include": "#error.compound_value"
         }
       ]
     },
@@ -1512,7 +1642,7 @@
               "include": "#common.double_range"
             },
             {
-              "include": "#error.unknown_command"
+              "include": "#error.command_line"
             }
           ]
         }
@@ -1537,7 +1667,7 @@
               "include": "#common.double_range"
             },
             {
-              "include": "#error.unknown_command"
+              "include": "#error.command_line"
             }
           ]
         }
@@ -1609,7 +1739,7 @@
               "include": "#common.quotable_string"
             },
             {
-              "include": "#error.unknown_command"
+              "include": "#error.command_line"
             }
           ]
         }
@@ -1637,7 +1767,7 @@
               "include": "#common.taggable_resource_location"
             },
             {
-              "include": "#error.unknown_command"
+              "include": "#error.command_line"
             }
           ]
         }
@@ -1662,7 +1792,7 @@
               "include": "#common.integer_range"
             },
             {
-              "include": "#error.unknown_command"
+              "include": "#error.command_line"
             }
           ]
         }
@@ -1833,7 +1963,7 @@
           "include": "#generated.command.execute"
         },
         {
-          "include": "#error.unknown_command"
+          "include": "#error.command_line"
         }
       ]
     },
@@ -1857,7 +1987,7 @@
           "include": "#generated.command.say.message"
         },
         {
-          "include": "#error.unknown_command"
+          "include": "#error.command_line"
         }
       ]
     },
@@ -1888,7 +2018,7 @@
           "include": "#generated.command.tellraw.targets"
         },
         {
-          "include": "#error.unknown_command"
+          "include": "#error.command_line"
         }
       ]
     },
@@ -1966,12 +2096,12 @@
               "include": "#target_selector.content"
             },
             {
-              "include": "#error.unknown_command"
+              "include": "#error.command_line"
             }
           ]
         },
         {
-          "include": "#error.unknown_command"
+          "include": "#error.command_line"
         }
       ]
     },
@@ -1981,7 +2111,7 @@
           "include": "#text_component"
         },
         {
-          "include": "#error.unknown_command"
+          "include": "#error.command_line"
         }
       ]
     },
@@ -2008,7 +2138,7 @@
           "include": "#generated.command.execute.as"
         },
         {
-          "include": "#error.unknown_command"
+          "include": "#error.command_line"
         }
       ]
     },
@@ -2053,7 +2183,7 @@
           "include": "#generated.command.execute.as.targets"
         },
         {
-          "include": "#error.unknown_command"
+          "include": "#error.command_line"
         }
       ]
     },
@@ -2131,12 +2261,12 @@
               "include": "#target_selector.content"
             },
             {
-              "include": "#error.unknown_command"
+              "include": "#error.command_line"
             }
           ]
         },
         {
-          "include": "#error.unknown_command"
+          "include": "#error.command_line"
         }
       ]
     },

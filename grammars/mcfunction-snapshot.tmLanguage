@@ -201,76 +201,7 @@
           </dict>
         </dict>
       </dict>
-      <key>error.unknown_string</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>match</key>
-            <string>(([^\n\"]+))</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>invalid.illegal._.invalid.mcfunction</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>markup.underline._.underline.mcfunction</string>
-              </dict>
-            </dict>
-          </dict>
-        </array>
-      </dict>
-      <key>error.unknown_compound</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>match</key>
-            <string>(([^\n\}]+))</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>invalid.illegal._.invalid.mcfunction</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>markup.underline._.underline.mcfunction</string>
-              </dict>
-            </dict>
-          </dict>
-        </array>
-      </dict>
-      <key>error.unknown_list</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>match</key>
-            <string>(([^\n\]]+))</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>invalid.illegal._.invalid.mcfunction</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>markup.underline._.underline.mcfunction</string>
-              </dict>
-            </dict>
-          </dict>
-        </array>
-      </dict>
-      <key>error.unknown_command</key>
+      <key>error.command_line</key>
       <dict>
         <key>name</key>
         <string>meta._.unknown_command.mcfunction</string>
@@ -296,15 +227,11 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#error.compound</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.list</string>
+            <string>#error.block_value</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>(([^\n\{\[\,\}]))</string>
+            <string>(([^\n\}\,]))</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -321,7 +248,79 @@
           </dict>
         </array>
       </dict>
-      <key>error.compound</key>
+      <key>error.list_value</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#error.block_value</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(([^\n\]\,]))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>error.block_value</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#error.dict</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.list</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.quoted_string</string>
+          </dict>
+        </array>
+      </dict>
+      <key>error.block</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(([^\n\{\}\[\]\"\']+))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.block_value</string>
+          </dict>
+        </array>
+      </dict>
+      <key>error.dict</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -329,7 +328,7 @@
             <key>begin</key>
             <string>((\{))</string>
             <key>end</key>
-            <string>(?=\n)|((\}))</string>
+            <string>((?=\n)|(\}))</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -356,34 +355,11 @@
                 <string>markup.underline._.underline.mcfunction</string>
               </dict>
             </dict>
-            <key>contentName</key>
-            <string>invalid.illegal._.invalid.mcfunction</string>
             <key>patterns</key>
             <array>
               <dict>
                 <key>include</key>
-                <string>#error.compound</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#error.list</string>
-              </dict>
-              <dict>
-                <key>match</key>
-                <string>(([^\n\{\[\}]))</string>
-                <key>captures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>invalid.illegal._.invalid.mcfunction</string>
-                  </dict>
-                  <key>2</key>
-                  <dict>
-                    <key>name</key>
-                    <string>markup.underline._.underline.mcfunction</string>
-                  </dict>
-                </dict>
+                <string>#error.block</string>
               </dict>
             </array>
           </dict>
@@ -397,7 +373,7 @@
             <key>begin</key>
             <string>((\[))</string>
             <key>end</key>
-            <string>(?=\n)|((\]))</string>
+            <string>((?=\n)|(\]))</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -424,36 +400,231 @@
                 <string>markup.underline._.underline.mcfunction</string>
               </dict>
             </dict>
-            <key>contentName</key>
-            <string>invalid.illegal._.invalid.mcfunction</string>
             <key>patterns</key>
             <array>
               <dict>
                 <key>include</key>
-                <string>#error.compound</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#error.list</string>
-              </dict>
-              <dict>
-                <key>match</key>
-                <string>(([^\n\{\[\]]))</string>
-                <key>captures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>invalid.illegal._.invalid.mcfunction</string>
-                  </dict>
-                  <key>2</key>
-                  <dict>
-                    <key>name</key>
-                    <string>markup.underline._.underline.mcfunction</string>
-                  </dict>
-                </dict>
+                <string>#error.block</string>
               </dict>
             </array>
+          </dict>
+        </array>
+      </dict>
+      <key>error.quoted_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#error.double_quoted_string</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.single_quoted_string</string>
+          </dict>
+        </array>
+      </dict>
+      <key>error.double_quoted_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>((\"))</string>
+            <key>end</key>
+            <string>((?=\n)|(\"))</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#error.double_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>error.single_quoted_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>((\'))</string>
+            <key>end</key>
+            <string>((?=\n)|(\'))</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#error.single_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>error.double_quoted_string.content</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(([^\\\"\n]))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>((\\[^\n]))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>((\\))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>error.single_quoted_string.content</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(([^\\\'\n]))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>((\\[^\n]))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>((\\))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal._.invalid.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.underline._.underline.mcfunction</string>
+              </dict>
+            </dict>
           </dict>
         </array>
       </dict>
@@ -463,10 +634,28 @@
         <array>
           <dict>
             <key>match</key>
-            <string>[^\n\{\}\[\]]+</string>
+            <string>[^\n\{\}\[\]\"\']+</string>
             <key>name</key>
             <string>string._.content.dict.generic.mcfunction</string>
           </dict>
+          <dict>
+            <key>include</key>
+            <string>#common.dict</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#common.list</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#common.quoted_string</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.dict</key>
+      <dict>
+        <key>patterns</key>
+        <array>
           <dict>
             <key>begin</key>
             <string>(\{)</string>
@@ -496,6 +685,12 @@
               </dict>
             </array>
           </dict>
+        </array>
+      </dict>
+      <key>common.list</key>
+      <dict>
+        <key>patterns</key>
+        <array>
           <dict>
             <key>begin</key>
             <string>(\[)</string>
@@ -986,7 +1181,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_command</string>
+                <string>#error.command_line</string>
               </dict>
             </array>
           </dict>
@@ -1108,7 +1303,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_string</string>
+                <string>#error.double_quoted_string.content</string>
               </dict>
             </array>
           </dict>
@@ -1149,7 +1344,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_string</string>
+                <string>#error.double_quoted_string.content</string>
               </dict>
             </array>
           </dict>
@@ -1232,7 +1427,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_string</string>
+                <string>#error.double_quoted_string.content</string>
               </dict>
             </array>
           </dict>
@@ -1244,27 +1439,27 @@
         <array>
           <dict>
             <key>match</key>
-            <string>(\@[parse])(?=\")</string>
+            <string>(?&lt;=\")(\@[parse])(?=\")</string>
             <key>name</key>
             <string>support.class._.base.target_selector.mcfunction</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\")</string>
+            <string>(?&lt;=\")([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=\")</string>
             <key>name</key>
             <string>support.class._.uuid.target.mcfunction</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>(\w+)(?=\")</string>
+            <string>(?&lt;=\")(\w+)(?=\")</string>
             <key>name</key>
             <string>support.class._.player_name.target.mcfunction</string>
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\@[parse])(\[)(?= *[\w\]])</string>
+            <string>(?&lt;=\")(\@[parse])(\[)(?= *[\w\]])</string>
             <key>end</key>
-            <string>(?=\n)|(?=\")|(\])</string>
+            <string>(?=\n)|(?=\")|(\])(?=\")</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -1294,7 +1489,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_string</string>
+                <string>#error.double_quoted_string.content</string>
               </dict>
             </array>
           </dict>
@@ -1371,7 +1566,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_list</string>
+            <string>#error.list_value</string>
           </dict>
         </array>
       </dict>
@@ -1599,7 +1794,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_compound</string>
+            <string>#error.compound_value</string>
           </dict>
         </array>
       </dict>
@@ -2069,7 +2264,7 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#error.unknown_compound</string>
+            <string>#error.compound_value</string>
           </dict>
         </array>
       </dict>
@@ -2079,7 +2274,7 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#error.unknown_compound</string>
+            <string>#error.compound_value</string>
           </dict>
         </array>
       </dict>
@@ -2089,7 +2284,7 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#error.unknown_compound</string>
+            <string>#error.compound_value</string>
           </dict>
         </array>
       </dict>
@@ -2287,7 +2482,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_command</string>
+                <string>#error.command_line</string>
               </dict>
             </array>
           </dict>
@@ -2325,7 +2520,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_command</string>
+                <string>#error.command_line</string>
               </dict>
             </array>
           </dict>
@@ -2438,7 +2633,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_command</string>
+                <string>#error.command_line</string>
               </dict>
             </array>
           </dict>
@@ -2481,7 +2676,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_command</string>
+                <string>#error.command_line</string>
               </dict>
             </array>
           </dict>
@@ -2519,7 +2714,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_command</string>
+                <string>#error.command_line</string>
               </dict>
             </array>
           </dict>
@@ -2784,7 +2979,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_command</string>
+            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
@@ -2820,7 +3015,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_command</string>
+            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
@@ -2866,7 +3061,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_command</string>
+            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
@@ -2984,13 +3179,13 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_command</string>
+                <string>#error.command_line</string>
               </dict>
             </array>
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_command</string>
+            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
@@ -3004,7 +3199,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_command</string>
+            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
@@ -3044,7 +3239,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_command</string>
+            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
@@ -3112,7 +3307,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_command</string>
+            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
@@ -3230,13 +3425,13 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.unknown_command</string>
+                <string>#error.command_line</string>
               </dict>
             </array>
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.unknown_command</string>
+            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
