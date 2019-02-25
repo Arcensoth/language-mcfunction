@@ -6,6 +6,10 @@ tellraw @s {"text": "hello \"escaped\" world"}
 tellraw @s {"text": "hello \" world"}
 tellraw @s {"text": "hello ' world"}
 tellraw @s {"text": "hello\nworld"}
+tellraw @s {"text": true}
+tellraw @s {"text": 123}
+tellraw @s {"text": -321}
+tellraw @s {"text": 3.14}
 
 # "bold", "italic", "underline", and "obfuscated"
 tellraw @s {"bold": false}
@@ -71,12 +75,19 @@ tellraw @s {"insertion": "/execute as @a run say hello @e[sort=nearest, limit=1]
 # "score"
 tellraw @s {"score": {"name": "@p", "objective": "TEST"}}
 tellraw @s {"score": {"name": "*", "objective": "TEST"}}
-tellraw @s {"score": {"name": "@p", "objective": "TEST", "value":"hello"}}
+tellraw @s {"score": {"name": "@p", "objective": "TEST", "value": 123}}
+tellraw @s {"score": {"name": "@p", "objective": "TEST", "value": -123}}
+tellraw @s {"score": {"name": "@p", "objective": "TEST", "value": 3.14}}
+tellraw @s {"score": {"name": "@p", "objective": "TEST", "value": true}}
+tellraw @s {"score": {"name": "@p", "objective": "TEST", "value": "hello world"}}
+tellraw @s {"score": {"name": "@e[sort=nearest, limit=1]", "objective": "TEST", "value": "hello"}}
+tellraw @s {"score": {"name": "#temp", "objective": "TEST"}}
+tellraw @s {"score": {"name": "$mypack.calc", "objective": "TEST"}}
 
 # "clickEvent"
-tellraw @s {"text":"Click", "clickEvent": {"action": "open_url", "value": "http://google.com"}}
-tellraw @s {"text":"Click", "clickEvent": {"action": "run_command", "value": "/say Must be OP'd to run this command"}}
-tellraw @s {"text":"Click", "clickEvent": {"action": "suggest_command", "value": "Text replaced"}}
+tellraw @s {"text": "Click", "clickEvent": {"action": "open_url", "value": "http://google.com"}}
+tellraw @s {"text": "Click", "clickEvent": {"action": "run_command", "value": "/say Must be OP'd to run this command"}}
+tellraw @s {"text": "Click", "clickEvent": {"action": "suggest_command", "value": "Text replaced"}}
 
 # "hoverEvent"
 tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_text", "value": "Basic string"}}

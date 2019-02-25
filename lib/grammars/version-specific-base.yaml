@@ -68,9 +68,6 @@ names:
   string_escape: constant.character.escape._.string_escape.mcfunction
   word: string._.word.mcfunction
   keyword: keyword._.keyword.mcfunction
-  entity_tag: string._.entity_tag.mcfunction
-  scoreboard_team: string._.scoreboard_team.mcfunction
-  scoreboard_objective: string._.scoreboard_objective.mcfunction
 
   # numeric scopes
   number: constant.numeric._.number.mcfunction
@@ -86,6 +83,13 @@ names:
   # scopes for other types of arguments accepted by `minecraft:entity`
   target.uuid: support.class._.uuid.target.mcfunction
   target.player_name: support.class._.player_name.target.mcfunction
+
+  # objectives, teams, and tags
+  entity_tag: entity.other.attribute-name._.entity_tag.mcfunction
+  scoreboard_team: entity.other.attribute-name._.scoreboard_team.mcfunction
+  scoreboard_objective: entity.other.attribute-name._.scoreboard_objective.mcfunction
+  score_holder.all: support.class._.all.score_holder.mcfunction
+  score_holder.fakeplayer: support.class._.fakeplayer.score_holder.mcfunction
 
   # other scopes
   generic.dict.bracket: storage._.bracket.dict.generic.mcfunction
@@ -145,6 +149,10 @@ variables:
   parameterized_target_selector.args_r: '(\])'
   parameterized_target_selector.begin: '{{parameterized_target_selector.base}}{{parameterized_target_selector.args_l}}(?={{pad}}[\w\]])'
   parameterized_target_selector.next: "{{parameterized_target_selector.args_r}}"
+
+  # score holders
+  score_holder.all: '(\*)'
+  score_holder.fakeplayer: '([\w\.\-\#\$\%]+)'
 
   # numbers
   integer: '(\-?\d*)'
@@ -527,6 +535,11 @@ repository:
       - match: '(?<!\w){{boolean}}(?!\w)'
         name: "#boolean"
 
+  common.number:
+    patterns:
+      - match: '(?<!\d){{double}}(?!\d)'
+        name: "#number"
+
   common.position:
     patterns:
       - include: "#common.position.abs_rel"
@@ -716,6 +729,7 @@ repository:
   text_component:
     patterns:
       - include: "#text_component.boolean"
+      - include: "#text_component.number"
       - include: "#text_component.string"
       - include: "#text_component.list"
       - include: "#text_component.dict"
@@ -724,9 +738,19 @@ repository:
     patterns:
       - include: "#common.boolean"
 
+  text_component.number:
+    patterns:
+      - include: "#common.number"
+
   text_component.string:
     patterns:
       - include: "#common.double_quoted_string"
+
+  text_component.atomic:
+    patterns:
+      - include: "#text_component.boolean"
+      - include: "#text_component.number"
+      - include: "#text_component.string"
 
   text_component.string.color:
     patterns:
@@ -816,7 +840,8 @@ repository:
 
   text_component.string.nbt.content:
     # FIXME implement nbt path
-    patterns: []
+    patterns:
+      - include: "#common.double_quoted_string.content"
 
   text_component.string.position:
     patterns:
@@ -834,6 +859,39 @@ repository:
         captures: "#position.abs_rel"
       - match: '(?<=\"){{position.local}}(?=\")'
         captures: "#position.local"
+
+  text_component.string.score_holder:
+    patterns:
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - include: "#text_component.string.score_holder.content"
+          - include: "#error.double_quoted_string.content"
+
+  text_component.string.score_holder.content:
+    patterns:
+      - match: '(?<=\"){{score_holder.all}}(?=\")'
+        name: "#score_holder.all"
+      - match: '(?<=\"){{score_holder.fakeplayer}}(?=\")'
+        name: "#score_holder.fakeplayer"
+      - include: "#text_component.string.target.content"
+
+  text_component.string.objective:
+    patterns:
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - include: "#text_component.string.objective.content"
+          - include: "#error.double_quoted_string.content"
+
+  text_component.string.objective.content:
+    patterns:
+      - match: '(?<=\"){{scoreboard_objective}}(?=\")'
+        name: "#scoreboard_objective"
 
   text_component.list_common:
     patterns:
@@ -947,7 +1005,7 @@ repository:
         end: "{{tc.p.end}}"
         beginCaptures: "#text_component.property"
         patterns:
-          - include: "#text_component.string"
+          - include: "#text_component.atomic"
           - include: "#error.compound_value"
 
   text_component.property.color:
@@ -1060,8 +1118,37 @@ repository:
 
   text_component.properties.score:
     patterns:
-      # FIXME implement score sub-properties
+      - include: "#text_component.property.score.name"
+      - include: "#text_component.property.score.objective"
+      - include: "#text_component.property.score.value"
       - include: "#error.compound_value"
+
+  text_component.property.score.name:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(name){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.score_holder"
+          - include: "#error.compound_value"
+
+  text_component.property.score.objective:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(objective){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.objective"
+          - include: "#error.compound_value"
+
+  text_component.property.score.value:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(value){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.atomic"
+          - include: "#error.compound_value"
 
   text_component.properties.clickEvent:
     patterns:

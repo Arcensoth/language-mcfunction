@@ -98,3 +98,5 @@ tellraw @s {"block": "10 20", "nbt": "RecordItem"}
 tellraw @s {"block": "^10 20 30", "nbt": "RecordItem"}
 tellraw @s {"block": "10 ^20 30", "nbt": "RecordItem"}
 tellraw @s {"block": "10 20 ^30", "nbt": "RecordItem"}
+
+tellraw @s {"text": 3.14x}

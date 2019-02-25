@@ -502,6 +502,14 @@
         }
       ]
     },
+    "common.number": {
+      "patterns": [
+        {
+          "match": "(?<!\\d)(\\-?\\d*\\.?\\d+)(?!\\d)",
+          "name": "constant.numeric._.number.mcfunction"
+        }
+      ]
+    },
     "common.position": {
       "patterns": [
         {
@@ -884,6 +892,9 @@
           "include": "#text_component.boolean"
         },
         {
+          "include": "#text_component.number"
+        },
+        {
           "include": "#text_component.string"
         },
         {
@@ -901,10 +912,30 @@
         }
       ]
     },
+    "text_component.number": {
+      "patterns": [
+        {
+          "include": "#common.number"
+        }
+      ]
+    },
     "text_component.string": {
       "patterns": [
         {
           "include": "#common.double_quoted_string"
+        }
+      ]
+    },
+    "text_component.atomic": {
+      "patterns": [
+        {
+          "include": "#text_component.boolean"
+        },
+        {
+          "include": "#text_component.number"
+        },
+        {
+          "include": "#text_component.string"
         }
       ]
     },
@@ -1085,7 +1116,11 @@
       ]
     },
     "text_component.string.nbt.content": {
-      "patterns": []
+      "patterns": [
+        {
+          "include": "#common.double_quoted_string.content"
+        }
+      ]
     },
     "text_component.string.position": {
       "patterns": [
@@ -1169,6 +1204,81 @@
               "name": "constant.numeric._.number.local.position.mcfunction"
             }
           }
+        }
+      ]
+    },
+    "text_component.string.score_holder": {
+      "patterns": [
+        {
+          "begin": "(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.score_holder.content"
+            },
+            {
+              "include": "#error.double_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.string.score_holder.content": {
+      "patterns": [
+        {
+          "match": "(?<=\\\")(\\*)(?=\\\")",
+          "name": "support.class._.all.score_holder.mcfunction"
+        },
+        {
+          "match": "(?<=\\\")([\\w\\.\\-\\#\\$\\%]+)(?=\\\")",
+          "name": "support.class._.fakeplayer.score_holder.mcfunction"
+        },
+        {
+          "include": "#text_component.string.target.content"
+        }
+      ]
+    },
+    "text_component.string.objective": {
+      "patterns": [
+        {
+          "begin": "(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.objective.content"
+            },
+            {
+              "include": "#error.double_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.string.objective.content": {
+      "patterns": [
+        {
+          "match": "(?<=\\\")([\\w\\.\\-\\+]+)(?=\\\")",
+          "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
         }
       ]
     },
@@ -1442,7 +1552,7 @@
           },
           "patterns": [
             {
-              "include": "#text_component.string"
+              "include": "#text_component.atomic"
             },
             {
               "include": "#error.compound_value"
@@ -1814,7 +1924,106 @@
     "text_component.properties.score": {
       "patterns": [
         {
+          "include": "#text_component.property.score.name"
+        },
+        {
+          "include": "#text_component.property.score.objective"
+        },
+        {
+          "include": "#text_component.property.score.value"
+        },
+        {
           "include": "#error.compound_value"
+        }
+      ]
+    },
+    "text_component.property.score.name": {
+      "patterns": [
+        {
+          "begin": "(\\\")(name)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.score_holder"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.property.score.objective": {
+      "patterns": [
+        {
+          "begin": "(\\\")(objective)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.objective"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.property.score.value": {
+      "patterns": [
+        {
+          "begin": "(\\\")(value)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.atomic"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
         }
       ]
     },
@@ -2010,7 +2219,7 @@
               "name": "constant.character.escape._.not.target_selector.mcfunction"
             },
             "4": {
-              "name": "string._.scoreboard_team.mcfunction"
+              "name": "entity.other.attribute-name._.scoreboard_team.mcfunction"
             }
           }
         }
@@ -2032,7 +2241,7 @@
               "name": "constant.character.escape._.not.target_selector.mcfunction"
             },
             "4": {
-              "name": "string._.entity_tag.mcfunction"
+              "name": "entity.other.attribute-name._.entity_tag.mcfunction"
             }
           }
         }

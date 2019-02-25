@@ -770,6 +770,18 @@
           </dict>
         </array>
       </dict>
+      <key>common.number</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(?&lt;!\d)(\-?\d*\.?\d+)(?!\d)</string>
+            <key>name</key>
+            <string>constant.numeric._.number.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
       <key>common.position</key>
       <dict>
         <key>patterns</key>
@@ -1354,6 +1366,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#text_component.number</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#text_component.string</string>
           </dict>
           <dict>
@@ -1376,6 +1392,16 @@
           </dict>
         </array>
       </dict>
+      <key>text_component.number</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.number</string>
+          </dict>
+        </array>
+      </dict>
       <key>text_component.string</key>
       <dict>
         <key>patterns</key>
@@ -1383,6 +1409,24 @@
           <dict>
             <key>include</key>
             <string>#common.double_quoted_string</string>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.atomic</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#text_component.boolean</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.number</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.string</string>
           </dict>
         </array>
       </dict>
@@ -1655,7 +1699,12 @@
       <key>text_component.string.nbt.content</key>
       <dict>
         <key>patterns</key>
-        <array/>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.double_quoted_string.content</string>
+          </dict>
+        </array>
       </dict>
       <key>text_component.string.position</key>
       <dict>
@@ -1788,6 +1837,118 @@
                 <string>constant.numeric._.number.local.position.mcfunction</string>
               </dict>
             </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.string.score_holder</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.score_holder.content</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.double_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.string.score_holder.content</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(?&lt;=\")(\*)(?=\")</string>
+            <key>name</key>
+            <string>support.class._.all.score_holder.mcfunction</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(?&lt;=\")([\w\.\-\#\$\%]+)(?=\")</string>
+            <key>name</key>
+            <string>support.class._.fakeplayer.score_holder.mcfunction</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.string.target.content</string>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.string.objective</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.objective.content</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.double_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.string.objective.content</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(?&lt;=\")([\w\.\-\+]+)(?=\")</string>
+            <key>name</key>
+            <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
           </dict>
         </array>
       </dict>
@@ -2192,7 +2353,7 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#text_component.string</string>
+                <string>#text_component.atomic</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -2760,7 +2921,157 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#text_component.property.score.name</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.property.score.objective</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.property.score.value</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#error.compound_value</string>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.score.name</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(name)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.score_holder</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.score.objective</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(objective)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.objective</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.score.value</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(value)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.atomic</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -3051,7 +3362,7 @@
               <key>4</key>
               <dict>
                 <key>name</key>
-                <string>string._.scoreboard_team.mcfunction</string>
+                <string>entity.other.attribute-name._.scoreboard_team.mcfunction</string>
               </dict>
             </dict>
           </dict>
@@ -3086,7 +3397,7 @@
               <key>4</key>
               <dict>
                 <key>name</key>
-                <string>string._.entity_tag.mcfunction</string>
+                <string>entity.other.attribute-name._.entity_tag.mcfunction</string>
               </dict>
             </dict>
           </dict>
