@@ -6,35 +6,19 @@ Language grammars and syntax highlighting for mcfunction files.
 
 This project provides two types of grammars: the default, [version-agnostic grammar](#version-agnostic-grammar) (shown below), and WIP [version-specific grammars](#version-specific-grammars).
 
+- [Install]
+- [Features]
+- [Configure]
+- [Customization]
+  - [Version-agnostic grammar]
+  - [Version-specific grammars]
+- [Resources]
+
 [![Showcase](https://i.imgur.com/Rz845y3.png)](https://i.imgur.com/Rz845y3.png)
 
 ## Install
 - VSCode: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
 - SublimeText: clone repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`)
-
-## Configure
-### Version-agnostic grammar
-This is a generic "version-agnostic" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
-
-The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting.
-
-In the future, the [version-specific grammars](#version-specific-grammars) will be preferred when available.
-
-### Version-specific grammars
-> **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar](#version-agnostic-grammar). Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
-
-The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher. They have context-sensitive highlighting and command validation comparable to the in-game command bar.
-
-#### VSCode
-You can easily choose which version of mcfunction to use by changing the `.mcfunction` extension association in your workspace settings:
-
-```
-"files.associations": {
-  "*.mcfunction": "mcfunction-snapshot"
-}
-```
-
-This option can also be set on the user-level in `settings.json` or folder-level in `.vscode/settings.json`.
 
 ## Features
 Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
@@ -74,10 +58,45 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
         - [x] [Score arguments](https://i.imgur.com/L7f9wJ3.png): `scores`
         - [x] [Advancement arguments](https://i.imgur.com/yQj5Oye.png): `advancements`
 
+## Configure
+### Version-agnostic grammar
+This is a generic "version-agnostic" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
+
+The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting.
+
+In the future, the [version-specific grammars](#version-specific-grammars) will be preferred when available.
+
+### Version-specific grammars
+> **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar](#version-agnostic-grammar). Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
+
+The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher. They have context-sensitive highlighting and command validation comparable to the in-game command bar.
+
+In VSCode, you can easily choose which version of mcfunction to use by changing the `.mcfunction` extension association in your workspace settings:
+
+```
+"files.associations": {
+  "*.mcfunction": "mcfunction-snapshot"
+}
+```
+
+This option can also be set on the user-level in `settings.json` or folder-level in `.vscode/settings.json`.
+
 ## Customization
 Currently available for the [version-specific grammars](#version-specific-grammars).
 
 Scopes have been assigned with user customization in mind. If your editor allows scope overrides, this will make it easy to customize your own colours for a variety of scopes.
+
+- [Customizing errors]
+- [Customizing comments]
+- [Customizing commands]
+- [Customizing selectors]
+- [Customizing NBT]
+- [Customizing text components]
+- [Customizing resource locations]
+- [Customizing strings]
+- [Customizing numbers]
+- [Customizing tags, teams, and objectives]
+- [Other customizable scopes]
 
 ### Customizing errors
 Short name  | Full scope name                           | Examples
@@ -152,9 +171,6 @@ Short name              | Full scope name                                       
 `string_escape`         | `constant.character.escape._.string_escape.mcfunction`  | `"hello(\n)newline"`
 `word`                  | `string._.word.mcfunction`                              | `foo` / `foo_bar`
 `keyword`               | `keyword._.word.mcfunction`                             | `nearest` / `creative`
-`entity_tag`            | `string._.entity_tag.mcfunction`                        | `mypack.some.tag`
-`scoreboard_team`       | `string._.scoreboard_team.mcfunction`                   | `mypack.blue`
-`scoreboard_objective`  | `string._.scoreboard_objective.mcfunction`              | `mypack.points`
 
 ### Customizing numbers
 Short name                    | Full scope name                                             | Examples
@@ -169,16 +185,25 @@ Short name                    | Full scope name                                 
 `position.local.operator`     | `keyword.control._.operator.local.position.mcfunction`      | `(^)10 (^)20 (^)30`
 `position.local.number`       | `constant.numeric._.number.local.position.mcfunction`       | `^(10) ^(20) ^(30)`
 
+### Customizing tags, teams, and objectives
+Short name                  | Full scope name                                                 | Examples
+--------------------------- | --------------------------------------------------------------- | ----------
+`entity_tag`                | `entity.other.attribute-name._.entity_tag.mcfunction`           | `mypack.some.tag`
+`scoreboard_team `          | `entity.other.attribute-name._.scoreboard_team.mcfunction`      | `mypack.blue`
+`scoreboard_objective`      | `entity.other.attribute-name._.scoreboard_objective.mcfunction` | `mypack.points`
+`score_holder.all`          | `support.class._.all.score_holder.mcfunction`                   | `*`
+`score_holder.fakeplayer `  | `support.class._.fakeplayer.score_holder.mcfunction`            | `#temp` / `$mypack.calc`
+
 ### Other customizable scopes
-Short name              | Full scope name                             | Examples
------------------------ | --------------------------------------------| ----------
-`target.uuid`           | `support.class._.uuid.target.mcfunction`    | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
-`target.player_name`    | `support.class._.uuid.target.mcfunction`    | `Arcensoth` / `some_guy`
-`boolean`               | `constant.numeric._.boolean.mcfunction`     | `true` / `false`
-`generic.dict.bracket`  | `storage._.bracket.dict.generic.mcfunction` | `({) key: value (})`
-`generic.dict.content`  | `string._.content.dict.generic.mcfunction`  | `{( key: value )}`
-`generic.list.bracket`  | `storage._.bracket.list.generic.mcfunction` | `([) item, item (])`
-`generic.list.content`  | `string._.content.list.generic.mcfunction`  | `[( item, item )]`
+Short name                | Full scope name                                       | Examples
+------------------------- | ----------------------------------------------------- | ----------
+`boolean`                 | `constant.numeric._.boolean.mcfunction`               | `true` / `false`
+`target.uuid`             | `support.class._.uuid.target.mcfunction`              | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
+`target.player_name`      | `support.class._.uuid.target.mcfunction`              | `Arcensoth` / `some_guy`
+`generic.dict.bracket`    | `storage._.bracket.dict.generic.mcfunction`           | `({) key: value (})`
+`generic.dict.content`    | `string._.content.dict.generic.mcfunction`            | `{( key: value )}`
+`generic.list.bracket`    | `storage._.bracket.list.generic.mcfunction`           | `([) item, item (])`
+`generic.list.content`    | `string._.content.list.generic.mcfunction`            | `[( item, item )]`
 
 ## Resources
 - https://github.com/Arcensoth/language-tmdemo
@@ -192,3 +217,22 @@ Short name              | Full scope name                             | Examples
 
 [vscode-version-badge]: https://img.shields.io/visual-studio-marketplace/v/arcensoth.language-mcfunction.svg?logo=visual-studio-code
 [discord-chat-badge]: https://img.shields.io/discord/154777837382008833.svg?color=%237289DA&label=chat&logo=discord&logoColor=%23FFFFFF
+
+[Install]: #install
+[Features]: #features
+[Configure]: #configure
+[Version-agnostic grammar]: #version-agnostic-grammar
+[Version-specific grammars]: #version-specific-grammars
+[Customization]: #customization
+[Customizing errors]: #customizing-errors
+[Customizing comments]: #customizing-comments
+[Customizing commands]: #customizing-commands
+[Customizing selectors]: #customizing-selectors
+[Customizing NBT]: #customizing-NBT
+[Customizing text components]: #customizing-text-components
+[Customizing resource locations]: #customizing-resource-locations
+[Customizing strings]: #customizing-strings
+[Customizing numbers]: #customizing-numbers
+[Customizing tags, teams, and objectives]: #customizing-tags-teams-and-objectives
+[Other customizable scopes]: #other-customizable-scopes
+[Resources]: #resources
