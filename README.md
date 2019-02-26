@@ -154,7 +154,8 @@ Short name                        | Full scope name                             
 `text_component.comma`            | `storage._.comma.text_component.mcfunction`           | `,`
 `text_component.property`         | `string._.property.text_component.mcfunction`         | `text` / `color` / `selector`
 `text_component.property.color`   | `string._.color.property.text_component.mcfunction`   | `red` / `green` / `blue`
-`text_component.property.keybind` | `string._.keybind.property.text_component.mcfunction` | `key.drop`
+`text_component.property.keybind` | `string._.keybind.property.text_component.mcfunction` | `key.drop` / `key.use`
+`text_component.property.event`   | `string._.event.property.text_component.mcfunction`   | `run_command` / `show_text`
 
 ### Customizing resource locations
 Short name                    | Full scope name                                                 | Examples

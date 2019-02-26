@@ -158,10 +158,10 @@ repository:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures:
+        beginCaptures: &ref_4
           '1':
             name: storage._.bracket.dict.generic.mcfunction
-        endCaptures:
+        endCaptures: &ref_5
           '1':
             name: storage._.bracket.dict.generic.mcfunction
         patterns:
@@ -206,7 +206,7 @@ repository:
           (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
           (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
           (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
-        captures: &ref_4
+        captures: &ref_6
           '1':
             name: keyword.control._.operator.relative.position.mcfunction
           '2':
@@ -228,7 +228,7 @@ repository:
   common.position.local:
     patterns:
       - match: (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?
-        captures: &ref_5
+        captures: &ref_7
           '1':
             name: keyword.control._.operator.local.position.mcfunction
           '2':
@@ -358,6 +358,14 @@ repository:
         name: support.class._.base.target_selector.mcfunction
       - match: '([^\n])'
         name: string._.string.mcfunction
+  nbt.compound:
+    patterns:
+      - begin: '(\{)'
+        end: '(?=\n)|(\})'
+        beginCaptures: *ref_4
+        endCaptures: *ref_5
+        patterns:
+          - include: '#nbt.compound.content'
   nbt.compound.content:
     patterns:
       - include: '#common.block'
@@ -413,7 +421,7 @@ repository:
               (key\.forward|key\.left|key\.back|key\.right|key\.jump|key\.sneak|key\.sprint|key\.inventory|key\.swapHands|key\.drop|key\.use|key\.attack|key\.pickItem|key\.chat|key\.playerlist|key\.command|key\.screenshot|key\.togglePerspective|key\.smoothCamera|key\.fullscreen|key\.spectatorOutlines|key\.hotbar\.1|key\.hotbar\.2|key\.hotbar\.3|key\.hotbar\.4|key\.hotbar\.5|key\.hotbar\.6|key\.hotbar\.7|key\.hotbar\.8|key\.hotbar\.9|key\.saveToolbarActivator|key\.loadToolbarActivator)
             name: string._.keybind.property.text_component.mcfunction
           - include: '#error.double_quoted_string.content'
-  text_component.string.command:
+  text_component.command_string:
     patterns:
       - begin: (\")(\/)
         end: (?=\n)|(\")
@@ -425,7 +433,6 @@ repository:
         endCaptures: *ref_2
         patterns:
           - include: '#commands'
-      - include: '#common.double_quoted_string'
   text_component.string.target:
     patterns:
       - begin: (\")
@@ -483,11 +490,11 @@ repository:
           (?<=\")(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
           (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
           (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))(?=\")
-        captures: *ref_4
+        captures: *ref_6
       - match: >-
           (?<=\")(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?
           (\^)(\-?\d*\.?\d+)?(?=\")
-        captures: *ref_5
+        captures: *ref_7
   text_component.string.score_holder:
     patterns:
       - begin: (\")
@@ -517,6 +524,34 @@ repository:
     patterns:
       - match: '(?<=\")([\w\.\-\+]+)(?=\")'
         name: entity.other.attribute-name._.scoreboard_objective.mcfunction
+  text_component.string.click_event:
+    patterns:
+      - begin: (\")
+        end: (?=\n)|(\")
+        beginCaptures: *ref_1
+        endCaptures: *ref_2
+        patterns:
+          - match: (open_url|open_file|run_command|suggest_command|change_page)
+            name: string._.event.property.text_component.mcfunction
+          - include: '#error.double_quoted_string.content'
+  text_component.string.hover_event:
+    patterns:
+      - begin: (\")
+        end: (?=\n)|(\")
+        beginCaptures: *ref_1
+        endCaptures: *ref_2
+        patterns:
+          - match: (show_text|show_item|show_entity)
+            name: string._.event.property.text_component.mcfunction
+          - include: '#error.double_quoted_string.content'
+  text_component.nbt_compound_string:
+    patterns:
+      - begin: '(\")(?=\{)'
+        end: (?=\n)|(\")
+        beginCaptures: *ref_1
+        endCaptures: *ref_2
+        patterns:
+          - include: '#nbt.compound'
   text_component.list_common:
     patterns:
       - match: '(?<=[^\[\,])(\,)(?=[^\]\,])'
@@ -552,10 +587,10 @@ repository:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures: &ref_6
+        beginCaptures: &ref_8
           '1':
             name: storage._.bracket.text_component.mcfunction
-        endCaptures: &ref_7
+        endCaptures: &ref_9
           '1':
             name: storage._.bracket.text_component.mcfunction
         patterns:
@@ -565,29 +600,29 @@ repository:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures: *ref_6
-        endCaptures: *ref_7
+        beginCaptures: *ref_8
+        endCaptures: *ref_9
         patterns:
           - include: '#text_component.dict_common'
           - include: '#text_component.properties.score'
-  text_component.dict.clickEvent:
+  text_component.dict.click_event:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures: *ref_6
-        endCaptures: *ref_7
+        beginCaptures: *ref_8
+        endCaptures: *ref_9
         patterns:
           - include: '#text_component.dict_common'
-          - include: '#text_component.properties.clickEvent'
-  text_component.dict.hoverEvent:
+          - include: '#text_component.properties.click_event'
+  text_component.dict.hover_event:
     patterns:
       - begin: '(\{)'
         end: '(?=\n)|(\})'
-        beginCaptures: *ref_6
-        endCaptures: *ref_7
+        beginCaptures: *ref_8
+        endCaptures: *ref_9
         patterns:
           - include: '#text_component.dict_common'
-          - include: '#text_component.properties.hoverEvent'
+          - include: '#text_component.properties.hover_event'
   text_component.properties:
     patterns:
       - include: '#text_component.property.b_i_u_s_o'
@@ -598,8 +633,8 @@ repository:
       - include: '#text_component.property.score'
       - include: '#text_component.property.keybind'
       - include: '#text_component.property.insertion'
-      - include: '#text_component.property.clickEvent'
-      - include: '#text_component.property.hoverEvent'
+      - include: '#text_component.property.click_event'
+      - include: '#text_component.property.hover_event'
       - include: '#text_component.property.nbt'
       - include: '#text_component.property.entity'
       - include: '#text_component.property.block'
@@ -611,7 +646,7 @@ repository:
           (\")(bold|italic|underlined|strikethrough|obfuscated)(\") *(\:)
           *(?=[^\s\,\}])
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: &ref_8
+        beginCaptures: &ref_10
           '1':
             name: string._.string.mcfunction
           '2':
@@ -627,7 +662,7 @@ repository:
     patterns:
       - begin: '(\")(text|translate)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.atomic'
           - include: '#error.compound_value'
@@ -635,7 +670,7 @@ repository:
     patterns:
       - begin: '(\")(color)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.string.color'
           - include: '#error.compound_value'
@@ -643,7 +678,7 @@ repository:
     patterns:
       - begin: '(\")(extra|with)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.list'
           - include: '#error.compound_value'
@@ -651,7 +686,7 @@ repository:
     patterns:
       - begin: '(\")(selector)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.string.target'
           - include: '#error.compound_value'
@@ -659,7 +694,7 @@ repository:
     patterns:
       - begin: '(\")(score)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.dict.score'
           - include: '#error.compound_value'
@@ -667,7 +702,7 @@ repository:
     patterns:
       - begin: '(\")(keybind)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.string.keybind'
           - include: '#error.compound_value'
@@ -675,31 +710,32 @@ repository:
     patterns:
       - begin: '(\")(insertion)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
-          - include: '#text_component.string.command'
+          - include: '#text_component.command_string'
+          - include: '#text_component.string'
           - include: '#error.compound_value'
-  text_component.property.clickEvent:
+  text_component.property.click_event:
     patterns:
       - begin: '(\")(clickEvent)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
-          - include: '#text_component.dict.clickEvent'
+          - include: '#text_component.dict.click_event'
           - include: '#error.compound_value'
-  text_component.property.hoverEvent:
+  text_component.property.hover_event:
     patterns:
       - begin: '(\")(hoverEvent)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
-          - include: '#text_component.dict.hoverEvent'
+          - include: '#text_component.dict.hover_event'
           - include: '#error.compound_value'
   text_component.property.nbt:
     patterns:
       - begin: '(\")(nbt)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.string.nbt'
           - include: '#error.compound_value'
@@ -707,7 +743,7 @@ repository:
     patterns:
       - begin: '(\")(entity)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.string.target'
           - include: '#error.compound_value'
@@ -715,7 +751,7 @@ repository:
     patterns:
       - begin: '(\")(block)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.string.position'
           - include: '#error.compound_value'
@@ -723,7 +759,7 @@ repository:
     patterns:
       - begin: '(\")(interpret)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.boolean'
           - include: '#error.compound_value'
@@ -737,7 +773,7 @@ repository:
     patterns:
       - begin: '(\")(name)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.string.score_holder'
           - include: '#error.compound_value'
@@ -745,7 +781,7 @@ repository:
     patterns:
       - begin: '(\")(objective)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.string.objective'
           - include: '#error.compound_value'
@@ -753,16 +789,54 @@ repository:
     patterns:
       - begin: '(\")(value)(\") *(\:) *(?=[^\s\,\}])'
         end: '(?=\n)|(?= *[\,\}])'
-        beginCaptures: *ref_8
+        beginCaptures: *ref_10
         patterns:
           - include: '#text_component.atomic'
           - include: '#error.compound_value'
-  text_component.properties.clickEvent:
+  text_component.properties.click_event:
     patterns:
+      - include: '#text_component.property.click_event.action'
+      - include: '#text_component.property.click_event.value'
       - include: '#error.compound_value'
-  text_component.properties.hoverEvent:
+  text_component.property.click_event.action:
     patterns:
+      - begin: '(\")(action)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_10
+        patterns:
+          - include: '#text_component.string.click_event'
+          - include: '#error.compound_value'
+  text_component.property.click_event.value:
+    patterns:
+      - begin: '(\")(value)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_10
+        patterns:
+          - include: '#text_component.command_string'
+          - include: '#text_component.string'
+          - include: '#error.compound_value'
+  text_component.properties.hover_event:
+    patterns:
+      - include: '#text_component.property.hover_event.action'
+      - include: '#text_component.property.hover_event.value'
       - include: '#error.compound_value'
+  text_component.property.hover_event.action:
+    patterns:
+      - begin: '(\")(action)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_10
+        patterns:
+          - include: '#text_component.string.hover_event'
+          - include: '#error.compound_value'
+  text_component.property.hover_event.value:
+    patterns:
+      - begin: '(\")(value)(\") *(\:) *(?=[^\s\,\}])'
+        end: '(?=\n)|(?= *[\,\}])'
+        beginCaptures: *ref_10
+        patterns:
+          - include: '#text_component.nbt_compound_string'
+          - include: '#text_component'
+          - include: '#error.compound_value'
   target_selector.content:
     patterns:
       - name: meta._.argument_separator.content.target_selector.mcfunction

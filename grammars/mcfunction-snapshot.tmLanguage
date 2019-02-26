@@ -1326,6 +1326,41 @@
           </dict>
         </array>
       </dict>
+      <key>nbt.compound</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\{)</string>
+            <key>end</key>
+            <string>(?=\n)|(\})</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.bracket.dict.generic.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.bracket.dict.generic.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#nbt.compound.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
       <key>nbt.compound.content</key>
       <dict>
         <key>patterns</key>
@@ -1522,7 +1557,7 @@
           </dict>
         </array>
       </dict>
-      <key>text_component.string.command</key>
+      <key>text_component.command_string</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -1559,10 +1594,6 @@
                 <string>#commands</string>
               </dict>
             </array>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#common.double_quoted_string</string>
           </dict>
         </array>
       </dict>
@@ -1962,6 +1993,123 @@
           </dict>
         </array>
       </dict>
+      <key>text_component.string.click_event</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>match</key>
+                <string>(open_url|open_file|run_command|suggest_command|change_page)</string>
+                <key>name</key>
+                <string>string._.event.property.text_component.mcfunction</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.double_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.string.hover_event</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>match</key>
+                <string>(show_text|show_item|show_entity)</string>
+                <key>name</key>
+                <string>string._.event.property.text_component.mcfunction</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.double_quoted_string.content</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.nbt_compound_string</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(?=\{)</string>
+            <key>end</key>
+            <string>(?=\n)|(\")</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#nbt.compound</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
       <key>text_component.list_common</key>
       <dict>
         <key>patterns</key>
@@ -2137,7 +2285,7 @@
           </dict>
         </array>
       </dict>
-      <key>text_component.dict.clickEvent</key>
+      <key>text_component.dict.click_event</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -2170,13 +2318,13 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#text_component.properties.clickEvent</string>
+                <string>#text_component.properties.click_event</string>
               </dict>
             </array>
           </dict>
         </array>
       </dict>
-      <key>text_component.dict.hoverEvent</key>
+      <key>text_component.dict.hover_event</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -2209,7 +2357,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#text_component.properties.hoverEvent</string>
+                <string>#text_component.properties.hover_event</string>
               </dict>
             </array>
           </dict>
@@ -2253,11 +2401,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#text_component.property.clickEvent</string>
+            <string>#text_component.property.click_event</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#text_component.property.hoverEvent</string>
+            <string>#text_component.property.hover_event</string>
           </dict>
           <dict>
             <key>include</key>
@@ -2639,7 +2787,11 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#text_component.string.command</string>
+                <string>#text_component.command_string</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -2649,7 +2801,7 @@
           </dict>
         </array>
       </dict>
-      <key>text_component.property.clickEvent</key>
+      <key>text_component.property.click_event</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -2685,7 +2837,7 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#text_component.dict.clickEvent</string>
+                <string>#text_component.dict.click_event</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -2695,7 +2847,7 @@
           </dict>
         </array>
       </dict>
-      <key>text_component.property.hoverEvent</key>
+      <key>text_component.property.hover_event</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -2731,7 +2883,7 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#text_component.dict.hoverEvent</string>
+                <string>#text_component.dict.hover_event</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -3085,23 +3237,231 @@
           </dict>
         </array>
       </dict>
-      <key>text_component.properties.clickEvent</key>
+      <key>text_component.properties.click_event</key>
       <dict>
         <key>patterns</key>
         <array>
+          <dict>
+            <key>include</key>
+            <string>#text_component.property.click_event.action</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.property.click_event.value</string>
+          </dict>
           <dict>
             <key>include</key>
             <string>#error.compound_value</string>
           </dict>
         </array>
       </dict>
-      <key>text_component.properties.hoverEvent</key>
+      <key>text_component.property.click_event.action</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(action)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.click_event</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.click_event.value</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(value)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.command_string</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.properties.hover_event</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
+            <string>#text_component.property.hover_event.action</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#text_component.property.hover_event.value</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#error.compound_value</string>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.hover_event.action</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(action)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.string.hover_event</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>text_component.property.hover_event.value</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\")(value)(\") *(\:) *(?=[^\s\,\}])</string>
+            <key>end</key>
+            <string>(?=\n)|(?= *[\,\}])</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string._.property.text_component.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string._.string.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage._.compound_colon.nbt.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#text_component.nbt_compound_string</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#text_component</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.compound_value</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>

@@ -865,6 +865,29 @@
         }
       ]
     },
+    "nbt.compound": {
+      "patterns": [
+        {
+          "begin": "(\\{)",
+          "end": "(?=\\n)|(\\})",
+          "beginCaptures": {
+            "1": {
+              "name": "storage._.bracket.dict.generic.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "storage._.bracket.dict.generic.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#nbt.compound.content"
+            }
+          ]
+        }
+      ]
+    },
     "nbt.compound.content": {
       "patterns": [
         {
@@ -1000,7 +1023,7 @@
         }
       ]
     },
-    "text_component.string.command": {
+    "text_component.command_string": {
       "patterns": [
         {
           "begin": "(\\\")(\\/)",
@@ -1023,9 +1046,6 @@
               "include": "#commands"
             }
           ]
-        },
-        {
-          "include": "#common.double_quoted_string"
         }
       ]
     },
@@ -1289,6 +1309,83 @@
         }
       ]
     },
+    "text_component.string.click_event": {
+      "patterns": [
+        {
+          "begin": "(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "match": "(open_url|open_file|run_command|suggest_command|change_page)",
+              "name": "string._.event.property.text_component.mcfunction"
+            },
+            {
+              "include": "#error.double_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.string.hover_event": {
+      "patterns": [
+        {
+          "begin": "(\\\")",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "match": "(show_text|show_item|show_entity)",
+              "name": "string._.event.property.text_component.mcfunction"
+            },
+            {
+              "include": "#error.double_quoted_string.content"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.nbt_compound_string": {
+      "patterns": [
+        {
+          "begin": "(\\\")(?=\\{)",
+          "end": "(?=\\n)|(\\\")",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#nbt.compound"
+            }
+          ]
+        }
+      ]
+    },
     "text_component.list_common": {
       "patterns": [
         {
@@ -1407,7 +1504,7 @@
         }
       ]
     },
-    "text_component.dict.clickEvent": {
+    "text_component.dict.click_event": {
       "patterns": [
         {
           "begin": "(\\{)",
@@ -1427,13 +1524,13 @@
               "include": "#text_component.dict_common"
             },
             {
-              "include": "#text_component.properties.clickEvent"
+              "include": "#text_component.properties.click_event"
             }
           ]
         }
       ]
     },
-    "text_component.dict.hoverEvent": {
+    "text_component.dict.hover_event": {
       "patterns": [
         {
           "begin": "(\\{)",
@@ -1453,7 +1550,7 @@
               "include": "#text_component.dict_common"
             },
             {
-              "include": "#text_component.properties.hoverEvent"
+              "include": "#text_component.properties.hover_event"
             }
           ]
         }
@@ -1486,10 +1583,10 @@
           "include": "#text_component.property.insertion"
         },
         {
-          "include": "#text_component.property.clickEvent"
+          "include": "#text_component.property.click_event"
         },
         {
-          "include": "#text_component.property.hoverEvent"
+          "include": "#text_component.property.hover_event"
         },
         {
           "include": "#text_component.property.nbt"
@@ -1739,7 +1836,10 @@
           },
           "patterns": [
             {
-              "include": "#text_component.string.command"
+              "include": "#text_component.command_string"
+            },
+            {
+              "include": "#text_component.string"
             },
             {
               "include": "#error.compound_value"
@@ -1748,7 +1848,7 @@
         }
       ]
     },
-    "text_component.property.clickEvent": {
+    "text_component.property.click_event": {
       "patterns": [
         {
           "begin": "(\\\")(clickEvent)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
@@ -1769,7 +1869,7 @@
           },
           "patterns": [
             {
-              "include": "#text_component.dict.clickEvent"
+              "include": "#text_component.dict.click_event"
             },
             {
               "include": "#error.compound_value"
@@ -1778,7 +1878,7 @@
         }
       ]
     },
-    "text_component.property.hoverEvent": {
+    "text_component.property.hover_event": {
       "patterns": [
         {
           "begin": "(\\\")(hoverEvent)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
@@ -1799,7 +1899,7 @@
           },
           "patterns": [
             {
-              "include": "#text_component.dict.hoverEvent"
+              "include": "#text_component.dict.hover_event"
             },
             {
               "include": "#error.compound_value"
@@ -2034,17 +2134,155 @@
         }
       ]
     },
-    "text_component.properties.clickEvent": {
+    "text_component.properties.click_event": {
       "patterns": [
+        {
+          "include": "#text_component.property.click_event.action"
+        },
+        {
+          "include": "#text_component.property.click_event.value"
+        },
         {
           "include": "#error.compound_value"
         }
       ]
     },
-    "text_component.properties.hoverEvent": {
+    "text_component.property.click_event.action": {
       "patterns": [
         {
+          "begin": "(\\\")(action)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.click_event"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.property.click_event.value": {
+      "patterns": [
+        {
+          "begin": "(\\\")(value)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.command_string"
+            },
+            {
+              "include": "#text_component.string"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.properties.hover_event": {
+      "patterns": [
+        {
+          "include": "#text_component.property.hover_event.action"
+        },
+        {
+          "include": "#text_component.property.hover_event.value"
+        },
+        {
           "include": "#error.compound_value"
+        }
+      ]
+    },
+    "text_component.property.hover_event.action": {
+      "patterns": [
+        {
+          "begin": "(\\\")(action)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.string.hover_event"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
+        }
+      ]
+    },
+    "text_component.property.hover_event.value": {
+      "patterns": [
+        {
+          "begin": "(\\\")(value)(\\\") *(\\:) *(?=[^\\s\\,\\}])",
+          "end": "(?=\\n)|(?= *[\\,\\}])",
+          "beginCaptures": {
+            "1": {
+              "name": "string._.string.mcfunction"
+            },
+            "2": {
+              "name": "string._.property.text_component.mcfunction"
+            },
+            "3": {
+              "name": "string._.string.mcfunction"
+            },
+            "4": {
+              "name": "storage._.compound_colon.nbt.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#text_component.nbt_compound_string"
+            },
+            {
+              "include": "#text_component"
+            },
+            {
+              "include": "#error.compound_value"
+            }
+          ]
         }
       ]
     },

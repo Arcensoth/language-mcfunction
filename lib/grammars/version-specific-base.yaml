@@ -56,6 +56,7 @@ names:
   text_component.property: string._.property.text_component.mcfunction
   text_component.property.color: string._.color.property.text_component.mcfunction
   text_component.property.keybind: string._.keybind.property.text_component.mcfunction
+  text_component.property.event: string._.event.property.text_component.mcfunction
 
   # resource location scopes
   resource_location.namespace: entity.name.function._.namespace.resource_location.mcfunction
@@ -185,6 +186,8 @@ variables:
 
   text_component.colors: (black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|dark_gray|blue|green|aqua|red|light_purple|yellow|white)
   text_component.keybinds: '(key\.forward|key\.left|key\.back|key\.right|key\.jump|key\.sneak|key\.sprint|key\.inventory|key\.swapHands|key\.drop|key\.use|key\.attack|key\.pickItem|key\.chat|key\.playerlist|key\.command|key\.screenshot|key\.togglePerspective|key\.smoothCamera|key\.fullscreen|key\.spectatorOutlines|key\.hotbar\.1|key\.hotbar\.2|key\.hotbar\.3|key\.hotbar\.4|key\.hotbar\.5|key\.hotbar\.6|key\.hotbar\.7|key\.hotbar\.8|key\.hotbar\.9|key\.saveToolbarActivator|key\.loadToolbarActivator)'
+  text_component.click_events: '(open_url|open_file|run_command|suggest_command|change_page)'
+  text_component.hover_events: '(show_text|show_item|show_entity)'
 
 patterns:
   - include: "#comment"
@@ -700,6 +703,15 @@ repository:
   # NBT ########################################################################
   ##############################################################################
 
+  nbt.compound:
+    patterns:
+      - begin: '{{dict.begin}}'
+        end: '{{dict.end}}'
+        beginCaptures: '#dict.begin'
+        endCaptures: '#dict.end'
+        patterns:
+          - include: '#nbt.compound.content'
+
   nbt.compound.content:
     # FIXME implement nbt compound patterns
     patterns:
@@ -779,7 +791,7 @@ repository:
             name: "#text_component.property.keybind"
           - include: "#error.double_quoted_string.content"
 
-  text_component.string.command:
+  text_component.command_string:
     patterns:
       - begin: '{{dqs.begin}}(\/)'
         end: "{{dqs.end}}"
@@ -792,7 +804,6 @@ repository:
         patterns:
           # TODO local error highlighting for commands
           - include: "#commands"
-      - include: "#common.double_quoted_string"
 
   text_component.string.target:
     patterns:
@@ -897,6 +908,37 @@ repository:
       - match: '(?<=\"){{scoreboard_objective}}(?=\")'
         name: "#scoreboard_objective"
 
+  text_component.string.click_event:
+    patterns:
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - match: "{{text_component.click_events}}"
+            name: "#text_component.property.event"
+          - include: "#error.double_quoted_string.content"
+
+  text_component.string.hover_event:
+    patterns:
+      - begin: "{{dqs.begin}}"
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - match: "{{text_component.hover_events}}"
+            name: "#text_component.property.event"
+          - include: "#error.double_quoted_string.content"
+
+  text_component.nbt_compound_string:
+    patterns:
+      - begin: '{{dqs.begin}}(?=\{)'
+        end: "{{dqs.end}}"
+        beginCaptures: "#quoted_string.begin"
+        endCaptures: "#quoted_string.end"
+        patterns:
+          - include: "#nbt.compound"
+
   text_component.list_common:
     patterns:
       # consume commas between values
@@ -952,7 +994,7 @@ repository:
           - include: "#text_component.dict_common"
           - include: "#text_component.properties.score"
 
-  text_component.dict.clickEvent:
+  text_component.dict.click_event:
     patterns:
       - begin: "{{dict.begin}}"
         end: "{{dict.end}}"
@@ -960,9 +1002,9 @@ repository:
         endCaptures: "#text_component.dict.end"
         patterns:
           - include: "#text_component.dict_common"
-          - include: "#text_component.properties.clickEvent"
+          - include: "#text_component.properties.click_event"
 
-  text_component.dict.hoverEvent:
+  text_component.dict.hover_event:
     patterns:
       - begin: "{{dict.begin}}"
         end: "{{dict.end}}"
@@ -970,7 +1012,7 @@ repository:
         endCaptures: "#text_component.dict.end"
         patterns:
           - include: "#text_component.dict_common"
-          - include: "#text_component.properties.hoverEvent"
+          - include: "#text_component.properties.hover_event"
 
   text_component.properties:
     patterns:
@@ -983,8 +1025,8 @@ repository:
       - include: "#text_component.property.score"
       - include: "#text_component.property.keybind"
       - include: "#text_component.property.insertion"
-      - include: "#text_component.property.clickEvent"
-      - include: "#text_component.property.hoverEvent"
+      - include: "#text_component.property.click_event"
+      - include: "#text_component.property.hover_event"
 
       # 1.14
       - include: "#text_component.property.nbt"
@@ -1063,25 +1105,26 @@ repository:
         end: "{{tc.p.end}}"
         beginCaptures: "#text_component.property"
         patterns:
-          - include: "#text_component.string.command"
+          - include: "#text_component.command_string"
+          - include: "#text_component.string"
           - include: "#error.compound_value"
 
-  text_component.property.clickEvent:
+  text_component.property.click_event:
     patterns:
       - begin: "{{tc.p.begin_l}}(clickEvent){{tc.p.begin_r}}"
         end: "{{tc.p.end}}"
         beginCaptures: "#text_component.property"
         patterns:
-          - include: "#text_component.dict.clickEvent"
+          - include: "#text_component.dict.click_event"
           - include: "#error.compound_value"
 
-  text_component.property.hoverEvent:
+  text_component.property.hover_event:
     patterns:
       - begin: "{{tc.p.begin_l}}(hoverEvent){{tc.p.begin_r}}"
         end: "{{tc.p.end}}"
         beginCaptures: "#text_component.property"
         patterns:
-          - include: "#text_component.dict.hoverEvent"
+          - include: "#text_component.dict.hover_event"
           - include: "#error.compound_value"
 
   text_component.property.nbt:
@@ -1154,15 +1197,55 @@ repository:
           - include: "#text_component.atomic"
           - include: "#error.compound_value"
 
-  text_component.properties.clickEvent:
+  text_component.properties.click_event:
     patterns:
-      # FIXME implement clickEvent sub-properties
+      - include: "#text_component.property.click_event.action"
+      - include: "#text_component.property.click_event.value"
       - include: "#error.compound_value"
 
-  text_component.properties.hoverEvent:
+  text_component.property.click_event.action:
     patterns:
-      # FIXME implement hoverEvent sub-properties
+      - begin: "{{tc.p.begin_l}}(action){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.click_event"
+          - include: "#error.compound_value"
+
+  text_component.property.click_event.value:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(value){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.command_string"
+          - include: "#text_component.string"
+          - include: "#error.compound_value"
+
+  text_component.properties.hover_event:
+    patterns:
+      - include: "#text_component.property.hover_event.action"
+      - include: "#text_component.property.hover_event.value"
       - include: "#error.compound_value"
+
+  text_component.property.hover_event.action:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(action){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.string.hover_event"
+          - include: "#error.compound_value"
+
+  text_component.property.hover_event.value:
+    patterns:
+      - begin: "{{tc.p.begin_l}}(value){{tc.p.begin_r}}"
+        end: "{{tc.p.end}}"
+        beginCaptures: "#text_component.property"
+        patterns:
+          - include: "#text_component.nbt_compound_string"
+          - include: "#text_component"
+          - include: "#error.compound_value"
 
   ##############################################################################
   # TARGET SELECTORS ###########################################################

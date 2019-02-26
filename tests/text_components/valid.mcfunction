@@ -92,12 +92,10 @@ tellraw @s {"text": "Click", "clickEvent": {"action": "suggest_command", "value"
 # "hoverEvent"
 tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_text", "value": "Basic string"}}
 tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_text", "value": ["", { "text": "Text\n", "color": "green", "underlined": true}, "component"]}}
-tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_achievement", "value": "achievement.openInventory"}}
-tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_achievement", "value": "stat.walkOneCm"}}
-tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_item", "value": "{id: \"minecraft:stone\", tag: {display: {Lore: [\"Lore line 1\", \"Lore line 2\"]}}}"}}
 tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_entity", "value": "{name: \"Skylinerw\", type: \"Creeper\", id: \"00000000-0000-0000-0000-000000000000\"}"}}
 tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_entity", "value": "{name: \"Skylinerw\", id: \"Not a valid UUID\"}"}}
-tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_item", "value": "{id: 'minecraft:stone', tag: {display: {Lore: ['Lore line 1', 'Lore line 2']}}}"}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_item", "value": "{id: \"minecraft:stone\", Count: 1b, tag: {display: {Lore: [\"\\\"Lore line 1\\\"\", \"\\\"Lore line 2\\\"\"]}}}"}}
+tellraw @s {"text": "Hover", "hoverEvent": {"action": "show_item", "value": "{id: 'minecraft:stone', Count: 1b, tag: {display: {Lore: ['\"Lore line 1\"', '\"Lore line 2\"']}}}"}}
 
 # "nbt", "entity", "block", and "interpret"
 tellraw @s {"entity": "@s", "nbt": "SelectedItem"}
