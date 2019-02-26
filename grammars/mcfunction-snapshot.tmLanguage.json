@@ -872,6 +872,13 @@
         }
       ]
     },
+    "nbt_path": {
+      "patterns": [
+        {
+          "include": "#common.double_quoted_string.content"
+        }
+      ]
+    },
     "score_map.content": {
       "patterns": [
         {
@@ -1118,7 +1125,7 @@
     "text_component.string.nbt.content": {
       "patterns": [
         {
-          "include": "#common.double_quoted_string.content"
+          "include": "#nbt_path"
         }
       ]
     },

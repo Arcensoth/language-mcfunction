@@ -361,6 +361,9 @@ repository:
   nbt.compound.content:
     patterns:
       - include: '#common.block'
+  nbt_path:
+    patterns:
+      - include: '#common.double_quoted_string.content'
   score_map.content:
     patterns:
       - include: '#common.block'
@@ -464,7 +467,7 @@ repository:
           - include: '#error.double_quoted_string.content'
   text_component.string.nbt.content:
     patterns:
-      - include: '#common.double_quoted_string.content'
+      - include: '#nbt_path'
   text_component.string.position:
     patterns:
       - begin: (\")

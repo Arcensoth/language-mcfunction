@@ -1336,6 +1336,16 @@
           </dict>
         </array>
       </dict>
+      <key>nbt_path</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.double_quoted_string.content</string>
+          </dict>
+        </array>
+      </dict>
       <key>score_map.content</key>
       <dict>
         <key>patterns</key>
@@ -1702,7 +1712,7 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#common.double_quoted_string.content</string>
+            <string>#nbt_path</string>
           </dict>
         </array>
       </dict>

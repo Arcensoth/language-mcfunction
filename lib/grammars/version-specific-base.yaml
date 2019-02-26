@@ -701,21 +701,26 @@ repository:
   ##############################################################################
 
   nbt.compound.content:
-    # FIXME nbt compound patterns
+    # FIXME implement nbt compound patterns
     patterns:
       - include: "#common.block"
+
+  nbt_path:
+    # FIXME implement nbt paths
+    patterns:
+      - include: "#common.double_quoted_string.content"
 
   ##############################################################################
   # MAPS #######################################################################
   ##############################################################################
 
   score_map.content:
-    # FIXME score map patterns
+    # FIXME implement score map patterns
     patterns:
       - include: "#common.block"
 
   advancement_map.content:
-    # FIXME advancement map patterns
+    # FIXME implement advancement map patterns
     patterns:
       - include: "#common.block"
 
@@ -839,9 +844,8 @@ repository:
           - include: "#error.double_quoted_string.content"
 
   text_component.string.nbt.content:
-    # FIXME implement nbt path
     patterns:
-      - include: "#common.double_quoted_string.content"
+      - include: "#nbt_path"
 
   text_component.string.position:
     patterns:
