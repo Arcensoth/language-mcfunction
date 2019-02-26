@@ -6,31 +6,44 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 ## [0.8.0] - 2019-02-23
+### Added
 - Added important information to the readme
 
 ## [0.7.0] - 2019-02-23
-- Added support for single-quoted strings
-- Added support for block predicates with NBT
+### Added
+- Support for single-quoted strings
+- Support for block predicates with NBT
+
+### Changed
 - Adjusted comment highlighting
 - Adjusted colour classes
 - Overhauled grammar generation scheme
 
 ## [0.6.0] - 2019-02-17
-- Fixed bug with scores
+### Changed
 - Adjusted colour classes
 
+### Fixed
+- Fixed bug with scores
+
 ## [0.5.0] - 2019-02-16
+### Changed
 - Adjusted colour classes
 
 ## [0.4.0] - 2019-02-16
+### Added
 - Implement support for SublimeText
 
 ## [0.3.0] - 2019-02-16
+### Added
 - Implemented scores/advancements for selectors
-- Now generating property list file for other editors
+- Generate property list file for other editors
 
 ## [0.2.0] - 2019-02-15
+### Added
 - Implemented JSON/text components
+
+### Changed
 - Adjusted colour classes
 
 ## [0.1.0] - 2019-02-15
