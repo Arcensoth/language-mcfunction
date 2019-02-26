@@ -68,6 +68,7 @@ variables:
 
   # an integer or decimal with optional leading digit
   number: '(\-?\d*\.?\d+)'
+  integer: '(\-?\d+)'
 
   # a resource path is the portion of the resource location following the namespace
   resource_path_nc: '[a-z0-9_\.\-\/]+'
@@ -147,6 +148,10 @@ capturesRepository:
       name: "#numeric_altered"
 
   number:
+    1:
+      name: "#numeric_constant"
+
+  integer:
     1:
       name: "#numeric_constant"
 
@@ -699,8 +704,22 @@ repository:
 
   nbt_path.index:
     patterns:
-      # TODO this isn't really an index
-      - include: "#nbt.list"
+      - match: '(?<=\[){{integer}}(?=\])'
+        captures: '#integer'
+      - begin: '(\{)'
+        end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
+        beginCaptures:
+          1:
+            name: "#nbt_delims"
+        endCaptures:
+          1:
+            name: "#nbt_delims"
+          2:
+            name: '#error'
+        patterns:
+          - include: "#nbt.compound"
+      - match: '[^\n\]]+'
+        name: '#error'
 
   block_predicate:
     patterns:

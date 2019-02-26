@@ -424,7 +424,24 @@ repository:
         name: invalid.illegal.mcfunction
   nbt_path.index:
     patterns:
-      - include: '#nbt.list'
+      - match: '(?<=\[)(\-?\d+)(?=\])'
+        captures:
+          '1':
+            name: constant.numeric.mcfunction
+      - begin: '(\{)'
+        end: '(?=\n)|(\})([^\]\,\n]*)'
+        beginCaptures:
+          '1':
+            name: variable.language.mcfunction
+        endCaptures:
+          '1':
+            name: variable.language.mcfunction
+          '2':
+            name: invalid.illegal.mcfunction
+        patterns:
+          - include: '#nbt.compound'
+      - match: '[^\n\]]+'
+        name: invalid.illegal.mcfunction
   block_predicate:
     patterns:
       - match: '(\#)([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)'

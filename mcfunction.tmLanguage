@@ -1197,8 +1197,56 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#nbt.list</string>
+            <key>match</key>
+            <string>(?&lt;=\[)(\-?\d+)(?=\])</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(\{)</string>
+            <key>end</key>
+            <string>(?=\n)|(\})([^\]\,\n]*)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#nbt.compound</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>[^\n\]]+</string>
+            <key>name</key>
+            <string>invalid.illegal.mcfunction</string>
           </dict>
         </array>
       </dict>

@@ -19,12 +19,22 @@ data get entity @s Inventory[-1]
 data get entity @s Inventory[].tag
 
 # test invalid list access
+data get entity @s Inventory[ 0 ]
 data get entity @s Inventory[0.5]
+data get entity @s Inventory[true]
+data get entity @s Inventory[1, 2]
 
 # test valid list access with compound
 data get entity @s Inventory[{}]
 data get entity @s Inventory[{Count: 64}]
 data get entity @s Inventory[{id: "minecraft:diamond"}]
+
+# test invalid list access with compound
+data get entity @s Inventory[ {} ]
+data get entity @s Inventory[x{}]
+data get entity @s Inventory[{}x]
+data get entity @s Inventory[x{}x]
+data get entity @s Inventory[ {Count: 64} ]
 
 # test valid compound access
 data get entity @s Inventory[].tag{custom: true}.display.Name
