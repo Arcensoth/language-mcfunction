@@ -36,6 +36,10 @@ say 'hello " world'
 say "hello \" world"
 say 'hello \' world'
 
+# player names
+scoreboard players reset $mypack:some.fakeplayer
+scoreboard players reset $mypack.core:another.fakeplayer
+
 # quoted string with trailing characters
 say "oh oh"bad
 say 'oh oh'bad

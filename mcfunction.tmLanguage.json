@@ -164,13 +164,13 @@
           "include": "#command.token.nbt_path"
         },
         {
-          "include": "#command.token.unquoted_string"
-        },
-        {
           "include": "#command.token.quoted_string"
         },
         {
           "include": "#command.token.single_quoted_string"
+        },
+        {
+          "include": "#command.token.unquoted_string"
         },
         {
           "include": "#command.token.unknown"
@@ -293,7 +293,7 @@
     },
     "command.token.fakeplayer": {
       "name": "meta.command.token.fakeplayer.mcfunction",
-      "match": "(?<= )([\\#\\$\\%][\\w\\.\\-]+)(?=[ \\n])",
+      "match": "(?<= )([\\#\\$\\%]\\S+)(?=[ \\n])",
       "captures": {
         "1": {
           "name": "support.class.mcfunction"
@@ -302,7 +302,7 @@
     },
     "command.token.unquoted_string": {
       "name": "meta.command.token.unquoted_string.mcfunction",
-      "match": "(?<= )([\\w\\.\\-\\#\\$\\%]+)(?=[ \\n])",
+      "match": "(?<= )(\\S+)(?=[ \\n])",
       "captures": {
         "1": {
           "name": "string.unquoted.mcfunction"
@@ -519,7 +519,7 @@
           "name": "constant.numeric.mcfunction"
         },
         {
-          "match": "([\\w\\.\\-\\#\\$\\%]+)",
+          "match": "([^\\s\\{\\}\\[\\]\\,\\:\\=]+)",
           "name": "string.unquoted.mcfunction"
         },
         {
@@ -654,7 +654,10 @@
               "include": "#selector.argument.boolean"
             },
             {
-              "include": "#selector.argument.unquoted_string"
+              "include": "#selector.argument.property_map"
+            },
+            {
+              "include": "#selector.argument.nbt_compound"
             },
             {
               "include": "#selector.argument.quoted_string"
@@ -663,10 +666,7 @@
               "include": "#selector.argument.single_quoted_string"
             },
             {
-              "include": "#selector.argument.property_map"
-            },
-            {
-              "include": "#selector.argument.nbt_compound"
+              "include": "#selector.argument.unquoted_string"
             },
             {
               "include": "#selector.argument.unknown"
@@ -1012,7 +1012,7 @@
     },
     "selector.argument.unquoted_string": {
       "name": "meta.selector.argument.unquoted_string.mcfunction",
-      "match": "([\\w\\.\\-\\#\\$\\%]+)(?= *[\\,\\]\\n])",
+      "match": "([^\\s\\{\\}\\[\\]\\,\\:\\=\\!]+)(?= *[\\,\\]\\n])",
       "captures": {
         "1": {
           "name": "string.unquoted.mcfunction"
@@ -1076,7 +1076,7 @@
     },
     "selector.argument.property_map": {
       "name": "meta.selector.argument.property_map.mcfunction",
-      "begin": "(\\{)(?= *([a-z0-9_\\.\\-]+\\:[a-z0-9_\\.\\-\\/]+|[a-z0-9_\\.\\-\\/]+|([\\w\\.\\-\\#\\$\\%]+)) *(\\=))",
+      "begin": "(\\{)(?= *([a-z0-9_\\.\\-]+\\:[a-z0-9_\\.\\-\\/]+|[a-z0-9_\\.\\-\\/]+|([a-z0-9_\\.\\-]+)) *(\\=))",
       "end": "(?=\\n)|(\\})([^\\]\\,\\n]*)",
       "beginCaptures": {
         "1": {
@@ -1126,14 +1126,14 @@
           "match": " +"
         },
         {
-          "begin": "(,)? *([\\w\\.\\-\\#\\$\\%]+) *(\\=) *",
+          "begin": "(,)? *([a-z0-9_\\.\\-]+) *(\\=) *",
           "end": " *(?=[\\n\\}\\,])",
           "beginCaptures": {
             "1": {
               "name": "variable.language.mcfunction"
             },
             "2": {
-              "name": "string.unquoted.mcfunction"
+              "name": "entity.name.function.mcfunction"
             },
             "3": {
               "name": "variable.language.mcfunction"

@@ -248,15 +248,15 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#command.token.unquoted_string</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#command.token.quoted_string</string>
           </dict>
           <dict>
             <key>include</key>
             <string>#command.token.single_quoted_string</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#command.token.unquoted_string</string>
           </dict>
           <dict>
             <key>include</key>
@@ -459,7 +459,7 @@
         <key>name</key>
         <string>meta.command.token.fakeplayer.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )([\#\$\%][\w\.\-]+)(?=[ \n])</string>
+        <string>(?&lt;= )([\#\$\%]\S+)(?=[ \n])</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -474,7 +474,7 @@
         <key>name</key>
         <string>meta.command.token.unquoted_string.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )([\w\.\-\#\$\%]+)(?=[ \n])</string>
+        <string>(?&lt;= )(\S+)(?=[ \n])</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -811,7 +811,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>([\w\.\-\#\$\%]+)</string>
+            <string>([^\s\{\}\[\]\,\:\=]+)</string>
             <key>name</key>
             <string>string.unquoted.mcfunction</string>
           </dict>
@@ -1025,7 +1025,11 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#selector.argument.unquoted_string</string>
+                <string>#selector.argument.property_map</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#selector.argument.nbt_compound</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -1037,11 +1041,7 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#selector.argument.property_map</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#selector.argument.nbt_compound</string>
+                <string>#selector.argument.unquoted_string</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -1584,7 +1584,7 @@
         <key>name</key>
         <string>meta.selector.argument.unquoted_string.mcfunction</string>
         <key>match</key>
-        <string>([\w\.\-\#\$\%]+)(?= *[\,\]\n])</string>
+        <string>([^\s\{\}\[\]\,\:\=\!]+)(?= *[\,\]\n])</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -1688,7 +1688,7 @@
         <key>name</key>
         <string>meta.selector.argument.property_map.mcfunction</string>
         <key>begin</key>
-        <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+|([\w\.\-\#\$\%]+)) *(\=))</string>
+        <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+|([a-z0-9_\.\-]+)) *(\=))</string>
         <key>end</key>
         <string>(?=\n)|(\})([^\]\,\n]*)</string>
         <key>beginCaptures</key>
@@ -1767,7 +1767,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(,)? *([\w\.\-\#\$\%]+) *(\=) *</string>
+            <string>(,)? *([a-z0-9_\.\-]+) *(\=) *</string>
             <key>end</key>
             <string> *(?=[\n\}\,])</string>
             <key>beginCaptures</key>
@@ -1780,7 +1780,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>string.unquoted.mcfunction</string>
+                <string>entity.name.function.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>

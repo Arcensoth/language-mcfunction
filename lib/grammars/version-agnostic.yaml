@@ -22,6 +22,7 @@ names:
   tagged_resource_namespace: "#resource_namespace"
   tagged_resource_path: "#tagged_resource_namespace"
   namespace_separator: "#resource_namespace"
+  scoreboard_objective: "#resource_namespace"
   uuid: "#base_selector"
   fakeplayer: "#base_selector"
   boolean: "#numeric_constant"
@@ -81,13 +82,21 @@ variables:
   # uuid format
   hex_digit: "[0-9a-fA-F]"
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
+  
+  # scorebord objective names
+  scoreboard_objective: '{{component}}'
+
+  # unquoted strings are like literals with additional available characters
+  # basically anything is accepted apart from whitespace
+  # character ambiguity depends on context
+  unquoted_string_nc: '\S+'
+  unquoted_string: '({{unquoted_string_nc}})'
+  nbt_unquoted_string: '([^\s\{\}\[\]\,\:\=]+)'
+  selector_unquoted_string: '([^\s\{\}\[\]\,\:\=\!]+)'
 
   # various popular fakeplayer formats
   # they'd get classified as unquoted strings anyway
-  fakeplayer: '([\#\$\%][\w\.\-]+)'
-
-  # unquoted strings are like literals with additional available characters
-  unquoted_string: '([\w\.\-\#\$\%]+)'
+  fakeplayer: '([\#\$\%]{{unquoted_string_nc}})'
 
   # a tagged resource location is a resource location prefaced with `#`
   tagged_resource_location: '(\#){{resource_location}}'
@@ -277,9 +286,9 @@ repository:
       - include: "#command.token.uuid"
       - include: "#command.token.fakeplayer"
       - include: "#command.token.nbt_path"
-      - include: "#command.token.unquoted_string"
       - include: "#command.token.quoted_string"
       - include: "#command.token.single_quoted_string"
+      - include: "#command.token.unquoted_string"
       - include: "#command.token.unknown"
 
   command.token.selector_without_arguments:
@@ -488,7 +497,7 @@ repository:
         name: "#boolean"
       - match: "{{number}}"
         name: "#numeric_constant"
-      - match: "{{unquoted_string}}"
+      - match: "{{nbt_unquoted_string}}"
         name: "#unquoted_string"
       - match: '[^\n\,\]\}]+'
         name: "#error"
@@ -623,11 +632,11 @@ repository:
           - include: "#selector.argument.range"
           - include: "#selector.argument.number"
           - include: "#selector.argument.boolean"
-          - include: "#selector.argument.unquoted_string"
-          - include: "#selector.argument.quoted_string"
-          - include: "#selector.argument.single_quoted_string"
           - include: "#selector.argument.property_map"
           - include: "#selector.argument.nbt_compound"
+          - include: "#selector.argument.quoted_string"
+          - include: "#selector.argument.single_quoted_string"
+          - include: "#selector.argument.unquoted_string"
           - include: "#selector.argument.unknown"
 
       # anything else apart from terminals is classified as an error
@@ -812,7 +821,7 @@ repository:
 
   selector.argument.unquoted_string:
     name: meta.selector.argument.unquoted_string.mcfunction
-    match: "{{unquoted_string}}{{sat}}"
+    match: "{{selector_unquoted_string}}{{sat}}"
     captures: "#unquoted_string"
 
   selector.argument.unknown:
@@ -858,7 +867,7 @@ repository:
     # we need to try and distinguish this from an nbt argument
     # lookahead for something unique to advancements/scores
     # (how about we just copy-paste thee capturing part of the property map?)
-    begin: '(\{)(?= *({{resource_location_nc}}|{{resource_path_nc}}|{{unquoted_string}}) *(\=))'
+    begin: '(\{)(?= *({{resource_location_nc}}|{{resource_path_nc}}|{{scoreboard_objective}}) *(\=))'
     end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
     beginCaptures:
       1:
@@ -893,13 +902,13 @@ repository:
       - match: " +"
 
       # try for things that look like scores first
-      - begin: '(,)? *{{unquoted_string}} *(\=) *'
+      - begin: '(,)? *{{scoreboard_objective}} *(\=) *'
         end: ' *(?=[\n\}\,])'
         beginCaptures:
           1:
             name: "#nbt_delims"
           2:
-            name: "#unquoted_string"
+            name: "#scoreboard_objective"
           3:
             name: "#nbt_delims"
         patterns:
