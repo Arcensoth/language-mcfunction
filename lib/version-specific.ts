@@ -2,7 +2,7 @@ import { CommandNode } from "./command-manifest";
 import { ExtendedLanguageGrammar, GrammarNode } from "./language-grammar";
 import { deepCopy } from "./utils";
 
-function augmentNode(
+export function augmentNode(
   grammar: ExtendedLanguageGrammar,
   grammarNode: GrammarNode,
   commandNode: CommandNode
@@ -15,7 +15,7 @@ export function augmentGrammar(
   commands: CommandNode
 ): ExtendedLanguageGrammar {
   const grammar = deepCopy(baseGrammar);
-  const grammarNode = grammar.repository.generated_commands;
+  const grammarNode = grammar.repository["generated.commands"];
   const commandNode = commands;
   augmentNode(grammar, grammarNode, commandNode);
   return grammar;
