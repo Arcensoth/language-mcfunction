@@ -11,6 +11,14 @@
       "request": "launch",
       "runtimeExecutable": "${execPath}",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/lib/cli.ts",
+      "preLaunchTask": "npm: build",
+      "outFiles": ["${workspaceFolder}/out/**/*.js"]
     }
   ]
 }

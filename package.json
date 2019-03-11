@@ -7,7 +7,8 @@
   "repository": "https://github.com/Arcensoth/language-mcfunction",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -b lib -v && node lib/cli.js"
+    "build": "tsc -b lib -v",
+    "build-grammars": "tsc -b lib -v && node out/cli.js"
   },
   "engines": {
     "vscode": "^1.30.0"

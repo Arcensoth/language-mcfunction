@@ -3,7 +3,8 @@
     "target": "ES5",
     "module": "commonjs",
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "outDir": "../out",
+    "sourceMap": true
   },
   "exclude": ["node_modules"]
 }
