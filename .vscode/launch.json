@@ -15,8 +15,17 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Build version-agnostic grammar",
       "program": "${workspaceFolder}/lib/cli.ts",
+      "preLaunchTask": "npm: build",
+      "outFiles": ["${workspaceFolder}/out/**/*.js"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Build version-specific grammar",
+      "program": "${workspaceFolder}/lib/cli.ts",
+      "args": ["generated", "snapshot"],
       "preLaunchTask": "npm: build",
       "outFiles": ["${workspaceFolder}/out/**/*.js"]
     }

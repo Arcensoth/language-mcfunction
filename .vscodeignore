@@ -2,6 +2,7 @@
 node_modules
 dist
 out
+generated
 lib
 tests
 mcfunction.tmLanguage.yaml
