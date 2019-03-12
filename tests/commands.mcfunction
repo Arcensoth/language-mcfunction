@@ -22,3 +22,11 @@ execute as @s run as @s
 execute as @s run execute
 execute as @s run execute foo
 execute as @s run execute as @s run
+
+advancement
+advancement foo
+advancement grant
+advancement grant foo
+advancement grant targets
+advancement grant targets foo
+advancement grant targets everything

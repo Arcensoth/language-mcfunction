@@ -1,6 +1,11 @@
 export enum CommandNodeType {
+  ROOT = "root",
   LITERAL = "literal",
   ARGUMENT = "argument"
+}
+
+export interface CommandNodeChildren {
+  [name: string]: CommandNode;
 }
 
 export interface CommandNode {
@@ -8,7 +13,7 @@ export interface CommandNode {
   parser?: string;
   properties?: {};
   executable?: boolean;
-  children: { [name: string]: CommandNode };
+  children?: CommandNodeChildren;
 }
 
 export interface CommandManifest extends CommandNode {}

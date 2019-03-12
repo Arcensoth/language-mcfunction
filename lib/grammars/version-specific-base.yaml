@@ -1524,7 +1524,6 @@ repository:
       - include: "#generated.command.say"
       - include: "#generated.command.tellraw"
       - include: "#generated.command.execute"
-      - include: "#error.command_line"
 
   generated.command.say:
     begin: "(say){{cbx_false}}"

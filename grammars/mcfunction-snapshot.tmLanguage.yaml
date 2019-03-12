@@ -1077,6 +1077,7 @@ repository:
       - include: '#generated.command.say'
       - include: '#generated.command.tellraw'
       - include: '#generated.command.execute'
+      - include: '#generated.command.advancement'
       - include: '#error.command_line'
   generated.command.say:
     begin: '(say) (?=[^\s\#])'
@@ -1230,3 +1231,306 @@ repository:
   generated.commands.execute.as.targets:
     patterns:
       - include: '#generated.commands.execute'
+  generated.command.advancement:
+    begin: '(advancement) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.control._.command.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement'
+  generated.commands.advancement:
+    patterns:
+      - include: '#generated.command.advancement.grant'
+      - include: '#generated.command.advancement.revoke'
+      - include: '#error.command_line'
+  generated.command.advancement.grant:
+    begin: '(grant) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant'
+  generated.commands.advancement.grant:
+    patterns:
+      - include: '#generated.command.advancement.grant.targets'
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets:
+    begin: '(targets) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets'
+  generated.commands.advancement.grant.targets:
+    patterns:
+      - include: '#generated.command.advancement.grant.targets.everything'
+      - include: '#generated.command.advancement.grant.targets.from'
+      - include: '#generated.command.advancement.grant.targets.only'
+      - include: '#generated.command.advancement.grant.targets.through'
+      - include: '#generated.command.advancement.grant.targets.until'
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.everything:
+    begin: (everything)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets.everything'
+  generated.commands.advancement.grant.targets.everything:
+    patterns:
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.from:
+    begin: '(from) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets.from'
+  generated.commands.advancement.grant.targets.from:
+    patterns:
+      - include: '#generated.command.advancement.grant.targets.from.advancement'
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.from.advancement:
+    begin: (advancement)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets.from.advancement'
+  generated.commands.advancement.grant.targets.from.advancement:
+    patterns:
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.only:
+    begin: '(only) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets.only'
+  generated.commands.advancement.grant.targets.only:
+    patterns:
+      - include: '#generated.command.advancement.grant.targets.only.advancement'
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.only.advancement:
+    begin: (advancement)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets.only.advancement'
+  generated.commands.advancement.grant.targets.only.advancement:
+    patterns:
+      - include: >-
+          #generated.command.advancement.grant.targets.only.advancement.criterion
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.only.advancement.criterion:
+    begin: (criterion)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: >-
+          #generated.commands.advancement.grant.targets.only.advancement.criterion
+  generated.commands.advancement.grant.targets.only.advancement.criterion:
+    patterns:
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.through:
+    begin: '(through) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets.through'
+  generated.commands.advancement.grant.targets.through:
+    patterns:
+      - include: '#generated.command.advancement.grant.targets.through.advancement'
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.through.advancement:
+    begin: (advancement)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets.through.advancement'
+  generated.commands.advancement.grant.targets.through.advancement:
+    patterns:
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.until:
+    begin: '(until) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets.until'
+  generated.commands.advancement.grant.targets.until:
+    patterns:
+      - include: '#generated.command.advancement.grant.targets.until.advancement'
+      - include: '#error.command_line'
+  generated.command.advancement.grant.targets.until.advancement:
+    begin: (advancement)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.grant.targets.until.advancement'
+  generated.commands.advancement.grant.targets.until.advancement:
+    patterns:
+      - include: '#error.command_line'
+  generated.command.advancement.revoke:
+    begin: '(revoke) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke'
+  generated.commands.advancement.revoke:
+    patterns:
+      - include: '#generated.command.advancement.revoke.targets'
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets:
+    begin: '(targets) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets'
+  generated.commands.advancement.revoke.targets:
+    patterns:
+      - include: '#generated.command.advancement.revoke.targets.everything'
+      - include: '#generated.command.advancement.revoke.targets.from'
+      - include: '#generated.command.advancement.revoke.targets.only'
+      - include: '#generated.command.advancement.revoke.targets.through'
+      - include: '#generated.command.advancement.revoke.targets.until'
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.everything:
+    begin: (everything)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets.everything'
+  generated.commands.advancement.revoke.targets.everything:
+    patterns:
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.from:
+    begin: '(from) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets.from'
+  generated.commands.advancement.revoke.targets.from:
+    patterns:
+      - include: '#generated.command.advancement.revoke.targets.from.advancement'
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.from.advancement:
+    begin: (advancement)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets.from.advancement'
+  generated.commands.advancement.revoke.targets.from.advancement:
+    patterns:
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.only:
+    begin: '(only) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets.only'
+  generated.commands.advancement.revoke.targets.only:
+    patterns:
+      - include: '#generated.command.advancement.revoke.targets.only.advancement'
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.only.advancement:
+    begin: (advancement)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets.only.advancement'
+  generated.commands.advancement.revoke.targets.only.advancement:
+    patterns:
+      - include: >-
+          #generated.command.advancement.revoke.targets.only.advancement.criterion
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.only.advancement.criterion:
+    begin: (criterion)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: >-
+          #generated.commands.advancement.revoke.targets.only.advancement.criterion
+  generated.commands.advancement.revoke.targets.only.advancement.criterion:
+    patterns:
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.through:
+    begin: '(through) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets.through'
+  generated.commands.advancement.revoke.targets.through:
+    patterns:
+      - include: '#generated.command.advancement.revoke.targets.through.advancement'
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.through.advancement:
+    begin: (advancement)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets.through.advancement'
+  generated.commands.advancement.revoke.targets.through.advancement:
+    patterns:
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.until:
+    begin: '(until) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets.until'
+  generated.commands.advancement.revoke.targets.until:
+    patterns:
+      - include: '#generated.command.advancement.revoke.targets.until.advancement'
+      - include: '#error.command_line'
+  generated.command.advancement.revoke.targets.until.advancement:
+    begin: (advancement)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.advancement.revoke.targets.until.advancement'
+  generated.commands.advancement.revoke.targets.until.advancement:
+    patterns:
+      - include: '#error.command_line'
