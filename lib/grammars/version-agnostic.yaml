@@ -63,6 +63,10 @@ variables:
   # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
 
+  # characters permitted in unquoted string words, like nbt compound keys
+  unquoted_word_nc: '[A-Za-z0-9_\.\-]+'
+  unquoted_word: '({{unquoted_word_nc}})'
+
   # characters permitted in namespaces, resource paths, etc
   component_nc: '[a-z0-9_\.\-]+'
   component: "({{component_nc}})"
@@ -403,7 +407,7 @@ repository:
 
       # quoted keys: { ("text") (:) "hello" }
       # unquoted keys: { (SelectedItem) (:) { Count: 64 } }
-      - begin: '(,)? *(\w+|\"[^\n\"]+\") *(\:) *'
+      - begin: '(,)? *({{unquoted_word_nc}}|\"[^\n\"]+\") *(\:) *'
 
         # Possible ending cases:
         #   1. the closing brace of the parent compound

@@ -216,7 +216,7 @@ repository:
   nbt.compound:
     patterns:
       - match: ' +'
-      - begin: '(,)? *(\w+|\"[^\n\"]+\") *(\:) *'
+      - begin: '(,)? *([A-Za-z0-9_\.\-]+|\"[^\n\"]+\") *(\:) *'
         end: ' *(?=[\n\}\,])'
         beginCaptures:
           '1':

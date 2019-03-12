@@ -603,7 +603,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(,)? *(\w+|\"[^\n\"]+\") *(\:) *</string>
+            <string>(,)? *([A-Za-z0-9_\.\-]+|\"[^\n\"]+\") *(\:) *</string>
             <key>end</key>
             <string> *(?=[\n\}\,])</string>
             <key>beginCaptures</key>
