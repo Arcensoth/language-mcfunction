@@ -1,0 +1,22 @@
+{
+  "name": "mcfunction-client",
+  "description": "mcfunction language client",
+  "version": "0.11.0-dev",
+  "author": "Arcensoth",
+  "publisher": "arcensoth",
+  "license": "MIT",
+  "repository": "https://github.com/Arcensoth/language-mcfunction",
+  "scripts": {
+    "update-vscode": "vscode-install",
+    "postinstall": "vscode-install"
+  },
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^4.1.4"
+  },
+  "devDependencies": {
+    "vscode": "^1.1.30"
+  }
+}
