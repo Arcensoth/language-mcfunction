@@ -88,7 +88,7 @@ variables:
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
   
   # scorebord objective names
-  scoreboard_objective: '{{component}}'
+  scoreboard_objective: '{{unquoted_word}}'
 
   # unquoted strings are like literals with additional available characters
   # basically anything is accepted apart from whitespace

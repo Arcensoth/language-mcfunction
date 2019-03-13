@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Fixed
 - Fix compound key whitelisted characters, as per #10
+- Fix selector scores whitelisted characters, as per #12
 
 ## [v0.10.0] - 2019-03-02
 ### Changed

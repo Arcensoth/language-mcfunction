@@ -1688,7 +1688,7 @@
         <key>name</key>
         <string>meta.selector.argument.property_map.mcfunction</string>
         <key>begin</key>
-        <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+|([a-z0-9_\.\-]+)) *(\=))</string>
+        <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+|([A-Za-z0-9_\.\-]+)) *(\=))</string>
         <key>end</key>
         <string>(?=\n)|(\})([^\]\,\n]*)</string>
         <key>beginCaptures</key>
@@ -1767,7 +1767,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(,)? *([a-z0-9_\.\-]+) *(\=) *</string>
+            <string>(,)? *([A-Za-z0-9_\.\-]+) *(\=) *</string>
             <key>end</key>
             <string> *(?=[\n\}\,])</string>
             <key>beginCaptures</key>
