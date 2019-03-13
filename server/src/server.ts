@@ -14,6 +14,10 @@ import {
   TextDocumentPositionParams
 } from "vscode-languageserver";
 
+import { LanguageDatabase } from "./language-database";
+
+const languageDatabase = new LanguageDatabase();
+
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
 let connection = createConnection(ProposedFeatures.all);
@@ -175,24 +179,12 @@ connection.onDidChangeWatchedFiles(_change => {
   connection.console.log("We received an file change event");
 });
 
-// This handler provides the initial list of the completion items.
 connection.onCompletion(
   (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-    // The pass parameter contains the position of the text document in
-    // which code complete got requested. For the example we ignore this
-    // info and always provide the same completion items.
-    return [
-      {
-        label: "TypeScript",
-        kind: CompletionItemKind.Text,
-        data: 1
-      },
-      {
-        label: "JavaScript",
-        kind: CompletionItemKind.Text,
-        data: 2
-      }
-    ];
+    return languageDatabase.getCompletions(
+      documents.get(_textDocumentPosition.textDocument.uri),
+      _textDocumentPosition.position
+    );
   }
 );
 
@@ -200,13 +192,9 @@ connection.onCompletion(
 // the completion list.
 connection.onCompletionResolve(
   (item: CompletionItem): CompletionItem => {
-    if (item.data === 1) {
-      (item.detail = "TypeScript details"),
-        (item.documentation = "TypeScript documentation");
-    } else if (item.data === 2) {
-      (item.detail = "JavaScript details"),
-        (item.documentation = "JavaScript documentation");
-    }
+    // TODO resolve completion item details
+    item.detail = "TODO detail";
+    item.documentation = "TODO documentation";
     return item;
   }
 );

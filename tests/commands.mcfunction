@@ -30,3 +30,13 @@ advancement grant foo
 advancement grant targets
 advancement grant targets foo
 advancement grant targets everything
+
+execute as targets
+execute as targets 
+execute as targets run
+execute as targets run 
+execute as targets run execute
+execute as targets run execute 
+execute as targets run execute as
+execute as targets run execute as 
+execute as targets run execute as targets
