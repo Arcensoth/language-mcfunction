@@ -179,7 +179,7 @@
     },
     "command.token.selector_without_arguments": {
       "name": "meta.command.token.selector_without_arguments.mcfunction",
-      "match": "(?<= )(\\@[a-z])(?=[ \\n])",
+      "match": "(?<= )(\\@[a-z])(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "support.class.mcfunction"
@@ -188,7 +188,7 @@
     },
     "command.token.resource_location": {
       "name": "meta.command.token.resource_location.mcfunction",
-      "match": "(?<= )([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
+      "match": "(?<= )([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "entity.name.function.mcfunction"
@@ -203,7 +203,7 @@
     },
     "command.token.tagged_resource_location": {
       "name": "meta.command.token.tagged_resource_location.mcfunction",
-      "match": "(?<= )(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n])",
+      "match": "(?<= )(\\#)([a-z0-9_\\.\\-]+)(\\:)([a-z0-9_\\.\\-\\/]+)(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "entity.name.function.mcfunction"
@@ -221,7 +221,7 @@
     },
     "command.token.range": {
       "name": "meta.command.token.range.mcfunction",
-      "match": "(?<= )(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?(?=[ \\n])",
+      "match": "(?<= )(\\-?\\d*\\.?\\d+)?(\\.\\.)(\\-?\\d*\\.?\\d+)?(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "constant.numeric.mcfunction"
@@ -236,7 +236,7 @@
     },
     "command.token.number": {
       "name": "meta.command.token.number.mcfunction",
-      "match": "(?<= )(\\-?\\d*\\.?\\d+)(?=[ \\n])",
+      "match": "(?<= )(\\-?\\d*\\.?\\d+)(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "constant.numeric.mcfunction"
@@ -245,7 +245,7 @@
     },
     "command.token.coordinate": {
       "name": "meta.command.token.coordinate.mcfunction",
-      "match": "(?<= )([\\~\\^])(\\-?\\d*\\.?\\d+)?(?=[ \\n])",
+      "match": "(?<= )([\\~\\^])(\\-?\\d*\\.?\\d+)?(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "constant.numeric.mcfunction"
@@ -257,7 +257,7 @@
     },
     "command.token.boolean": {
       "name": "meta.command.token.boolean.mcfunction",
-      "match": "(?<= )(true|false)(?=[ \\n])",
+      "match": "(?<= )(true|false)(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "constant.numeric.mcfunction"
@@ -266,7 +266,7 @@
     },
     "command.token.operation": {
       "name": "meta.command.token.operation.mcfunction",
-      "match": "(?<= )(\\%\\=|\\*\\=|\\+\\=|\\-\\=|\\/\\=|\\<|\\=|\\>|\\>\\<|\\<\\=|\\>\\=)(?=[ \\n])",
+      "match": "(?<= )(\\%\\=|\\*\\=|\\+\\=|\\-\\=|\\/\\=|\\<|\\=|\\>|\\>\\<|\\<\\=|\\>\\=)(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "constant.numeric.mcfunction"
@@ -275,7 +275,7 @@
     },
     "command.token.literal": {
       "name": "meta.command.token.literal.mcfunction",
-      "match": "(?<= )([a-z_][a-z0-9_]*)(?=[ \\n])",
+      "match": "(?<= )([a-z_][a-z0-9_]*)(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "entity.name.mcfunction"
@@ -284,7 +284,7 @@
     },
     "command.token.uuid": {
       "name": "meta.command.token.uuid.mcfunction",
-      "match": "(?<= )([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=[ \\n])",
+      "match": "(?<= )([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "support.class.mcfunction"
@@ -293,7 +293,7 @@
     },
     "command.token.fakeplayer": {
       "name": "meta.command.token.fakeplayer.mcfunction",
-      "match": "(?<= )([\\#\\$\\%]\\S+)(?=[ \\n])",
+      "match": "(?<= )([\\#\\$\\%]\\S+)(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "support.class.mcfunction"
@@ -302,7 +302,7 @@
     },
     "command.token.unquoted_string": {
       "name": "meta.command.token.unquoted_string.mcfunction",
-      "match": "(?<= )(\\S+)(?=[ \\n])",
+      "match": "(?<= )(\\S+)(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "string.unquoted.mcfunction"
@@ -311,7 +311,7 @@
     },
     "command.token.unknown": {
       "name": "meta.command.token.unknown.mcfunction",
-      "match": "(?<= )([^ \\n]*)(?=[ \\n])",
+      "match": "(?<= )([^ \\n]*)(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "invalid.illegal.mcfunction"
@@ -320,7 +320,7 @@
     },
     "command.token.root_redirect": {
       "name": "meta.command.token.root_redirect.mcfunction",
-      "match": "(?<= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \\n])",
+      "match": "(?<= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "entity.name.mcfunction"
@@ -682,7 +682,7 @@
     "command.token.nbt_path": {
       "name": "meta.command.token.nbt_path.mcfunction",
       "begin": "(?<= )(?=\\w+[\\.\\[\\{])",
-      "end": "(?=[ \\n])",
+      "end": "(?=[ \\n]|$)",
       "patterns": [
         {
           "include": "#nbt_path.property"

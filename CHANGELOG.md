@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fix compound key whitelisted characters, as per #10
 - Fix selector scores whitelisted characters, as per #12
 - Fix selector argument whitespace issues, as per #13
+- Fix invalid trailing arguments without newline, as per #14
 
 ## [v0.10.0] - 2019-03-02
 ### Changed

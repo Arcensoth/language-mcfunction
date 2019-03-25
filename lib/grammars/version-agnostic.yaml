@@ -43,7 +43,7 @@ variables:
   not_command_token_delim: '[^ \n]'
 
   command_token_l: "(?<= )"
-  command_token_r: '(?=[ \n])'
+  command_token_r: '(?=[ \n]|$)'
 
   selector_argument_terminal: '(?= *[\,\]\n])'
   sat: "{{selector_argument_terminal}}"
