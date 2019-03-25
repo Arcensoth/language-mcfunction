@@ -617,7 +617,7 @@
         {
           "name": "meta.selector.argument.mcfunction",
           "begin": "([a-z_][a-z0-9_]*) *(\\=) *(\\!)? *",
-          "end": "(\\,)(?=[\\]\\n])|(\\,)|(?=[\\]\\n])",
+          "end": "( *\\,)(?=[\\]\\n])|( *\\,)|(?= *[\\]\\n])",
           "beginCaptures": {
             "1": {
               "name": "variable.other.mcfunction"
@@ -1031,7 +1031,7 @@
     "selector.argument.quoted_string": {
       "name": "meta.selector.argument.quoted_string.mcfunction",
       "begin": "(\\\")",
-      "end": "(?=\\n)|(\\\")([^\\]\\,\\n]*)",
+      "end": "(?=\\n)|(\\\") *([^\\]\\,\\n]*)",
       "beginCaptures": {
         "1": {
           "name": "string.quoted.mcfunction"
@@ -1054,7 +1054,7 @@
     "selector.argument.single_quoted_string": {
       "name": "meta.selector.argument.single_quoted_string.mcfunction",
       "begin": "(\\')",
-      "end": "(?=\\n)|(\\')([^\\]\\,\\n]*)",
+      "end": "(?=\\n)|(\\') *([^\\]\\,\\n]*)",
       "beginCaptures": {
         "1": {
           "name": "string.quoted.mcfunction"
@@ -1077,7 +1077,7 @@
     "selector.argument.property_map": {
       "name": "meta.selector.argument.property_map.mcfunction",
       "begin": "(\\{)(?= *([a-z0-9_\\.\\-]+\\:[a-z0-9_\\.\\-\\/]+|[a-z0-9_\\.\\-\\/]+|([A-Za-z0-9_\\.\\-]+)) *(\\=))",
-      "end": "(?=\\n)|(\\})([^\\]\\,\\n]*)",
+      "end": "(?=\\n)|(\\}) *([^\\]\\,\\n]*)",
       "beginCaptures": {
         "1": {
           "name": "variable.language.mcfunction"
@@ -1100,7 +1100,7 @@
     "selector.argument.nbt_compound": {
       "name": "meta.selector.argument.nbt_compound.mcfunction",
       "begin": "(\\{)",
-      "end": "(?=\\n)|(\\})([^\\]\\,\\n]*)",
+      "end": "(?=\\n)|(\\}) *([^\\]\\,\\n]*)",
       "beginCaptures": {
         "1": {
           "name": "variable.language.mcfunction"
@@ -1205,7 +1205,7 @@
         },
         {
           "begin": "(\\{) *",
-          "end": "(?=\\n)|(\\})([^\\}\\,\\n]*)",
+          "end": "(?=\\n)|(\\}) *([^\\}\\,\\n]*)",
           "beginCaptures": {
             "1": {
               "name": "variable.language.mcfunction"

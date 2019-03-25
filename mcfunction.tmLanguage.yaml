@@ -347,7 +347,7 @@ repository:
         match: ' +'
       - name: meta.selector.argument.mcfunction
         begin: '([a-z_][a-z0-9_]*) *(\=) *(\!)? *'
-        end: '(\,)(?=[\]\n])|(\,)|(?=[\]\n])'
+        end: '( *\,)(?=[\]\n])|( *\,)|(?= *[\]\n])'
         beginCaptures:
           '1':
             name: variable.other.mcfunction
@@ -534,7 +534,7 @@ repository:
   selector.argument.quoted_string:
     name: meta.selector.argument.quoted_string.mcfunction
     begin: (\")
-    end: '(?=\n)|(\")([^\]\,\n]*)'
+    end: '(?=\n)|(\") *([^\]\,\n]*)'
     beginCaptures:
       '1':
         name: string.quoted.mcfunction
@@ -548,7 +548,7 @@ repository:
   selector.argument.single_quoted_string:
     name: meta.selector.argument.single_quoted_string.mcfunction
     begin: (\')
-    end: '(?=\n)|(\'')([^\]\,\n]*)'
+    end: '(?=\n)|(\'') *([^\]\,\n]*)'
     beginCaptures:
       '1':
         name: string.quoted.mcfunction
@@ -565,7 +565,7 @@ repository:
       (\{)(?=
       *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+|([A-Za-z0-9_\.\-]+))
       *(\=))
-    end: '(?=\n)|(\})([^\]\,\n]*)'
+    end: '(?=\n)|(\}) *([^\]\,\n]*)'
     beginCaptures:
       '1':
         name: variable.language.mcfunction
@@ -579,7 +579,7 @@ repository:
   selector.argument.nbt_compound:
     name: meta.selector.argument.nbt_compound.mcfunction
     begin: '(\{)'
-    end: '(?=\n)|(\})([^\]\,\n]*)'
+    end: '(?=\n)|(\}) *([^\]\,\n]*)'
     beginCaptures:
       '1':
         name: variable.language.mcfunction
@@ -626,7 +626,7 @@ repository:
       - match: (\-?\d*\.?\d+)
         captures: *ref_2
       - begin: '(\{) *'
-        end: '(?=\n)|(\})([^\}\,\n]*)'
+        end: '(?=\n)|(\}) *([^\}\,\n]*)'
         beginCaptures:
           '1':
             name: variable.language.mcfunction

@@ -969,7 +969,7 @@
             <key>begin</key>
             <string>([a-z_][a-z0-9_]*) *(\=) *(\!)? *</string>
             <key>end</key>
-            <string>(\,)(?=[\]\n])|(\,)|(?=[\]\n])</string>
+            <string>( *\,)(?=[\]\n])|( *\,)|(?= *[\]\n])</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -1616,7 +1616,7 @@
         <key>begin</key>
         <string>(\")</string>
         <key>end</key>
-        <string>(?=\n)|(\")([^\]\,\n]*)</string>
+        <string>(?=\n)|(\") *([^\]\,\n]*)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1653,7 +1653,7 @@
         <key>begin</key>
         <string>(\')</string>
         <key>end</key>
-        <string>(?=\n)|(\')([^\]\,\n]*)</string>
+        <string>(?=\n)|(\') *([^\]\,\n]*)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1690,7 +1690,7 @@
         <key>begin</key>
         <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+|([A-Za-z0-9_\.\-]+)) *(\=))</string>
         <key>end</key>
-        <string>(?=\n)|(\})([^\]\,\n]*)</string>
+        <string>(?=\n)|(\}) *([^\]\,\n]*)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1727,7 +1727,7 @@
         <key>begin</key>
         <string>(\{)</string>
         <key>end</key>
-        <string>(?=\n)|(\})([^\]\,\n]*)</string>
+        <string>(?=\n)|(\}) *([^\]\,\n]*)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1889,7 +1889,7 @@
             <key>begin</key>
             <string>(\{) *</string>
             <key>end</key>
-            <string>(?=\n)|(\})([^\}\,\n]*)</string>
+            <string>(?=\n)|(\}) *([^\}\,\n]*)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
