@@ -1,8 +1,8 @@
+.git
 .vscode
-node_modules
 dist
-out
 generated
 lib
+node_modules
+out
 tests
-mcfunction.tmLanguage.yaml
