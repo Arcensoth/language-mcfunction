@@ -9,9 +9,10 @@ This project provides two types of grammars: the default, [version-agnostic gram
 - [Install]
 - [Features]
 - [Configure]
-- [Customization]
+- [Customize]
   - [Version-agnostic grammar]
   - [Version-specific grammars]
+- [Contribute]
 - [Resources]
 
 [![Showcase](https://i.imgur.com/Rz845y3.png)](https://i.imgur.com/Rz845y3.png)
@@ -81,7 +82,7 @@ In VSCode, you can easily choose which version of mcfunction to use by changing 
 
 This option can also be set on the user-level in `settings.json` or folder-level in `.vscode/settings.json`.
 
-## Customization
+## Customize
 Currently available for the [version-specific grammars](#version-specific-grammars).
 
 Scopes have been assigned with user customization in mind. If your editor allows scope overrides, this will make it easy to customize your own colours for a variety of scopes.
@@ -206,6 +207,9 @@ Short name                | Full scope name                                     
 `generic.list.bracket`    | `storage._.bracket.list.generic.mcfunction`           | `([) item, item (])`
 `generic.list.content`    | `string._.content.list.generic.mcfunction`            | `[( item, item )]`
 
+## Contribute
+[Contributions are welcome; see `CONTRIBUTING.md`.](./CONTRIBUTING.md)
+
 ## Resources
 - https://github.com/Arcensoth/language-tmdemo
 - https://github.com/github/linguist/blob/master/CONTRIBUTING.md
@@ -227,7 +231,7 @@ Short name                | Full scope name                                     
 [Configure]: #configure
 [Version-agnostic grammar]: #version-agnostic-grammar
 [Version-specific grammars]: #version-specific-grammars
-[Customization]: #customization
+[Customize]: #customize
 [Customizing errors]: #customizing-errors
 [Customizing comments]: #customizing-comments
 [Customizing commands]: #customizing-commands
@@ -239,4 +243,5 @@ Short name                | Full scope name                                     
 [Customizing numbers]: #customizing-numbers
 [Customizing tags, teams, and objectives]: #customizing-tags-teams-and-objectives
 [Other customizable scopes]: #other-customizable-scopes
+[Contribute]: #contribute
 [Resources]: #resources
