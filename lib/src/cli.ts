@@ -33,7 +33,7 @@ function buildVersionAgnosticGrammar(
   writeGrammar(compiledGrammar, outDir, outName);
 }
 
-const PROJECT_ROOT = path.resolve(__dirname, "..");
+const PROJECT_ROOT = path.resolve(__dirname, "..", "..");
 
 if (process.argv.length > 2) {
   // data path provided; go version-specific
@@ -42,7 +42,13 @@ if (process.argv.length > 2) {
   console.log(`Building version-specific grammar '${label}' from:`, dataPath);
   buildVersionSpecificGrammar(
     path.resolve(dataPath),
-    path.join(PROJECT_ROOT, "lib", "grammars", "version-specific-base.yaml"),
+    path.join(
+      PROJECT_ROOT,
+      "lib",
+      "src",
+      "grammars",
+      "version-specific-base.yaml"
+    ),
     path.join(PROJECT_ROOT, "grammars"),
     `mcfunction-${label}`,
     label
@@ -51,7 +57,7 @@ if (process.argv.length > 2) {
   // no data path; go version-agnostic
   console.log("Building version-agnostic grammar");
   buildVersionAgnosticGrammar(
-    path.join(PROJECT_ROOT, "lib", "grammars", "version-agnostic.yaml"),
+    path.join(PROJECT_ROOT, "lib", "src", "grammars", "version-agnostic.yaml"),
     PROJECT_ROOT,
     "mcfunction"
   );

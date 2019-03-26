@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Added
 - Add contribution guidelines
+### Changed
+- Reorganize library code
 
 ## [v0.12.0] - 2019-03-25
 ### Added

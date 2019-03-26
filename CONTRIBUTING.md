@@ -13,16 +13,17 @@
 - `grammars/` contains generated grammars. Do not modify these files by-hand; they will be over-written.
 - `icons/` contains file icons and the original extension icon SVG. The file icons are not currently used by the extension due to limitations with the VSCode theming API.
 - **`lib/` contains all of the interesting stuff, and most of what you'll probably care about.**
-    - `grammars/` contains grammar stubs used as a basis for generated grammars.
-        - `version-agnostic.yaml` is the version-agnostic grammar, in a [custom format](#compiling-the-grammars).
-        - `version-specific-base.yaml` is the base grammar, common to all version-specific grammars.
-    - `cli.ts` is the entry point for the grammar generator's command-line interface.
-    - `command-manifest.ts` defines data structures for the server-generated `commands.json`.
-    - `language-grammar.ts` defines data structures for various tmLanguage constructs.
+    - `out/` is where compiled output typically goes. You can safely ignore folders like this.
+    - `src/` contains all of the library TypeScript source code to be compiled into JavaScript.
+        - `grammars/` contains grammar stubs used as a basis for generated grammars.
+            - `version-agnostic.yaml` is the version-agnostic grammar, in a [custom format](#compiling-the-grammars).
+            - `version-specific-base.yaml` is the base grammar, common to all version-specific grammars.
+        - `cli.ts` is the entry point for the grammar generator's command-line interface.
+        - `command-manifest.ts` defines data structures for the server-generated `commands.json`.
+        - `language-grammar.ts` defines data structures for various tmLanguage constructs.
+        - `utils.ts` contains common utilities.
+        - `version-specific.ts` contains the bulk of the version-specific grammar generator.
     - `tsconfig.json` is the configuration file for the TypeScript compiler.
-    - `utils.ts` contains common utilities.
-    - `version-specific.ts` contains the bulk of the version-specific grammar generator.
-- `out/` is where compiled output typically goes. You can safely ignore folders like this.
 - `tests/` contains all of the sample `mcfunction` files for testing. It is recommend that you add to the tests when fixing bugs or adding new features.
 - `.vscodeignore` lists the files/folders that need not be packaged with the extension. Everything in `lib` and `tests` is already listed here, but if you add new files elsewhere you should consider listing them in this file.
 - `CHANGELOG.md` lists changes from version to version, via the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
@@ -56,12 +57,12 @@ We recommend using VSCode to develop and test the VSCode extension. Otherwise yo
 ### Compiling the grammars
 The following command will both compile `lib` (from TypeScript into JavaScript) and run the `cli` script to generate the **version-agnostic** grammar from `version-agnostic.yaml`:
 ```
-npm run build-grammars
+npm run generate-grammars
 ```
 
 Providing two additional arguments: (1) a directory (the server-generated data folder) and (2) a version label; will cause the script to instead generate a **version-specific grammar** based on `version-specific-base.yaml`:
 ```
-npm run build-grammars ./generated snapshot
+npm run generate-grammars ./generated snapshot
 ```
 
 I recommend creating a symlink `generated` (pre-configured in `.gitignore`) in the repository root that points to the generated data folder of a recent Minecraft snapshot. This will make it easier to supply the grammar generator with a directory for the server-generated data.
