@@ -1,4 +1,4 @@
-node_modules
 dist
-out
 generated
+node_modules
+out
