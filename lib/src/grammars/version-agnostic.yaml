@@ -43,7 +43,7 @@ variables:
   not_command_token_delim: '[^ \n]'
 
   command_token_l: "(?<= )"
-  command_token_r: '(?=[ \n])'
+  command_token_r: '(?=[ \n]|$)'
 
   selector_argument_terminal: '(?= *[\,\]\n])'
   sat: "{{selector_argument_terminal}}"
@@ -88,7 +88,7 @@ variables:
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
   
   # scorebord objective names
-  scoreboard_objective: '{{component}}'
+  scoreboard_objective: '{{unquoted_word}}'
 
   # unquoted strings are like literals with additional available characters
   # basically anything is accepted apart from whitespace
@@ -609,7 +609,7 @@ repository:
         #      not the terminal. This is an error case.
         #   2. Just a comma. This is the expected case and we can proceed fine.
         #   3. just a terminal. Also an error case.
-        end: '(\,)(?=[\]\n])|(\,)|(?=[\]\n])'
+        end: '( *\,)(?=[\]\n])|( *\,)|(?= *[\]\n])'
 
         beginCaptures:
           1:
@@ -838,7 +838,7 @@ repository:
   selector.argument.quoted_string:
     name: meta.selector.argument.quoted_string.mcfunction
     begin: '(\")'
-    end: '{{lookahead_newline}}|(\")([^\]\,\n]*)'
+    end: '{{lookahead_newline}}|(\") *([^\]\,\n]*)'
     beginCaptures:
       1:
         name: "#quoted_string"
@@ -846,7 +846,7 @@ repository:
       1:
         name: "#quoted_string"
       2:
-        # anything trailing after the quote, apart from terminals, is an error
+        # anything trailing after the quote, apart from whitespace terminals, is an error
         name: "#error"
     patterns:
       - include: "#common.quoted_string"
@@ -854,7 +854,7 @@ repository:
   selector.argument.single_quoted_string:
     name: meta.selector.argument.single_quoted_string.mcfunction
     begin: "(\\')"
-    end: "{{lookahead_newline}}|(\\')([^\\]\\,\\n]*)"
+    end: "{{lookahead_newline}}|(\\') *([^\\]\\,\\n]*)"
     beginCaptures:
       1:
         name: "#quoted_string"
@@ -872,7 +872,7 @@ repository:
     # lookahead for something unique to advancements/scores
     # (how about we just copy-paste thee capturing part of the property map?)
     begin: '(\{)(?= *({{resource_location_nc}}|{{resource_path_nc}}|{{scoreboard_objective}}) *(\=))'
-    end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
+    end: '{{lookahead_newline}}|(\}) *([^\]\,\n]*)'
     beginCaptures:
       1:
         name: "#nbt_delims"
@@ -887,7 +887,7 @@ repository:
   selector.argument.nbt_compound:
     name: meta.selector.argument.nbt_compound.mcfunction
     begin: '(\{)'
-    end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
+    end: '{{lookahead_newline}}|(\}) *([^\]\,\n]*)'
     beginCaptures:
       1:
         name: "#nbt_delims"
@@ -900,7 +900,7 @@ repository:
       - include: "#nbt.compound"
 
   property_map:
-    # for `advancements` in selectors
+    # for `advancements` and `scores` in selectors
     patterns:
       # skip whitespace
       - match: " +"
@@ -946,7 +946,7 @@ repository:
       - match: "{{number}}"
         captures: "#number"
       - begin: '(\{) *'
-        end: '{{lookahead_newline}}|(\})([^\}\,\n]*)'
+        end: '{{lookahead_newline}}|(\}) *([^\}\,\n]*)'
         beginCaptures:
           1:
             name: "#nbt_delims"

@@ -269,7 +269,7 @@
         <key>name</key>
         <string>meta.command.token.selector_without_arguments.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )(\@[a-z])(?=[ \n])</string>
+        <string>(?&lt;= )(\@[a-z])(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -284,7 +284,7 @@
         <key>name</key>
         <string>meta.command.token.resource_location.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(?=[ \n])</string>
+        <string>(?&lt;= )([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -309,7 +309,7 @@
         <key>name</key>
         <string>meta.command.token.tagged_resource_location.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )(\#)([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(?=[ \n])</string>
+        <string>(?&lt;= )(\#)([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -339,7 +339,7 @@
         <key>name</key>
         <string>meta.command.token.range.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )(\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)?(?=[ \n])</string>
+        <string>(?&lt;= )(\-?\d*\.?\d+)?(\.\.)(\-?\d*\.?\d+)?(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -364,7 +364,7 @@
         <key>name</key>
         <string>meta.command.token.number.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )(\-?\d*\.?\d+)(?=[ \n])</string>
+        <string>(?&lt;= )(\-?\d*\.?\d+)(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -379,7 +379,7 @@
         <key>name</key>
         <string>meta.command.token.coordinate.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )([\~\^])(\-?\d*\.?\d+)?(?=[ \n])</string>
+        <string>(?&lt;= )([\~\^])(\-?\d*\.?\d+)?(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -399,7 +399,7 @@
         <key>name</key>
         <string>meta.command.token.boolean.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )(true|false)(?=[ \n])</string>
+        <string>(?&lt;= )(true|false)(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -414,7 +414,7 @@
         <key>name</key>
         <string>meta.command.token.operation.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )(\%\=|\*\=|\+\=|\-\=|\/\=|\&lt;|\=|\&gt;|\&gt;\&lt;|\&lt;\=|\&gt;\=)(?=[ \n])</string>
+        <string>(?&lt;= )(\%\=|\*\=|\+\=|\-\=|\/\=|\&lt;|\=|\&gt;|\&gt;\&lt;|\&lt;\=|\&gt;\=)(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -429,7 +429,7 @@
         <key>name</key>
         <string>meta.command.token.literal.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )([a-z_][a-z0-9_]*)(?=[ \n])</string>
+        <string>(?&lt;= )([a-z_][a-z0-9_]*)(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -444,7 +444,7 @@
         <key>name</key>
         <string>meta.command.token.uuid.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=[ \n])</string>
+        <string>(?&lt;= )([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -459,7 +459,7 @@
         <key>name</key>
         <string>meta.command.token.fakeplayer.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )([\#\$\%]\S+)(?=[ \n])</string>
+        <string>(?&lt;= )([\#\$\%]\S+)(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -474,7 +474,7 @@
         <key>name</key>
         <string>meta.command.token.unquoted_string.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )(\S+)(?=[ \n])</string>
+        <string>(?&lt;= )(\S+)(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -489,7 +489,7 @@
         <key>name</key>
         <string>meta.command.token.unknown.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )([^ \n]*)(?=[ \n])</string>
+        <string>(?&lt;= )([^ \n]*)(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -504,7 +504,7 @@
         <key>name</key>
         <string>meta.command.token.root_redirect.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \n])</string>
+        <string>(?&lt;= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -969,7 +969,7 @@
             <key>begin</key>
             <string>([a-z_][a-z0-9_]*) *(\=) *(\!)? *</string>
             <key>end</key>
-            <string>(\,)(?=[\]\n])|(\,)|(?=[\]\n])</string>
+            <string>( *\,)(?=[\]\n])|( *\,)|(?= *[\]\n])</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -1064,7 +1064,7 @@
         <key>begin</key>
         <string>(?&lt;= )(?=\w+[\.\[\{])</string>
         <key>end</key>
-        <string>(?=[ \n])</string>
+        <string>(?=[ \n]|$)</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -1616,7 +1616,7 @@
         <key>begin</key>
         <string>(\")</string>
         <key>end</key>
-        <string>(?=\n)|(\")([^\]\,\n]*)</string>
+        <string>(?=\n)|(\") *([^\]\,\n]*)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1653,7 +1653,7 @@
         <key>begin</key>
         <string>(\')</string>
         <key>end</key>
-        <string>(?=\n)|(\')([^\]\,\n]*)</string>
+        <string>(?=\n)|(\') *([^\]\,\n]*)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1688,9 +1688,9 @@
         <key>name</key>
         <string>meta.selector.argument.property_map.mcfunction</string>
         <key>begin</key>
-        <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+|([a-z0-9_\.\-]+)) *(\=))</string>
+        <string>(\{)(?= *([a-z0-9_\.\-]+\:[a-z0-9_\.\-\/]+|[a-z0-9_\.\-\/]+|([A-Za-z0-9_\.\-]+)) *(\=))</string>
         <key>end</key>
-        <string>(?=\n)|(\})([^\]\,\n]*)</string>
+        <string>(?=\n)|(\}) *([^\]\,\n]*)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1727,7 +1727,7 @@
         <key>begin</key>
         <string>(\{)</string>
         <key>end</key>
-        <string>(?=\n)|(\})([^\]\,\n]*)</string>
+        <string>(?=\n)|(\}) *([^\]\,\n]*)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1767,7 +1767,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(,)? *([a-z0-9_\.\-]+) *(\=) *</string>
+            <string>(,)? *([A-Za-z0-9_\.\-]+) *(\=) *</string>
             <key>end</key>
             <string> *(?=[\n\}\,])</string>
             <key>beginCaptures</key>
@@ -1889,7 +1889,7 @@
             <key>begin</key>
             <string>(\{) *</string>
             <key>end</key>
-            <string>(?=\n)|(\})([^\}\,\n]*)</string>
+            <string>(?=\n)|(\}) *([^\}\,\n]*)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>

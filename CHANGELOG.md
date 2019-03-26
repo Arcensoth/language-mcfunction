@@ -4,8 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Add contribution guidelines
+### Changed
+- Reorganize library code
+
+## [v0.12.0] - 2019-03-25
+### Added
+- Add icon to extension
+
+## [v0.11.0] - 2019-03-25
+### Added
+- File icons SVG for user-level theming
 ### Fixed
 - Fix compound key whitelisted characters, as per #10
+- Fix selector scores whitelisted characters, as per #12
+- Fix selector argument whitespace issues, as per #13
+- Fix invalid trailing arguments without newline, as per #14
 
 ## [v0.10.0] - 2019-03-02
 ### Changed
