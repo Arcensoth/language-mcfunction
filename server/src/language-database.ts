@@ -149,4 +149,11 @@ export class LanguageDatabase {
 
     return completions;
   }
+
+  getCompletionDetails(item: CompletionItem): CompletionItem {
+    // FIXME resolve completion item details
+    item.detail = "TODO detail";
+    item.documentation = "TODO documentation";
+    return item;
+  }
 }
