@@ -92,11 +92,11 @@
     }
   },
   "devDependencies": {
-    "js-yaml": "latest",
-    "plist": "latest",
-    "typescript": "latest",
     "@types/js-yaml": "latest",
+    "@types/node": "latest",
     "@types/plist": "latest",
-    "@types/node": "latest"
+    "js-yaml": "^3.13.1",
+    "plist": "latest",
+    "typescript": "latest"
   }
 }
