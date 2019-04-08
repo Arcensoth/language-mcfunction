@@ -8,28 +8,53 @@ import {
   CompletionItem
 } from "vscode-languageserver";
 
-import { CommandManifest, CommandNode } from "./command-manifest";
-
-export interface LanguageData {
-  commands: CommandManifest;
-}
+import { CommandParser, CommandParserState } from "./command-parser";
+import { RawLanguageData } from "./raw-language-data";
+import { LanguageData } from "./language-data";
+import { CommandNode, CommandNodeType, makeCommandTree } from "./command-node";
 
 export class LanguageDatabase {
-  private cache: { [languageId: string]: LanguageData } = {};
+  private languageCache: { [languageId: string]: LanguageData } = {};
+  private parserCache: { [languageId: string]: CommandParser } = {};
 
   private loadLanguage(languageId: string) {
     const dataFilePath = path.resolve(
       path.join("server", "src", "data", `${languageId}.json`)
     );
-    const languageData = JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
-    this.cache[languageId] = languageData;
+
+    const rawData: RawLanguageData = JSON.parse(
+      fs.readFileSync(dataFilePath, "utf8")
+    );
+
+    const languageData = this.makeLanguageData(rawData);
+
+    this.languageCache[languageId] = languageData;
+  }
+
+  private loadParser(languageId: string) {
+    const languageData = this.getLanguage(languageId);
+    const parser = new CommandParser(languageData);
+    this.parserCache[languageId] = parser;
   }
 
   getLanguage(languageId: string): LanguageData {
-    if (!this.cache.hasOwnProperty(languageId)) {
+    if (!this.languageCache.hasOwnProperty(languageId)) {
       this.loadLanguage(languageId);
     }
-    return this.cache[languageId];
+    return this.languageCache[languageId];
+  }
+
+  getParser(languageId: string): CommandParser {
+    if (!this.parserCache.hasOwnProperty(languageId)) {
+      this.loadParser(languageId);
+    }
+    return this.parserCache[languageId];
+  }
+
+  makeLanguageData(rawData: RawLanguageData): LanguageData {
+    return {
+      commands: makeCommandTree(rawData.commands)
+    };
   }
 
   getCommandText(document: TextDocument, position: Position): string {
@@ -44,108 +69,74 @@ export class LanguageDatabase {
     return commandText;
   }
 
-  getCommandNode(languageId: string, commandText: string): CommandNode {
-    const languageData = this.getLanguage(languageId);
+  completionizeCommandNodes(commandNodes: CommandNode[]): CompletionItem[] {
+    const completions: CompletionItem[] = [];
 
-    // FIXME consider argument types
-
-    const tokens = commandText.split(" ");
-    tokens.pop();
-
-    const rootCommandNode = languageData.commands;
-    let commandNode = rootCommandNode;
-
-    let breadcrumb = [];
-    let depth = 0;
-
-    tokens.forEach(token => {
-      if (!commandNode) {
-        return;
-      }
-
-      breadcrumb.push(token);
-      depth += 1;
-
-      if (commandNode.children) {
-        if (token in commandNode.children) {
-          commandNode = commandNode.children[token];
+    commandNodes.forEach(node => {
+      if (node.type === CommandNodeType.LITERAL) {
+        if (node.parent.type === CommandNodeType.ROOT) {
+          completions.push({
+            kind: CompletionItemKind.Function,
+            label: node.name,
+            data: node.id,
+            insertText: node.name + " "
+          });
         } else {
-          commandNode = undefined;
-          return;
+          completions.push({
+            kind: CompletionItemKind.Field,
+            label: node.name,
+            data: node.id,
+            insertText: node.name + " "
+          });
         }
-      }
-
-      if (commandNode.redirect) {
-        depth = 0;
-        const redirects = commandNode.redirect;
-        commandNode = rootCommandNode;
-        redirects.forEach(redirect => {
-          commandNode = commandNode.children[redirect];
+      } else if (node.type === CommandNodeType.ARGUMENT) {
+        completions.push({
+          kind: CompletionItemKind.Value,
+          // label: `<${node.name}>`,
+          label: node.name,
+          data: node.id,
+          // insertText: `<${node.name}>` + " "
+          insertText: node.name + " "
         });
-      }
-
-      if (
-        !(
-          commandNode.children ||
-          commandNode.redirect ||
-          commandNode.executable
-        )
-      ) {
-        // special-case for root redirect
-        depth = 0;
-        commandNode = rootCommandNode;
       }
     });
 
-    if (commandNode === undefined) {
-      commandNode = {} as CommandNode;
-    }
-
-    commandNode.breadcrumb = breadcrumb;
-    commandNode.depth = depth;
-
-    return commandNode;
+    return completions;
   }
 
-  getCompletionItemData(commandNode: CommandNode): string {
-    return commandNode.breadcrumb.join(".");
+  doesCommandNodeMatchText(
+    commandNode: CommandNode,
+    commandText: string
+  ): boolean {
+    if (commandNode.type === CommandNodeType.LITERAL) {
+      // TODO can we do a fuzzy match? requires client backtracking; probably not
+      return commandNode.name.startsWith(commandText);
+    } else if (commandNode.type === CommandNodeType.ARGUMENT) {
+      // TODO can we implement partial argument matching? also probably not
+      return commandNode.name.startsWith(commandText);
+    }
+    return false;
+  }
+
+  gatherMatchingCommandNodes(parserState: CommandParserState): CommandNode[] {
+    const matches = parserState.commandNode.childList.filter(childNode => {
+      return this.doesCommandNodeMatchText(childNode, parserState.commandText);
+    });
+    return matches;
   }
 
   getCompletions(document: TextDocument, position: Position): CompletionItem[] {
     const commandText = this.getCommandText(document, position);
-    const commandNode = this.getCommandNode(document.languageId, commandText);
+    const commandParser = this.getParser(document.languageId);
 
-    let completions: CompletionItem[] = [];
+    // process the command as much as we can
+    let finalState = commandParser.parse(commandText);
 
-    if (commandNode.children !== undefined) {
-      Object.keys(commandNode.children).forEach(childName => {
-        const childNode = commandNode.children[childName];
-        if (childNode["type"] === "literal") {
-          if (commandNode.depth > 0) {
-            completions.push({
-              kind: CompletionItemKind.Field,
-              label: childName,
-              data: this.getCompletionItemData(commandNode),
-              insertText: childName + " "
-            });
-          } else {
-            completions.push({
-              kind: CompletionItemKind.Function,
-              label: childName,
-              data: this.getCompletionItemData(commandNode),
-              insertText: childName + " "
-            });
-          }
-        } else if (childNode["type"] === "argument") {
-          completions.push({
-            kind: CompletionItemKind.Value,
-            label: childName,
-            data: this.getCompletionItemData(commandNode),
-            insertText: childName + " "
-          });
-        }
-      });
-    }
+    // compare children of the final node to the remaining command text
+    const matches = this.gatherMatchingCommandNodes(finalState);
+
+    // turn matching children in completion items
+    const completions = this.completionizeCommandNodes(matches);
 
     return completions;
   }
