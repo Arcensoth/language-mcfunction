@@ -7,6 +7,8 @@ Language grammars and syntax highlighting for mcfunction files.
 This project provides two types of grammars: the default, [version-agnostic grammar](#version-agnostic-grammar) (shown below), and WIP [version-specific grammars](#version-specific-grammars).
 
 - [Install]
+  - [Install for VSCode]
+  - [Install for SublimeText]
 - [Features]
 - [Configure]
 - [Customize]
@@ -18,8 +20,13 @@ This project provides two types of grammars: the default, [version-agnostic gram
 [![Showcase](https://i.imgur.com/Rz845y3.png)](https://i.imgur.com/Rz845y3.png)
 
 ## Install
-- VSCode: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
-- SublimeText: clone repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`)
+### Install for VSCode
+The extension [language-mcfunction](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction) is available from the Marketplace: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
+
+### Install for SublimeText
+It is recommended you install [PackageControl](https://packagecontrol.io/) and use the `Package Control: Add Repository` [command](https://packagecontrol.io/docs/usage) to install `https://github.com/Arcensoth/language-mcfunction` as a package. This will keep the package updated with the repository automatically.
+
+Otherwise you can clone the repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`) and update it manually.
 
 ## Features
 Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
@@ -225,6 +232,8 @@ Short name                | Full scope name                                     
 [discord-chat-badge]: https://img.shields.io/discord/154777837382008833.svg?color=%237289DA&label=chat&logo=discord&logoColor=%23FFFFFF
 
 [Install]: #install
+[Install for VSCode]: #install-for-vscode
+[Install for SublimeText]: #install-for-sublimetext
 [Features]: #features
 [Configure]: #configure
 [Version-agnostic grammar]: #version-agnostic-grammar
