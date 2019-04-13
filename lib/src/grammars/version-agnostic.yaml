@@ -33,8 +33,8 @@ names:
   quoted_string_escape: constant.character.escape.mcfunction
   root_redirect: "#literal"
   top_level_command: keyword.control.mcfunction
-  unknown: invalid.illegal.mcfunction
-  error: invalid.illegal.mcfunction
+  unknown: markup.italic.mcfunction
+  error: markup.italic.mcfunction
 
 variables:
   lookahead_newline: '(?=\n)'
