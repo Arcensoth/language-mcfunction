@@ -56,7 +56,7 @@ repository:
   unknown:
     patterns:
       - name: meta.unknown.mcfunction
-        match: ^(.*)$
+        match: "^([^\r]*)$"
         captures:
           '1':
             name: invalid.illegal.mcfunction

@@ -162,7 +162,7 @@
             <key>name</key>
             <string>meta.unknown.mcfunction</string>
             <key>match</key>
-            <string>^(.*)$</string>
+            <string>^([^&#xD;]*)$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
