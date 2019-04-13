@@ -101,10 +101,10 @@
       "patterns": [
         {
           "name": "meta.unknown.mcfunction",
-          "match": "^([^\r]*)$",
+          "match": "^(.*)$",
           "captures": {
             "1": {
-              "name": "markup.italic.mcfunction"
+              "name": "invalid.illegal.mcfunction"
             }
           }
         }
@@ -314,7 +314,7 @@
       "match": "(?<= )([^ \\n]*)(?=[ \\n]|$)",
       "captures": {
         "1": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       }
     },
@@ -344,7 +344,7 @@
           "name": "variable.language.mcfunction"
         },
         "2": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -367,7 +367,7 @@
           "name": "variable.language.mcfunction"
         },
         "2": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -403,7 +403,7 @@
         },
         {
           "match": "[^\\n\\}\\,]+",
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       ]
     },
@@ -428,7 +428,7 @@
         },
         {
           "match": "[^\\n\\]\\,]+",
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       ]
     },
@@ -524,7 +524,7 @@
         },
         {
           "match": "[^\\n\\,\\]\\}]+",
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       ]
     },
@@ -542,7 +542,7 @@
           "name": "string.quoted.mcfunction"
         },
         "2": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -565,7 +565,7 @@
           "name": "string.quoted.mcfunction"
         },
         "2": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -580,7 +580,7 @@
       "end": "(?=\\n)|(?:(?<=\\])(?!\\{)|(?<=\\}))([^ \\n]*)",
       "endCaptures": {
         "1": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -606,7 +606,7 @@
           "name": "support.class.mcfunction"
         },
         "2": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -631,7 +631,7 @@
           },
           "endCaptures": {
             "1": {
-              "name": "markup.italic.mcfunction"
+              "name": "invalid.illegal.mcfunction"
             },
             "2": {
               "name": "support.class.mcfunction"
@@ -674,7 +674,7 @@
           ]
         },
         {
-          "name": "markup.italic.mcfunction",
+          "name": "invalid.illegal.mcfunction",
           "match": "[^\\]\\n]+"
         }
       ]
@@ -756,13 +756,13 @@
           "match": "(\\.)(?=\\.)",
           "captures": {
             "1": {
-              "name": "markup.italic.mcfunction"
+              "name": "invalid.illegal.mcfunction"
             }
           }
         },
         {
           "match": "[^\\.\\s]+",
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       ]
     },
@@ -789,7 +789,7 @@
               "name": "variable.language.mcfunction"
             },
             "2": {
-              "name": "markup.italic.mcfunction"
+              "name": "invalid.illegal.mcfunction"
             }
           },
           "patterns": [
@@ -800,7 +800,7 @@
         },
         {
           "match": "[^\\n\\]]+",
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       ]
     },
@@ -897,7 +897,7 @@
           },
           "endCaptures": {
             "1": {
-              "name": "markup.italic.mcfunction"
+              "name": "invalid.illegal.mcfunction"
             },
             "2": {
               "name": "variable.language.mcfunction"
@@ -1024,7 +1024,7 @@
       "match": "([^\\]\\n\\,]+)",
       "captures": {
         "1": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       }
     },
@@ -1042,7 +1042,7 @@
           "name": "string.quoted.mcfunction"
         },
         "2": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -1065,7 +1065,7 @@
           "name": "string.quoted.mcfunction"
         },
         "2": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -1088,7 +1088,7 @@
           "name": "variable.language.mcfunction"
         },
         "2": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -1111,7 +1111,7 @@
           "name": "variable.language.mcfunction"
         },
         "2": {
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       },
       "patterns": [
@@ -1167,7 +1167,7 @@
         },
         {
           "match": "[^\\n\\}\\,]+",
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       ]
     },
@@ -1216,7 +1216,7 @@
               "name": "variable.language.mcfunction"
             },
             "2": {
-              "name": "markup.italic.mcfunction"
+              "name": "invalid.illegal.mcfunction"
             }
           },
           "patterns": [
@@ -1239,7 +1239,7 @@
         },
         {
           "match": "\\\\",
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       ]
     },
@@ -1255,7 +1255,7 @@
         },
         {
           "match": "\\\\",
-          "name": "markup.italic.mcfunction"
+          "name": "invalid.illegal.mcfunction"
         }
       ]
     }
