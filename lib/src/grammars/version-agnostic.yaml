@@ -37,15 +37,15 @@ names:
   error: invalid.illegal.mcfunction
 
 variables:
-  lookahead_newline: '(?=\n)'
+  lookahead_newline: '(?=\n|$)'
 
-  command_token_delim: '[ \n]'
-  not_command_token_delim: '[^ \n]'
+  command_token_delim: '[ \n$]'
+  not_command_token_delim: '[^ \n$]'
 
   command_token_l: "(?<= )"
-  command_token_r: '(?=[ \n]|$)'
+  command_token_r: '(?=[ \n$])'
 
-  selector_argument_terminal: '(?= *[\,\]\n])'
+  selector_argument_terminal: '(?= *[\,\]\n$])'
   sat: "{{selector_argument_terminal}}"
 
   block_predicate_argument_terminal: "{{sat}}"
@@ -247,7 +247,7 @@ repository:
   command:
     patterns:
       - name: meta.command.mcfunction
-        begin: '^\s*{{literal}}[ \n]'
+        begin: '^\s*{{literal}}[ \n$]'
         end: "$"
         beginCaptures:
           # highlight the first command on each line
@@ -257,7 +257,7 @@ repository:
           # don't name this one yet, we want to get rid of the space
           - begin: "(?<= )"
             # consume the space
-            end: '[ \n]'
+            end: '[ \n$]'
             # name everything inside as part of the token
             contentName: meta.command.token.mcfunction
             patterns:
@@ -357,7 +357,7 @@ repository:
 
   command.token.unknown:
     name: meta.command.token.unknown.mcfunction
-    match: '{{command_token_l}}([^ \n]*){{command_token_r}}'
+    match: '{{command_token_l}}([^ \n$]*){{command_token_r}}'
     captures:
       1:
         name: "#unknown"
@@ -407,13 +407,13 @@ repository:
 
       # quoted keys: { ("text") (:) "hello" }
       # unquoted keys: { (SelectedItem) (:) { Count: 64 } }
-      - begin: '(,)? *({{unquoted_word_nc}}|\"[^\n\"]+\") *(\:) *'
+      - begin: '(,)? *({{unquoted_word_nc}}|\"[^\n$\"]+\") *(\:) *'
 
         # Possible ending cases:
         #   1. the closing brace of the parent compound
         #   2. the comma separating the next element
         #   3. newline (error case)
-        end: ' *(?=[\n\}\,])'
+        end: ' *(?=[\n$\}\,])'
 
         beginCaptures:
           1:
@@ -427,7 +427,7 @@ repository:
           - include: "#nbt.value"
 
       # anything else apart from separators and terminals is an error
-      - match: '[^\n\}\,]+'
+      - match: '[^\n$\}\,]+'
         name: "#error"
 
   nbt.list:
@@ -437,13 +437,13 @@ repository:
 
       # values: [ 1 (,) (2) , 3]
       # begin on anything that is not a terminal or separator
-      - begin: '(,)? *(?=[^\n\]\,])'
+      - begin: '(,)? *(?=[^\n$\]\,])'
 
         # Possible ending cases:
         #   1. the closing brace of the parent compound
         #   2. the comma separating the next element
         #   3. newline (error case)
-        end: ' *(?=[\n\]\,])'
+        end: ' *(?=[\n$\]\,])'
 
         beginCaptures:
           1:
@@ -452,7 +452,7 @@ repository:
         patterns:
           - include: "#nbt.value"
 
-      - match: '[^\n\]\,]+'
+      - match: '[^\n$\]\,]+'
         name: "#error"
 
   nbt.value:
@@ -503,7 +503,7 @@ repository:
         name: "#numeric_constant"
       - match: "{{nbt_unquoted_string}}"
         name: "#unquoted_string"
-      - match: '[^\n\,\]\}]+'
+      - match: '[^\n$\,\]\}]+'
         name: "#error"
 
   command.token.quoted_string:
@@ -609,7 +609,7 @@ repository:
         #      not the terminal. This is an error case.
         #   2. Just a comma. This is the expected case and we can proceed fine.
         #   3. just a terminal. Also an error case.
-        end: '( *\,)(?=[\]\n])|( *\,)|(?= *[\]\n])'
+        end: '( *\,)(?=[\]\n$])|( *\,)|(?= *[\]\n$])'
 
         beginCaptures:
           1:
@@ -645,7 +645,7 @@ repository:
 
       # anything else apart from terminals is classified as an error
       - name: "#error"
-        match: '[^\]\n]+'
+        match: '[^\]\n$]+'
 
   command.token.nbt_path:
     name: meta.command.token.nbt_path.mcfunction
@@ -670,7 +670,7 @@ repository:
     patterns:
       # (Inventory)([){Count: 64}(])
       - begin: '(\.)?(\w+)(\[)'
-        end: '(\])|(?=\n)'
+        end: '(\])|(?=\n|$)'
         beginCaptures:
           1:
             name: "#nbt_delims"
@@ -685,7 +685,7 @@ repository:
           - include: "#nbt_path.index"
       # Inventory[].(tag)({)custom: true(}).display.Name
       - begin: '(\.)?(\w+)(\{)'
-        end: '(\})|(?=\n)'
+        end: '(\})|(?=\n|$)'
         beginCaptures:
           1:
             name: "#nbt_delims"
@@ -720,7 +720,7 @@ repository:
       - match: '(?<=\[){{integer}}(?=\])'
         captures: '#integer'
       - begin: '(\{)'
-        end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
+        end: '{{lookahead_newline}}|(\})([^\]\,\n$]*)'
         beginCaptures:
           1:
             name: "#nbt_delims"
@@ -731,7 +731,7 @@ repository:
             name: '#error'
         patterns:
           - include: "#nbt.compound"
-      - match: '[^\n\]]+'
+      - match: '[^\n$\]]+'
         name: '#error'
 
   block_predicate:
@@ -767,7 +767,7 @@ repository:
         match: " +"
       - name: meta.block_predicate.argument.mcfunction
         begin: '{{literal}} *(\=) *'
-        end: '(\,)(?=[\]\n])|(\,)|(?=[\]\n])'
+        end: '(\,)(?=[\]\n$])|(\,)|(?=[\]\n$])'
         beginCaptures:
           1:
             name: "#argument_key"
@@ -830,7 +830,7 @@ repository:
 
   selector.argument.unknown:
     name: meta.selector.argument.unknown.mcfunction
-    match: '([^\]\n\,]+)'
+    match: '([^\]\n$\,]+)'
     captures:
       1:
         name: "#unknown"
@@ -838,7 +838,7 @@ repository:
   selector.argument.quoted_string:
     name: meta.selector.argument.quoted_string.mcfunction
     begin: '(\")'
-    end: '{{lookahead_newline}}|(\") *([^\]\,\n]*)'
+    end: '{{lookahead_newline}}|(\") *([^\]\,\n$]*)'
     beginCaptures:
       1:
         name: "#quoted_string"
@@ -854,7 +854,7 @@ repository:
   selector.argument.single_quoted_string:
     name: meta.selector.argument.single_quoted_string.mcfunction
     begin: "(\\')"
-    end: "{{lookahead_newline}}|(\\') *([^\\]\\,\\n]*)"
+    end: "{{lookahead_newline}}|(\\') *([^\\]\\,\\n$]*)"
     beginCaptures:
       1:
         name: "#quoted_string"
@@ -872,7 +872,7 @@ repository:
     # lookahead for something unique to advancements/scores
     # (how about we just copy-paste thee capturing part of the property map?)
     begin: '(\{)(?= *({{resource_location_nc}}|{{resource_path_nc}}|{{scoreboard_objective}}) *(\=))'
-    end: '{{lookahead_newline}}|(\}) *([^\]\,\n]*)'
+    end: '{{lookahead_newline}}|(\}) *([^\]\,\n$]*)'
     beginCaptures:
       1:
         name: "#nbt_delims"
@@ -887,7 +887,7 @@ repository:
   selector.argument.nbt_compound:
     name: meta.selector.argument.nbt_compound.mcfunction
     begin: '(\{)'
-    end: '{{lookahead_newline}}|(\}) *([^\]\,\n]*)'
+    end: '{{lookahead_newline}}|(\}) *([^\]\,\n$]*)'
     beginCaptures:
       1:
         name: "#nbt_delims"
@@ -907,7 +907,7 @@ repository:
 
       # try for things that look like scores first
       - begin: '(,)? *{{scoreboard_objective}} *(\=) *'
-        end: ' *(?=[\n\}\,])'
+        end: ' *(?=[\n$\}\,])'
         beginCaptures:
           1:
             name: "#nbt_delims"
@@ -922,7 +922,7 @@ repository:
       # with namespace:    {minecraft:story/form_obsidian=true}
       # without namespace: {story/form_obsidian=true}
       - begin: '(,)? *({{resource_location_nc}}|{{resource_path_nc}}) *(\=) *'
-        end: ' *(?=[\n\}\,])'
+        end: ' *(?=[\n$\}\,])'
         beginCaptures:
           1:
             name: "#nbt_delims"
@@ -934,7 +934,7 @@ repository:
           - include: "#property_map.values"
 
       # anything else apart from separators and terminals is an error
-      - match: '[^\n\}\,]+'
+      - match: '[^\n$\}\,]+'
         name: "#error"
 
   property_map.values:
@@ -946,7 +946,7 @@ repository:
       - match: "{{number}}"
         captures: "#number"
       - begin: '(\{) *'
-        end: '{{lookahead_newline}}|(\}) *([^\}\,\n]*)'
+        end: '{{lookahead_newline}}|(\}) *([^\}\,\n$]*)'
         beginCaptures:
           1:
             name: "#nbt_delims"
@@ -961,10 +961,10 @@ repository:
   common.quoted_string:
     patterns:
       # consume everything except for backslashes, quotes, and newlines
-      - match: '[^\\\"\n]'
+      - match: '[^\\\"\n$]'
         name: "#quoted_string"
       # consume any escaped characters... except for newlines
-      - match: '\\[^\n]'
+      - match: '\\[^\n$]'
         name: "#quoted_string_escape"
       # consume a single backslash (implicitly followed by a newline) as an error
       - match: '\\'
@@ -973,9 +973,9 @@ repository:
 
   common.single_quoted_string:
     patterns:
-      - match: "[^\\\\\\'\\n]"
+      - match: "[^\\\\\\'\\n$]"
         name: "#quoted_string"
-      - match: '\\[^\n]'
+      - match: '\\[^\n$]'
         name: "#quoted_string_escape"
       - match: '\\'
         name: "#error"
