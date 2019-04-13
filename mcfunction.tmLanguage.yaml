@@ -59,7 +59,7 @@ repository:
         match: ^(.*)$
         captures:
           '1':
-            name: markup.italic.mcfunction
+            name: invalid.illegal.mcfunction
   command.tokens:
     patterns:
       - include: '#command.token.nbt_compound'
@@ -176,7 +176,7 @@ repository:
     match: '(?<= )([^ \n]*)(?=[ \n]|$)'
     captures:
       '1':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
   command.token.root_redirect:
     name: meta.command.token.root_redirect.mcfunction
     match: '(?<= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \n]|$)'
@@ -196,7 +196,7 @@ repository:
       '1':
         name: variable.language.mcfunction
       '2':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - include: '#nbt.compound'
   command.token.nbt_list:
@@ -210,7 +210,7 @@ repository:
       '1':
         name: variable.language.mcfunction
       '2':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - include: '#nbt.list'
   nbt.compound:
@@ -228,7 +228,7 @@ repository:
         patterns:
           - include: '#nbt.value'
       - match: '[^\n\}\,]+'
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
   nbt.list:
     patterns:
       - match: ' +'
@@ -240,7 +240,7 @@ repository:
         patterns:
           - include: '#nbt.value'
       - match: '[^\n\]\,]+'
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
   nbt.value:
     patterns:
       - begin: '(\{)'
@@ -290,7 +290,7 @@ repository:
       - match: '([^\s\{\}\[\]\,\:\=]+)'
         name: string.unquoted.mcfunction
       - match: '[^\n\,\]\}]+'
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
   command.token.quoted_string:
     name: meta.command.token.quoted_string.mcfunction
     begin: (?<= )(\")
@@ -302,7 +302,7 @@ repository:
       '1':
         name: string.quoted.mcfunction
       '2':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - include: '#common.quoted_string'
   command.token.single_quoted_string:
@@ -316,7 +316,7 @@ repository:
       '1':
         name: string.quoted.mcfunction
       '2':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - include: '#common.single_quoted_string'
   command.token.block_predicate:
@@ -325,7 +325,7 @@ repository:
     end: '(?=\n)|(?:(?<=\])(?!\{)|(?<=\}))([^ \n]*)'
     endCaptures:
       '1':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - include: '#block_predicate'
   command.token.selector_with_arguments:
@@ -341,7 +341,7 @@ repository:
       '1':
         name: support.class.mcfunction
       '2':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - name: meta.selector.argument_spacing.mcfunction
         match: ' +'
@@ -357,7 +357,7 @@ repository:
             name: keyword.control.mcfunction
         endCaptures:
           '1':
-            name: markup.italic.mcfunction
+            name: invalid.illegal.mcfunction
           '2':
             name: support.class.mcfunction
         patterns:
@@ -372,7 +372,7 @@ repository:
           - include: '#selector.argument.single_quoted_string'
           - include: '#selector.argument.unquoted_string'
           - include: '#selector.argument.unknown'
-      - name: markup.italic.mcfunction
+      - name: invalid.illegal.mcfunction
         match: '[^\]\n]+'
   command.token.nbt_path:
     name: meta.command.token.nbt_path.mcfunction
@@ -419,9 +419,9 @@ repository:
       - match: (\.)(?=\.)
         captures:
           '1':
-            name: markup.italic.mcfunction
+            name: invalid.illegal.mcfunction
       - match: '[^\.\s]+'
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
   nbt_path.index:
     patterns:
       - match: '(?<=\[)(\-?\d+)(?=\])'
@@ -437,11 +437,11 @@ repository:
           '1':
             name: variable.language.mcfunction
           '2':
-            name: markup.italic.mcfunction
+            name: invalid.illegal.mcfunction
         patterns:
           - include: '#nbt.compound'
       - match: '[^\n\]]+'
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
   block_predicate:
     patterns:
       - match: '(\#)([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)'
@@ -482,7 +482,7 @@ repository:
             name: variable.language.mcfunction
         endCaptures:
           '1':
-            name: markup.italic.mcfunction
+            name: invalid.illegal.mcfunction
           '2':
             name: variable.language.mcfunction
         patterns:
@@ -530,7 +530,7 @@ repository:
     match: '([^\]\n\,]+)'
     captures:
       '1':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
   selector.argument.quoted_string:
     name: meta.selector.argument.quoted_string.mcfunction
     begin: (\")
@@ -542,7 +542,7 @@ repository:
       '1':
         name: string.quoted.mcfunction
       '2':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - include: '#common.quoted_string'
   selector.argument.single_quoted_string:
@@ -556,7 +556,7 @@ repository:
       '1':
         name: string.quoted.mcfunction
       '2':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - include: '#common.single_quoted_string'
   selector.argument.property_map:
@@ -573,7 +573,7 @@ repository:
       '1':
         name: variable.language.mcfunction
       '2':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - include: '#property_map'
   selector.argument.nbt_compound:
@@ -587,7 +587,7 @@ repository:
       '1':
         name: variable.language.mcfunction
       '2':
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
     patterns:
       - include: '#nbt.compound'
   property_map:
@@ -616,7 +616,7 @@ repository:
         patterns:
           - include: '#property_map.values'
       - match: '[^\n\}\,]+'
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
   property_map.values:
     patterns:
       - match: (true|false)
@@ -634,7 +634,7 @@ repository:
           '1':
             name: variable.language.mcfunction
           '2':
-            name: markup.italic.mcfunction
+            name: invalid.illegal.mcfunction
         patterns:
           - include: '#property_map'
   common.quoted_string:
@@ -644,7 +644,7 @@ repository:
       - match: '\\[^\n]'
         name: constant.character.escape.mcfunction
       - match: \\
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
   common.single_quoted_string:
     patterns:
       - match: '[^\\\''\n]'
@@ -652,4 +652,4 @@ repository:
       - match: '\\[^\n]'
         name: constant.character.escape.mcfunction
       - match: \\
-        name: markup.italic.mcfunction
+        name: invalid.illegal.mcfunction
