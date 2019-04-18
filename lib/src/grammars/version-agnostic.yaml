@@ -209,16 +209,6 @@ capturesRepository:
 repository:
   comment:
     patterns:
-      # things that need attention, like todos and fixmes
-      - name: meta.comment.todo.mcfunction
-        match: '^\s*(#)\s*((?:TODO|FIXME|DELETEME))(\b.*)$'
-        captures:
-          1:
-            name: comment.number-sign.mcfunction
-          2:
-            name: markup.bold.mcfunction
-          3:
-            name: comment.number-sign.mcfunction
       # doc tags like `@params` and `@returns`
       - name: meta.comment.annotation.mcfunction
         match: '^\s*(#)\s*(\@\w*)(\b.*)$'

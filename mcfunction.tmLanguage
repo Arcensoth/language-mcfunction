@@ -33,30 +33,6 @@
         <array>
           <dict>
             <key>name</key>
-            <string>meta.comment.todo.mcfunction</string>
-            <key>match</key>
-            <string>^\s*(#)\s*((?:TODO|FIXME|DELETEME))(\b.*)$</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>markup.bold.mcfunction</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>name</key>
             <string>meta.comment.annotation.mcfunction</string>
             <key>match</key>
             <string>^\s*(#)\s*(\@\w*)(\b.*)$</string>
