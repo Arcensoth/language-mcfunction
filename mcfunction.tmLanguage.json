@@ -19,26 +19,73 @@
     "comment": {
       "patterns": [
         {
-          "name": "meta.comment.annotation.mcfunction",
-          "match": "^\\s*(#)\\s*(\\@\\w*)(\\b.*)$",
-          "captures": {
+          "name": "meta.comment.block.mcfunction",
+          "begin": "^[ \\t]*((#)(>)((.*)))$",
+          "end": "^(?![ \\t]*#)",
+          "beginCaptures": {
             "1": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "comment.block.mcfunction"
             },
             "2": {
-              "name": "markup.heading.mcfunction"
+              "name": "markup.list.mcfunction"
             },
             "3": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "markup.list.mcfunction"
+            },
+            "4": {
+              "name": "markup.bold.mcfunction"
+            },
+            "5": {
+              "name": "markup.list.mcfunction"
             }
-          }
+          },
+          "patterns": [
+            {
+              "include": "#comment.block"
+            }
+          ]
         },
         {
-          "name": "meta.comment.annotation.mcfunction",
-          "match": "^\\s*(##)\\s*(.*)$",
+          "name": "meta.comment.line.mcfunction",
+          "match": "^[ \\t]*(#.*)$",
           "captures": {
             "1": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "comment.line.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "comment.block": {
+      "patterns": [
+        {
+          "name": "meta.comment.block_line.mcfunction",
+          "begin": "^[ \\t]*((#)[ \\t]*)",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "comment.block.mcfunction"
+            },
+            "2": {
+              "name": "markup.list.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comment.block.line"
+            }
+          ]
+        }
+      ]
+    },
+    "comment.block.line": {
+      "patterns": [
+        {
+          "name": "meta.comment.block.annotation.mcfunction",
+          "match": "((\\@\\w*)\\b.*)$",
+          "captures": {
+            "1": {
+              "name": "comment.block.mcfunction"
             },
             "2": {
               "name": "markup.heading.mcfunction"
@@ -46,11 +93,23 @@
           }
         },
         {
-          "name": "meta.comment.mcfunction",
-          "match": "^\\s*(#.*)$",
+          "name": "meta.comment.block.heading.mcfunction",
+          "match": "((\\#.*))$",
           "captures": {
             "1": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "comment.block.mcfunction"
+            },
+            "2": {
+              "name": "markup.heading.mcfunction"
+            }
+          }
+        },
+        {
+          "name": "meta.comment.block.text.mcfunction",
+          "match": "(.*)$",
+          "captures": {
+            "1": {
+              "name": "comment.block.mcfunction"
             }
           }
         }

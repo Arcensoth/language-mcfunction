@@ -33,39 +33,112 @@
         <array>
           <dict>
             <key>name</key>
-            <string>meta.comment.annotation.mcfunction</string>
-            <key>match</key>
-            <string>^\s*(#)\s*(\@\w*)(\b.*)$</string>
-            <key>captures</key>
+            <string>meta.comment.block.mcfunction</string>
+            <key>begin</key>
+            <string>^[ \t]*((#)(&gt;)((.*)))$</string>
+            <key>end</key>
+            <string>^(?![ \t]*#)</string>
+            <key>beginCaptures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.block.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.heading.mcfunction</string>
+                <string>markup.list.mcfunction</string>
               </dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>markup.list.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>markup.bold.mcfunction</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>markup.list.mcfunction</string>
               </dict>
             </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#comment.block</string>
+              </dict>
+            </array>
           </dict>
           <dict>
             <key>name</key>
-            <string>meta.comment.annotation.mcfunction</string>
+            <string>meta.comment.line.mcfunction</string>
             <key>match</key>
-            <string>^\s*(##)\s*(.*)$</string>
+            <string>^[ \t]*(#.*)$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.line.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>comment.block</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta.comment.block_line.mcfunction</string>
+            <key>begin</key>
+            <string>^[ \t]*((#)[ \t]*)</string>
+            <key>end</key>
+            <string>$</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>comment.block.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.list.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#comment.block.line</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>comment.block.line</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta.comment.block.annotation.mcfunction</string>
+            <key>match</key>
+            <string>((\@\w*)\b.*)$</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>comment.block.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
@@ -76,15 +149,34 @@
           </dict>
           <dict>
             <key>name</key>
-            <string>meta.comment.mcfunction</string>
+            <string>meta.comment.block.heading.mcfunction</string>
             <key>match</key>
-            <string>^\s*(#.*)$</string>
+            <string>((\#.*))$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.block.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.heading.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>name</key>
+            <string>meta.comment.block.text.mcfunction</string>
+            <key>match</key>
+            <string>(.*)$</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>comment.block.mcfunction</string>
               </dict>
             </dict>
           </dict>

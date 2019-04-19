@@ -35,6 +35,12 @@ names:
   top_level_command: keyword.control.mcfunction
   unknown: invalid.illegal.mcfunction
   error: invalid.illegal.mcfunction
+  block_comment: comment.block.mcfunction
+  block_comment_symbol: markup.list.mcfunction
+  block_comment_prefix: markup.list.mcfunction
+  block_comment_heading_1: markup.bold.mcfunction
+  block_comment_heading_2: markup.list.mcfunction
+  block_comment_annotation: markup.heading.mcfunction
 
 variables:
   lookahead_newline: '(?=\n)'
@@ -113,6 +119,9 @@ variables:
 
   # base selectors are defined with a single, lower-case character
   base_selector: '(\@[a-z])'
+
+  # prefix following the `#` to initiate a block comment section
+  block_comment_prefix: '>'
 
 patterns:
   - include: "#comment"
@@ -209,30 +218,81 @@ capturesRepository:
 repository:
   comment:
     patterns:
-      # doc tags like `@params` and `@returns`
-      - name: meta.comment.annotation.mcfunction
-        match: '^\s*(#)\s*(\@\w*)(\b.*)$'
-        captures:
+      # enter into block comments via alternate comment style
+      - name: meta.comment.block.mcfunction
+
+        # must begin with unique prefix
+        begin: '^[ \t]*((#)({{block_comment_prefix}})((.*)))$'
+
+        # end on any line that is not a comment, without consuming anything
+        # should only get here when an adjacent comment was not found
+        # this allows the inner block comment loop to run-off
+        end: '^(?![ \t]*#)'
+
+        beginCaptures:
           1:
-            name: comment.number-sign.mcfunction
+            name: '#block_comment'
           2:
-            name: markup.heading.mcfunction
+            name: '#block_comment_symbol'
           3:
-            name: comment.number-sign.mcfunction
-      # headers for separating blocks
-      - name: meta.comment.annotation.mcfunction
-        match: '^\s*(##)\s*(.*)$'
+            name: '#block_comment_prefix'
+          4:
+            name: '#block_comment_heading_1'
+          5:
+            name: '#block_comment_heading_2'
+
+        patterns:
+          - include: "#comment.block"
+          
+      # any other type of comment gets caught here
+      - name: meta.comment.line.mcfunction
+        match: '^[ \t]*(#.*)$'
         captures:
           1:
-            name: comment.number-sign.mcfunction
+            name: comment.line.mcfunction
+
+  comment.block:
+    patterns:
+      # match any type of comment attached to the block
+      - name: meta.comment.block_line.mcfunction
+        begin: '^[ \t]*((#)[ \t]*)'
+        end: '$'
+        beginCaptures:
+          1:
+            name: '#block_comment'
+          2:
+            name: '#block_comment_symbol'
+        patterns:
+          - include: "#comment.block.line"
+
+      # otherwise, break from the block loop
+
+  comment.block.line:
+    patterns:
+      # doc tags like `@params` and `@returns`
+      - name: meta.comment.block.annotation.mcfunction
+        match: '((\@\w*)\b.*)$'
+        captures:
+          1:
+            name: '#block_comment'
+          2:
+            name: '#block_comment_annotation'
+
+      # headers for separating blocks
+      - name: meta.comment.block.heading.mcfunction
+        match: '((\#.*))$'
+        captures:
+          1:
+            name: '#block_comment'
           2:
             name: markup.heading.mcfunction
-      # any other comment should get caught here
-      - name: meta.comment.mcfunction
-        match: '^\s*(#.*)$'
+
+      # otherwise its just a comment
+      - name: meta.comment.block.text.mcfunction
+        match: '(.*)$'
         captures:
           1:
-            name: comment.number-sign.mcfunction
+            name: '#block_comment'
 
   command:
     patterns:

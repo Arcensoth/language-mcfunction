@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Implement imaginary block comment to contain custom comment styling
+    - Use `#>` to initiate an imaginary block comment
+    - Any text following `#>` is the block heading
+        - e.g. `#> This is a block heading`
+    - Annotations are now supported within block comments
+        - e.g. `# @returns Return value information`
+    - Future comment highlights will be supported only within block comments
 ### Removed
 - Remove language grammar definitions for TODO, FIXME, etc
 
