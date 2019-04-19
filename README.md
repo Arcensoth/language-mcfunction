@@ -12,9 +12,9 @@ This project provides two types of grammars: the default, [version-agnostic gram
   - [Install for SublimeText]
 - [Features]
 - [Configure]
-- [Customize]
   - [Version-agnostic grammar]
   - [Version-specific grammars]
+- [Customize]
 - [Contribute]
 - [Resources]
 
