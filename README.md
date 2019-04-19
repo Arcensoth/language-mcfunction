@@ -1,6 +1,7 @@
 # language-mcfunction
 Language grammars and syntax highlighting for mcfunction files.
 
+[![github-license-badge]](https://github.com/Arcensoth/language-mcfunction)
 [![vscode-version-badge]](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction)
 [![discord-chat-badge]](https://discord.gg/QAFXFtZ)
 
@@ -223,6 +224,7 @@ Short name                | Full scope name                                     
 - https://macromates.com/manual/en/language_grammars
 - https://regex101.com/
 
+[github-license-badge]: https://img.shields.io/github/license/arcensoth/language-mcfunction.svg?logo=github
 [vscode-version-badge]: https://img.shields.io/visual-studio-marketplace/v/arcensoth.language-mcfunction.svg?logo=visual-studio-code
 [discord-chat-badge]: https://img.shields.io/discord/154777837382008833.svg?color=%237289DA&label=chat&logo=discord&logoColor=%23FFFFFF
 
