@@ -97,10 +97,10 @@ This is a generic "version-agnostic" grammar that does not target any particular
 
 The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting.
 
-In the future, the [version-specific grammars](#version-specific-grammars) will be preferred when available.
+In the future, the [version-specific grammars] will be preferred when available.
 
 ### Configuring the version-specific grammars
-> **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar](#version-agnostic-grammar). Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
+> **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar]. Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
 
 The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher. They have context-sensitive highlighting and command validation comparable to the in-game command bar.
 
@@ -115,7 +115,7 @@ In VSCode, you can easily choose which version of mcfunction to use by changing 
 This option can also be set on the user-level in `settings.json` or folder-level in `.vscode/settings.json`.
 
 ## Customize
-Currently available for the [version-specific grammars](#version-specific-grammars).
+Currently available for the [version-specific grammars].
 
 Scopes have been assigned with user customization in mind. If your editor allows scope overrides, this will make it easy to customize your own colours for a variety of scopes.
 
@@ -265,7 +265,9 @@ Short name                | Full scope name                                     
 [Custom block comments]: #custom-block-comments
 [Configure]: #configure
 [Configuring the version-agnostic grammar]: #configuring-the-version-agnostic-grammar
+[version-agnostic grammar]: #configuring-the-version-agnostic-grammar
 [Configuring the version-specific grammars]: #configuring-the-version-specific-grammars
+[version-specific grammars]: #configuring-the-version-specific-grammars
 [Customize]: #customize
 [Customizing errors]: #customizing-errors
 [Customizing comments]: #customizing-comments
