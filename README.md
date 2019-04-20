@@ -11,6 +11,7 @@ This project provides two types of grammars: the default, [version-agnostic gram
   - [Install for VSCode]
   - [Install for SublimeText]
 - [Features]
+  - [Custom block comments]
 - [Configure]
   - [Version-agnostic grammar]
   - [Version-specific grammars]
@@ -33,7 +34,7 @@ Otherwise you can clone the repository into user packages (e.g. `%appdata%\Subli
 Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
 
 - [x] [Comments and indentation](https://i.imgur.com/1N5zlkj.png): `# This is a comment`
-- [x] [Block comments and custom styling](https://i.imgur.com/i2ojCZS.png): `#> This is a block heading`
+- [x] [Custom block comments]: `#> This is a block heading`
 - [x] [Booleans](https://i.imgur.com/FBKTc5u.png): `true` / `false`
 - [x] [Numbers](https://i.imgur.com/KSvbapt.png): `20` / `3.14` / `.001`
 - [x] [Operations](https://i.imgur.com/iYvND6j.png): `=` / `/=` / `%=` / etc
@@ -61,6 +62,26 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
     - [x] [NBT compound arguments](https://i.imgur.com/JqWrpVm.png): `nbt`
     - [x] [Score arguments](https://i.imgur.com/L7f9wJ3.png): `scores`
     - [x] [Advancement arguments](https://i.imgur.com/yQj5Oye.png): `advancements`
+
+### Custom block comments
+It's common for datapack developers to comment parts of their code with things like headings, parameters, return values, etc. To support these patterns for those who wish to use them, the grammar implements custom block comments. These types of comments are gated behind a vanilla-compatible alternate comment style.
+
+The prefix `#>` can be used to initiate a block comment:
+
+```mcfunction
+#> This is a block heading
+# All adjacent comments will be considered part of the block.
+#
+# So long as you keep comments attached, they will remain part of the block.
+
+# This line no longer attached to the block.
+
+#> But we can start a new block here!
+```
+
+[Click here for a detailed example.](https://i.imgur.com/i2ojCZS.png)
+
+As of writing there is no documentation standard, however the grammar has the capacity to support this via block comments and alternate comment styles.
 
 ## Configure
 ### Version-agnostic grammar
@@ -232,6 +253,7 @@ Short name                | Full scope name                                     
 [Install for VSCode]: #install-for-vscode
 [Install for SublimeText]: #install-for-sublimetext
 [Features]: #features
+[Custom block comments]: #custom-block-comments
 [Configure]: #configure
 [Version-agnostic grammar]: #version-agnostic-grammar
 [Version-specific grammars]: #version-specific-grammars
