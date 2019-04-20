@@ -8,13 +8,14 @@ Language grammars and syntax highlighting for mcfunction files.
 This project provides two types of grammars: the default, [version-agnostic grammar](#version-agnostic-grammar) (shown below), and WIP [version-specific grammars](#version-specific-grammars).
 
 - [Install]
-  - [Install for VSCode]
-  - [Install for SublimeText]
+  - [Installing the VSCode extension]
+  - [Installing the SublimeText package]
 - [Features]
+  - [Syntax highlighting]
   - [Custom block comments]
 - [Configure]
-  - [Version-agnostic grammar]
-  - [Version-specific grammars]
+  - [Configuring the version-agnostic grammar]
+  - [Configuring the version-specific grammars]
 - [Customize]
 - [Contribute]
 - [Resources]
@@ -22,15 +23,16 @@ This project provides two types of grammars: the default, [version-agnostic gram
 [![Showcase](https://i.imgur.com/0agDB4B.png)](https://i.imgur.com/0agDB4B.png)
 
 ## Install
-### Install for VSCode
+### Installing the VSCode extension
 The extension [language-mcfunction](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction) is available from the Marketplace: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
 
-### Install for SublimeText
+### Installing the SublimeText package
 It is recommended you install [PackageControl](https://packagecontrol.io/) and use the `Package Control: Add Repository` [command](https://packagecontrol.io/docs/usage) to install `https://github.com/Arcensoth/language-mcfunction` as a package. This will keep the package updated with the repository automatically.
 
 Otherwise you can clone the repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`) and update it manually.
 
 ## Features
+### Syntax highlighting
 Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
 
 - [x] [Comments and indentation](https://i.imgur.com/1N5zlkj.png): `# This is a comment`
@@ -84,14 +86,14 @@ The prefix `#>` can be used to initiate a block comment:
 As of writing there is no documentation standard, however the grammar has the capacity to support this via block comments and alternate comment styles.
 
 ## Configure
-### Version-agnostic grammar
+### Configuring the version-agnostic grammar
 This is a generic "version-agnostic" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
 
 The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting.
 
 In the future, the [version-specific grammars](#version-specific-grammars) will be preferred when available.
 
-### Version-specific grammars
+### Configuring the version-specific grammars
 > **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar](#version-agnostic-grammar). Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
 
 The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher. They have context-sensitive highlighting and command validation comparable to the in-game command bar.
@@ -250,13 +252,14 @@ Short name                | Full scope name                                     
 [discord-chat-badge]: https://img.shields.io/discord/154777837382008833.svg?color=%237289DA&label=chat&logo=discord&logoColor=%23FFFFFF
 
 [Install]: #install
-[Install for VSCode]: #install-for-vscode
-[Install for SublimeText]: #install-for-sublimetext
+[Installing the VSCode extension]: #installing-the-vscode-extension
+[Installing the SublimeText package]: #installing-the-sublimetext-package
 [Features]: #features
+[Syntax highlighting]: #syntax-highlighting
 [Custom block comments]: #custom-block-comments
 [Configure]: #configure
-[Version-agnostic grammar]: #version-agnostic-grammar
-[Version-specific grammars]: #version-specific-grammars
+[Configuring the version-agnostic grammar]: #configuring-the-version-agnostic-grammar
+[Configuring the version-specific grammars]: #configuring-the-version-specific-grammars
 [Customize]: #customize
 [Customizing errors]: #customizing-errors
 [Customizing comments]: #customizing-comments
