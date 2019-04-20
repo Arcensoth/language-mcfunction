@@ -27,7 +27,13 @@ This project provides two types of grammars: the default, [version-agnostic gram
 The extension [language-mcfunction](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction) is available from the Marketplace: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
 
 ### Installing the SublimeText package
-It is recommended you install [PackageControl](https://packagecontrol.io/) and use the `Package Control: Add Repository` [command](https://packagecontrol.io/docs/usage) to install `https://github.com/Arcensoth/language-mcfunction` as a package. This will keep the package updated with the repository automatically.
+It is recommended you use [Package Control](https://packagecontrol.io/) to manage the package:
+
+1. [Install Package Control](https://packagecontrol.io/installation) if it is not already present.
+2. Run the `Package Control: Add Repository` [command](https://packagecontrol.io/docs/usage) and enter `https://github.com/Arcensoth/language-mcfunction` to add the repository as a package.
+3. Run the `Package Control: Install Package` and search for `language-mcfunction` to install it as you would a normal package.
+
+This will keep the package updated with the repository automatically.
 
 Otherwise you can clone the repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`) and update it manually.
 
