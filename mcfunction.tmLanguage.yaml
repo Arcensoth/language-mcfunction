@@ -91,6 +91,7 @@ repository:
       - include: '#command.token.selector_with_arguments'
       - include: '#command.token.selector_without_arguments'
       - include: '#command.token.block_predicate'
+      - include: '#command.token.block_predicate_without_namespace'
       - include: '#command.token.resource_location'
       - include: '#command.token.tagged_resource_location'
       - include: '#command.token.range'
@@ -361,6 +362,15 @@ repository:
         name: invalid.illegal.mcfunction
     patterns:
       - include: '#block_predicate'
+  command.token.block_predicate_without_namespace:
+    name: meta.command.token.block_predicate_without_namespace.mcfunction
+    begin: '(?<= )(?=(\#)?([a-z0-9_\.\-\/]+)(\[ *([a-z_][a-z0-9_]*) *\=))'
+    end: '(?=\n)|(?:(?<=\])(?!\{)|(?<=\}))([^ \n]*)'
+    endCaptures:
+      '1':
+        name: invalid.illegal.mcfunction
+    patterns:
+      - include: '#block_predicate'
   command.token.selector_with_arguments:
     name: meta.command.token.selector_with_arguments.mcfunction
     begin: '(?<= )(\@[a-z])(\[)'
@@ -481,6 +491,10 @@ repository:
         captures: *ref_0
       - match: '([a-z0-9_\.\-]+)(\:)([a-z0-9_\.\-\/]+)'
         captures: *ref_1
+      - match: '([a-z0-9_\.\-\/]+)'
+        captures:
+          '1':
+            name: entity.name.function.mcfunction
       - begin: '(\[)'
         end: '(\])'
         beginCaptures:

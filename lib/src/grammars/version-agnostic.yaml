@@ -137,6 +137,10 @@ capturesRepository:
     1:
       name: "#base_selector"
 
+  resource_path:
+    1:
+      name: "#resource_path"
+
   resource_location:
     1:
       # the namespace
@@ -338,6 +342,7 @@ repository:
       - include: "#command.token.selector_with_arguments"
       - include: "#command.token.selector_without_arguments"
       - include: "#command.token.block_predicate"
+      - include: "#command.token.block_predicate_without_namespace"
       - include: "#command.token.resource_location"
       - include: "#command.token.tagged_resource_location"
       - include: "#command.token.range"
@@ -633,6 +638,24 @@ repository:
     patterns:
       - include: "#block_predicate"
 
+  command.token.block_predicate_without_namespace:
+    name: meta.command.token.block_predicate_without_namespace.mcfunction
+
+    # We need to be careful here about not selecting an NBT path. We do this
+    # by using look-ahead to check for a block state property immediately
+    # inside the braces. Note that we can only disambiguate when a block state
+    # mapping is present, otherwise we can't differentiate from an NBT path.
+    begin: '{{command_token_l}}(?=(\#)?{{resource_path}}(\[ *{{literal}} *\=))'
+
+    end: '{{lookahead_newline}}|(?:(?<=\])(?!\{)|(?<=\}))({{not_command_token_delim}}*)'
+
+    endCaptures:
+      1:
+        name: "#error"
+
+    patterns:
+      - include: "#block_predicate"
+
   command.token.selector_with_arguments:
     name: meta.command.token.selector_with_arguments.mcfunction
 
@@ -807,6 +830,8 @@ repository:
         captures: "#tagged_resource_location"
       - match: "{{resource_location}}"
         captures: "#resource_location"
+      - match: "{{resource_path}}"
+        captures: "#resource_path"
       - begin: '(\[)'
         end: '(\])'
         beginCaptures:

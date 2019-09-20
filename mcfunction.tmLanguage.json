@@ -172,6 +172,9 @@
           "include": "#command.token.block_predicate"
         },
         {
+          "include": "#command.token.block_predicate_without_namespace"
+        },
+        {
           "include": "#command.token.resource_location"
         },
         {
@@ -648,6 +651,21 @@
         }
       ]
     },
+    "command.token.block_predicate_without_namespace": {
+      "name": "meta.command.token.block_predicate_without_namespace.mcfunction",
+      "begin": "(?<= )(?=(\\#)?([a-z0-9_\\.\\-\\/]+)(\\[ *([a-z_][a-z0-9_]*) *\\=))",
+      "end": "(?=\\n)|(?:(?<=\\])(?!\\{)|(?<=\\}))([^ \\n]*)",
+      "endCaptures": {
+        "1": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#block_predicate"
+        }
+      ]
+    },
     "command.token.selector_with_arguments": {
       "name": "meta.command.token.selector_with_arguments.mcfunction",
       "begin": "(?<= )(\\@[a-z])(\\[)",
@@ -892,6 +910,14 @@
               "name": "entity.name.function.mcfunction"
             },
             "3": {
+              "name": "entity.name.function.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "([a-z0-9_\\.\\-\\/]+)",
+          "captures": {
+            "1": {
               "name": "entity.name.function.mcfunction"
             }
           }

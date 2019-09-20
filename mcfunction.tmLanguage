@@ -268,6 +268,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#command.token.block_predicate_without_namespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#command.token.resource_location</string>
           </dict>
           <dict>
@@ -1013,6 +1017,30 @@
           </dict>
         </array>
       </dict>
+      <key>command.token.block_predicate_without_namespace</key>
+      <dict>
+        <key>name</key>
+        <string>meta.command.token.block_predicate_without_namespace.mcfunction</string>
+        <key>begin</key>
+        <string>(?&lt;= )(?=(\#)?([a-z0-9_\.\-\/]+)(\[ *([a-z_][a-z0-9_]*) *\=))</string>
+        <key>end</key>
+        <string>(?=\n)|(?:(?&lt;=\])(?!\{)|(?&lt;=\}))([^ \n]*)</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#block_predicate</string>
+          </dict>
+        </array>
+      </dict>
       <key>command.token.selector_with_arguments</key>
       <dict>
         <key>name</key>
@@ -1389,6 +1417,18 @@
                 <string>entity.name.function.mcfunction</string>
               </dict>
               <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>([a-z0-9_\.\-\/]+)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
               <dict>
                 <key>name</key>
                 <string>entity.name.function.mcfunction</string>
