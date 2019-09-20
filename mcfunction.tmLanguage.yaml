@@ -203,7 +203,7 @@ repository:
         name: invalid.illegal.mcfunction
   command.token.root_redirect:
     name: meta.command.token.root_redirect.mcfunction
-    match: '(?<= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \n]|$)'
+    match: '(?<= )(run) ([a-z_][a-z0-9_]*)?(?=[ \n]|$)'
     captures:
       '1':
         name: entity.name.mcfunction

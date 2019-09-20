@@ -417,7 +417,7 @@ repository:
     # root command. We use this to highlight the top-level command despite it
     # not being on its own line.
     name: meta.command.token.root_redirect.mcfunction
-    match: "{{command_token_l}}{{root_redirect}} ?{{literal}}?{{command_token_r}}"
+    match: "{{command_token_l}}{{root_redirect}} {{literal}}?{{command_token_r}}"
     captures: "#root_redirect"
 
   command.token.nbt_compound:
