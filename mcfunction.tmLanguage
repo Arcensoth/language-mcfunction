@@ -1147,7 +1147,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(\.)?(\w+)(\[)</string>
+            <string>(\.)?(\w+)?(\[)</string>
             <key>end</key>
             <string>(\])|(?=\n)</string>
             <key>beginCaptures</key>

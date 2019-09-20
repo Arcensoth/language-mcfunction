@@ -29,6 +29,15 @@ data get entity @s Inventory[{}]
 data get entity @s Inventory[{Count: 64}]
 data get entity @s Inventory[{id: "minecraft:diamond"}]
 
+# test valid adjacent list access
+data get entity @s Item.tag.foo[][]
+data get entity @s Item.tag.foo[0][]
+data get entity @s Item.tag.foo[][0]
+data get entity @s Item.tag.foo[0][0]
+data get entity @s Item.tag.foo[][][]
+data get entity @s Item.tag.foo[][0][]
+data get entity @s Item.tag.foo[][{}][]
+
 # test invalid list access with compound
 data get entity @s Inventory[ {} ]
 data get entity @s Inventory[x{}]

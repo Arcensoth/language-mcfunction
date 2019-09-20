@@ -736,7 +736,7 @@
     "nbt_path.property": {
       "patterns": [
         {
-          "begin": "(\\.)?(\\w+)(\\[)",
+          "begin": "(\\.)?(\\w+)?(\\[)",
           "end": "(\\])|(?=\\n)",
           "beginCaptures": {
             "1": {

@@ -719,7 +719,7 @@ repository:
   nbt_path.property:
     patterns:
       # (Inventory)([){Count: 64}(])
-      - begin: '(\.)?(\w+)(\[)'
+      - begin: '(\.)?(\w+)?(\[)'
         end: '(\])|(?=\n)'
         beginCaptures:
           1:

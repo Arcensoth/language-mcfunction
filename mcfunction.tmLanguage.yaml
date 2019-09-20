@@ -406,7 +406,7 @@ repository:
       - include: '#nbt_path.property'
   nbt_path.property:
     patterns:
-      - begin: '(\.)?(\w+)(\[)'
+      - begin: '(\.)?(\w+)?(\[)'
         end: '(\])|(?=\n)'
         beginCaptures:
           '1':
