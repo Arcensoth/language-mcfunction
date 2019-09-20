@@ -4,8 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Implemented special case to support greedy commands (say), as per #25
+- Implemented support for block predicates without a namespace, as per #26
+### Fixed
+- Fixed adjacent list access in NBT path, as per #20
+- Fixed issue with root redirect (execute run), as per #22
 
-## [v0.14.0] - 2019-04-18
+## [0.14.0] - 2019-04-18
 ### Changed
 - Implement imaginary block comment to contain custom comment styling
     - Use `#>` to initiate an imaginary block comment
@@ -17,17 +23,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 - Remove language grammar definitions for TODO, FIXME, etc
 
-## [v0.13.0] - 2019-04-12
+## [0.13.0] - 2019-04-12
 ### Added
 - Add contribution guidelines
 ### Changed
 - Reorganize library code
 
-## [v0.12.0] - 2019-03-25
+## [0.12.0] - 2019-03-25
 ### Added
 - Add icon to extension
 
-## [v0.11.0] - 2019-03-25
+## [0.11.0] - 2019-03-25
 ### Added
 - File icons SVG for user-level theming
 ### Fixed
@@ -36,7 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fix selector argument whitespace issues, as per #13
 - Fix invalid trailing arguments without newline, as per #14
 
-## [v0.10.0] - 2019-03-02
+## [0.10.0] - 2019-03-02
 ### Changed
 - Version-agnostic grammar:
     - Separate distinct cases of unquoted strings
@@ -45,7 +51,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Version-agnostic grammar:
     - Fix fakeplayer recognition
 
-## [v0.9.0] - 2019-02-25
+## [0.9.0] - 2019-02-25
 ### Added
 - More work on version-specific grammars:
     - Text components for 1.13/1.14 are supported with property-specific highlighting
@@ -99,3 +105,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [0.1.0] - 2019-02-15
 - Initial release
+
+[Unreleased]: https://github.com/Arcensoth/language-mcfunction/compare/v0.14.0...HEAD
+[0.14.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.13.0...v0.14.0
+[0.13.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.12.0...v0.13.0
+[0.12.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.11.0...v0.12.0
+[0.11.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.10.0...v0.11.0
+[0.10.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.9.0...v0.10.0
+[0.9.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.8.0...v0.9.0
+[0.8.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.7.0...v0.8.0
+[0.7.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/Arcensoth/language-mcfunction/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/Arcensoth/language-mcfunction/releases/tag/v0.1.0
