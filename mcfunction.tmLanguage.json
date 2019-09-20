@@ -196,6 +196,9 @@
           "include": "#command.token.root_redirect"
         },
         {
+          "include": "#command.token.greedy_parent"
+        },
+        {
           "include": "#command.token.literal"
         },
         {
@@ -371,6 +374,18 @@
         },
         "2": {
           "name": "keyword.control.mcfunction"
+        }
+      }
+    },
+    "command.token.greedy_parent": {
+      "name": "meta.command.token.greedy_parent.mcfunction",
+      "match": "((?<=^say | say ))(.*)$",
+      "captures": {
+        "1": {
+          "name": "entity.name.mcfunction"
+        },
+        "2": {
+          "name": "string.quoted.mcfunction"
         }
       }
     },

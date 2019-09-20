@@ -300,6 +300,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#command.token.greedy_parent</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#command.token.literal</string>
           </dict>
           <dict>
@@ -584,6 +588,26 @@
           <dict>
             <key>name</key>
             <string>keyword.control.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>command.token.greedy_parent</key>
+      <dict>
+        <key>name</key>
+        <string>meta.command.token.greedy_parent.mcfunction</string>
+        <key>match</key>
+        <string>((?&lt;=^say | say ))(.*)$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>string.quoted.mcfunction</string>
           </dict>
         </dict>
       </dict>
