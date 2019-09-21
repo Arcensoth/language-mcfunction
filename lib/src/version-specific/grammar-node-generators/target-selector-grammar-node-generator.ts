@@ -3,7 +3,7 @@ import { GrammarNode } from "../../language-grammar";
 import { captures, nodes, patterns } from "../constants";
 import { GrammarNodeGenerator } from "./abc/grammar-node-generator";
 
-export class EntityGrammarNodeGenerator extends GrammarNodeGenerator {
+export class TargetSelectorGrammarNodeGenerator extends GrammarNodeGenerator {
   generate(context: CommandNodeContext): GrammarNode {
     return {
       patterns: [
