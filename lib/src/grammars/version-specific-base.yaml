@@ -1622,30 +1622,8 @@ repository:
   generated.commands:
     # this is where the generator will inject command patterns
     patterns:
-      - include: "#generated.command.say"
       - include: "#generated.command.tellraw"
       - include: "#generated.command.execute"
-
-  generated.command.say:
-    begin: "(say){{cbx_false}}"
-    end: "{{ln}}"
-    beginCaptures:
-      1:
-        name: "#command"
-    patterns:
-      - include: "#generated.commands.say"
-
-  generated.commands.say:
-    patterns:
-      - include: "#generated.command.say.message"
-      - include: "#error.command_line"
-
-  generated.command.say.message:
-    # minecraft:message is an exception
-    # it just consume the rest of the line, attempting to
-    # parse various patterns (such as selectors) as it goes
-    patterns:
-      - include: "#common.message"
 
   generated.command.tellraw:
     begin: "(tellraw){{cbx_false}}"

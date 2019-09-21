@@ -116,11 +116,12 @@ export function augmentGrammar(
   // make a copy of the given grammar
   const grammar = deepCopy(baseGrammar) as ExtendedLanguageGrammar;
 
-  // DELETEME
+  // DELETEME limit generated commands during development
   commands = {
     type: CommandNodeType.ROOT,
     children: {
-      effect: commands.children["effect"]
+      effect: commands.children["effect"],
+      say: commands.children["say"]
     }
   };
 
@@ -128,9 +129,8 @@ export function augmentGrammar(
   const grammarRootGroup = makeGrammarGroup(commands, []);
   grammar.repository["generated.commands"] = grammarRootGroup;
 
-  // DELETEME
+  // DELETEME account for hand-written samples
   grammarRootGroup.patterns = [
-    { include: "#generated.command.say" },
     { include: "#generated.command.tellraw" },
     { include: "#generated.command.execute" },
     ...grammarRootGroup.patterns

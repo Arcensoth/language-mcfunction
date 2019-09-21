@@ -38,7 +38,8 @@ export const nodes = {
     badSyntax: "#error.bad_syntax"
   },
   common: {
-    trailingWhitespace: "#common.trailing_whitespace"
+    trailingWhitespace: "#common.trailing_whitespace",
+    message: "#common.message"
   },
   targetSelector: {
     content: "#target_selector.content"

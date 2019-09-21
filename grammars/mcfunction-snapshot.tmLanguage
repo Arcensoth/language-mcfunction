@@ -4338,10 +4338,6 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.command.say</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#generated.command.tellraw</string>
           </dict>
           <dict>
@@ -4354,57 +4350,15 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#generated.command.say</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#common.trailing_whitespace</string>
           </dict>
           <dict>
             <key>include</key>
             <string>#error.unmatched_child</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.say</key>
-      <dict>
-        <key>begin</key>
-        <string>(say) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.control._.command.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.say</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.say</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.say.message</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.say.message</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#common.message</string>
           </dict>
         </array>
       </dict>
@@ -5444,6 +5398,70 @@
         </array>
       </dict>
       <key>generated.commands.effect.give.targets.effect.seconds.amplifier.hideParticles</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.say</key>
+      <dict>
+        <key>begin</key>
+        <string>(say) (?=[^\s\#])</string>
+        <key>end</key>
+        <string>(?=\n)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control._.command.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.commands.say</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.say</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.command.say.message</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.say.message</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#common.message</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.say.message</key>
       <dict>
         <key>patterns</key>
         <array>

@@ -2851,9 +2851,6 @@
     "generated.commands": {
       "patterns": [
         {
-          "include": "#generated.command.say"
-        },
-        {
           "include": "#generated.command.tellraw"
         },
         {
@@ -2863,41 +2860,13 @@
           "include": "#generated.command.effect"
         },
         {
+          "include": "#generated.command.say"
+        },
+        {
           "include": "#common.trailing_whitespace"
         },
         {
           "include": "#error.unmatched_child"
-        }
-      ]
-    },
-    "generated.command.say": {
-      "begin": "(say) (?=[^\\s\\#])",
-      "end": "(?=\\n)",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.control._.command.mcfunction"
-        }
-      },
-      "patterns": [
-        {
-          "include": "#generated.commands.say"
-        }
-      ]
-    },
-    "generated.commands.say": {
-      "patterns": [
-        {
-          "include": "#generated.command.say.message"
-        },
-        {
-          "include": "#error.command_line"
-        }
-      ]
-    },
-    "generated.command.say.message": {
-      "patterns": [
-        {
-          "include": "#common.message"
         }
       ]
     },
@@ -3599,6 +3568,50 @@
       ]
     },
     "generated.commands.effect.give.targets.effect.seconds.amplifier.hideParticles": {
+      "patterns": [
+        {
+          "include": "#common.trailing_whitespace"
+        },
+        {
+          "include": "#error.unmatched_child"
+        }
+      ]
+    },
+    "generated.command.say": {
+      "begin": "(say) (?=[^\\s\\#])",
+      "end": "(?=\\n)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control._.command.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#generated.commands.say"
+        }
+      ]
+    },
+    "generated.commands.say": {
+      "patterns": [
+        {
+          "include": "#generated.command.say.message"
+        },
+        {
+          "include": "#common.trailing_whitespace"
+        },
+        {
+          "include": "#error.unmatched_child"
+        }
+      ]
+    },
+    "generated.command.say.message": {
+      "patterns": [
+        {
+          "include": "#common.message"
+        }
+      ]
+    },
+    "generated.commands.say.message": {
       "patterns": [
         {
           "include": "#common.trailing_whitespace"
