@@ -48,19 +48,25 @@ repository:
   comment.block.line:
     patterns:
       - name: meta._.annotation.line.block.comment.mcfunction
-        match: ((\@\w*)\b.*)$
+        match: ((\@\w*)\b(.*))$
         captures:
           '1':
             name: comment.block._.block.comment.mcfunction
           '2':
-            name: markup.heading._.annotation.block.comment.mcfunction
+            name: markup.heading._.label.annotation.block.comment.mcfunction
+          '3':
+            name: comment.block._.text.annotation.block.comment.mcfunction
       - name: meta._.heading.line.block.comment.mcfunction
-        match: '((\#.*))$'
+        match: ((>)((.*)))$
         captures:
           '1':
             name: comment.block._.block.comment.mcfunction
           '2':
-            name: markup.heading.mcfunction
+            name: markup.list._.prefix.block.comment.mcfunction
+          '3':
+            name: markup.bold._.heading_1.block.comment.mcfunction
+          '4':
+            name: markup.list._.heading_2.block.comment.mcfunction
       - name: meta._.text.line.block.comment.mcfunction
         match: (.*)$
         captures:

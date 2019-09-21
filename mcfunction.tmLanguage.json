@@ -82,25 +82,34 @@
       "patterns": [
         {
           "name": "meta.comment.block.annotation.mcfunction",
-          "match": "((\\@\\w*)\\b.*)$",
+          "match": "((\\@\\w*)\\b(.*))$",
           "captures": {
             "1": {
               "name": "comment.block.mcfunction"
             },
             "2": {
               "name": "markup.heading.mcfunction"
+            },
+            "3": {
+              "name": "comment.block.mcfunction"
             }
           }
         },
         {
           "name": "meta.comment.block.heading.mcfunction",
-          "match": "((\\#.*))$",
+          "match": "((>)((.*)))$",
           "captures": {
             "1": {
               "name": "comment.block.mcfunction"
             },
             "2": {
-              "name": "markup.heading.mcfunction"
+              "name": "markup.list.mcfunction"
+            },
+            "3": {
+              "name": "markup.bold.mcfunction"
+            },
+            "4": {
+              "name": "markup.list.mcfunction"
             }
           }
         },

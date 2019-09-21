@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Ported block comments to the version-specific grammar
 ### Changed
 - Improved architecture for version-specific grammar generator
+- Improved support for adjacent block comments and headings in all grammars
 
 ## [0.15.0] - 2019-09-20
 ### Added

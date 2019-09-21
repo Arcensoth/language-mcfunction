@@ -41,7 +41,8 @@ names:
   block_comment_prefix: markup.list.mcfunction
   block_comment_heading_1: markup.bold.mcfunction
   block_comment_heading_2: markup.list.mcfunction
-  block_comment_annotation: markup.heading.mcfunction
+  block_comment_annotation_label: markup.heading.mcfunction
+  block_comment_annotation_text: comment.block.mcfunction
 
 variables:
   lookahead_newline: '(?=\n)'
@@ -285,21 +286,27 @@ repository:
     patterns:
       # doc tags like `@params` and `@returns`
       - name: meta.comment.block.annotation.mcfunction
-        match: '((\@\w*)\b.*)$'
+        match: '((\@\w*)\b(.*))$'
         captures:
           1:
             name: "#block_comment"
           2:
-            name: "#block_comment_annotation"
+            name: "#block_comment_annotation_label"
+          3:
+            name: "#block_comment_annotation_text"
 
-      # headers for separating blocks
+      # block headers within blocks
       - name: meta.comment.block.heading.mcfunction
-        match: '((\#.*))$'
+        match: '(({{block_comment_prefix}})((.*)))$'
         captures:
           1:
             name: "#block_comment"
           2:
-            name: markup.heading.mcfunction
+            name: "#block_comment_prefix"
+          3:
+            name: "#block_comment_heading_1"
+          4:
+            name: "#block_comment_heading_2"
 
       # otherwise its just a comment
       - name: meta.comment.block.text.mcfunction

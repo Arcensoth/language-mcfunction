@@ -18,7 +18,8 @@ names:
   comment.block.prefix: markup.list._.prefix.block.comment.mcfunction
   comment.block.heading_1: markup.bold._.heading_1.block.comment.mcfunction
   comment.block.heading_2: markup.list._.heading_2.block.comment.mcfunction
-  comment.block.annotation: markup.heading._.annotation.block.comment.mcfunction
+  comment.block.annotation.label: markup.heading._.label.annotation.block.comment.mcfunction
+  comment.block.annotation.text: comment.block._.text.annotation.block.comment.mcfunction
 
   # command scopes
   command: keyword.control._.command.mcfunction
@@ -404,21 +405,27 @@ repository:
     patterns:
       # doc tags like `@params` and `@returns`
       - name: meta._.annotation.line.block.comment.mcfunction
-        match: '((\@\w*)\b.*)$'
+        match: '((\@\w*)\b(.*))$'
         captures:
           1:
             name: "#comment.block"
           2:
-            name: "#comment.block.annotation"
+            name: "#comment.block.annotation.label"
+          3:
+            name: "#comment.block.annotation.text"
 
-      # headers for separating blocks
+      # block headers within blocks
       - name: meta._.heading.line.block.comment.mcfunction
-        match: '((\{{comment.symbol}}.*))$'
+        match: "(({{comment.block.prefix}})((.*)))$"
         captures:
           1:
             name: "#comment.block"
           2:
-            name: markup.heading.mcfunction
+            name: "#comment.block.prefix"
+          3:
+            name: "#comment.block.heading_1"
+          4:
+            name: "#comment.block.heading_2"
 
       # otherwise its just a comment
       - name: meta._.text.line.block.comment.mcfunction

@@ -29,6 +29,15 @@ execute as @s run say this should also not be a comment
 
 execute as @s run say this should be a command
 
+#> One block
+#> Two block
+
+# @hello world
+#> Red block
+# @hello world
+#> Blue block
+# @hello world
+
     #> An indented block
     # @hello does this still work?
     # hopefully it does

@@ -132,7 +132,7 @@
             <key>name</key>
             <string>meta.comment.block.annotation.mcfunction</string>
             <key>match</key>
-            <string>((\@\w*)\b.*)$</string>
+            <string>((\@\w*)\b(.*))$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -144,6 +144,11 @@
               <dict>
                 <key>name</key>
                 <string>markup.heading.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>comment.block.mcfunction</string>
               </dict>
             </dict>
           </dict>
@@ -151,7 +156,7 @@
             <key>name</key>
             <string>meta.comment.block.heading.mcfunction</string>
             <key>match</key>
-            <string>((\#.*))$</string>
+            <string>((&gt;)((.*)))$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -162,7 +167,17 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.heading.mcfunction</string>
+                <string>markup.list.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>markup.bold.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>markup.list.mcfunction</string>
               </dict>
             </dict>
           </dict>
