@@ -12,12 +12,13 @@ names:
   underline: markup.underline._.underline.mcfunction
 
   # comment scopes
-  comment: comment._.comment.mcfunction
-  comment.heading: markup.heading._.heading.comment.mcfunction
-  comment.marker.name: markup.bold._.name.marker.comment.mcfunction
-  comment.marker.text: comment._.text.marker.comment.mcfunction
-  comment.annotation.name: markup.heading._.name.annotation.comment.mcfunction
-  comment.annotation.text: comment._.text.annotation.comment.mcfunction
+  comment.plain: comment._.plain.comment.mcfunction
+  comment.block: comment.block._.block.comment.mcfunction
+  comment.block.symbol: markup.list._.symbol.block.comment.mcfunction
+  comment.block.prefix: markup.list._.prefix.block.comment.mcfunction
+  comment.block.heading_1: markup.bold._.heading_1.block.comment.mcfunction
+  comment.block.heading_2: markup.list._.heading_2.block.comment.mcfunction
+  comment.block.annotation: markup.heading._.annotation.block.comment.mcfunction
 
   # command scopes
   command: keyword.control._.command.mcfunction
@@ -125,6 +126,10 @@ variables:
   tc.p.begin_r: '(\"){{pad}}(\:){{pad}}(?=[^\s\,\}])'
   tc.p.end: '{{ln}}|(?={{pad}}[\,\}])'
 
+  # comment
+  comment.symbol: "#"
+  comment.block.prefix: ">"
+
   # dictionary/compound
   dict.begin: '(\{)'
   dict.end: '{{ln}}|(\})'
@@ -197,7 +202,8 @@ variables:
   text_component.hover_events: "(show_text|show_item|show_entity)"
 
 patterns:
-  - include: "#comment"
+  - include: "#comment.block"
+  - include: "#comment.plain"
   - include: "#command"
   - include: "#unknown"
 
@@ -343,69 +349,89 @@ capturesRepository:
       name: "#resource_location.path"
 
 repository:
-  comment:
+  comment.plain:
     patterns:
-      # comments begin on with `#`, after optional leading whitespace
-      - name: meta._.comment.mcfunction
-        begin: '^{{tpad}}(?=\#)'
-        end: '\n'
+      # any other type of comment gets caught here
+      - name: meta._.plain.comment.mcfunction
+        match: "^{{tpad}}({{comment.symbol}}.*)$"
+        captures:
+          1:
+            name: "#comment.plain"
+
+  comment.block:
+    patterns:
+      - name: meta._.block.comment.mcfunction
+
+        # must begin with unique prefix
+        begin: "^{{tpad}}(({{comment.symbol}})({{comment.block.prefix}})((.*)))$"
+
+        # end on any line that is not a comment, without consuming anything
+        # should only get here when an adjacent comment was not found
+        # this allows the inner block comment loop to run-off
+        end: "^(?!{{tpad}}{{comment.symbol}})"
+
+        beginCaptures:
+          1:
+            name: "#comment.block"
+          2:
+            name: "#comment.block.symbol"
+          3:
+            name: "#comment.block.prefix"
+          4:
+            name: "#comment.block.heading_1"
+          5:
+            name: "#comment.block.heading_2"
+
         patterns:
-          - include: "#comments"
+          - include: "#comment.block.lines"
 
-  comments:
+  comment.block.lines:
     patterns:
-      - include: "#comment.heading"
-      - include: "#comment.marker"
-      - include: "#comment.annotation"
-      - include: "#comment.other"
+      # match any type of comment attached to the block
+      - name: meta._.lines.block.comment.mcfunction
+        begin: "^{{tpad}}(({{comment.symbol}}){{tpad}})"
+        end: "$"
+        beginCaptures:
+          1:
+            name: "#comment.block"
+          2:
+            name: "#comment.block.symbol"
+        patterns:
+          - include: "#comment.block.line"
+      # otherwise, break from the block loop
 
-  comment.heading:
-    # headers for separating blocks
-    name: meta._.heading.comment.mcfunction
-    match: "(##){{tpad}}(.*)$"
-    captures:
-      1:
-        name: "#comment"
-      2:
-        name: "#comment.heading"
+  comment.block.line:
+    patterns:
+      # doc tags like `@params` and `@returns`
+      - name: meta._.annotation.line.block.comment.mcfunction
+        match: '((\@\w*)\b.*)$'
+        captures:
+          1:
+            name: "#comment.block"
+          2:
+            name: "#comment.block.annotation"
 
-  comment.marker:
-    # things that need attention, like todos and fixmes
-    name: meta._.marker.comment.mcfunction
-    match: '(#){{tpad}}((?:TODO|FIXME|XXX))(\b.*)$'
-    captures:
-      1:
-        name: "#comment"
-      2:
-        name: "#comment.marker.name"
-      3:
-        name: "#comment.marker.text"
+      # headers for separating blocks
+      - name: meta._.heading.line.block.comment.mcfunction
+        match: '((\{{comment.symbol}}.*))$'
+        captures:
+          1:
+            name: "#comment.block"
+          2:
+            name: markup.heading.mcfunction
 
-  comment.annotation:
-    # doc tags like `@params` and `@returns`
-    name: meta._.annotation.comment.mcfunction
-    match: '(#){{tpad}}(\@\w*)(\b.*)$'
-    captures:
-      1:
-        name: "#comment"
-      2:
-        name: "#comment.annotation.name"
-      3:
-        name: "#comment.annotation.text"
-
-  comment.other:
-    # any other comment should get caught here
-    name: meta._.other.comment.mcfunction
-    match: "(#.*)$"
-    captures:
-      1:
-        name: "#comment"
+      # otherwise its just a comment
+      - name: meta._.text.line.block.comment.mcfunction
+        match: "(.*)$"
+        captures:
+          1:
+            name: "#comment.block"
 
   command:
     # commands begin with any non-whitespace, non-comment character, after optional leading whitespace
     name: meta._.command.mcfunction
     # don't start consuming the command yet
-    begin: '^{{tpad}}(?=[^\s\#])'
+    begin: '^{{tpad}}(?=[^\s{{comment.symbol}}])'
     # we will actually consume the newline here
     # none of the sub-patterns will consume the newline
     # instead they will use lookahead to return to the parent scope

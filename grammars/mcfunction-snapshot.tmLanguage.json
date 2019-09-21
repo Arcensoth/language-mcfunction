@@ -6,7 +6,10 @@
   ],
   "patterns": [
     {
-      "include": "#comment"
+      "include": "#comment.block"
+    },
+    {
+      "include": "#comment.plain"
     },
     {
       "include": "#command"
@@ -16,90 +19,112 @@
     }
   ],
   "repository": {
-    "comment": {
+    "comment.plain": {
       "patterns": [
         {
-          "name": "meta._.comment.mcfunction",
-          "begin": "^[ \\t]*(?=\\#)",
-          "end": "\\n",
+          "name": "meta._.plain.comment.mcfunction",
+          "match": "^[ \\t]*(#.*)$",
+          "captures": {
+            "1": {
+              "name": "comment._.plain.comment.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "comment.block": {
+      "patterns": [
+        {
+          "name": "meta._.block.comment.mcfunction",
+          "begin": "^[ \\t]*((#)(>)((.*)))$",
+          "end": "^(?![ \\t]*#)",
+          "beginCaptures": {
+            "1": {
+              "name": "comment.block._.block.comment.mcfunction"
+            },
+            "2": {
+              "name": "markup.list._.symbol.block.comment.mcfunction"
+            },
+            "3": {
+              "name": "markup.list._.prefix.block.comment.mcfunction"
+            },
+            "4": {
+              "name": "markup.bold._.heading_1.block.comment.mcfunction"
+            },
+            "5": {
+              "name": "markup.list._.heading_2.block.comment.mcfunction"
+            }
+          },
           "patterns": [
             {
-              "include": "#comments"
+              "include": "#comment.block.lines"
             }
           ]
         }
       ]
     },
-    "comments": {
+    "comment.block.lines": {
       "patterns": [
         {
-          "include": "#comment.heading"
-        },
-        {
-          "include": "#comment.marker"
-        },
-        {
-          "include": "#comment.annotation"
-        },
-        {
-          "include": "#comment.other"
+          "name": "meta._.lines.block.comment.mcfunction",
+          "begin": "^[ \\t]*((#)[ \\t]*)",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "comment.block._.block.comment.mcfunction"
+            },
+            "2": {
+              "name": "markup.list._.symbol.block.comment.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comment.block.line"
+            }
+          ]
         }
       ]
     },
-    "comment.heading": {
-      "name": "meta._.heading.comment.mcfunction",
-      "match": "(##)[ \\t]*(.*)$",
-      "captures": {
-        "1": {
-          "name": "comment._.comment.mcfunction"
+    "comment.block.line": {
+      "patterns": [
+        {
+          "name": "meta._.annotation.line.block.comment.mcfunction",
+          "match": "((\\@\\w*)\\b.*)$",
+          "captures": {
+            "1": {
+              "name": "comment.block._.block.comment.mcfunction"
+            },
+            "2": {
+              "name": "markup.heading._.annotation.block.comment.mcfunction"
+            }
+          }
         },
-        "2": {
-          "name": "markup.heading._.heading.comment.mcfunction"
+        {
+          "name": "meta._.heading.line.block.comment.mcfunction",
+          "match": "((\\#.*))$",
+          "captures": {
+            "1": {
+              "name": "comment.block._.block.comment.mcfunction"
+            },
+            "2": {
+              "name": "markup.heading.mcfunction"
+            }
+          }
+        },
+        {
+          "name": "meta._.text.line.block.comment.mcfunction",
+          "match": "(.*)$",
+          "captures": {
+            "1": {
+              "name": "comment.block._.block.comment.mcfunction"
+            }
+          }
         }
-      }
-    },
-    "comment.marker": {
-      "name": "meta._.marker.comment.mcfunction",
-      "match": "(#)[ \\t]*((?:TODO|FIXME|XXX))(\\b.*)$",
-      "captures": {
-        "1": {
-          "name": "comment._.comment.mcfunction"
-        },
-        "2": {
-          "name": "markup.bold._.name.marker.comment.mcfunction"
-        },
-        "3": {
-          "name": "comment._.text.marker.comment.mcfunction"
-        }
-      }
-    },
-    "comment.annotation": {
-      "name": "meta._.annotation.comment.mcfunction",
-      "match": "(#)[ \\t]*(\\@\\w*)(\\b.*)$",
-      "captures": {
-        "1": {
-          "name": "comment._.comment.mcfunction"
-        },
-        "2": {
-          "name": "markup.heading._.name.annotation.comment.mcfunction"
-        },
-        "3": {
-          "name": "comment._.text.annotation.comment.mcfunction"
-        }
-      }
-    },
-    "comment.other": {
-      "name": "meta._.other.comment.mcfunction",
-      "match": "(#.*)$",
-      "captures": {
-        "1": {
-          "name": "comment._.comment.mcfunction"
-        }
-      }
+      ]
     },
     "command": {
       "name": "meta._.command.mcfunction",
-      "begin": "^[ \\t]*(?=[^\\s\\#])",
+      "begin": "^[ \\t]*(?=[^\\s#])",
       "end": "\\n",
       "patterns": [
         {

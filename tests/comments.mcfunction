@@ -35,6 +35,13 @@ execute as @s run say this should be a command
     execute as @s run say goodbye world
 
 #> Yet another block
+    # @except this time
+        # we have very strange indents
+execute as @s run say goodbye world
+    execute as @s run say goodbye world
+        execute as @s run say goodbye world
+
+#> Yet another block
 # @yeah another one
 # blah blah blah
 execute as @s run say this should also be a command
