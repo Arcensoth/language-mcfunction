@@ -5,6 +5,7 @@ export const patterns = {
   nonNegativeInteger: "{{non_negative_integer}}",
   positiveInteger: "{{positive_integer}}",
   double: "{{double}}",
+  scoreboardObjective: "{{scoreboard_objective}}",
   resourceID: "{{resource_id}}",
   UUID: "{{uuid}}",
   playerName: "{{player_name}}",
@@ -21,6 +22,7 @@ export const captures = {
   nonNegativeInteger: "#non_negative_integer",
   positiveInteger: "#positive_integer",
   double: "#double",
+  scoreboardObjective: "#scoreboard_objective",
   resourceID: "#resource_id",
   targetSelector: {
     base: "#target_selector.base",

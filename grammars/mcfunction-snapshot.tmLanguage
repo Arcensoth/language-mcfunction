@@ -6982,8 +6982,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.if.score.target.targetObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -7098,8 +7115,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.if.score.target.targetObjective.&lt;.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -7194,8 +7228,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.if.score.target.targetObjective.&lt;=.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -7290,8 +7341,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.if.score.target.targetObjective.=.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -7386,8 +7454,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.if.score.target.targetObjective.&gt;.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -7482,8 +7567,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.if.score.target.targetObjective.&gt;=.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9868,8 +9970,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.score.targets.objective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -12160,8 +12279,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.score.targets.objective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -13938,8 +14074,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.unless.score.target.targetObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -14054,8 +14207,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.unless.score.target.targetObjective.&lt;.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -14150,8 +14320,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.unless.score.target.targetObjective.&lt;=.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -14246,8 +14433,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.unless.score.target.targetObjective.=.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -14342,8 +14546,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.unless.score.target.targetObjective.&gt;.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -14438,8 +14659,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>([\w\.\-\+]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.other.attribute-name._.scoreboard_objective.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.unless.score.target.targetObjective.&gt;=.source.sourceObjective</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>

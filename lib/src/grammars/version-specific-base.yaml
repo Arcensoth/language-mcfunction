@@ -235,6 +235,10 @@ capturesRepository:
     1:
       name: "#number"
 
+  scoreboard_objective:
+    1:
+      name: "#scoreboard_objective"
+
   position.abs_rel:
     1:
       name: "#position.relative.operator"

@@ -6,6 +6,7 @@ import { EntityGrammarNodeGenerator } from "./grammar-node-generators/entity-gra
 import { IntegerGrammarNodeGenerator } from "./grammar-node-generators/integer-grammar-node-generator";
 import { MessageGrammarNodeGenerator } from "./grammar-node-generators/message-grammar-node-generator";
 import { MobEffectGrammarNodeGenerator } from "./grammar-node-generators/mob-effect-grammar-node-generator";
+import { ScoreboardObjectiveGrammarNodeGenerator } from "./grammar-node-generators/scoreboard-objective-grammar-node-generator";
 import { TextComponentGrammarNodeGenerator } from "./grammar-node-generators/text-component-grammar-node-generator";
 
 const GRAMMAR_NODE_GENERATOR_MAP: {
@@ -14,10 +15,11 @@ const GRAMMAR_NODE_GENERATOR_MAP: {
   "brigadier:bool": new BoolGrammarNodeGenerator(),
   "brigadier:double": new DoubleGrammarNodeGenerator(),
   "brigadier:integer": new IntegerGrammarNodeGenerator(),
+  "minecraft:component": new TextComponentGrammarNodeGenerator(),
   "minecraft:entity": new EntityGrammarNodeGenerator(),
   "minecraft:message": new MessageGrammarNodeGenerator(),
   "minecraft:mob_effect": new MobEffectGrammarNodeGenerator(),
-  "minecraft:component": new TextComponentGrammarNodeGenerator()
+  "minecraft:objective": new ScoreboardObjectiveGrammarNodeGenerator()
 };
 
 export function getGrammarNodeGenerator(node: CommandNode) {

@@ -4662,7 +4662,18 @@
     "generated.command.execute.if.score.target.targetObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective"
+            }
+          ]
         }
       ]
     },
@@ -4744,7 +4755,18 @@
     "generated.command.execute.if.score.target.targetObjective.<.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
@@ -4811,7 +4833,18 @@
     "generated.command.execute.if.score.target.targetObjective.<=.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<=.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
@@ -4878,7 +4911,18 @@
     "generated.command.execute.if.score.target.targetObjective.=.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.=.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
@@ -4945,7 +4989,18 @@
     "generated.command.execute.if.score.target.targetObjective.>.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
@@ -5012,7 +5067,18 @@
     "generated.command.execute.if.score.target.targetObjective.>=.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>=.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
@@ -6646,7 +6712,18 @@
     "generated.command.execute.store.result.score.targets.objective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.score.targets.objective"
+            }
+          ]
         }
       ]
     },
@@ -8219,7 +8296,18 @@
     "generated.command.execute.store.success.score.targets.objective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.score.targets.objective"
+            }
+          ]
         }
       ]
     },
@@ -9443,7 +9531,18 @@
     "generated.command.execute.unless.score.target.targetObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective"
+            }
+          ]
         }
       ]
     },
@@ -9525,7 +9624,18 @@
     "generated.command.execute.unless.score.target.targetObjective.<.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
@@ -9592,7 +9702,18 @@
     "generated.command.execute.unless.score.target.targetObjective.<=.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<=.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
@@ -9659,7 +9780,18 @@
     "generated.command.execute.unless.score.target.targetObjective.=.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.=.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
@@ -9726,7 +9858,18 @@
     "generated.command.execute.unless.score.target.targetObjective.>.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
@@ -9793,7 +9936,18 @@
     "generated.command.execute.unless.score.target.targetObjective.>=.source.sourceObjective": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "([\\w\\.\\-\\+]+)( |(?=\\n))",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name._.scoreboard_objective.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>=.source.sourceObjective"
+            }
+          ]
         }
       ]
     },
