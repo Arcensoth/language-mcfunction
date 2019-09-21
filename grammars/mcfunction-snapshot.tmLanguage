@@ -8442,8 +8442,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.block.targetPos.path.byte.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -8510,8 +8527,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.block.targetPos.path.double.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -8578,8 +8612,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.block.targetPos.path.float.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -8646,8 +8697,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.block.targetPos.path.int.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -8714,8 +8782,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.block.targetPos.path.long.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -8782,8 +8867,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.block.targetPos.path.short.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9228,8 +9330,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.entity.target.path.byte.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9296,8 +9415,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.entity.target.path.double.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9364,8 +9500,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.entity.target.path.float.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9432,8 +9585,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.entity.target.path.int.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9500,8 +9670,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.entity.target.path.long.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9568,8 +9755,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.entity.target.path.short.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9848,8 +10052,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.storage.target.path.byte.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9916,8 +10137,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.storage.target.path.double.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -9984,8 +10222,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.storage.target.path.float.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -10052,8 +10307,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.storage.target.path.int.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -10120,8 +10392,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.storage.target.path.long.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -10188,8 +10477,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.result.storage.target.path.short.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -10428,8 +10734,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.block.targetPos.path.byte.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -10496,8 +10819,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.block.targetPos.path.double.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -10564,8 +10904,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.block.targetPos.path.float.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -10632,8 +10989,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.block.targetPos.path.int.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -10700,8 +11074,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.block.targetPos.path.long.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -10768,8 +11159,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.block.targetPos.path.short.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -11214,8 +11622,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.entity.target.path.byte.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -11282,8 +11707,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.entity.target.path.double.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -11350,8 +11792,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.entity.target.path.float.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -11418,8 +11877,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.entity.target.path.int.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -11486,8 +11962,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.entity.target.path.long.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -11554,8 +12047,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.entity.target.path.short.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -11834,8 +12344,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.storage.target.path.byte.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -11902,8 +12429,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.storage.target.path.double.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -11970,8 +12514,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.storage.target.path.float.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -12038,8 +12599,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.storage.target.path.int.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -12106,8 +12684,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.storage.target.path.long.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -12174,8 +12769,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(\-?\d*\.?\d+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.store.success.storage.target.path.short.scale</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>

@@ -5671,7 +5671,18 @@
     "generated.command.execute.store.result.block.targetPos.path.byte.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.block.targetPos.path.byte.scale"
+            }
+          ]
         }
       ]
     },
@@ -5718,7 +5729,18 @@
     "generated.command.execute.store.result.block.targetPos.path.double.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.block.targetPos.path.double.scale"
+            }
+          ]
         }
       ]
     },
@@ -5765,7 +5787,18 @@
     "generated.command.execute.store.result.block.targetPos.path.float.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.block.targetPos.path.float.scale"
+            }
+          ]
         }
       ]
     },
@@ -5812,7 +5845,18 @@
     "generated.command.execute.store.result.block.targetPos.path.int.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.block.targetPos.path.int.scale"
+            }
+          ]
         }
       ]
     },
@@ -5859,7 +5903,18 @@
     "generated.command.execute.store.result.block.targetPos.path.long.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.block.targetPos.path.long.scale"
+            }
+          ]
         }
       ]
     },
@@ -5906,7 +5961,18 @@
     "generated.command.execute.store.result.block.targetPos.path.short.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.block.targetPos.path.short.scale"
+            }
+          ]
         }
       ]
     },
@@ -6212,7 +6278,18 @@
     "generated.command.execute.store.result.entity.target.path.byte.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.entity.target.path.byte.scale"
+            }
+          ]
         }
       ]
     },
@@ -6259,7 +6336,18 @@
     "generated.command.execute.store.result.entity.target.path.double.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.entity.target.path.double.scale"
+            }
+          ]
         }
       ]
     },
@@ -6306,7 +6394,18 @@
     "generated.command.execute.store.result.entity.target.path.float.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.entity.target.path.float.scale"
+            }
+          ]
         }
       ]
     },
@@ -6353,7 +6452,18 @@
     "generated.command.execute.store.result.entity.target.path.int.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.entity.target.path.int.scale"
+            }
+          ]
         }
       ]
     },
@@ -6400,7 +6510,18 @@
     "generated.command.execute.store.result.entity.target.path.long.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.entity.target.path.long.scale"
+            }
+          ]
         }
       ]
     },
@@ -6447,7 +6568,18 @@
     "generated.command.execute.store.result.entity.target.path.short.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.entity.target.path.short.scale"
+            }
+          ]
         }
       ]
     },
@@ -6643,7 +6775,18 @@
     "generated.command.execute.store.result.storage.target.path.byte.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.storage.target.path.byte.scale"
+            }
+          ]
         }
       ]
     },
@@ -6690,7 +6833,18 @@
     "generated.command.execute.store.result.storage.target.path.double.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.storage.target.path.double.scale"
+            }
+          ]
         }
       ]
     },
@@ -6737,7 +6891,18 @@
     "generated.command.execute.store.result.storage.target.path.float.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.storage.target.path.float.scale"
+            }
+          ]
         }
       ]
     },
@@ -6784,7 +6949,18 @@
     "generated.command.execute.store.result.storage.target.path.int.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.storage.target.path.int.scale"
+            }
+          ]
         }
       ]
     },
@@ -6831,7 +7007,18 @@
     "generated.command.execute.store.result.storage.target.path.long.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.storage.target.path.long.scale"
+            }
+          ]
         }
       ]
     },
@@ -6878,7 +7065,18 @@
     "generated.command.execute.store.result.storage.target.path.short.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.storage.target.path.short.scale"
+            }
+          ]
         }
       ]
     },
@@ -7046,7 +7244,18 @@
     "generated.command.execute.store.success.block.targetPos.path.byte.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.block.targetPos.path.byte.scale"
+            }
+          ]
         }
       ]
     },
@@ -7093,7 +7302,18 @@
     "generated.command.execute.store.success.block.targetPos.path.double.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.block.targetPos.path.double.scale"
+            }
+          ]
         }
       ]
     },
@@ -7140,7 +7360,18 @@
     "generated.command.execute.store.success.block.targetPos.path.float.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.block.targetPos.path.float.scale"
+            }
+          ]
         }
       ]
     },
@@ -7187,7 +7418,18 @@
     "generated.command.execute.store.success.block.targetPos.path.int.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.block.targetPos.path.int.scale"
+            }
+          ]
         }
       ]
     },
@@ -7234,7 +7476,18 @@
     "generated.command.execute.store.success.block.targetPos.path.long.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.block.targetPos.path.long.scale"
+            }
+          ]
         }
       ]
     },
@@ -7281,7 +7534,18 @@
     "generated.command.execute.store.success.block.targetPos.path.short.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.block.targetPos.path.short.scale"
+            }
+          ]
         }
       ]
     },
@@ -7587,7 +7851,18 @@
     "generated.command.execute.store.success.entity.target.path.byte.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.entity.target.path.byte.scale"
+            }
+          ]
         }
       ]
     },
@@ -7634,7 +7909,18 @@
     "generated.command.execute.store.success.entity.target.path.double.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.entity.target.path.double.scale"
+            }
+          ]
         }
       ]
     },
@@ -7681,7 +7967,18 @@
     "generated.command.execute.store.success.entity.target.path.float.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.entity.target.path.float.scale"
+            }
+          ]
         }
       ]
     },
@@ -7728,7 +8025,18 @@
     "generated.command.execute.store.success.entity.target.path.int.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.entity.target.path.int.scale"
+            }
+          ]
         }
       ]
     },
@@ -7775,7 +8083,18 @@
     "generated.command.execute.store.success.entity.target.path.long.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.entity.target.path.long.scale"
+            }
+          ]
         }
       ]
     },
@@ -7822,7 +8141,18 @@
     "generated.command.execute.store.success.entity.target.path.short.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.entity.target.path.short.scale"
+            }
+          ]
         }
       ]
     },
@@ -8018,7 +8348,18 @@
     "generated.command.execute.store.success.storage.target.path.byte.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.storage.target.path.byte.scale"
+            }
+          ]
         }
       ]
     },
@@ -8065,7 +8406,18 @@
     "generated.command.execute.store.success.storage.target.path.double.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.storage.target.path.double.scale"
+            }
+          ]
         }
       ]
     },
@@ -8112,7 +8464,18 @@
     "generated.command.execute.store.success.storage.target.path.float.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.storage.target.path.float.scale"
+            }
+          ]
         }
       ]
     },
@@ -8159,7 +8522,18 @@
     "generated.command.execute.store.success.storage.target.path.int.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.storage.target.path.int.scale"
+            }
+          ]
         }
       ]
     },
@@ -8206,7 +8580,18 @@
     "generated.command.execute.store.success.storage.target.path.long.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.storage.target.path.long.scale"
+            }
+          ]
         }
       ]
     },
@@ -8253,7 +8638,18 @@
     "generated.command.execute.store.success.storage.target.path.short.scale": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\-?\\d*\\.?\\d+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.number.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.storage.target.path.short.scale"
+            }
+          ]
         }
       ]
     },

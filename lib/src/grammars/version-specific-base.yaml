@@ -231,6 +231,10 @@ capturesRepository:
     1:
       name: "#number"
 
+  double:
+    1:
+      name: "#number"
+
   position.abs_rel:
     1:
       name: "#position.relative.operator"
