@@ -4156,7 +4156,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#generated.command.advancement</string>
+            <string>#generated.command.effect</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4626,10 +4626,10 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement</key>
+      <key>generated.command.effect</key>
       <dict>
         <key>begin</key>
-        <string>(advancement) (?=[^\s\#])</string>
+        <string>(effect) (?=[^\s\#])</string>
         <key>end</key>
         <string>(?=\n)</string>
         <key>beginCaptures</key>
@@ -4644,21 +4644,21 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.commands.advancement</string>
+            <string>#generated.commands.effect</string>
           </dict>
         </array>
       </dict>
-      <key>generated.commands.advancement</key>
+      <key>generated.commands.effect</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.command.advancement.grant</string>
+            <string>#generated.command.effect.clear</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#generated.command.advancement.revoke</string>
+            <string>#generated.command.effect.give</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4666,10 +4666,10 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant</key>
+      <key>generated.command.effect.clear</key>
       <dict>
         <key>begin</key>
-        <string>(grant) (?=[^\s\#])</string>
+        <string>(clear) (?=[^\s\#])</string>
         <key>end</key>
         <string>(?=\n)</string>
         <key>beginCaptures</key>
@@ -4684,17 +4684,17 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.commands.advancement.grant</string>
+            <string>#generated.commands.effect.clear</string>
           </dict>
         </array>
       </dict>
-      <key>generated.commands.advancement.grant</key>
+      <key>generated.commands.effect.clear</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.command.advancement.grant.targets</string>
+            <string>#generated.command.effect.clear.targets</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4702,10 +4702,49 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant.targets</key>
+      <key>generated.command.effect.clear.targets</key>
+      <dict>
+        <key>patterns</key>
+        <array/>
+      </dict>
+      <key>generated.commands.effect.clear.targets</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#generated.command.effect.clear.targets.effect</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.command_line</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.effect.clear.targets.effect</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#error.command_line</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.commands.effect.clear.targets.effect</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#error.command_line</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generated.command.effect.give</key>
       <dict>
         <key>begin</key>
-        <string>(targets) (?=[^\s\#])</string>
+        <string>(give) (?=[^\s\#])</string>
         <key>end</key>
         <string>(?=\n)</string>
         <key>beginCaptures</key>
@@ -4720,33 +4759,17 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.commands.advancement.grant.targets</string>
+            <string>#generated.commands.effect.give</string>
           </dict>
         </array>
       </dict>
-      <key>generated.commands.advancement.grant.targets</key>
+      <key>generated.commands.effect.give</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.command.advancement.grant.targets.everything</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.grant.targets.from</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.grant.targets.only</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.grant.targets.through</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.grant.targets.until</string>
+            <string>#generated.command.effect.give.targets</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4754,29 +4777,26 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant.targets.everything</key>
+      <key>generated.command.effect.give.targets</key>
       <dict>
-        <key>begin</key>
-        <string>(everything)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
+        <key>patterns</key>
+        <array/>
+      </dict>
+      <key>generated.commands.effect.give.targets</key>
+      <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.everything</string>
+            <string>#generated.command.effect.give.targets.effect</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
-      <key>generated.commands.advancement.grant.targets.everything</key>
+      <key>generated.command.effect.give.targets.effect</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -4786,35 +4806,13 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant.targets.from</key>
-      <dict>
-        <key>begin</key>
-        <string>(from) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.from</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.grant.targets.from</key>
+      <key>generated.commands.effect.give.targets.effect</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.command.advancement.grant.targets.from.advancement</string>
+            <string>#generated.command.effect.give.targets.effect.seconds</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4822,29 +4820,7 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant.targets.from.advancement</key>
-      <dict>
-        <key>begin</key>
-        <string>(advancement)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.from.advancement</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.grant.targets.from.advancement</key>
+      <key>generated.command.effect.give.targets.effect.seconds</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -4854,35 +4830,13 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant.targets.only</key>
-      <dict>
-        <key>begin</key>
-        <string>(only) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.only</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.grant.targets.only</key>
+      <key>generated.commands.effect.give.targets.effect.seconds</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.command.advancement.grant.targets.only.advancement</string>
+            <string>#generated.command.effect.give.targets.effect.seconds.amplifier</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4890,65 +4844,7 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant.targets.only.advancement</key>
-      <dict>
-        <key>begin</key>
-        <string>(advancement)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.only.advancement</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.grant.targets.only.advancement</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.grant.targets.only.advancement.criterion</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.grant.targets.only.advancement.criterion</key>
-      <dict>
-        <key>begin</key>
-        <string>(criterion)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.only.advancement.criterion</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.grant.targets.only.advancement.criterion</key>
+      <key>generated.command.effect.give.targets.effect.seconds.amplifier</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -4958,35 +4854,13 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant.targets.through</key>
-      <dict>
-        <key>begin</key>
-        <string>(through) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.through</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.grant.targets.through</key>
+      <key>generated.commands.effect.give.targets.effect.seconds.amplifier</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>include</key>
-            <string>#generated.command.advancement.grant.targets.through.advancement</string>
+            <string>#generated.command.effect.give.targets.effect.seconds.amplifier.hideParticles</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4994,29 +4868,7 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant.targets.through.advancement</key>
-      <dict>
-        <key>begin</key>
-        <string>(advancement)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.through.advancement</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.grant.targets.through.advancement</key>
+      <key>generated.command.effect.give.targets.effect.seconds.amplifier.hideParticles</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -5026,493 +4878,7 @@
           </dict>
         </array>
       </dict>
-      <key>generated.command.advancement.grant.targets.until</key>
-      <dict>
-        <key>begin</key>
-        <string>(until) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.until</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.grant.targets.until</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.grant.targets.until.advancement</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.grant.targets.until.advancement</key>
-      <dict>
-        <key>begin</key>
-        <string>(advancement)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.grant.targets.until.advancement</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.grant.targets.until.advancement</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke</key>
-      <dict>
-        <key>begin</key>
-        <string>(revoke) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets</key>
-      <dict>
-        <key>begin</key>
-        <string>(targets) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.everything</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.from</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.only</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.through</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.until</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.everything</key>
-      <dict>
-        <key>begin</key>
-        <string>(everything)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.everything</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.everything</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.from</key>
-      <dict>
-        <key>begin</key>
-        <string>(from) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.from</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.from</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.from.advancement</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.from.advancement</key>
-      <dict>
-        <key>begin</key>
-        <string>(advancement)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.from.advancement</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.from.advancement</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.only</key>
-      <dict>
-        <key>begin</key>
-        <string>(only) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.only</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.only</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.only.advancement</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.only.advancement</key>
-      <dict>
-        <key>begin</key>
-        <string>(advancement)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.only.advancement</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.only.advancement</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.only.advancement.criterion</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.only.advancement.criterion</key>
-      <dict>
-        <key>begin</key>
-        <string>(criterion)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.only.advancement.criterion</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.only.advancement.criterion</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.through</key>
-      <dict>
-        <key>begin</key>
-        <string>(through) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.through</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.through</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.through.advancement</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.through.advancement</key>
-      <dict>
-        <key>begin</key>
-        <string>(advancement)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.through.advancement</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.through.advancement</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.until</key>
-      <dict>
-        <key>begin</key>
-        <string>(until) (?=[^\s\#])</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.until</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.until</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.command.advancement.revoke.targets.until.advancement</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.command.advancement.revoke.targets.until.advancement</key>
-      <dict>
-        <key>begin</key>
-        <string>(advancement)( |(?=\n))</string>
-        <key>end</key>
-        <string>(?=\n)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other._.subcommand.mcfunction</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#generated.commands.advancement.revoke.targets.until.advancement</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generated.commands.advancement.revoke.targets.until.advancement</key>
+      <key>generated.commands.effect.give.targets.effect.seconds.amplifier.hideParticles</key>
       <dict>
         <key>patterns</key>
         <array>

@@ -17,3 +17,11 @@ export interface CommandNode {
 }
 
 export interface CommandManifest extends CommandNode {}
+
+export class CommandNodeContext {
+  constructor(
+    public node: CommandNode,
+    public name: string,
+    public breadcrumb: string[]
+  ) {}
+}
