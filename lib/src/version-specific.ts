@@ -121,7 +121,8 @@ export function augmentGrammar(
     type: CommandNodeType.ROOT,
     children: {
       effect: commands.children["effect"],
-      say: commands.children["say"]
+      say: commands.children["say"],
+      tellraw: commands.children["tellraw"]
     }
   };
 
@@ -131,7 +132,6 @@ export function augmentGrammar(
 
   // DELETEME account for hand-written samples
   grammarRootGroup.patterns = [
-    { include: "#generated.command.tellraw" },
     { include: "#generated.command.execute" },
     ...grammarRootGroup.patterns
   ];

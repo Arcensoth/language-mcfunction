@@ -41,6 +41,7 @@ export const nodes = {
     trailingWhitespace: "#common.trailing_whitespace",
     message: "#common.message"
   },
+  textComponent: '#text_component',
   targetSelector: {
     content: "#target_selector.content"
   }

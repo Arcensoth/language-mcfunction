@@ -1126,68 +1126,12 @@ repository:
           - include: '#nbt.compound.content'
   generated.commands:
     patterns:
-      - include: '#generated.command.tellraw'
       - include: '#generated.command.execute'
       - include: '#generated.command.effect'
       - include: '#generated.command.say'
+      - include: '#generated.command.tellraw'
       - include: '#common.trailing_whitespace'
       - include: '#error.unmatched_child'
-  generated.command.tellraw:
-    begin: '(tellraw) (?=[^\s\#])'
-    end: (?=\n)
-    beginCaptures:
-      '1':
-        name: keyword.control._.command.mcfunction
-    patterns:
-      - include: '#generated.commands.tellraw'
-  generated.commands.tellraw:
-    patterns:
-      - include: '#generated.command.tellraw.targets'
-      - include: '#error.command_line'
-  generated.command.tellraw.targets:
-    patterns:
-      - begin: '(\@[parse]) (?=[^\s\#])'
-        end: (?=\n)
-        beginCaptures:
-          '1':
-            name: support.class._.base.target_selector.mcfunction
-        patterns:
-          - include: '#generated.commands.tellraw.targets'
-      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
-        end: (?=\n)
-        beginCaptures:
-          '1':
-            name: support.class._.uuid.target.mcfunction
-        patterns:
-          - include: '#generated.commands.tellraw.targets'
-      - begin: '(\w+) (?=[^\s\#])'
-        end: (?=\n)
-        beginCaptures:
-          '1':
-            name: support.class._.player_name.target.mcfunction
-        patterns:
-          - include: '#generated.commands.tellraw.targets'
-      - begin: '(\@[parse])(\[)(?= *[\w\]])'
-        end: (?=\n)
-        beginCaptures:
-          '1':
-            name: support.class._.base.target_selector.mcfunction
-          '2':
-            name: support.class._.bracket.target_selector.mcfunction
-        patterns:
-          - begin: '(\]) (?=[^\s\#])'
-            end: (?=\n)
-            beginCaptures:
-              '1':
-                name: support.class._.bracket.target_selector.mcfunction
-            patterns:
-              - include: '#generated.commands.tellraw.targets'
-          - include: '#target_selector.content'
-          - include: '#error.bad_syntax'
-  generated.commands.tellraw.targets:
-    patterns:
-      - include: '#text_component'
-      - include: '#error.command_line'
   generated.command.execute:
     begin: '(execute) (?=[^\s\#])'
     end: (?=\n)
@@ -1481,6 +1425,71 @@ repository:
     patterns:
       - include: '#common.message'
   generated.commands.say.message:
+    patterns:
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.tellraw:
+    begin: '(tellraw) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.control._.command.mcfunction
+    patterns:
+      - include: '#generated.commands.tellraw'
+  generated.commands.tellraw:
+    patterns:
+      - include: '#generated.command.tellraw.targets'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.tellraw.targets:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.tellraw.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.tellraw.targets'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.tellraw.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.tellraw.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.tellraw.targets:
+    patterns:
+      - include: '#generated.command.tellraw.targets.message'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.tellraw.targets.message:
+    patterns:
+      - include: '#text_component'
+  generated.commands.tellraw.targets.message:
     patterns:
       - include: '#common.trailing_whitespace'
       - include: '#error.unmatched_child'
