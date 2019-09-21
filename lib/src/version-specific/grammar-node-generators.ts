@@ -6,10 +6,11 @@ import { EntityGrammarNodeGenerator } from "./grammar-node-generators/entity-gra
 import { IntegerGrammarNodeGenerator } from "./grammar-node-generators/integer-grammar-node-generator";
 import { MessageGrammarNodeGenerator } from "./grammar-node-generators/message-grammar-node-generator";
 import { MobEffectGrammarNodeGenerator } from "./grammar-node-generators/mob-effect-grammar-node-generator";
+import { ScoreHolderGrammarNodeGenerator } from "./grammar-node-generators/score-holder-grammar-node-generator";
 import { ScoreboardObjectiveGrammarNodeGenerator } from "./grammar-node-generators/scoreboard-objective-grammar-node-generator";
 import { TextComponentGrammarNodeGenerator } from "./grammar-node-generators/text-component-grammar-node-generator";
 
-const GRAMMAR_NODE_GENERATOR_MAP: {
+export const GRAMMAR_NODE_GENERATOR_MAP: {
   [parserID: string]: GrammarNodeGenerator;
 } = {
   "brigadier:bool": new BoolGrammarNodeGenerator(),
@@ -19,7 +20,8 @@ const GRAMMAR_NODE_GENERATOR_MAP: {
   "minecraft:entity": new EntityGrammarNodeGenerator(),
   "minecraft:message": new MessageGrammarNodeGenerator(),
   "minecraft:mob_effect": new MobEffectGrammarNodeGenerator(),
-  "minecraft:objective": new ScoreboardObjectiveGrammarNodeGenerator()
+  "minecraft:objective": new ScoreboardObjectiveGrammarNodeGenerator(),
+  "minecraft:score_holder": new ScoreHolderGrammarNodeGenerator()
 };
 
 export function getGrammarNodeGenerator(node: CommandNode) {

@@ -158,3 +158,6 @@ execute as @a[advancements={minecraft:story/form_obsidian={foo=true, bar=false},
 
 give @s diamond_sword{display: {Name: '"My Custom Sword"'}}
 give @s minecraft:diamond_sword{display: {Name: '"My Custom Sword"'}}
+
+execute if score @s foo < @s bar run say execute if score @s foo < @s bar run say
+execute if score @s foo < @s bar run say hello @e[tag=baz, sort=nearest, limit=1] how are you?

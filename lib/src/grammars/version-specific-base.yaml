@@ -239,6 +239,14 @@ capturesRepository:
     1:
       name: "#scoreboard_objective"
 
+  score_holder.all:
+    1:
+      name: "#score_holder.all"
+
+  score_holder.fakeplayer:
+    1:
+      name: "#score_holder.fakeplayer"
+
   position.abs_rel:
     1:
       name: "#position.relative.operator"

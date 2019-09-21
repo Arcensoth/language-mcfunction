@@ -1942,7 +1942,58 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.if.score.target:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: &ref_12
+          '1':
+            name: support.class._.all.score_holder.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.score.target'
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: &ref_13
+          '1':
+            name: support.class._.fakeplayer.score_holder.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.score.target'
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.score.target'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.score.target'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.score.target'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.if.score.target'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.if.score.target:
     patterns:
       - include: '#generated.command.execute.if.score.target.targetObjective'
@@ -1952,7 +2003,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: &ref_12
+        beginCaptures: &ref_14
           '1':
             name: entity.other.attribute-name._.scoreboard_objective.mcfunction
         patterns:
@@ -1982,7 +2033,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.if.score.target.targetObjective.<.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.if.score.target.targetObjective.<.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.if.score.target.targetObjective.<.source:
     patterns:
       - include: >-
@@ -1993,7 +2097,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.<.source.sourceObjective
@@ -2017,7 +2121,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.if.score.target.targetObjective.<=.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<=.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<=.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<=.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<=.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.<=.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.if.score.target.targetObjective.<=.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.if.score.target.targetObjective.<=.source:
     patterns:
       - include: >-
@@ -2028,7 +2185,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.<=.source.sourceObjective
@@ -2052,7 +2209,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.if.score.target.targetObjective.=.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.=.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.=.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.=.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.=.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.=.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.if.score.target.targetObjective.=.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.if.score.target.targetObjective.=.source:
     patterns:
       - include: >-
@@ -2063,7 +2273,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.=.source.sourceObjective
@@ -2087,7 +2297,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.if.score.target.targetObjective.>.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.if.score.target.targetObjective.>.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.if.score.target.targetObjective.>.source:
     patterns:
       - include: >-
@@ -2098,7 +2361,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.>.source.sourceObjective
@@ -2122,7 +2385,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.if.score.target.targetObjective.>=.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>=.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>=.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>=.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>=.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.>=.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.if.score.target.targetObjective.>=.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.if.score.target.targetObjective.>=.source:
     patterns:
       - include: >-
@@ -2133,7 +2449,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.>=.source.sourceObjective
@@ -2441,7 +2757,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: &ref_13
+        beginCaptures: &ref_15
           '1':
             name: constant.numeric._.number.mcfunction
         patterns:
@@ -2470,7 +2786,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.block.targetPos.path.double.scale
@@ -2497,7 +2813,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.block.targetPos.path.float.scale
@@ -2523,7 +2839,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.block.targetPos.path.int.scale
@@ -2550,7 +2866,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.block.targetPos.path.long.scale
@@ -2577,7 +2893,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.block.targetPos.path.short.scale
@@ -2722,7 +3038,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.entity.target.path.byte.scale
@@ -2749,7 +3065,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.entity.target.path.double.scale
@@ -2775,7 +3091,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.entity.target.path.float.scale
@@ -2801,7 +3117,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.entity.target.path.int.scale
@@ -2827,7 +3143,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.entity.target.path.long.scale
@@ -2853,7 +3169,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.entity.target.path.short.scale
@@ -2877,7 +3193,54 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.store.result.score.targets:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: '#generated.commands.execute.store.result.score.targets'
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: '#generated.commands.execute.store.result.score.targets'
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.result.score.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.result.score.targets'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.result.score.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.store.result.score.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.store.result.score.targets:
     patterns:
       - include: '#generated.command.execute.store.result.score.targets.objective'
@@ -2887,7 +3250,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: '#generated.commands.execute.store.result.score.targets.objective'
   generated.commands.execute.store.result.score.targets.objective:
@@ -2946,7 +3309,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.storage.target.path.byte.scale
@@ -2973,7 +3336,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.storage.target.path.double.scale
@@ -3000,7 +3363,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.storage.target.path.float.scale
@@ -3026,7 +3389,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.storage.target.path.int.scale
@@ -3052,7 +3415,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.storage.target.path.long.scale
@@ -3079,7 +3442,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.result.storage.target.path.short.scale
@@ -3157,7 +3520,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.block.targetPos.path.byte.scale
@@ -3184,7 +3547,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.block.targetPos.path.double.scale
@@ -3211,7 +3574,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.block.targetPos.path.float.scale
@@ -3238,7 +3601,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.block.targetPos.path.int.scale
@@ -3265,7 +3628,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.block.targetPos.path.long.scale
@@ -3292,7 +3655,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.block.targetPos.path.short.scale
@@ -3437,7 +3800,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.entity.target.path.byte.scale
@@ -3464,7 +3827,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.entity.target.path.double.scale
@@ -3491,7 +3854,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.entity.target.path.float.scale
@@ -3517,7 +3880,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.entity.target.path.int.scale
@@ -3543,7 +3906,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.entity.target.path.long.scale
@@ -3570,7 +3933,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.entity.target.path.short.scale
@@ -3594,7 +3957,54 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.store.success.score.targets:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: '#generated.commands.execute.store.success.score.targets'
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: '#generated.commands.execute.store.success.score.targets'
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.success.score.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.success.score.targets'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.success.score.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.store.success.score.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.store.success.score.targets:
     patterns:
       - include: '#generated.command.execute.store.success.score.targets.objective'
@@ -3604,7 +4014,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: '#generated.commands.execute.store.success.score.targets.objective'
   generated.commands.execute.store.success.score.targets.objective:
@@ -3664,7 +4074,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.storage.target.path.byte.scale
@@ -3691,7 +4101,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.storage.target.path.double.scale
@@ -3718,7 +4128,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.storage.target.path.float.scale
@@ -3744,7 +4154,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.storage.target.path.int.scale
@@ -3771,7 +4181,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.storage.target.path.long.scale
@@ -3798,7 +4208,7 @@ repository:
     patterns:
       - begin: '(\-?\d*\.?\d+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_13
+        beginCaptures: *ref_15
         patterns:
           - include: >-
               #generated.commands.execute.store.success.storage.target.path.short.scale
@@ -4151,7 +4561,54 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.unless.score.target:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: '#generated.commands.execute.unless.score.target'
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: '#generated.commands.execute.unless.score.target'
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.unless.score.target'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.unless.score.target'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.unless.score.target'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.unless.score.target'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.unless.score.target:
     patterns:
       - include: '#generated.command.execute.unless.score.target.targetObjective'
@@ -4161,7 +4618,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+) (?=[^\s\#])'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: '#generated.commands.execute.unless.score.target.targetObjective'
   generated.commands.execute.unless.score.target.targetObjective:
@@ -4190,7 +4647,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.unless.score.target.targetObjective.<.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.unless.score.target.targetObjective.<.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.unless.score.target.targetObjective.<.source:
     patterns:
       - include: >-
@@ -4201,7 +4711,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.<.source.sourceObjective
@@ -4226,7 +4736,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.unless.score.target.targetObjective.<=.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<=.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<=.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<=.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<=.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.<=.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.unless.score.target.targetObjective.<=.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.unless.score.target.targetObjective.<=.source:
     patterns:
       - include: >-
@@ -4237,7 +4800,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.<=.source.sourceObjective
@@ -4262,7 +4825,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.unless.score.target.targetObjective.=.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.=.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.=.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.=.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.=.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.=.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.unless.score.target.targetObjective.=.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.unless.score.target.targetObjective.=.source:
     patterns:
       - include: >-
@@ -4273,7 +4889,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.=.source.sourceObjective
@@ -4298,7 +4914,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.unless.score.target.targetObjective.>.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.unless.score.target.targetObjective.>.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.unless.score.target.targetObjective.>.source:
     patterns:
       - include: >-
@@ -4309,7 +4978,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.>.source.sourceObjective
@@ -4334,7 +5003,60 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.unless.score.target.targetObjective.>=.source:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: '(\*) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_12
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>=.source
+      - begin: '([\w\.\-\#\$\%]+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures: *ref_13
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>=.source
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>=.source
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>=.source
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.>=.source
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: >-
+                  #generated.commands.execute.unless.score.target.targetObjective.>=.source
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.execute.unless.score.target.targetObjective.>=.source:
     patterns:
       - include: >-
@@ -4345,7 +5067,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_12
+        beginCaptures: *ref_14
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.>=.source.sourceObjective

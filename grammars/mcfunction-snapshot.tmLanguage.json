@@ -4642,7 +4642,108 @@
     "generated.command.execute.if.score.target": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.if.score.target"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -4735,7 +4836,108 @@
     "generated.command.execute.if.score.target.targetObjective.<.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.if.score.target.targetObjective.<.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -4813,7 +5015,108 @@
     "generated.command.execute.if.score.target.targetObjective.<=.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.if.score.target.targetObjective.<=.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -4891,7 +5194,108 @@
     "generated.command.execute.if.score.target.targetObjective.=.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.if.score.target.targetObjective.=.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -4969,7 +5373,108 @@
     "generated.command.execute.if.score.target.targetObjective.>.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.if.score.target.targetObjective.>.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -5047,7 +5552,108 @@
     "generated.command.execute.if.score.target.targetObjective.>=.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.if.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.if.score.target.targetObjective.>=.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -6692,7 +7298,108 @@
     "generated.command.execute.store.result.score.targets": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.result.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.store.result.score.targets"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -8276,7 +8983,108 @@
     "generated.command.execute.store.success.score.targets": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.store.success.score.targets"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.store.success.score.targets"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -9511,7 +10319,108 @@
     "generated.command.execute.unless.score.target": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.unless.score.target"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -9604,7 +10513,108 @@
     "generated.command.execute.unless.score.target.targetObjective.<.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.unless.score.target.targetObjective.<.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -9682,7 +10692,108 @@
     "generated.command.execute.unless.score.target.targetObjective.<=.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.<=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.unless.score.target.targetObjective.<=.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -9760,7 +10871,108 @@
     "generated.command.execute.unless.score.target.targetObjective.=.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.unless.score.target.targetObjective.=.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -9838,7 +11050,108 @@
     "generated.command.execute.unless.score.target.targetObjective.>.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.unless.score.target.targetObjective.>.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
@@ -9916,7 +11229,108 @@
     "generated.command.execute.unless.score.target.targetObjective.>=.source": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(\\*) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.all.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([\\w\\.\\-\\#\\$\\%]+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.fakeplayer.score_holder.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse]) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.uuid.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\w+) (?=[^\\s\\#])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.player_name.target.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.unless.score.target.targetObjective.>=.source"
+            }
+          ]
+        },
+        {
+          "begin": "(\\@[parse])(\\[)(?= *[\\w\\]])",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "support.class._.base.target_selector.mcfunction"
+            },
+            "2": {
+              "name": "support.class._.bracket.target_selector.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(\\]) (?=[^\\s\\#])",
+              "end": "(?=\\n)",
+              "beginCaptures": {
+                "1": {
+                  "name": "support.class._.bracket.target_selector.mcfunction"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#generated.commands.execute.unless.score.target.targetObjective.>=.source"
+                }
+              ]
+            },
+            {
+              "include": "#target_selector.content"
+            },
+            {
+              "include": "#error.bad_syntax"
+            }
+          ]
         }
       ]
     },
