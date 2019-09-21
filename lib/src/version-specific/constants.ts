@@ -10,6 +10,10 @@ export const patterns = {
     all: "{{score_holder.all}}",
     fakeplayer: "{{score_holder.fakeplayer}}"
   },
+  position: {
+    absoluteRelative: "{{position.abs_rel}}",
+    local: "{{position.local}}",
+  },
   resourceID: "{{resource_id}}",
   UUID: "{{uuid}}",
   playerName: "{{player_name}}",
@@ -30,6 +34,10 @@ export const captures = {
   scoreHolder: {
     all: "#score_holder.all",
     fakeplayer: "#score_holder.fakeplayer"
+  },
+  position: {
+    absoluteRelative: "#position.abs_rel",
+    local: "#position.local",
   },
   resourceID: "#resource_id",
   targetSelector: {
