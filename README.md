@@ -138,14 +138,16 @@ Short name  | Full scope name                           | Examples
 `underline` | `markup.underline._.underline.mcfunction` | `execute (foo)`
 
 ### Customizing comments
-Short name                | Full scope name                                       | Examples
-------------------------- | ----------------------------------------------------- | ----------
-`comment`                 | `comment._.comment.mcfunction`                        | `# This is a comment`
-`comment.heading`         | `markup.heading._.heading.comment.mcfunction`         | `## Comment Heading`
-`comment.marker.name`     | `markup.bold._.name.marker.comment.mcfunction`        | `# (TODO): optimize selectors`
-`comment.marker.text`     | `comment._.text.marker.comment.mcfunction`            | `# TODO(: optimize selectors)`
-`comment.annotation.name` | `markup.heading._.name.annotation.comment.mcfunction` | `# (@returns) the number of blocks`
-`comment.annotation.text` | `comment._.text.annotation.comment.mcfunction`        | `# @returns( the number of blocks)`
+Short name                        | Full scope name                                               | Examples
+--------------------------------- | ------------------------------------------------------------- | ----------
+`comment.plain`                   | `comment._.plain.comment.mcfunction`                          | `(# This is a plain comment)`
+`comment.block`                   | `comment.block._.block.comment.mcfunction`                    | `(#> This is part of a block comment)`
+`comment.block.symbol`            | `markup.list._.symbol.block.comment.mcfunction`               | `(#)> This is part of a block comment`
+`comment.block.prefix`            | `markup.list._.prefix.block.comment.mcfunction`               | `#(>) This is part of a block comment`
+`comment.block.heading_1`         | `markup.bold._.heading_1.block.comment.mcfunction`            | `#> (This is part of a block comment)`
+`comment.block.heading_2`         | `markup.list._.heading_2.block.comment.mcfunction`            | `#> (This is part of a block comment)`
+`comment.block.annotation.label`  | `markup.heading._.label.annotation.block.comment.mcfunction`  | `#> (@annotation) some annotation`
+`comment.block.annotation.text`   | `comment.block._.text.annotation.block.comment.mcfunction`    | `#> @annotation (some annotation)`
 
 ### Customizing commands
 Short name      | Full scope name                         | Examples
