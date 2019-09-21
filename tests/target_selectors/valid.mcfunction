@@ -33,14 +33,14 @@ execute as @s[nbt={foo: {bar: [{baz: {}}]}}] as @s run say hello
 execute as @s[nbt=!{custom: true}] as @s run say hello
 execute as @e[tag=foo, sort=nearest, nbt={custom: true}] run execute as @s run execute as @s run say hello
 
-execute as @e[sort=nearest] run
-execute as @e[ sort = nearest ] run
-execute as @e[  sort  =  nearest  ] run
+execute as @e[sort=nearest] run say hello
+execute as @e[ sort = nearest ] run say hello
+execute as @e[  sort  =  nearest  ] run say hello
 
-execute as @e[limit=1] run
-execute as @e[limit=01] run
-execute as @e[ limit = 1 ] run
-execute as @e[  limit  =  1  ] run
+execute as @e[limit=1] run say hello
+execute as @e[limit=01] run say hello
+execute as @e[ limit = 1 ] run say hello
+execute as @e[  limit  =  1  ] run say hello
 
 execute as @e[team=] run say hi
 execute as @e[team=!] run say hi
