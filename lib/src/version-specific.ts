@@ -10,7 +10,9 @@ import { getGrammarNodeGenerator } from "./version-specific/grammar-node-generat
 import {
   makeCommandNodeChildNames,
   makeGrammarGroupName,
-  makeGrammarNodeName
+  makeGrammarNodeName,
+  makeCommandNodeChildRefs,
+  makeCommandNodeRedirectRefs
 } from "./version-specific/utils";
 
 export function makeLiteralGrammarNode(
@@ -67,14 +69,17 @@ export function makeGrammarGroup(
 ): GrammarNode {
   return {
     patterns: [
-      ...makeCommandNodeChildNames(commandNode).map(childName => {
-        const childGrammarNodeName = makeGrammarNodeName(
-          ...breadcrumb,
-          childName
-        );
-        return { include: `#${childGrammarNodeName}` } as GrammarNode;
-      }),
+      // Attempt to match all child nodes first.
+      ...makeCommandNodeChildRefs(commandNode, breadcrumb),
+
+      // Then attempt to match any redirects.
+      ...makeCommandNodeRedirectRefs(commandNode, breadcrumb),
+
+      // Then attempt to consume remaining whitespace.
+      // NOTE This should only ever be reached by executable nodes.
       { include: nodes.common.trailingWhitespace },
+
+      // Otherwise we've got an error.
       { include: nodes.error.unmatchedChild }
     ]
   } as GrammarNode;
@@ -121,6 +126,7 @@ export function augmentGrammar(
     type: CommandNodeType.ROOT,
     children: {
       effect: commands.children["effect"],
+      execute: commands.children["execute"],
       say: commands.children["say"],
       tellraw: commands.children["tellraw"]
     }
@@ -129,12 +135,6 @@ export function augmentGrammar(
   // register grammar root group with includes for all top-level commands
   const grammarRootGroup = makeGrammarGroup(commands, []);
   grammar.repository["generated.commands"] = grammarRootGroup;
-
-  // DELETEME account for hand-written samples
-  grammarRootGroup.patterns = [
-    { include: "#generated.command.execute" },
-    ...grammarRootGroup.patterns
-  ];
 
   // recursively add top-level commands to the grammar
   makeCommandNodeChildNames(commands).forEach(childName => {

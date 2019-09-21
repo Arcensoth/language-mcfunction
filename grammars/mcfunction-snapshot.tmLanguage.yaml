@@ -1126,92 +1126,12 @@ repository:
           - include: '#nbt.compound.content'
   generated.commands:
     patterns:
-      - include: '#generated.command.execute'
       - include: '#generated.command.effect'
+      - include: '#generated.command.execute'
       - include: '#generated.command.say'
       - include: '#generated.command.tellraw'
       - include: '#common.trailing_whitespace'
       - include: '#error.unmatched_child'
-  generated.command.execute:
-    begin: '(execute) (?=[^\s\#])'
-    end: (?=\n)
-    beginCaptures:
-      '1':
-        name: keyword.control._.command.mcfunction
-    patterns:
-      - include: '#generated.commands.execute'
-  generated.commands.execute:
-    patterns:
-      - include: '#generated.command.execute.run'
-      - include: '#generated.command.execute.as'
-      - include: '#error.unmatched_child'
-  generated.command.execute.run:
-    begin: (run)( |(?=\n))
-    end: (?=\n)
-    beginCaptures:
-      '1':
-        name: keyword.other._.subcommand.mcfunction
-    patterns:
-      - include: '#generated.commands.execute.run'
-  generated.commands.execute.run:
-    patterns:
-      - include: '#generated.commands'
-      - include: '#error.unmatched_child'
-  generated.command.execute.as:
-    begin: '(as) (?=[^\s\#])'
-    end: (?=\n)
-    beginCaptures:
-      '1':
-        name: keyword.other._.subcommand.mcfunction
-    patterns:
-      - include: '#generated.commands.execute.as'
-  generated.commands.execute.as:
-    patterns:
-      - include: '#generated.command.execute.as.targets'
-      - include: '#error.unmatched_child'
-  generated.command.execute.as.targets:
-    patterns:
-      - begin: '(\@[parse])( |(?=\n))'
-        end: (?=\n)
-        beginCaptures:
-          '1':
-            name: support.class._.base.target_selector.mcfunction
-        patterns:
-          - include: '#generated.commands.execute.as.targets'
-      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})( |(?=\n))'
-        end: (?=\n)
-        beginCaptures:
-          '1':
-            name: support.class._.uuid.target.mcfunction
-        patterns:
-          - include: '#generated.commands.execute.as.targets'
-      - begin: (\w+)( |(?=\n))
-        end: (?=\n)
-        beginCaptures:
-          '1':
-            name: support.class._.player_name.target.mcfunction
-        patterns:
-          - include: '#generated.commands.execute.as.targets'
-      - begin: '(\@[parse])(\[)(?= *[\w\]])'
-        end: (?=\n)
-        beginCaptures:
-          '1':
-            name: support.class._.base.target_selector.mcfunction
-          '2':
-            name: support.class._.bracket.target_selector.mcfunction
-        patterns:
-          - begin: '(\])( |(?=\n))'
-            end: (?=\n)
-            beginCaptures:
-              '1':
-                name: support.class._.bracket.target_selector.mcfunction
-            patterns:
-              - include: '#generated.commands.execute.as.targets'
-          - include: '#target_selector.content'
-          - include: '#error.bad_syntax'
-  generated.commands.execute.as.targets:
-    patterns:
-      - include: '#generated.commands.execute'
   generated.command.effect:
     begin: '(effect) (?=[^\s\#])'
     end: (?=\n)
@@ -1406,6 +1326,2805 @@ repository:
               #generated.commands.effect.give.targets.effect.seconds.amplifier.hideParticles
   generated.commands.effect.give.targets.effect.seconds.amplifier.hideParticles:
     patterns:
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute:
+    begin: '(execute) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.control._.command.mcfunction
+    patterns:
+      - include: '#generated.commands.execute'
+  generated.commands.execute:
+    patterns:
+      - include: '#generated.command.execute.align'
+      - include: '#generated.command.execute.anchored'
+      - include: '#generated.command.execute.as'
+      - include: '#generated.command.execute.at'
+      - include: '#generated.command.execute.facing'
+      - include: '#generated.command.execute.if'
+      - include: '#generated.command.execute.in'
+      - include: '#generated.command.execute.positioned'
+      - include: '#generated.command.execute.rotated'
+      - include: '#generated.command.execute.run'
+      - include: '#generated.command.execute.store'
+      - include: '#generated.command.execute.unless'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.align:
+    begin: '(align) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.align'
+  generated.commands.execute.align:
+    patterns:
+      - include: '#generated.command.execute.align.axes'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.align.axes:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.align.axes:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.anchored:
+    begin: '(anchored) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.anchored'
+  generated.commands.execute.anchored:
+    patterns:
+      - include: '#generated.command.execute.anchored.anchor'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.anchored.anchor:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.anchored.anchor:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.as:
+    begin: '(as) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.as'
+  generated.commands.execute.as:
+    patterns:
+      - include: '#generated.command.execute.as.targets'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.as.targets:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.as.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.as.targets'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.as.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.as.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.as.targets:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.at:
+    begin: '(at) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.at'
+  generated.commands.execute.at:
+    patterns:
+      - include: '#generated.command.execute.at.targets'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.at.targets:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.at.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.at.targets'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.at.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.at.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.at.targets:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.facing:
+    begin: '(facing) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.facing'
+  generated.commands.execute.facing:
+    patterns:
+      - include: '#generated.command.execute.facing.entity'
+      - include: '#generated.command.execute.facing.pos'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.facing.entity:
+    begin: '(entity) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.facing.entity'
+  generated.commands.execute.facing.entity:
+    patterns:
+      - include: '#generated.command.execute.facing.entity.targets'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.facing.entity.targets:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.facing.entity.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.facing.entity.targets'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.facing.entity.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.facing.entity.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.facing.entity.targets:
+    patterns:
+      - include: '#generated.command.execute.facing.entity.targets.anchor'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.facing.entity.targets.anchor:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.facing.entity.targets.anchor:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.facing.pos:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.facing.pos:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if:
+    begin: '(if) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if'
+  generated.commands.execute.if:
+    patterns:
+      - include: '#generated.command.execute.if.block'
+      - include: '#generated.command.execute.if.blocks'
+      - include: '#generated.command.execute.if.data'
+      - include: '#generated.command.execute.if.entity'
+      - include: '#generated.command.execute.if.predicate'
+      - include: '#generated.command.execute.if.score'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.block:
+    begin: '(block) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.block'
+  generated.commands.execute.if.block:
+    patterns:
+      - include: '#generated.command.execute.if.block.pos'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.block.pos:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.block.pos:
+    patterns:
+      - include: '#generated.command.execute.if.block.pos.block'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.block.pos.block:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.block.pos.block:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.blocks:
+    begin: '(blocks) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.blocks'
+  generated.commands.execute.if.blocks:
+    patterns:
+      - include: '#generated.command.execute.if.blocks.start'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.blocks.start:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.blocks.start:
+    patterns:
+      - include: '#generated.command.execute.if.blocks.start.end'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.blocks.start.end:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.blocks.start.end:
+    patterns:
+      - include: '#generated.command.execute.if.blocks.start.end.destination'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.blocks.start.end.destination:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.blocks.start.end.destination:
+    patterns:
+      - include: '#generated.command.execute.if.blocks.start.end.destination.all'
+      - include: '#generated.command.execute.if.blocks.start.end.destination.masked'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.blocks.start.end.destination.all:
+    begin: (all)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.blocks.start.end.destination.all'
+  generated.commands.execute.if.blocks.start.end.destination.all:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.blocks.start.end.destination.masked:
+    begin: (masked)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.blocks.start.end.destination.masked'
+  generated.commands.execute.if.blocks.start.end.destination.masked:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data:
+    begin: '(data) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.data'
+  generated.commands.execute.if.data:
+    patterns:
+      - include: '#generated.command.execute.if.data.block'
+      - include: '#generated.command.execute.if.data.entity'
+      - include: '#generated.command.execute.if.data.storage'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data.block:
+    begin: '(block) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.data.block'
+  generated.commands.execute.if.data.block:
+    patterns:
+      - include: '#generated.command.execute.if.data.block.sourcePos'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data.block.sourcePos:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.data.block.sourcePos:
+    patterns:
+      - include: '#generated.command.execute.if.data.block.sourcePos.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data.block.sourcePos.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.data.block.sourcePos.path:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data.entity:
+    begin: '(entity) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.data.entity'
+  generated.commands.execute.if.data.entity:
+    patterns:
+      - include: '#generated.command.execute.if.data.entity.source'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data.entity.source:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.data.entity.source'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.data.entity.source'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.data.entity.source'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.if.data.entity.source'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.if.data.entity.source:
+    patterns:
+      - include: '#generated.command.execute.if.data.entity.source.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data.entity.source.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.data.entity.source.path:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data.storage:
+    begin: '(storage) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.data.storage'
+  generated.commands.execute.if.data.storage:
+    patterns:
+      - include: '#generated.command.execute.if.data.storage.source'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data.storage.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.data.storage.source:
+    patterns:
+      - include: '#generated.command.execute.if.data.storage.source.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.data.storage.source.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.data.storage.source.path:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.entity:
+    begin: '(entity) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.entity'
+  generated.commands.execute.if.entity:
+    patterns:
+      - include: '#generated.command.execute.if.entity.entities'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.entity.entities:
+    patterns:
+      - begin: '(\@[parse])( |(?=\n))'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.entity.entities'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})( |(?=\n))'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.entity.entities'
+      - begin: (\w+)( |(?=\n))
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.if.entity.entities'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\])( |(?=\n))'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.if.entity.entities'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.if.entity.entities:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.predicate:
+    begin: '(predicate) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.predicate'
+  generated.commands.execute.if.predicate:
+    patterns:
+      - include: '#generated.command.execute.if.predicate.predicate'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.predicate.predicate:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.predicate.predicate:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score:
+    begin: '(score) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.score'
+  generated.commands.execute.if.score:
+    patterns:
+      - include: '#generated.command.execute.if.score.target'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target:
+    patterns:
+      - include: '#generated.command.execute.if.score.target.targetObjective'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective:
+    patterns:
+      - include: '#generated.command.execute.if.score.target.targetObjective.<'
+      - include: '#generated.command.execute.if.score.target.targetObjective.<='
+      - include: '#generated.command.execute.if.score.target.targetObjective.='
+      - include: '#generated.command.execute.if.score.target.targetObjective.>'
+      - include: '#generated.command.execute.if.score.target.targetObjective.>='
+      - include: '#generated.command.execute.if.score.target.targetObjective.matches'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.<:
+    begin: '(<) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.score.target.targetObjective.<'
+  generated.commands.execute.if.score.target.targetObjective.<:
+    patterns:
+      - include: '#generated.command.execute.if.score.target.targetObjective.<.source'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.<.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.<.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.if.score.target.targetObjective.<.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.<.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.<.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.<=:
+    begin: '(<=) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.score.target.targetObjective.<='
+  generated.commands.execute.if.score.target.targetObjective.<=:
+    patterns:
+      - include: '#generated.command.execute.if.score.target.targetObjective.<=.source'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.<=.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.<=.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.if.score.target.targetObjective.<=.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.<=.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.<=.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.=:
+    begin: '(=) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.score.target.targetObjective.='
+  generated.commands.execute.if.score.target.targetObjective.=:
+    patterns:
+      - include: '#generated.command.execute.if.score.target.targetObjective.=.source'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.=.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.=.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.if.score.target.targetObjective.=.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.=.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.=.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.>:
+    begin: '(>) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.score.target.targetObjective.>'
+  generated.commands.execute.if.score.target.targetObjective.>:
+    patterns:
+      - include: '#generated.command.execute.if.score.target.targetObjective.>.source'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.>.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.>.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.if.score.target.targetObjective.>.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.>.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.>.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.>=:
+    begin: '(>=) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.score.target.targetObjective.>='
+  generated.commands.execute.if.score.target.targetObjective.>=:
+    patterns:
+      - include: '#generated.command.execute.if.score.target.targetObjective.>=.source'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.>=.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.>=.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.if.score.target.targetObjective.>=.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.>=.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.>=.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.matches:
+    begin: '(matches) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.if.score.target.targetObjective.matches'
+  generated.commands.execute.if.score.target.targetObjective.matches:
+    patterns:
+      - include: >-
+          #generated.command.execute.if.score.target.targetObjective.matches.range
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.if.score.target.targetObjective.matches.range:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.if.score.target.targetObjective.matches.range:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.in:
+    begin: '(in) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.in'
+  generated.commands.execute.in:
+    patterns:
+      - include: '#generated.command.execute.in.dimension'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.in.dimension:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.in.dimension:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.positioned:
+    begin: '(positioned) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.positioned'
+  generated.commands.execute.positioned:
+    patterns:
+      - include: '#generated.command.execute.positioned.as'
+      - include: '#generated.command.execute.positioned.pos'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.positioned.as:
+    begin: '(as) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.positioned.as'
+  generated.commands.execute.positioned.as:
+    patterns:
+      - include: '#generated.command.execute.positioned.as.targets'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.positioned.as.targets:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.positioned.as.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.positioned.as.targets'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.positioned.as.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.positioned.as.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.positioned.as.targets:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.positioned.pos:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.positioned.pos:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.rotated:
+    begin: '(rotated) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.rotated'
+  generated.commands.execute.rotated:
+    patterns:
+      - include: '#generated.command.execute.rotated.as'
+      - include: '#generated.command.execute.rotated.rot'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.rotated.as:
+    begin: '(as) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.rotated.as'
+  generated.commands.execute.rotated.as:
+    patterns:
+      - include: '#generated.command.execute.rotated.as.targets'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.rotated.as.targets:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.rotated.as.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.rotated.as.targets'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.rotated.as.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.rotated.as.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.rotated.as.targets:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.rotated.rot:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.rotated.rot:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.run:
+    begin: '(run) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.run'
+  generated.commands.execute.run:
+    patterns:
+      - include: '#generated.commands'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store:
+    begin: '(store) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store'
+  generated.commands.execute.store:
+    patterns:
+      - include: '#generated.command.execute.store.result'
+      - include: '#generated.command.execute.store.success'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result:
+    begin: '(result) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result'
+  generated.commands.execute.store.result:
+    patterns:
+      - include: '#generated.command.execute.store.result.block'
+      - include: '#generated.command.execute.store.result.bossbar'
+      - include: '#generated.command.execute.store.result.entity'
+      - include: '#generated.command.execute.store.result.score'
+      - include: '#generated.command.execute.store.result.storage'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block:
+    begin: '(block) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.block'
+  generated.commands.execute.store.result.block:
+    patterns:
+      - include: '#generated.command.execute.store.result.block.targetPos'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.block.targetPos:
+    patterns:
+      - include: '#generated.command.execute.store.result.block.targetPos.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.block.targetPos.path:
+    patterns:
+      - include: '#generated.command.execute.store.result.block.targetPos.path.byte'
+      - include: '#generated.command.execute.store.result.block.targetPos.path.double'
+      - include: '#generated.command.execute.store.result.block.targetPos.path.float'
+      - include: '#generated.command.execute.store.result.block.targetPos.path.int'
+      - include: '#generated.command.execute.store.result.block.targetPos.path.long'
+      - include: '#generated.command.execute.store.result.block.targetPos.path.short'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.byte:
+    begin: '(byte) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.block.targetPos.path.byte'
+  generated.commands.execute.store.result.block.targetPos.path.byte:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.result.block.targetPos.path.byte.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.byte.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.block.targetPos.path.byte.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.double:
+    begin: '(double) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.block.targetPos.path.double'
+  generated.commands.execute.store.result.block.targetPos.path.double:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.result.block.targetPos.path.double.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.double.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.block.targetPos.path.double.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.float:
+    begin: '(float) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.block.targetPos.path.float'
+  generated.commands.execute.store.result.block.targetPos.path.float:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.result.block.targetPos.path.float.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.float.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.block.targetPos.path.float.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.int:
+    begin: '(int) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.block.targetPos.path.int'
+  generated.commands.execute.store.result.block.targetPos.path.int:
+    patterns:
+      - include: '#generated.command.execute.store.result.block.targetPos.path.int.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.int.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.block.targetPos.path.int.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.long:
+    begin: '(long) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.block.targetPos.path.long'
+  generated.commands.execute.store.result.block.targetPos.path.long:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.result.block.targetPos.path.long.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.long.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.block.targetPos.path.long.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.short:
+    begin: '(short) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.block.targetPos.path.short'
+  generated.commands.execute.store.result.block.targetPos.path.short:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.result.block.targetPos.path.short.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.block.targetPos.path.short.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.block.targetPos.path.short.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.bossbar:
+    begin: '(bossbar) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.bossbar'
+  generated.commands.execute.store.result.bossbar:
+    patterns:
+      - include: '#generated.command.execute.store.result.bossbar.id'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.bossbar.id:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.bossbar.id:
+    patterns:
+      - include: '#generated.command.execute.store.result.bossbar.id.max'
+      - include: '#generated.command.execute.store.result.bossbar.id.value'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.bossbar.id.max:
+    begin: '(max) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.bossbar.id.max'
+  generated.commands.execute.store.result.bossbar.id.max:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.bossbar.id.value:
+    begin: '(value) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.bossbar.id.value'
+  generated.commands.execute.store.result.bossbar.id.value:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity:
+    begin: '(entity) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.entity'
+  generated.commands.execute.store.result.entity:
+    patterns:
+      - include: '#generated.command.execute.store.result.entity.target'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.result.entity.target'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.result.entity.target'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.result.entity.target'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.store.result.entity.target'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.store.result.entity.target:
+    patterns:
+      - include: '#generated.command.execute.store.result.entity.target.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.entity.target.path:
+    patterns:
+      - include: '#generated.command.execute.store.result.entity.target.path.byte'
+      - include: '#generated.command.execute.store.result.entity.target.path.double'
+      - include: '#generated.command.execute.store.result.entity.target.path.float'
+      - include: '#generated.command.execute.store.result.entity.target.path.int'
+      - include: '#generated.command.execute.store.result.entity.target.path.long'
+      - include: '#generated.command.execute.store.result.entity.target.path.short'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.byte:
+    begin: '(byte) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.entity.target.path.byte'
+  generated.commands.execute.store.result.entity.target.path.byte:
+    patterns:
+      - include: '#generated.command.execute.store.result.entity.target.path.byte.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.byte.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.entity.target.path.byte.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.double:
+    begin: '(double) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.entity.target.path.double'
+  generated.commands.execute.store.result.entity.target.path.double:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.result.entity.target.path.double.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.double.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.entity.target.path.double.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.float:
+    begin: '(float) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.entity.target.path.float'
+  generated.commands.execute.store.result.entity.target.path.float:
+    patterns:
+      - include: '#generated.command.execute.store.result.entity.target.path.float.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.float.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.entity.target.path.float.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.int:
+    begin: '(int) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.entity.target.path.int'
+  generated.commands.execute.store.result.entity.target.path.int:
+    patterns:
+      - include: '#generated.command.execute.store.result.entity.target.path.int.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.int.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.entity.target.path.int.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.long:
+    begin: '(long) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.entity.target.path.long'
+  generated.commands.execute.store.result.entity.target.path.long:
+    patterns:
+      - include: '#generated.command.execute.store.result.entity.target.path.long.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.long.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.entity.target.path.long.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.short:
+    begin: '(short) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.entity.target.path.short'
+  generated.commands.execute.store.result.entity.target.path.short:
+    patterns:
+      - include: '#generated.command.execute.store.result.entity.target.path.short.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.entity.target.path.short.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.entity.target.path.short.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.score:
+    begin: '(score) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.score'
+  generated.commands.execute.store.result.score:
+    patterns:
+      - include: '#generated.command.execute.store.result.score.targets'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.score.targets:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.score.targets:
+    patterns:
+      - include: '#generated.command.execute.store.result.score.targets.objective'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.score.targets.objective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.score.targets.objective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage:
+    begin: '(storage) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.storage'
+  generated.commands.execute.store.result.storage:
+    patterns:
+      - include: '#generated.command.execute.store.result.storage.target'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.storage.target:
+    patterns:
+      - include: '#generated.command.execute.store.result.storage.target.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.storage.target.path:
+    patterns:
+      - include: '#generated.command.execute.store.result.storage.target.path.byte'
+      - include: '#generated.command.execute.store.result.storage.target.path.double'
+      - include: '#generated.command.execute.store.result.storage.target.path.float'
+      - include: '#generated.command.execute.store.result.storage.target.path.int'
+      - include: '#generated.command.execute.store.result.storage.target.path.long'
+      - include: '#generated.command.execute.store.result.storage.target.path.short'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.byte:
+    begin: '(byte) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.storage.target.path.byte'
+  generated.commands.execute.store.result.storage.target.path.byte:
+    patterns:
+      - include: '#generated.command.execute.store.result.storage.target.path.byte.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.byte.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.storage.target.path.byte.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.double:
+    begin: '(double) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.storage.target.path.double'
+  generated.commands.execute.store.result.storage.target.path.double:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.result.storage.target.path.double.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.double.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.storage.target.path.double.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.float:
+    begin: '(float) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.storage.target.path.float'
+  generated.commands.execute.store.result.storage.target.path.float:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.result.storage.target.path.float.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.float.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.storage.target.path.float.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.int:
+    begin: '(int) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.storage.target.path.int'
+  generated.commands.execute.store.result.storage.target.path.int:
+    patterns:
+      - include: '#generated.command.execute.store.result.storage.target.path.int.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.int.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.storage.target.path.int.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.long:
+    begin: '(long) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.storage.target.path.long'
+  generated.commands.execute.store.result.storage.target.path.long:
+    patterns:
+      - include: '#generated.command.execute.store.result.storage.target.path.long.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.long.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.storage.target.path.long.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.short:
+    begin: '(short) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.result.storage.target.path.short'
+  generated.commands.execute.store.result.storage.target.path.short:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.result.storage.target.path.short.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.result.storage.target.path.short.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.result.storage.target.path.short.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success:
+    begin: '(success) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success'
+  generated.commands.execute.store.success:
+    patterns:
+      - include: '#generated.command.execute.store.success.block'
+      - include: '#generated.command.execute.store.success.bossbar'
+      - include: '#generated.command.execute.store.success.entity'
+      - include: '#generated.command.execute.store.success.score'
+      - include: '#generated.command.execute.store.success.storage'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block:
+    begin: '(block) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.block'
+  generated.commands.execute.store.success.block:
+    patterns:
+      - include: '#generated.command.execute.store.success.block.targetPos'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.block.targetPos:
+    patterns:
+      - include: '#generated.command.execute.store.success.block.targetPos.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.block.targetPos.path:
+    patterns:
+      - include: '#generated.command.execute.store.success.block.targetPos.path.byte'
+      - include: '#generated.command.execute.store.success.block.targetPos.path.double'
+      - include: '#generated.command.execute.store.success.block.targetPos.path.float'
+      - include: '#generated.command.execute.store.success.block.targetPos.path.int'
+      - include: '#generated.command.execute.store.success.block.targetPos.path.long'
+      - include: '#generated.command.execute.store.success.block.targetPos.path.short'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.byte:
+    begin: '(byte) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.block.targetPos.path.byte'
+  generated.commands.execute.store.success.block.targetPos.path.byte:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.block.targetPos.path.byte.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.byte.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.block.targetPos.path.byte.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.double:
+    begin: '(double) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.block.targetPos.path.double'
+  generated.commands.execute.store.success.block.targetPos.path.double:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.block.targetPos.path.double.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.double.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.block.targetPos.path.double.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.float:
+    begin: '(float) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.block.targetPos.path.float'
+  generated.commands.execute.store.success.block.targetPos.path.float:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.block.targetPos.path.float.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.float.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.block.targetPos.path.float.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.int:
+    begin: '(int) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.block.targetPos.path.int'
+  generated.commands.execute.store.success.block.targetPos.path.int:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.block.targetPos.path.int.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.int.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.block.targetPos.path.int.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.long:
+    begin: '(long) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.block.targetPos.path.long'
+  generated.commands.execute.store.success.block.targetPos.path.long:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.block.targetPos.path.long.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.long.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.block.targetPos.path.long.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.short:
+    begin: '(short) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.block.targetPos.path.short'
+  generated.commands.execute.store.success.block.targetPos.path.short:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.block.targetPos.path.short.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.block.targetPos.path.short.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.block.targetPos.path.short.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.bossbar:
+    begin: '(bossbar) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.bossbar'
+  generated.commands.execute.store.success.bossbar:
+    patterns:
+      - include: '#generated.command.execute.store.success.bossbar.id'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.bossbar.id:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.bossbar.id:
+    patterns:
+      - include: '#generated.command.execute.store.success.bossbar.id.max'
+      - include: '#generated.command.execute.store.success.bossbar.id.value'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.bossbar.id.max:
+    begin: '(max) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.bossbar.id.max'
+  generated.commands.execute.store.success.bossbar.id.max:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.bossbar.id.value:
+    begin: '(value) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.bossbar.id.value'
+  generated.commands.execute.store.success.bossbar.id.value:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity:
+    begin: '(entity) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.entity'
+  generated.commands.execute.store.success.entity:
+    patterns:
+      - include: '#generated.command.execute.store.success.entity.target'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.success.entity.target'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.success.entity.target'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.store.success.entity.target'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.store.success.entity.target'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.store.success.entity.target:
+    patterns:
+      - include: '#generated.command.execute.store.success.entity.target.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.entity.target.path:
+    patterns:
+      - include: '#generated.command.execute.store.success.entity.target.path.byte'
+      - include: '#generated.command.execute.store.success.entity.target.path.double'
+      - include: '#generated.command.execute.store.success.entity.target.path.float'
+      - include: '#generated.command.execute.store.success.entity.target.path.int'
+      - include: '#generated.command.execute.store.success.entity.target.path.long'
+      - include: '#generated.command.execute.store.success.entity.target.path.short'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.byte:
+    begin: '(byte) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.entity.target.path.byte'
+  generated.commands.execute.store.success.entity.target.path.byte:
+    patterns:
+      - include: '#generated.command.execute.store.success.entity.target.path.byte.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.byte.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.entity.target.path.byte.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.double:
+    begin: '(double) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.entity.target.path.double'
+  generated.commands.execute.store.success.entity.target.path.double:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.entity.target.path.double.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.double.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.entity.target.path.double.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.float:
+    begin: '(float) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.entity.target.path.float'
+  generated.commands.execute.store.success.entity.target.path.float:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.entity.target.path.float.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.float.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.entity.target.path.float.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.int:
+    begin: '(int) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.entity.target.path.int'
+  generated.commands.execute.store.success.entity.target.path.int:
+    patterns:
+      - include: '#generated.command.execute.store.success.entity.target.path.int.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.int.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.entity.target.path.int.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.long:
+    begin: '(long) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.entity.target.path.long'
+  generated.commands.execute.store.success.entity.target.path.long:
+    patterns:
+      - include: '#generated.command.execute.store.success.entity.target.path.long.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.long.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.entity.target.path.long.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.short:
+    begin: '(short) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.entity.target.path.short'
+  generated.commands.execute.store.success.entity.target.path.short:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.entity.target.path.short.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.entity.target.path.short.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.entity.target.path.short.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.score:
+    begin: '(score) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.score'
+  generated.commands.execute.store.success.score:
+    patterns:
+      - include: '#generated.command.execute.store.success.score.targets'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.score.targets:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.score.targets:
+    patterns:
+      - include: '#generated.command.execute.store.success.score.targets.objective'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.score.targets.objective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.score.targets.objective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage:
+    begin: '(storage) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.storage'
+  generated.commands.execute.store.success.storage:
+    patterns:
+      - include: '#generated.command.execute.store.success.storage.target'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.storage.target:
+    patterns:
+      - include: '#generated.command.execute.store.success.storage.target.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.storage.target.path:
+    patterns:
+      - include: '#generated.command.execute.store.success.storage.target.path.byte'
+      - include: '#generated.command.execute.store.success.storage.target.path.double'
+      - include: '#generated.command.execute.store.success.storage.target.path.float'
+      - include: '#generated.command.execute.store.success.storage.target.path.int'
+      - include: '#generated.command.execute.store.success.storage.target.path.long'
+      - include: '#generated.command.execute.store.success.storage.target.path.short'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.byte:
+    begin: '(byte) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.storage.target.path.byte'
+  generated.commands.execute.store.success.storage.target.path.byte:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.storage.target.path.byte.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.byte.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.storage.target.path.byte.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.double:
+    begin: '(double) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.storage.target.path.double'
+  generated.commands.execute.store.success.storage.target.path.double:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.storage.target.path.double.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.double.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.storage.target.path.double.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.float:
+    begin: '(float) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.storage.target.path.float'
+  generated.commands.execute.store.success.storage.target.path.float:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.storage.target.path.float.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.float.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.storage.target.path.float.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.int:
+    begin: '(int) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.storage.target.path.int'
+  generated.commands.execute.store.success.storage.target.path.int:
+    patterns:
+      - include: '#generated.command.execute.store.success.storage.target.path.int.scale'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.int.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.storage.target.path.int.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.long:
+    begin: '(long) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.storage.target.path.long'
+  generated.commands.execute.store.success.storage.target.path.long:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.storage.target.path.long.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.long.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.storage.target.path.long.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.short:
+    begin: '(short) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.store.success.storage.target.path.short'
+  generated.commands.execute.store.success.storage.target.path.short:
+    patterns:
+      - include: >-
+          #generated.command.execute.store.success.storage.target.path.short.scale
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.store.success.storage.target.path.short.scale:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.store.success.storage.target.path.short.scale:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless:
+    begin: '(unless) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless'
+  generated.commands.execute.unless:
+    patterns:
+      - include: '#generated.command.execute.unless.block'
+      - include: '#generated.command.execute.unless.blocks'
+      - include: '#generated.command.execute.unless.data'
+      - include: '#generated.command.execute.unless.entity'
+      - include: '#generated.command.execute.unless.predicate'
+      - include: '#generated.command.execute.unless.score'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.block:
+    begin: '(block) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.block'
+  generated.commands.execute.unless.block:
+    patterns:
+      - include: '#generated.command.execute.unless.block.pos'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.block.pos:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.block.pos:
+    patterns:
+      - include: '#generated.command.execute.unless.block.pos.block'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.block.pos.block:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.block.pos.block:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.blocks:
+    begin: '(blocks) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.blocks'
+  generated.commands.execute.unless.blocks:
+    patterns:
+      - include: '#generated.command.execute.unless.blocks.start'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.blocks.start:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.blocks.start:
+    patterns:
+      - include: '#generated.command.execute.unless.blocks.start.end'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.blocks.start.end:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.blocks.start.end:
+    patterns:
+      - include: '#generated.command.execute.unless.blocks.start.end.destination'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.blocks.start.end.destination:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.blocks.start.end.destination:
+    patterns:
+      - include: '#generated.command.execute.unless.blocks.start.end.destination.all'
+      - include: '#generated.command.execute.unless.blocks.start.end.destination.masked'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.blocks.start.end.destination.all:
+    begin: (all)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.blocks.start.end.destination.all'
+  generated.commands.execute.unless.blocks.start.end.destination.all:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.blocks.start.end.destination.masked:
+    begin: (masked)( |(?=\n))
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.blocks.start.end.destination.masked'
+  generated.commands.execute.unless.blocks.start.end.destination.masked:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data:
+    begin: '(data) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.data'
+  generated.commands.execute.unless.data:
+    patterns:
+      - include: '#generated.command.execute.unless.data.block'
+      - include: '#generated.command.execute.unless.data.entity'
+      - include: '#generated.command.execute.unless.data.storage'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data.block:
+    begin: '(block) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.data.block'
+  generated.commands.execute.unless.data.block:
+    patterns:
+      - include: '#generated.command.execute.unless.data.block.sourcePos'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data.block.sourcePos:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.data.block.sourcePos:
+    patterns:
+      - include: '#generated.command.execute.unless.data.block.sourcePos.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data.block.sourcePos.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.data.block.sourcePos.path:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data.entity:
+    begin: '(entity) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.data.entity'
+  generated.commands.execute.unless.data.entity:
+    patterns:
+      - include: '#generated.command.execute.unless.data.entity.source'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data.entity.source:
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.unless.data.entity.source'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.unless.data.entity.source'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.unless.data.entity.source'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.unless.data.entity.source'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.unless.data.entity.source:
+    patterns:
+      - include: '#generated.command.execute.unless.data.entity.source.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data.entity.source.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.data.entity.source.path:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data.storage:
+    begin: '(storage) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.data.storage'
+  generated.commands.execute.unless.data.storage:
+    patterns:
+      - include: '#generated.command.execute.unless.data.storage.source'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data.storage.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.data.storage.source:
+    patterns:
+      - include: '#generated.command.execute.unless.data.storage.source.path'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.data.storage.source.path:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.data.storage.source.path:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.entity:
+    begin: '(entity) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.entity'
+  generated.commands.execute.unless.entity:
+    patterns:
+      - include: '#generated.command.execute.unless.entity.entities'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.entity.entities:
+    patterns:
+      - begin: '(\@[parse])( |(?=\n))'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.unless.entity.entities'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})( |(?=\n))'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.unless.entity.entities'
+      - begin: (\w+)( |(?=\n))
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.unless.entity.entities'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\])( |(?=\n))'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.execute.unless.entity.entities'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
+  generated.commands.execute.unless.entity.entities:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.predicate:
+    begin: '(predicate) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.predicate'
+  generated.commands.execute.unless.predicate:
+    patterns:
+      - include: '#generated.command.execute.unless.predicate.predicate'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.predicate.predicate:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.predicate.predicate:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score:
+    begin: '(score) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.score'
+  generated.commands.execute.unless.score:
+    patterns:
+      - include: '#generated.command.execute.unless.score.target'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target:
+    patterns:
+      - include: '#generated.command.execute.unless.score.target.targetObjective'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective:
+    patterns:
+      - include: '#generated.command.execute.unless.score.target.targetObjective.<'
+      - include: '#generated.command.execute.unless.score.target.targetObjective.<='
+      - include: '#generated.command.execute.unless.score.target.targetObjective.='
+      - include: '#generated.command.execute.unless.score.target.targetObjective.>'
+      - include: '#generated.command.execute.unless.score.target.targetObjective.>='
+      - include: '#generated.command.execute.unless.score.target.targetObjective.matches'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.<:
+    begin: '(<) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.score.target.targetObjective.<'
+  generated.commands.execute.unless.score.target.targetObjective.<:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.<.source
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.<.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.<.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.<.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.<.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.<.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.<=:
+    begin: '(<=) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.score.target.targetObjective.<='
+  generated.commands.execute.unless.score.target.targetObjective.<=:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.<=.source
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.<=.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.<=.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.<=.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.<=.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.<=.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.=:
+    begin: '(=) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.score.target.targetObjective.='
+  generated.commands.execute.unless.score.target.targetObjective.=:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.=.source
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.=.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.=.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.=.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.=.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.=.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.>:
+    begin: '(>) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.score.target.targetObjective.>'
+  generated.commands.execute.unless.score.target.targetObjective.>:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.>.source
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.>.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.>.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.>.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.>.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.>.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.>=:
+    begin: '(>=) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: '#generated.commands.execute.unless.score.target.targetObjective.>='
+  generated.commands.execute.unless.score.target.targetObjective.>=:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.>=.source
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.>=.source:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.>=.source:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.>=.source.sourceObjective
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.>=.source.sourceObjective:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.>=.source.sourceObjective:
+    patterns:
+      - include: '#generated.commands.execute'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.matches:
+    begin: '(matches) (?=[^\s\#])'
+    end: (?=\n)
+    beginCaptures:
+      '1':
+        name: keyword.other._.subcommand.mcfunction
+    patterns:
+      - include: >-
+          #generated.commands.execute.unless.score.target.targetObjective.matches
+  generated.commands.execute.unless.score.target.targetObjective.matches:
+    patterns:
+      - include: >-
+          #generated.command.execute.unless.score.target.targetObjective.matches.range
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
+  generated.command.execute.unless.score.target.targetObjective.matches.range:
+    patterns:
+      - include: '#error.unknown_parser'
+  generated.commands.execute.unless.score.target.targetObjective.matches.range:
+    patterns:
+      - include: '#generated.commands.execute'
       - include: '#common.trailing_whitespace'
       - include: '#error.unmatched_child'
   generated.command.say:

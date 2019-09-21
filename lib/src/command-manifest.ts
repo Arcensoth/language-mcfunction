@@ -17,6 +17,7 @@ export interface CommandNode {
   properties?: {};
   executable?: boolean;
   children?: CommandNodeChildren;
+  redirect?: string[];
 }
 
 export interface CommandManifest extends CommandNode {}
