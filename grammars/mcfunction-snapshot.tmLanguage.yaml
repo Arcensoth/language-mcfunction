@@ -71,6 +71,22 @@ repository:
         name: invalid.illegal._.invalid.mcfunction
       '2':
         name: markup.underline._.underline.mcfunction
+  error.invalid_node:
+    name: meta._.invalid_node.error.mcfunction
+    match: ((.*))$
+    captures: *ref_0
+  error.unknown_parser:
+    name: meta._.unknown_parser.error.mcfunction
+    match: ((.*))$
+    captures: *ref_0
+  error.unmatched_child:
+    name: meta._.unmatched_child.error.mcfunction
+    match: ((.*))$
+    captures: *ref_0
+  error.bad_syntax:
+    name: meta._.bad_syntax.error.mcfunction
+    match: ((.*))$
+    captures: *ref_0
   error.command_line:
     name: meta._.unknown_command.mcfunction
     match: ((.*))$
@@ -147,6 +163,14 @@ repository:
         captures: *ref_0
       - match: ((\\))
         captures: *ref_0
+  common.trailing_whitespace:
+    patterns:
+      - name: meta._.trailing_whitespace.common.mcfunction
+        begin: '[ \t]*'
+        end: (?=\n)
+        patterns:
+          - match: ((\S))
+            captures: *ref_0
   common.block:
     patterns:
       - match: '[^\n\{\}\[\]\"\'']+'
@@ -311,6 +335,16 @@ repository:
         captures: *ref_3
       - match: (\-?\d*\.?\d+)
         name: constant.numeric._.number.mcfunction
+  common.resource_id:
+    patterns:
+      - match: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-]+)'
+        captures: &ref_11
+          '1':
+            name: entity.name.function._.namespace.resource_location.mcfunction
+          '2':
+            name: entity.name.function._.colon.resource_location.mcfunction
+          '3':
+            name: entity.name.function._.path.resource_location.mcfunction
   common.resource_location:
     patterns:
       - match: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
@@ -1078,7 +1112,8 @@ repository:
       - include: '#generated.command.tellraw'
       - include: '#generated.command.execute'
       - include: '#generated.command.effect'
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.say:
     begin: '(say) (?=[^\s\#])'
     end: (?=\n)
@@ -1145,8 +1180,7 @@ repository:
             patterns:
               - include: '#generated.commands.tellraw.targets'
           - include: '#target_selector.content'
-          - include: '#error.command_line'
-      - include: '#error.command_line'
+          - include: '#error.bad_syntax'
   generated.commands.tellraw.targets:
     patterns:
       - include: '#text_component'
@@ -1163,7 +1197,7 @@ repository:
     patterns:
       - include: '#generated.command.execute.run'
       - include: '#generated.command.execute.as'
-      - include: '#error.command_line'
+      - include: '#error.unmatched_child'
   generated.command.execute.run:
     begin: (run)( |(?=\n))
     end: (?=\n)
@@ -1175,6 +1209,7 @@ repository:
   generated.commands.execute.run:
     patterns:
       - include: '#generated.commands'
+      - include: '#error.unmatched_child'
   generated.command.execute.as:
     begin: '(as) (?=[^\s\#])'
     end: (?=\n)
@@ -1186,7 +1221,7 @@ repository:
   generated.commands.execute.as:
     patterns:
       - include: '#generated.command.execute.as.targets'
-      - include: '#error.command_line'
+      - include: '#error.unmatched_child'
   generated.command.execute.as.targets:
     patterns:
       - begin: '(\@[parse])( |(?=\n))'
@@ -1226,8 +1261,7 @@ repository:
             patterns:
               - include: '#generated.commands.execute.as.targets'
           - include: '#target_selector.content'
-          - include: '#error.command_line'
-      - include: '#error.command_line'
+          - include: '#error.bad_syntax'
   generated.commands.execute.as.targets:
     patterns:
       - include: '#generated.commands.execute'
@@ -1243,7 +1277,8 @@ repository:
     patterns:
       - include: '#generated.command.effect.clear'
       - include: '#generated.command.effect.give'
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.effect.clear:
     begin: '(clear) (?=[^\s\#])'
     end: (?=\n)
@@ -1255,19 +1290,64 @@ repository:
   generated.commands.effect.clear:
     patterns:
       - include: '#generated.command.effect.clear.targets'
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.effect.clear.targets:
-    patterns: []
+    patterns:
+      - begin: '(\@[parse])( |(?=\n))'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.effect.clear.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})( |(?=\n))'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.effect.clear.targets'
+      - begin: (\w+)( |(?=\n))
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.effect.clear.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\])( |(?=\n))'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.effect.clear.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.effect.clear.targets:
     patterns:
       - include: '#generated.command.effect.clear.targets.effect'
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.effect.clear.targets.effect:
     patterns:
-      - include: '#error.command_line'
+      - begin: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-]+)( |(?=\n))'
+        end: (?=\n)
+        beginCaptures: *ref_11
+        patterns:
+          - include: '#generated.commands.effect.clear.targets.effect'
   generated.commands.effect.clear.targets.effect:
     patterns:
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.effect.give:
     begin: '(give) (?=[^\s\#])'
     end: (?=\n)
@@ -1279,38 +1359,105 @@ repository:
   generated.commands.effect.give:
     patterns:
       - include: '#generated.command.effect.give.targets'
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.effect.give.targets:
-    patterns: []
+    patterns:
+      - begin: '(\@[parse]) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+        patterns:
+          - include: '#generated.commands.effect.give.targets'
+      - begin: '([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.uuid.target.mcfunction
+        patterns:
+          - include: '#generated.commands.effect.give.targets'
+      - begin: '(\w+) (?=[^\s\#])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.player_name.target.mcfunction
+        patterns:
+          - include: '#generated.commands.effect.give.targets'
+      - begin: '(\@[parse])(\[)(?= *[\w\]])'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: support.class._.base.target_selector.mcfunction
+          '2':
+            name: support.class._.bracket.target_selector.mcfunction
+        patterns:
+          - begin: '(\]) (?=[^\s\#])'
+            end: (?=\n)
+            beginCaptures:
+              '1':
+                name: support.class._.bracket.target_selector.mcfunction
+            patterns:
+              - include: '#generated.commands.effect.give.targets'
+          - include: '#target_selector.content'
+          - include: '#error.bad_syntax'
   generated.commands.effect.give.targets:
     patterns:
       - include: '#generated.command.effect.give.targets.effect'
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.effect.give.targets.effect:
     patterns:
-      - include: '#error.command_line'
+      - begin: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-]+)( |(?=\n))'
+        end: (?=\n)
+        beginCaptures: *ref_11
+        patterns:
+          - include: '#generated.commands.effect.give.targets.effect'
   generated.commands.effect.give.targets.effect:
     patterns:
       - include: '#generated.command.effect.give.targets.effect.seconds'
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.effect.give.targets.effect.seconds:
     patterns:
-      - include: '#error.command_line'
+      - begin: '(0*[1-9]\d*)( |(?=\n))'
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: constant.numeric._.number.mcfunction
+        patterns:
+          - include: '#generated.commands.effect.give.targets.effect.seconds'
   generated.commands.effect.give.targets.effect.seconds:
     patterns:
       - include: '#generated.command.effect.give.targets.effect.seconds.amplifier'
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.effect.give.targets.effect.seconds.amplifier:
     patterns:
-      - include: '#error.command_line'
+      - begin: (\d+)( |(?=\n))
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: constant.numeric._.number.mcfunction
+        patterns:
+          - include: '#generated.commands.effect.give.targets.effect.seconds.amplifier'
   generated.commands.effect.give.targets.effect.seconds.amplifier:
     patterns:
       - include: >-
           #generated.command.effect.give.targets.effect.seconds.amplifier.hideParticles
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'
   generated.command.effect.give.targets.effect.seconds.amplifier.hideParticles:
     patterns:
-      - include: '#error.command_line'
+      - begin: (true|false)( |(?=\n))
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: constant.numeric._.boolean.mcfunction
+        patterns:
+          - include: >-
+              #generated.commands.effect.give.targets.effect.seconds.amplifier.hideParticles
   generated.commands.effect.give.targets.effect.seconds.amplifier.hideParticles:
     patterns:
-      - include: '#error.command_line'
+      - include: '#common.trailing_whitespace'
+      - include: '#error.unmatched_child'

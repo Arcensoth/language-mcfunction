@@ -201,6 +201,86 @@
           </dict>
         </dict>
       </dict>
+      <key>error.invalid_node</key>
+      <dict>
+        <key>name</key>
+        <string>meta._.invalid_node.error.mcfunction</string>
+        <key>match</key>
+        <string>((.*))$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal._.invalid.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>markup.underline._.underline.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>error.unknown_parser</key>
+      <dict>
+        <key>name</key>
+        <string>meta._.unknown_parser.error.mcfunction</string>
+        <key>match</key>
+        <string>((.*))$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal._.invalid.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>markup.underline._.underline.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>error.unmatched_child</key>
+      <dict>
+        <key>name</key>
+        <string>meta._.unmatched_child.error.mcfunction</string>
+        <key>match</key>
+        <string>((.*))$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal._.invalid.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>markup.underline._.underline.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>error.bad_syntax</key>
+      <dict>
+        <key>name</key>
+        <string>meta._.bad_syntax.error.mcfunction</string>
+        <key>match</key>
+        <string>((.*))$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal._.invalid.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>markup.underline._.underline.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
       <key>error.command_line</key>
       <dict>
         <key>name</key>
@@ -625,6 +705,40 @@
                 <string>markup.underline._.underline.mcfunction</string>
               </dict>
             </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>common.trailing_whitespace</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta._.trailing_whitespace.common.mcfunction</string>
+            <key>begin</key>
+            <string>[ \t]*</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>match</key>
+                <string>((\S))</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>invalid.illegal._.invalid.mcfunction</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>markup.underline._.underline.mcfunction</string>
+                  </dict>
+                </dict>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -1186,6 +1300,34 @@
             <string>(\-?\d*\.?\d+)</string>
             <key>name</key>
             <string>constant.numeric._.number.mcfunction</string>
+          </dict>
+        </array>
+      </dict>
+      <key>common.resource_id</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-]+)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.namespace.resource_location.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.colon.resource_location.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.path.resource_location.mcfunction</string>
+              </dict>
+            </dict>
           </dict>
         </array>
       </dict>
@@ -4160,7 +4302,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4360,13 +4506,9 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.command_line</string>
+                <string>#error.bad_syntax</string>
               </dict>
             </array>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
@@ -4420,7 +4562,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4453,6 +4595,10 @@
           <dict>
             <key>include</key>
             <string>#generated.commands</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4488,7 +4634,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4606,13 +4752,9 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#error.command_line</string>
+                <string>#error.bad_syntax</string>
               </dict>
             </array>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
           </dict>
         </array>
       </dict>
@@ -4662,7 +4804,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4698,14 +4844,133 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
       <key>generated.command.effect.clear.targets</key>
       <dict>
         <key>patterns</key>
-        <array/>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\@[parse])( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.base.target_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.clear.targets</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4})( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.uuid.target.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.clear.targets</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(\w+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.player_name.target.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.clear.targets</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(\@[parse])(\[)(?= *[\w\]])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.base.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.bracket.target_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>begin</key>
+                <string>(\])( |(?=\n))</string>
+                <key>end</key>
+                <string>(?=\n)</string>
+                <key>beginCaptures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>support.class._.bracket.target_selector.mcfunction</string>
+                  </dict>
+                </dict>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#generated.commands.effect.clear.targets</string>
+                  </dict>
+                </array>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#target_selector.content</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.bad_syntax</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
       </dict>
       <key>generated.commands.effect.clear.targets</key>
       <dict>
@@ -4717,7 +4982,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4726,8 +4995,35 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
+            <key>begin</key>
+            <string>([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.namespace.resource_location.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.colon.resource_location.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.path.resource_location.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.clear.targets.effect</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -4737,7 +5033,11 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4773,14 +5073,133 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
       <key>generated.command.effect.give.targets</key>
       <dict>
         <key>patterns</key>
-        <array/>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(\@[parse]) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.base.target_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.give.targets</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>([0-9a-fA-F]+(?:(-)[0-9a-fA-F]+){4}) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.uuid.target.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.give.targets</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(\w+) (?=[^\s\#])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.player_name.target.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.give.targets</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>(\@[parse])(\[)(?= *[\w\]])</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.base.target_selector.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.class._.bracket.target_selector.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>begin</key>
+                <string>(\]) (?=[^\s\#])</string>
+                <key>end</key>
+                <string>(?=\n)</string>
+                <key>beginCaptures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>support.class._.bracket.target_selector.mcfunction</string>
+                  </dict>
+                </dict>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#generated.commands.effect.give.targets</string>
+                  </dict>
+                </array>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#target_selector.content</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#error.bad_syntax</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
       </dict>
       <key>generated.commands.effect.give.targets</key>
       <dict>
@@ -4792,7 +5211,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4801,8 +5224,35 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
+            <key>begin</key>
+            <string>([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-]+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.namespace.resource_location.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.colon.resource_location.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.path.resource_location.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.give.targets.effect</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -4816,7 +5266,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4825,8 +5279,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
+            <key>begin</key>
+            <string>(0*[1-9]\d*)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.give.targets.effect.seconds</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -4840,7 +5311,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4849,8 +5324,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
+            <key>begin</key>
+            <string>(\d+)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.give.targets.effect.seconds.amplifier</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -4864,7 +5356,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>
@@ -4873,8 +5369,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.command_line</string>
+            <key>begin</key>
+            <string>(true|false)( |(?=\n))</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.boolean.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.effect.give.targets.effect.seconds.amplifier.hideParticles</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
@@ -4884,7 +5397,11 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#error.command_line</string>
+            <string>#common.trailing_whitespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#error.unmatched_child</string>
           </dict>
         </array>
       </dict>

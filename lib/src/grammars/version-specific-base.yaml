@@ -155,8 +155,15 @@ variables:
   score_holder.all: '(\*)'
   score_holder.fakeplayer: '([\w\.\-\#\$\%]+)'
 
+  # resource locations
+  # TODO refine resource location patterns
+  resource_id: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-]+)'
+  resource_location: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
+  tagged_resource_location: '(\#)([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
+
   # numbers
   integer: '(\-?\d*)'
+  non_negative_integer: '(\d+)'
   positive_integer: '(0*[1-9]\d*)'
   double: '(\-?\d*\.?\d+)'
 
@@ -186,8 +193,8 @@ variables:
 
   text_component.colors: (black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|dark_gray|blue|green|aqua|red|light_purple|yellow|white)
   text_component.keybinds: '(key\.forward|key\.left|key\.back|key\.right|key\.jump|key\.sneak|key\.sprint|key\.inventory|key\.swapHands|key\.drop|key\.use|key\.attack|key\.pickItem|key\.chat|key\.playerlist|key\.command|key\.screenshot|key\.togglePerspective|key\.smoothCamera|key\.fullscreen|key\.spectatorOutlines|key\.hotbar\.1|key\.hotbar\.2|key\.hotbar\.3|key\.hotbar\.4|key\.hotbar\.5|key\.hotbar\.6|key\.hotbar\.7|key\.hotbar\.8|key\.hotbar\.9|key\.saveToolbarActivator|key\.loadToolbarActivator)'
-  text_component.click_events: '(open_url|open_file|run_command|suggest_command|change_page)'
-  text_component.hover_events: '(show_text|show_item|show_entity)'
+  text_component.click_events: "(open_url|open_file|run_command|suggest_command|change_page)"
+  text_component.hover_events: "(show_text|show_item|show_entity)"
 
 patterns:
   - include: "#comment"
@@ -200,6 +207,22 @@ capturesRepository:
       name: "#invalid"
     2:
       name: "#underline"
+
+  boolean:
+    1:
+      name: "#boolean"
+
+  integer:
+    1:
+      name: "#number"
+
+  non_negative_integer:
+    1:
+      name: "#number"
+
+  positive_integer:
+    1:
+      name: "#number"
 
   position.abs_rel:
     1:
@@ -293,6 +316,32 @@ capturesRepository:
     1:
       name: "#text_component.bracket"
 
+  resource_id:
+    1:
+      name: "#resource_location.namespace"
+    2:
+      name: "#resource_location.colon"
+    3:
+      name: "#resource_location.path"
+
+  resource_location:
+    1:
+      name: "#resource_location.namespace"
+    2:
+      name: "#resource_location.colon"
+    3:
+      name: "#resource_location.path"
+
+  tagged_resource_location:
+    1:
+      name: "#resource_location.hash"
+    2:
+      name: "#resource_location.namespace"
+    3:
+      name: "#resource_location.colon"
+    4:
+      name: "#resource_location.path"
+
 repository:
   comment:
     patterns:
@@ -378,6 +427,26 @@ repository:
   ##############################################################################
   # ERRORS #####################################################################
   ##############################################################################
+
+  error.invalid_node:
+    name: meta._.invalid_node.error.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
+
+  error.unknown_parser:
+    name: meta._.unknown_parser.error.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
+
+  error.unmatched_child:
+    name: meta._.unmatched_child.error.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
+
+  error.bad_syntax:
+    name: meta._.bad_syntax.error.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
 
   error.command_line:
     # continue until the end of the line
@@ -472,6 +541,15 @@ repository:
   ##############################################################################
   # COMMON PARSERS #############################################################
   ##############################################################################
+
+  common.trailing_whitespace:
+    patterns:
+      - name: meta._.trailing_whitespace.common.mcfunction
+        begin: "{{tpad}}"
+        end: "{{ln}}"
+        patterns:
+          - match: '((\S))'
+            captures: "#underlined_error"
 
   common.block:
     patterns:
@@ -639,31 +717,21 @@ repository:
         name: "#number"
       # elevate `..` and any other cases to parent
 
-  common.resource_location:
-    # TODO refine resource location patterns
+  common.resource_id:
+    # essentually a resource location without separators
     patterns:
-      - match: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
-        captures:
-          1:
-            name: "#resource_location.namespace"
-          2:
-            name: "#resource_location.colon"
-          3:
-            name: "#resource_location.path"
+      - match: "{{resource_id}}"
+        captures: "#resource_id"
+
+  common.resource_location:
+    patterns:
+      - match: "{{resource_location}}"
+        captures: "#resource_location"
 
   common.tagged_resource_location:
-    # TODO refine tagged resource location patterns
     patterns:
-      - match: '(\#)([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
-        captures:
-          1:
-            name: "#resource_location.hash"
-          2:
-            name: "#resource_location.namespace"
-          3:
-            name: "#resource_location.colon"
-          4:
-            name: "#resource_location.path"
+      - match: "{{tagged_resource_location}}"
+        captures: "#tagged_resource_location"
 
   common.taggable_resource_location:
     patterns:
@@ -705,12 +773,12 @@ repository:
 
   nbt.compound:
     patterns:
-      - begin: '{{dict.begin}}'
-        end: '{{dict.end}}'
-        beginCaptures: '#dict.begin'
-        endCaptures: '#dict.end'
+      - begin: "{{dict.begin}}"
+        end: "{{dict.end}}"
+        beginCaptures: "#dict.begin"
+        endCaptures: "#dict.end"
         patterns:
-          - include: '#nbt.compound.content'
+          - include: "#nbt.compound.content"
 
   nbt.compound.content:
     # FIXME implement nbt compound patterns
@@ -1607,9 +1675,9 @@ repository:
             patterns:
               - include: "#generated.commands.tellraw.targets"
           - include: "#target_selector.content"
-          - include: "#error.command_line"
+          - include: "#error.bad_syntax"
 
-      - include: "#error.command_line"
+      # - include: "#error.command_line"
 
   generated.commands.tellraw.targets:
     patterns:
@@ -1631,7 +1699,7 @@ repository:
     patterns:
       - include: "#generated.command.execute.run"
       - include: "#generated.command.execute.as"
-      - include: "#error.command_line"
+      - include: "#error.unmatched_child"
 
   generated.command.execute.run:
     # `execute run` is executable
@@ -1647,6 +1715,7 @@ repository:
     # redirect to root
     patterns:
       - include: "#generated.commands"
+      - include: "#error.unmatched_child"
 
   generated.command.execute.as:
     # `execute as` is non-executable
@@ -1661,7 +1730,7 @@ repository:
   generated.commands.execute.as:
     patterns:
       - include: "#generated.command.execute.as.targets"
-      - include: "#error.command_line"
+      - include: "#error.unmatched_child"
 
   generated.command.execute.as.targets:
     # `execute as <targets>` is executable
@@ -1726,9 +1795,9 @@ repository:
           # this doesn't go in common selector patterns, because it invalidates
           # rest of the line... which wouldn't make sense in other future
           # potential scopes, like text components
-          - include: "#error.command_line"
+          - include: "#error.bad_syntax"
 
-      - include: "#error.command_line"
+      # - include: "#error.command_line"
 
   generated.commands.execute.as.targets:
     # redirect to `execute`
