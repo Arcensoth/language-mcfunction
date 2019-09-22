@@ -127,6 +127,7 @@ export function augmentGrammar(
     children: {
       effect: commands.children["effect"],
       execute: commands.children["execute"],
+      function: commands.children["function"],
       say: commands.children["say"],
       tellraw: commands.children["tellraw"]
     }

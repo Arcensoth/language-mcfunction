@@ -193,12 +193,15 @@ Short name                        | Full scope name                             
 `text_component.property.event`   | `string._.event.property.text_component.mcfunction`   | `run_command` / `show_text`
 
 ### Customizing resource locations
-Short name                    | Full scope name                                                 | Examples
------------------------------ | --------------------------------------------------------------- | ----------
-`resource_location.namespace` | `entity.name.function._.namespace.resource_location.mcfunction` | `#(mypack):some/resource`
-`resource_location.hash`      | `entity.name.function._.hash.resource_location.mcfunction`      | `(#)mypack:some/resource`
-`resource_location.colon`     | `entity.name.function._.colon.resource_location.mcfunction`     | `#mypack(:)some/resource`
-`resource_location.path`      | `entity.name.function._.path.resource_location.mcfunction`      | `#mypack:(some/resource)`
+Short name                            | Full scope name                                                         | Examples
+------------------------------------- | ----------------------------------------------------------------------- | ----------
+`resource_location.namespace`         | `entity.name.function._.namespace.resource_location.mcfunction`         | `(mypack):some/resource`
+`resource_location.colon`             | `entity.name.function._.colon.resource_location.mcfunction`             | `mypack(:)some/resource`
+`resource_location.path`              | `entity.name.function._.path.resource_location.mcfunction`              | `mypack:(some/resource)`
+`tagged_resource_location.hash`       | `entity.name.function._.hash.tagged_resource_location.mcfunction`       | `(#)mypack:some/resource`
+`tagged_resource_location.namespace`  | `entity.name.function._.namespace.tagged_resource_location.mcfunction`  | `#(mypack):some/resource`
+`tagged_resource_location.colon`      | `entity.name.function._.colon.tagged_resource_location.mcfunction`      | `#mypack(:)some/resource`
+`tagged_resource_location.path`       | `entity.name.function._.path.tagged_resource_location.mcfunction`       | `#mypack:(some/resource)`
 
 ### Customizing strings
 Short name              | Full scope name                                         | Examples

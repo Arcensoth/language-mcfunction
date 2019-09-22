@@ -1,11 +1,14 @@
 import { CommandNode } from "../command-manifest";
 import { GrammarNodeGenerator } from "./grammar-node-generators/abc/grammar-node-generator";
 import { BlockPositionGrammarNodeGenerator } from "./grammar-node-generators/block-position-grammar-node-generator";
+import { BlockPredicateGrammarNodeGenerator } from "./grammar-node-generators/block-predicate-grammar-node-generator";
 import { BoolGrammarNodeGenerator } from "./grammar-node-generators/bool-grammar-node-generator";
 import { DoubleGrammarNodeGenerator } from "./grammar-node-generators/double-grammar-node-generator";
+import { FunctionGrammarNodeGenerator } from "./grammar-node-generators/function-grammar-node-generator";
 import { IntegerGrammarNodeGenerator } from "./grammar-node-generators/integer-grammar-node-generator";
 import { MessageGrammarNodeGenerator } from "./grammar-node-generators/message-grammar-node-generator";
 import { MobEffectGrammarNodeGenerator } from "./grammar-node-generators/mob-effect-grammar-node-generator";
+import { ResourceLocationGrammarNodeGenerator } from "./grammar-node-generators/resource-location-grammar-node-generator";
 import { ScoreHolderGrammarNodeGenerator } from "./grammar-node-generators/score-holder-grammar-node-generator";
 import { ScoreboardObjectiveGrammarNodeGenerator } from "./grammar-node-generators/scoreboard-objective-grammar-node-generator";
 import { TargetSelectorGrammarNodeGenerator } from "./grammar-node-generators/target-selector-grammar-node-generator";
@@ -18,11 +21,14 @@ export const GRAMMAR_NODE_GENERATOR_MAP: {
   "brigadier:double": new DoubleGrammarNodeGenerator(),
   "brigadier:integer": new IntegerGrammarNodeGenerator(),
   "minecraft:block_pos": new BlockPositionGrammarNodeGenerator(),
+  "minecraft:block_predicate": new BlockPredicateGrammarNodeGenerator(),
   "minecraft:component": new TextComponentGrammarNodeGenerator(),
   "minecraft:entity": new TargetSelectorGrammarNodeGenerator(),
+  "minecraft:function": new FunctionGrammarNodeGenerator(),
   "minecraft:message": new MessageGrammarNodeGenerator(),
   "minecraft:mob_effect": new MobEffectGrammarNodeGenerator(),
   "minecraft:objective": new ScoreboardObjectiveGrammarNodeGenerator(),
+  "minecraft:resource_location": new ResourceLocationGrammarNodeGenerator(),
   "minecraft:score_holder": new ScoreHolderGrammarNodeGenerator()
 };
 

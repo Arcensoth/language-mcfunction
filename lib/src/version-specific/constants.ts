@@ -12,9 +12,11 @@ export const patterns = {
   },
   position: {
     absoluteRelative: "{{position.abs_rel}}",
-    local: "{{position.local}}",
+    local: "{{position.local}}"
   },
   resourceID: "{{resource_id}}",
+  resourceLocation: "{{resource_location}}",
+  taggedResourceLocation: "{{tagged_resource_location}}",
   UUID: "{{uuid}}",
   playerName: "{{player_name}}",
   basicTargetSelector: "{{basic_target_selector}}",
@@ -37,9 +39,11 @@ export const captures = {
   },
   position: {
     absoluteRelative: "#position.abs_rel",
-    local: "#position.local",
+    local: "#position.local"
   },
   resourceID: "#resource_id",
+  resourceLocation: "#resource_location",
+  taggedResourceLocation: "#tagged_resource_location",
   targetSelector: {
     base: "#target_selector.base",
     bracket: "#target_selector.bracket"
@@ -61,7 +65,7 @@ export const nodes = {
     trailingWhitespace: "#common.trailing_whitespace",
     message: "#common.message"
   },
-  textComponent: '#text_component',
+  textComponent: "#text_component",
   targetSelector: {
     content: "#target_selector.content"
   }

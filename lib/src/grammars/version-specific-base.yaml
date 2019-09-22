@@ -62,9 +62,14 @@ names:
 
   # resource location scopes
   resource_location.namespace: entity.name.function._.namespace.resource_location.mcfunction
-  resource_location.hash: entity.name.function._.hash.resource_location.mcfunction
   resource_location.colon: entity.name.function._.colon.resource_location.mcfunction
   resource_location.path: entity.name.function._.path.resource_location.mcfunction
+
+  # tagged resource location scopes
+  tagged_resource_location.namespace: entity.name.function._.namespace.tagged_resource_location.mcfunction
+  tagged_resource_location.hash: entity.name.function._.hash.tagged_resource_location.mcfunction
+  tagged_resource_location.colon: entity.name.function._.colon.tagged_resource_location.mcfunction
+  tagged_resource_location.path: entity.name.function._.path.tagged_resource_location.mcfunction
 
   # string scopes
   string: string._.string.mcfunction
@@ -120,7 +125,7 @@ variables:
   # but at least if the following token is also non-executable,
   # it will then be highlighted as an error
   # command_border_executable_false
-  cbx_false: ' (?=[^\s\#])'
+  cbx_false: ' (?=\S)'
 
   # text_component_property
   tc.p.begin_l: '(\")'
@@ -162,10 +167,10 @@ variables:
   score_holder.fakeplayer: '([\w\.\-\#\$\%]+)'
 
   # resource locations
-  # TODO refine resource location patterns
-  resource_id: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-]+)'
-  resource_location: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
-  tagged_resource_location: '(\#)([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
+  rc: '[a-z0-9_\.\-]+'
+  resource_id: '(?:({{rc}})(\:))?({{rc}})'
+  resource_location: '{{resource_id}}((?:\/?{{rc}})*)'
+  tagged_resource_location: '(\#){{resource_location}}'
 
   # numbers
   integer: '(\-?\d*)'
@@ -340,30 +345,46 @@ capturesRepository:
       name: "#text_component.bracket"
 
   resource_id:
+    # (namespace):foo
     1:
       name: "#resource_location.namespace"
+    # namespace(:)foo
     2:
       name: "#resource_location.colon"
+    # namespace:(foo)
     3:
       name: "#resource_location.path"
 
   resource_location:
+    # (namespace):foo/bar/baz
     1:
       name: "#resource_location.namespace"
+    # namespace(:)foo/bar/baz
     2:
       name: "#resource_location.colon"
+    # namespace:(foo)/bar/baz
     3:
+      name: "#resource_location.path"
+    # namespace:foo(/bar/baz)
+    4:
       name: "#resource_location.path"
 
   tagged_resource_location:
+    # (#)namespace:foo/bar/baz
     1:
-      name: "#resource_location.hash"
+      name: "#tagged_resource_location.hash"
+    # (namespace):foo/bar/baz
     2:
-      name: "#resource_location.namespace"
+      name: "#tagged_resource_location.namespace"
+    # namespace(:)foo/bar/baz
     3:
-      name: "#resource_location.colon"
+      name: "#tagged_resource_location.colon"
+    # namespace:(foo)/bar/baz
     4:
-      name: "#resource_location.path"
+      name: "#tagged_resource_location.path"
+    # namespace:foo(/bar/baz)
+    5:
+      name: "#tagged_resource_location.path"
 
 repository:
   comment.plain:
