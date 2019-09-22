@@ -8,7 +8,9 @@ export class IntegerGrammarNodeGenerator extends GrammarNodeGenerator {
     let pattern = patterns.integer;
     let capture = captures.integer;
 
-    const propMin = context.node.properties["min"];
+    const propMin = context.node.properties
+      ? context.node.properties["min"]
+      : null;
 
     if (propMin === 0) {
       pattern = patterns.nonNegativeInteger;
