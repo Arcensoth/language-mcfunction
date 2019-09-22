@@ -175,11 +175,19 @@ Short name                | Full scope name                                     
 ### Customizing NBT
 Short name              | Full scope name                             | Examples
 ----------------------- | ------------------------------------------- | ----------
-`nbt.compound_bracket`  | `storage._.compound_bracket.nbt.mcfunction` | `{}`
-`nbt.compound_colon`    | `storage._.compound_colon.nbt.mcfunction`   | `:`
-`nbt.compound_comma`    | `storage._.compound_comma.nbt.mcfunction`   | `,`
-`nbt.list_bracket`      | `storage._.list_bracket.nbt.mcfunction`     | `[]`
-`nbt.list_comma`        | `storage._.list_comma.nbt.mcfunction`       | `,`
+`nbt_compound.bracket`  | `storage._.bracket.nbt_compound.mcfunction` | `{}`
+`nbt_compound.colon`    | `storage._.colon.nbt_compound.mcfunction`   | `:`
+`nbt_compound.comma`    | `storage._.comma.nbt_compound.mcfunction`   | `,`
+`nbt_list.bracket`      | `storage._.bracket.nbt_list.mcfunction`     | `[]`
+`nbt_list.comma`        | `storage._.comma.nbt_list.mcfunction`       | `,`
+
+### Customizing NBT paths
+Short name                  | Full scope name                                   | Examples
+--------------------------- | ------------------------------------------------- | ----------
+`nbt_path.property`         | `string._.property.nbt_path.mcfunction`           | `(RecordItem)`
+`nbt_path.dot`              | `storage._.dot.nbt_path.mcfunction`               | `RecordItem(.)tag`
+`nbt_path.compound.bracket` | `storage._.bracket.compound.nbt_path.mcfunction`  | `SelectedItem({)(})`
+`nbt_path.index.bracket`    | `storage._.bracket.index.nbt_path.mcfunction`     | `Inventory([)(])`
 
 ### Customizing text components
 Short name                        | Full scope name                                       | Examples

@@ -35,11 +35,17 @@ names:
   target_selector.param: keyword.other._.param.target_selector.mcfunction
 
   # nbt scopes
-  nbt.compound_bracket: storage._.compound_bracket.nbt.mcfunction
-  nbt.compound_colon: storage._.compound_colon.nbt.mcfunction
-  nbt.compound_comma: storage._.compound_comma.nbt.mcfunction
-  nbt.list_bracket: storage._.list_bracket.nbt.mcfunction
-  nbt.list_comma: storage._.list_comma.nbt.mcfunction
+  nbt_compound.bracket: storage._.bracket.nbt_compound.mcfunction
+  nbt_compound.colon: storage._.colon.nbt_compound.mcfunction
+  nbt_compound.comma: storage._.comma.nbt_compound.mcfunction
+  nbt_list.bracket: storage._.bracket.nbt_list.mcfunction
+  nbt_list.comma: storage._.comma.nbt_list.mcfunction
+
+  # nbt path scopes
+  nbt_path.property: string._.property.nbt_path.mcfunction
+  nbt_path.dot: storage._.dot.nbt_path.mcfunction
+  nbt_path.compound.bracket: storage._.bracket.compound.nbt_path.mcfunction
+  nbt_path.index.bracket: storage._.bracket.index.nbt_path.mcfunction
 
   # score map scopes
   score_map.bracket: storage._.bracket.score_map.mcfunction
@@ -161,6 +167,18 @@ variables:
   parameterized_target_selector.args_r: '(\])'
   parameterized_target_selector.begin: '{{parameterized_target_selector.base}}{{parameterized_target_selector.args_l}}(?={{pad}}[\w\]])'
   parameterized_target_selector.next: "{{parameterized_target_selector.args_r}}"
+
+  # nbt compound
+  nbt_compound.begin: '(\{)'
+  nbt_compound.next: '(\})|{{ln}}'
+
+  # nbt list
+  nbt_list.begin: '(\[)'
+  nbt_list.next: '(\])|{{ln}}'
+
+  # nbt path
+  nbt_path.begin: '(\w+)'
+  nbt_path.next: '(?= |\n)'
 
   # score holders
   score_holder.all: '(\*)'
@@ -326,7 +344,7 @@ capturesRepository:
     3:
       name: "#string"
     4:
-      name: "#nbt.compound_colon"
+      name: "#nbt_compound.colon"
 
   text_component.dict.begin:
     1:
@@ -343,6 +361,28 @@ capturesRepository:
   text_component.list.end:
     1:
       name: "#text_component.bracket"
+
+  nbt_compound.begin:
+    1:
+      name: "#nbt_compound.bracket"
+
+  nbt_compound.next:
+    1:
+      name: "#nbt_compound.bracket"
+
+  nbt_list.begin:
+    1:
+      name: "#nbt_list.bracket"
+
+  nbt_list.next:
+    1:
+      name: "#nbt_list.bracket"
+
+  nbt_path.begin:
+    1:
+      name: "#nbt_path.property"
+
+  nbt_path.next: {}
 
   resource_id:
     # (namespace):foo
@@ -838,27 +878,89 @@ repository:
         name: "#string"
 
   ##############################################################################
-  # NBT ########################################################################
+  # NBT COMPOUND ###############################################################
   ##############################################################################
 
-  nbt.compound:
+  nbt_compound:
     patterns:
-      - begin: "{{dict.begin}}"
-        end: "{{dict.end}}"
-        beginCaptures: "#dict.begin"
-        endCaptures: "#dict.end"
+      - begin: "{{nbt_compound.begin}}"
+        end: "{{nbt_compound.next}}"
+        beginCaptures: "#nbt_compound.begin"
+        endCaptures: "#nbt_compound.next"
         patterns:
-          - include: "#nbt.compound.content"
+          - include: "#nbt_compound.content"
+          - include: "#error.bad_syntax"
 
-  nbt.compound.content:
-    # FIXME implement nbt compound patterns
+  nbt_compound.content:
+    # FIXME finish nbt compound patterns
     patterns:
       - include: "#common.block"
 
-  nbt_path:
-    # FIXME implement nbt paths
+  ##############################################################################
+  # NBT LIST ###################################################################
+  ##############################################################################
+
+  nbt_list:
     patterns:
-      - include: "#common.double_quoted_string.content"
+      - begin: "{{nbt_list.begin}}"
+        end: "{{nbt_list.next}}"
+        beginCaptures: "#nbt_list.begin"
+        endCaptures: "#nbt_list.next"
+        patterns:
+          - include: "#nbt_list.content"
+          - include: "#error.bad_syntax"
+
+  nbt_list.content:
+    # FIXME finish nbt list patterns
+    patterns:
+      - include: "#common.block"
+
+  ##############################################################################
+  # NBT PATH ###################################################################
+  ##############################################################################
+
+  nbt_path:
+    patterns:
+      - begin: "{{nbt_path.begin}}"
+        end: "{{nbt_path.next}}"
+        beginCaptures: "#nbt_path.begin"
+        endCaptures: "#nbt_path.next"
+        patterns:
+          - include: "#nbt_path.content"
+
+  nbt_path.content:
+    patterns:
+      # SelectedItem(.)(Count)
+      - match: '(\.)(\w+)'
+        captures:
+          1:
+            name: "#nbt_path.dot"
+          2:
+            name: "#nbt_path.property"
+      # Inventory([){Count: 64}(])
+      - begin: "{{nbt_list.begin}}"
+        end: "{{nbt_list.next}}"
+        beginCaptures: "#nbt_list.begin"
+        endCaptures: "#nbt_list.next"
+        patterns:
+          - include: "#nbt_path.index"
+      # Inventory[].tag({)custom: true(})
+      - include: "#nbt_compound"
+      # special case for weird trailing "."
+      # SelectedItem(.)
+      - match: '(\.){{nbt_path.next}}'
+        captures:
+          1:
+            name: "#nbt_path.dot"
+      # anything else is a syntax error
+      - include: "#error.bad_syntax"
+
+  nbt_path.index:
+    patterns:
+      - match: '(?<=\[){{integer}}(?=\])'
+        captures: "#integer"
+      - include: "#nbt_compound"
+      - include: "#error.bad_syntax"
 
   ##############################################################################
   # MAPS #######################################################################
@@ -1075,7 +1177,7 @@ repository:
         beginCaptures: "#quoted_string.begin"
         endCaptures: "#quoted_string.end"
         patterns:
-          - include: "#nbt.compound"
+          - include: "#nbt_compound"
 
   text_component.list_common:
     patterns:
@@ -1645,9 +1747,9 @@ repository:
           3:
             name: "#target_selector.not"
           4:
-            name: "#nbt.compound_bracket"
+            name: "#nbt_compound.bracket"
         endCaptures:
           1:
-            name: "#nbt.compound_bracket"
+            name: "#nbt_compound.bracket"
         patterns:
-          - include: "#nbt.compound.content"
+          - include: "#nbt_compound.content"

@@ -23,6 +23,18 @@ export const patterns = {
   parameterizedTargetSelector: {
     begin: "{{parameterized_target_selector.begin}}",
     next: "{{parameterized_target_selector.next}}"
+  },
+  nbtCompound: {
+    begin: "{{nbt_compound.begin}}",
+    next: "{{nbt_compound.next}}"
+  },
+  nbtList: {
+    begin: "{{nbt_list.begin}}",
+    next: "{{nbt_list.next}}"
+  },
+  nbtPath: {
+    begin: "{{nbt_path.begin}}",
+    next: "{{nbt_path.next}}"
   }
 };
 
@@ -51,6 +63,18 @@ export const captures = {
   target: {
     UUID: "#target.uuid",
     playerName: "#target.player_name"
+  },
+  nbtCompound: {
+    begin: "#nbt_compound.begin",
+    next: "#nbt_compound.next"
+  },
+  nbtList: {
+    begin: "#nbt_list.begin",
+    next: "#nbt_list.next"
+  },
+  nbtPath: {
+    begin: "#nbt_path.begin",
+    next: "#nbt_path.next"
   }
 };
 
@@ -68,5 +92,14 @@ export const nodes = {
   textComponent: "#text_component",
   targetSelector: {
     content: "#target_selector.content"
+  },
+  nbtCompound: {
+    content: "#nbt_compound.content"
+  },
+  nbtList: {
+    content: "#nbt_list.content"
+  },
+  nbtPath: {
+    content: "#nbt_path.content"
   }
 };

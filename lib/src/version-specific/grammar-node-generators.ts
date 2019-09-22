@@ -8,6 +8,9 @@ import { FunctionGrammarNodeGenerator } from "./grammar-node-generators/function
 import { IntegerGrammarNodeGenerator } from "./grammar-node-generators/integer-grammar-node-generator";
 import { MessageGrammarNodeGenerator } from "./grammar-node-generators/message-grammar-node-generator";
 import { MobEffectGrammarNodeGenerator } from "./grammar-node-generators/mob-effect-grammar-node-generator";
+import { NBTCompoundGrammarNodeGenerator } from "./grammar-node-generators/nbt-compound-grammar-node-generator";
+import { NBTPathGrammarNodeGenerator } from "./grammar-node-generators/nbt-path-grammar-node-generator";
+import { NBTValueGrammarNodeGenerator } from "./grammar-node-generators/nbt-value-grammar-node-generator";
 import { ResourceLocationGrammarNodeGenerator } from "./grammar-node-generators/resource-location-grammar-node-generator";
 import { ScoreHolderGrammarNodeGenerator } from "./grammar-node-generators/score-holder-grammar-node-generator";
 import { ScoreboardObjectiveGrammarNodeGenerator } from "./grammar-node-generators/scoreboard-objective-grammar-node-generator";
@@ -27,6 +30,9 @@ export const GRAMMAR_NODE_GENERATOR_MAP: {
   "minecraft:function": new FunctionGrammarNodeGenerator(),
   "minecraft:message": new MessageGrammarNodeGenerator(),
   "minecraft:mob_effect": new MobEffectGrammarNodeGenerator(),
+  "minecraft:nbt_compound_tag": new NBTCompoundGrammarNodeGenerator(),
+  "minecraft:nbt_path": new NBTPathGrammarNodeGenerator(),
+  "minecraft:nbt_tag": new NBTValueGrammarNodeGenerator(),
   "minecraft:objective": new ScoreboardObjectiveGrammarNodeGenerator(),
   "minecraft:resource_location": new ResourceLocationGrammarNodeGenerator(),
   "minecraft:score_holder": new ScoreHolderGrammarNodeGenerator()

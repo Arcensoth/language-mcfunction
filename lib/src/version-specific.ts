@@ -125,6 +125,7 @@ export function augmentGrammar(
   commands = {
     type: CommandNodeType.ROOT,
     children: {
+      data: commands.children["data"],
       effect: commands.children["effect"],
       execute: commands.children["execute"],
       function: commands.children["function"],
