@@ -7,6 +7,7 @@ import { DimensionGrammarNodeGenerator } from "./grammar-node-generators/dimensi
 import { DoubleGrammarNodeGenerator } from "./grammar-node-generators/double-grammar-node-generator";
 import { EntityAnchorGrammarNodeGenerator } from "./grammar-node-generators/entity-anchor-grammar-node-generator";
 import { FunctionGrammarNodeGenerator } from "./grammar-node-generators/function-grammar-node-generator";
+import { IntRangeGrammarNodeGenerator } from "./grammar-node-generators/int-range-grammar-node-generator";
 import { IntegerGrammarNodeGenerator } from "./grammar-node-generators/integer-grammar-node-generator";
 import { MessageGrammarNodeGenerator } from "./grammar-node-generators/message-grammar-node-generator";
 import { MobEffectGrammarNodeGenerator } from "./grammar-node-generators/mob-effect-grammar-node-generator";
@@ -40,6 +41,7 @@ export const GRAMMAR_NODE_GENERATOR_MAP: {
   "minecraft:nbt_path": new NBTPathGrammarNodeGenerator(),
   "minecraft:nbt_tag": new NBTValueGrammarNodeGenerator(),
   "minecraft:objective": new ScoreboardObjectiveGrammarNodeGenerator(),
+  "minecraft:int_range": new IntRangeGrammarNodeGenerator(),
   "minecraft:resource_location": new ResourceLocationGrammarNodeGenerator(),
   "minecraft:score_holder": new ScoreHolderGrammarNodeGenerator(),
   "minecraft:swizzle": new SwizzleGrammarNodeGenerator(),

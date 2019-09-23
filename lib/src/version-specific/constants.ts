@@ -18,6 +18,14 @@ export const patterns = {
     absoluteRelative: "{{block_position.abs_rel}}",
     local: "{{block_position.local}}"
   },
+  range: {
+    left: "{{range.left}}",
+    right: "{{range.right}}"
+  },
+  intRange: {
+    left: "{{int_range.left}}",
+    right: "{{int_range.right}}"
+  },
   resourceID: "{{resource_id}}",
   resourceLocation: "{{resource_location}}",
   taggedResourceLocation: "{{tagged_resource_location}}",
@@ -63,6 +71,15 @@ export const captures = {
   blockPosition: {
     absoluteRelative: "#position.abs_rel",
     local: "#position.local"
+  },
+  range: {
+    left: "#range",
+    right: "#range"
+  },
+  // same here
+  intRange: {
+    left: "#range",
+    right: "#range"
   },
   resourceID: "#resource_id",
   resourceLocation: "#resource_location",

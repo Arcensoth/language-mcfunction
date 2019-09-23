@@ -333,7 +333,7 @@ repository:
       - include: '#common.unquoted_string'
   common.integer_range:
     patterns:
-      - match: (\-?\d*)(\.\.)(\-?\d*)?
+      - match: (\-?\d+)(\.\.)(\-?\d+)?
         captures: &ref_3
           '1':
             name: constant.numeric._.minimum.range.mcfunction
@@ -341,9 +341,9 @@ repository:
             name: keyword.control._.ellipsis.range.mcfunction
           '3':
             name: constant.numeric._.maximum.range.mcfunction
-      - match: (\-?\d*)?(\.\.)(\-?\d*)
+      - match: (\-?\d+)?(\.\.)(\-?\d+)
         captures: *ref_3
-      - match: (\-?\d*)
+      - match: (\-?\d+)
         name: constant.numeric._.number.mcfunction
   common.double_range:
     patterns:
@@ -479,7 +479,7 @@ repository:
       - include: '#error.bad_syntax'
   nbt_path.index:
     patterns:
-      - match: '(?<=\[)(\-?\d*)(?=\])'
+      - match: '(?<=\[)(\-?\d+)(?=\])'
         captures: &ref_17
           '1':
             name: constant.numeric._.number.mcfunction
@@ -1242,13 +1242,13 @@ repository:
   generated.command.data.get.block.targetPos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.data.get.block.targetPos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -1463,13 +1463,13 @@ repository:
   generated.command.data.merge.block.targetPos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.data.merge.block.targetPos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -1646,13 +1646,13 @@ repository:
   generated.command.data.modify.block.targetPos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.data.modify.block.targetPos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -1734,14 +1734,14 @@ repository:
   generated.command.data.modify.block.targetPos.targetPath.append.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.block.targetPos.targetPath.append.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -1971,7 +1971,7 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.data.modify.block.targetPos.targetPath.insert.index:
     patterns:
-      - begin: (\-?\d*) (?=\S)
+      - begin: (\-?\d+) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_17
         patterns:
@@ -2022,14 +2022,14 @@ repository:
   generated.command.data.modify.block.targetPos.targetPath.insert.index.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.block.targetPos.targetPath.insert.index.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -2292,14 +2292,14 @@ repository:
   generated.command.data.modify.block.targetPos.targetPath.merge.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.block.targetPos.targetPath.merge.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -2563,14 +2563,14 @@ repository:
   generated.command.data.modify.block.targetPos.targetPath.prepend.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.block.targetPos.targetPath.prepend.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -2833,14 +2833,14 @@ repository:
   generated.command.data.modify.block.targetPos.targetPath.set.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.block.targetPos.targetPath.set.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -3182,14 +3182,14 @@ repository:
   generated.command.data.modify.entity.target.targetPath.append.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.entity.target.targetPath.append.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -3416,7 +3416,7 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.data.modify.entity.target.targetPath.insert.index:
     patterns:
-      - begin: (\-?\d*) (?=\S)
+      - begin: (\-?\d+) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_17
         patterns:
@@ -3467,14 +3467,14 @@ repository:
   generated.command.data.modify.entity.target.targetPath.insert.index.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.entity.target.targetPath.insert.index.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -3737,14 +3737,14 @@ repository:
   generated.command.data.modify.entity.target.targetPath.merge.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.entity.target.targetPath.merge.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -4006,14 +4006,14 @@ repository:
   generated.command.data.modify.entity.target.targetPath.prepend.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.entity.target.targetPath.prepend.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -4274,14 +4274,14 @@ repository:
   generated.command.data.modify.entity.target.targetPath.set.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.entity.target.targetPath.set.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -4592,14 +4592,14 @@ repository:
   generated.command.data.modify.storage.target.targetPath.append.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.storage.target.targetPath.append.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -4826,7 +4826,7 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.data.modify.storage.target.targetPath.insert.index:
     patterns:
-      - begin: (\-?\d*) (?=\S)
+      - begin: (\-?\d+) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_17
         patterns:
@@ -4877,14 +4877,14 @@ repository:
   generated.command.data.modify.storage.target.targetPath.insert.index.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.storage.target.targetPath.insert.index.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -5147,14 +5147,14 @@ repository:
   generated.command.data.modify.storage.target.targetPath.merge.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.storage.target.targetPath.merge.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -5416,14 +5416,14 @@ repository:
   generated.command.data.modify.storage.target.targetPath.prepend.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.storage.target.targetPath.prepend.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -5686,14 +5686,14 @@ repository:
   generated.command.data.modify.storage.target.targetPath.set.from.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+))( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: >-
               #generated.commands.data.modify.storage.target.targetPath.set.from.block.sourcePos
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)?( |(?=\n))
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -5936,13 +5936,13 @@ repository:
   generated.command.data.remove.block.targetPos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.data.remove.block.targetPos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -6614,13 +6614,13 @@ repository:
   generated.command.execute.if.block.pos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.if.block.pos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -6667,13 +6667,13 @@ repository:
   generated.command.execute.if.blocks.start:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.if.blocks.start'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -6686,13 +6686,13 @@ repository:
   generated.command.execute.if.blocks.start.end:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.if.blocks.start.end'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -6705,13 +6705,13 @@ repository:
   generated.command.execute.if.blocks.start.end.destination:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.if.blocks.start.end.destination'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -6779,13 +6779,13 @@ repository:
   generated.command.execute.if.data.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.if.data.block.sourcePos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -7566,7 +7566,24 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.if.score.target.targetObjective.matches.range:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: (\-?\d+)(\.\.)(\-?\d+)?( |(?=\n))
+        end: (?=\n)
+        beginCaptures: *ref_3
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.matches.range
+      - begin: (\-?\d+)?(\.\.)(\-?\d+)( |(?=\n))
+        end: (?=\n)
+        beginCaptures: *ref_3
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.matches.range
+      - begin: (\-?\d+)( |(?=\n))
+        end: (?=\n)
+        beginCaptures: *ref_17
+        patterns:
+          - include: >-
+              #generated.commands.execute.if.score.target.targetObjective.matches.range
   generated.commands.execute.if.score.target.targetObjective.matches.range:
     patterns:
       - include: '#generated.commands.execute'
@@ -7831,13 +7848,13 @@ repository:
   generated.command.execute.store.result.block.targetPos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.store.result.block.targetPos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -8645,13 +8662,13 @@ repository:
   generated.command.execute.store.success.block.targetPos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.store.success.block.targetPos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -9465,13 +9482,13 @@ repository:
   generated.command.execute.unless.block.pos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.unless.block.pos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -9518,13 +9535,13 @@ repository:
   generated.command.execute.unless.blocks.start:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.unless.blocks.start'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -9537,13 +9554,13 @@ repository:
   generated.command.execute.unless.blocks.start.end:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.unless.blocks.start.end'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -9556,13 +9573,13 @@ repository:
   generated.command.execute.unless.blocks.start.end.destination:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.unless.blocks.start.end.destination'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -9630,13 +9647,13 @@ repository:
   generated.command.execute.unless.data.block.sourcePos:
     patterns:
       - begin: >-
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))
-          (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?:(\~)(\-?\d+)?|(\-?\d+))
+          (?:(\~)(\-?\d+)?|(\-?\d+)) (?=\S)
         end: (?=\n)
         beginCaptures: *ref_6
         patterns:
           - include: '#generated.commands.execute.unless.data.block.sourcePos'
-      - begin: (\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)
+      - begin: (\^)(\-?\d+)? (\^)(\-?\d+)? (\^)(\-?\d+)? (?=\S)
         end: (?=\n)
         beginCaptures: *ref_7
         patterns:
@@ -10417,7 +10434,24 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.unless.score.target.targetObjective.matches.range:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: (\-?\d+)(\.\.)(\-?\d+)?( |(?=\n))
+        end: (?=\n)
+        beginCaptures: *ref_3
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.matches.range
+      - begin: (\-?\d+)?(\.\.)(\-?\d+)( |(?=\n))
+        end: (?=\n)
+        beginCaptures: *ref_3
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.matches.range
+      - begin: (\-?\d+)( |(?=\n))
+        end: (?=\n)
+        beginCaptures: *ref_17
+        patterns:
+          - include: >-
+              #generated.commands.execute.unless.score.target.targetObjective.matches.range
   generated.commands.execute.unless.score.target.targetObjective.matches.range:
     patterns:
       - include: '#generated.commands.execute'

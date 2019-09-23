@@ -193,10 +193,16 @@ variables:
   tagged_resource_location: '(\#){{resource_location}}'
 
   # numbers
-  integer: '(\-?\d*)'
+  integer: '(\-?\d+)'
   non_negative_integer: '(\d+)'
   positive_integer: '(0*[1-9]\d*)'
   double: '(\-?\d*\.?\d+)'
+
+  # ranges
+  range.left: '{{double}}(\.\.){{double}}?'
+  range.right: '{{double}}?(\.\.){{double}}'
+  int_range.left: '{{integer}}(\.\.){{integer}}?'
+  int_range.right: '{{integer}}?(\.\.){{integer}}'
 
   # various coordinates and positions
   coordinate.absolute: "{{double}}"
@@ -826,10 +832,10 @@ repository:
   common.integer_range:
     patterns:
       # right-side optional
-      - match: '{{integer}}(\.\.){{integer}}?'
+      - match: '{{int_range.left}}'
         captures: "#range"
       # left-side optional
-      - match: '{{integer}}?(\.\.){{integer}}'
+      - match: '{{int_range.right}}'
         captures: "#range"
       # exact number
       - match: "{{integer}}"
@@ -839,10 +845,10 @@ repository:
   common.double_range:
     patterns:
       # right-side optional
-      - match: '{{double}}(\.\.){{double}}?'
+      - match: '{{range.left}}'
         captures: "#range"
       # left-side optional
-      - match: '{{double}}?(\.\.){{double}}'
+      - match: '{{range.right}}'
         captures: "#range"
       # exact number
       - match: "{{double}}"
