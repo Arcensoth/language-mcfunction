@@ -7782,7 +7782,25 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.rotated.rot:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: >-
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: keyword.control._.operator.relative.position.mcfunction
+          '2':
+            name: constant.numeric._.number.relative.position.mcfunction
+          '3':
+            name: constant.numeric._.number.absolute.position.mcfunction
+          '4':
+            name: keyword.control._.operator.relative.position.mcfunction
+          '5':
+            name: constant.numeric._.number.relative.position.mcfunction
+          '6':
+            name: constant.numeric._.number.absolute.position.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.rotated.rot'
   generated.commands.execute.rotated.rot:
     patterns:
       - include: '#generated.commands.execute'

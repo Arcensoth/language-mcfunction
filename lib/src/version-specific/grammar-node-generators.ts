@@ -16,6 +16,7 @@ import { NBTPathGrammarNodeGenerator } from "./grammar-node-generators/nbt-path-
 import { NBTValueGrammarNodeGenerator } from "./grammar-node-generators/nbt-value-grammar-node-generator";
 import { PositionGrammarNodeGenerator } from "./grammar-node-generators/position-grammar-node-generator";
 import { ResourceLocationGrammarNodeGenerator } from "./grammar-node-generators/resource-location-grammar-node-generator";
+import { RotationGrammarNodeGenerator } from "./grammar-node-generators/rotation-grammar-node-generator";
 import { ScoreHolderGrammarNodeGenerator } from "./grammar-node-generators/score-holder-grammar-node-generator";
 import { ScoreboardObjectiveGrammarNodeGenerator } from "./grammar-node-generators/scoreboard-objective-grammar-node-generator";
 import { SwizzleGrammarNodeGenerator } from "./grammar-node-generators/swizzle-grammar-node-generator";
@@ -43,6 +44,7 @@ export const GRAMMAR_NODE_GENERATOR_MAP: {
   "minecraft:objective": new ScoreboardObjectiveGrammarNodeGenerator(),
   "minecraft:int_range": new IntRangeGrammarNodeGenerator(),
   "minecraft:resource_location": new ResourceLocationGrammarNodeGenerator(),
+  "minecraft:rotation": new RotationGrammarNodeGenerator(),
   "minecraft:score_holder": new ScoreHolderGrammarNodeGenerator(),
   "minecraft:swizzle": new SwizzleGrammarNodeGenerator(),
   "minecraft:vec3": new PositionGrammarNodeGenerator()

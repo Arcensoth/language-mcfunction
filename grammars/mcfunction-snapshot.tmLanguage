@@ -26966,8 +26966,50 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.relative.position.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.relative.position.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.absolute.position.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control._.operator.relative.position.mcfunction</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.relative.position.mcfunction</string>
+              </dict>
+              <key>6</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.number.absolute.position.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.rotated.rot</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>

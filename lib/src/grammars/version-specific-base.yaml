@@ -220,6 +220,9 @@ variables:
   block_position.abs_rel: "{{block_coordinate.abs_rel}} {{block_coordinate.abs_rel}} {{block_coordinate.abs_rel}}"
   block_position.local: "{{block_coordinate.local}} {{block_coordinate.local}} {{block_coordinate.local}}"
 
+  # rotation
+  rotation: "{{coordinate.abs_rel}} {{coordinate.abs_rel}}"
+
   boolean: "(true|false)"
 
   swizzle: "(x|y|z|xy|xz|yz|xyz)"
@@ -331,6 +334,20 @@ capturesRepository:
       name: "#position.local.operator"
     6:
       name: "#position.local.number"
+
+  rotation:
+    1:
+      name: "#position.relative.operator"
+    2:
+      name: "#position.relative.number"
+    3:
+      name: "#position.absolute.number"
+    4:
+      name: "#position.relative.operator"
+    5:
+      name: "#position.relative.number"
+    6:
+      name: "#position.absolute.number"
 
   quoted_string.begin:
     1:

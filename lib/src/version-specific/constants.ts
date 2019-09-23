@@ -26,6 +26,7 @@ export const patterns = {
     left: "{{int_range.left}}",
     right: "{{int_range.right}}"
   },
+  rotation: "{{rotation}}",
   resourceID: "{{resource_id}}",
   resourceLocation: "{{resource_location}}",
   taggedResourceLocation: "{{tagged_resource_location}}",
@@ -81,6 +82,7 @@ export const captures = {
     left: "#range",
     right: "#range"
   },
+  rotation: "#rotation",
   resourceID: "#resource_id",
   resourceLocation: "#resource_location",
   taggedResourceLocation: "#tagged_resource_location",
