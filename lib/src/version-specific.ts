@@ -1,40 +1,66 @@
 import {
   CommandNode,
-  CommandNodeChildren,
+  CommandNodeContext,
   CommandNodeType
 } from "./command-manifest";
 import { ExtendedLanguageGrammar, GrammarNode } from "./language-grammar";
 import { deepCopy } from "./utils";
+import { nodes } from "./version-specific/constants";
+import { getGrammarNodeGenerator } from "./version-specific/grammar-node-generators";
+import {
+  makeCommandNodeChildNames,
+  makeGrammarGroupName,
+  makeGrammarNodeName,
+  makeCommandNodeChildRefs,
+  makeCommandNodeRedirectRefs
+} from "./version-specific/utils";
 
-export function getCommandNodeChildNames(commandNode: CommandNode): string[] {
-  return Object.keys(commandNode.children ? commandNode.children : []);
-}
-
-export function getGrammarNodeName(...components: string[]): string {
-  return "generated.command." + components.join(".");
-}
-
-export function getGrammarGroupName(...components: string[]): string {
-  return "generated.commands." + components.join(".");
-}
-
-export function makeGrammarNode(
-  commandNode: CommandNode,
-  name: string,
-  breadcrumb: string[]
+export function makeLiteralGrammarNode(
+  context: CommandNodeContext
 ): GrammarNode {
-  // FIXME deal with node type and parser
-  const grammarGroupName = getGrammarGroupName(...breadcrumb, name);
   return {
-    begin: commandNode.executable
-      ? `(${name}){{cbx_true}}`
-      : `(${name}){{cbx_false}}`,
+    begin: context.appendExec(`(${context.name})`),
     end: "{{ln}}",
     beginCaptures: {
-      1: { name: breadcrumb.length > 0 ? "#subcommand" : "#command" }
+      1: { name: context.breadcrumb.length > 0 ? "#subcommand" : "#command" }
     },
-    patterns: [{ include: `#${grammarGroupName}` }]
+    patterns: context.groupPatterns
   } as GrammarNode;
+}
+
+function printError(context: CommandNodeContext, message: string) {
+  const nodePath = [...context.breadcrumb, context.name].join(".");
+  console.error(`${message} at node ${nodePath}`);
+}
+
+export function makeArgumentGrammarNode(
+  context: CommandNodeContext
+): GrammarNode {
+  const nodeParserGenerator = getGrammarNodeGenerator(context.node);
+
+  if (nodeParserGenerator) {
+    return nodeParserGenerator.generate(context);
+  }
+
+  printError(context, `Unknown parser "${context.node.parser}"`);
+  return {
+    patterns: [{ include: nodes.error.unknownParser }]
+  };
+}
+
+export function makeGrammarNode(context: CommandNodeContext): GrammarNode {
+  if (context.node.type === CommandNodeType.LITERAL) {
+    return makeLiteralGrammarNode(context);
+  }
+
+  if (context.node.type === CommandNodeType.ARGUMENT) {
+    return makeArgumentGrammarNode(context);
+  }
+
+  printError(context, `Invalid node type "${context.node.type}"`);
+  return {
+    patterns: [{ include: nodes.error.invalidNode }]
+  };
 }
 
 export function makeGrammarGroup(
@@ -43,41 +69,48 @@ export function makeGrammarGroup(
 ): GrammarNode {
   return {
     patterns: [
-      ...getCommandNodeChildNames(commandNode).map(childName => {
-        const childGrammarNodeName = getGrammarNodeName(
-          ...breadcrumb,
-          childName
-        );
-        return { include: `#${childGrammarNodeName}` } as GrammarNode;
-      }),
-      { include: "#error.command_line" }
+      // Attempt to match all child nodes first.
+      ...makeCommandNodeChildRefs(commandNode, breadcrumb),
+
+      // Then attempt to match any redirects.
+      ...makeCommandNodeRedirectRefs(commandNode, breadcrumb),
+
+      // Then attempt to consume remaining whitespace.
+      // NOTE This should only ever be reached by executable nodes.
+      { include: nodes.common.trailingWhitespace },
+
+      // Otherwise we've got an error.
+      { include: nodes.error.unmatchedChild }
     ]
   } as GrammarNode;
 }
 
 export function augmentNode(
   grammar: ExtendedLanguageGrammar,
-  commandNode: CommandNode,
-  name: string,
-  breadcrumb: string[]
+  context: CommandNodeContext
 ) {
-  const nextBreadcrumb = [...breadcrumb, name];
-  const grammarNodeName = getGrammarNodeName(...nextBreadcrumb);
-  const grammarGroupName = getGrammarGroupName(...nextBreadcrumb);
+  const nextBreadcrumb = [...context.breadcrumb, context.name];
+  const grammarNodeName = makeGrammarNodeName(...nextBreadcrumb);
+  const grammarGroupName = makeGrammarGroupName(...nextBreadcrumb);
 
   // register a grammar pattern for the command node
-  const grammarNode = makeGrammarNode(commandNode, name, breadcrumb);
+  const grammarNode = makeGrammarNode(context);
   grammar.repository[grammarNodeName] = grammarNode;
 
   // register a grammar pattern with includes for all children command nodes
   // we do this separately to reduce nested patterns and to trivialize redirects
-  const grammarGroup = makeGrammarGroup(commandNode, nextBreadcrumb);
+  const grammarGroup = makeGrammarGroup(context.node, nextBreadcrumb);
   grammar.repository[grammarGroupName] = grammarGroup;
 
   // recursively add children to the grammar
-  getCommandNodeChildNames(commandNode).forEach(childName => {
-    const childCommandNode = commandNode.children[childName];
-    augmentNode(grammar, childCommandNode, childName, nextBreadcrumb);
+  makeCommandNodeChildNames(context.node).forEach(childName => {
+    const childCommandNode = context.node.children[childName];
+    const childContext = new CommandNodeContext(
+      childCommandNode,
+      childName,
+      nextBreadcrumb
+    );
+    augmentNode(grammar, childContext);
   });
 }
 
@@ -88,11 +121,16 @@ export function augmentGrammar(
   // make a copy of the given grammar
   const grammar = deepCopy(baseGrammar) as ExtendedLanguageGrammar;
 
-  // DELETE
+  // DELETEME limit generated commands during development
   commands = {
     type: CommandNodeType.ROOT,
     children: {
-      advancement: commands.children["advancement"]
+      data: commands.children["data"],
+      effect: commands.children["effect"],
+      execute: commands.children["execute"],
+      function: commands.children["function"],
+      say: commands.children["say"],
+      tellraw: commands.children["tellraw"]
     }
   };
 
@@ -100,18 +138,15 @@ export function augmentGrammar(
   const grammarRootGroup = makeGrammarGroup(commands, []);
   grammar.repository["generated.commands"] = grammarRootGroup;
 
-  // DELETE
-  grammarRootGroup.patterns = [
-    { include: "#generated.command.say" },
-    { include: "#generated.command.tellraw" },
-    { include: "#generated.command.execute" },
-    ...grammarRootGroup.patterns
-  ];
-
   // recursively add top-level commands to the grammar
-  getCommandNodeChildNames(commands).forEach(childName => {
+  makeCommandNodeChildNames(commands).forEach(childName => {
     const childCommandNode = commands.children[childName];
-    augmentNode(grammar, childCommandNode, childName, []);
+    const childContext = new CommandNodeContext(
+      childCommandNode,
+      childName,
+      []
+    );
+    augmentNode(grammar, childContext);
   });
 
   return grammar;

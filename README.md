@@ -1,74 +1,106 @@
 # language-mcfunction
 Language grammars and syntax highlighting for mcfunction files.
 
+[![github-license-badge]](https://github.com/Arcensoth/language-mcfunction)
 [![vscode-version-badge]](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction)
 [![discord-chat-badge]](https://discord.gg/QAFXFtZ)
 
 This project provides two types of grammars: the default, [version-agnostic grammar](#version-agnostic-grammar) (shown below), and WIP [version-specific grammars](#version-specific-grammars).
 
 - [Install]
+  - [Installing the VSCode extension]
+  - [Installing the SublimeText package]
 - [Features]
+  - [Syntax highlighting]
+  - [Custom block comments]
 - [Configure]
+  - [Configuring the version-agnostic grammar]
+  - [Configuring the version-specific grammars]
 - [Customize]
-  - [Version-agnostic grammar]
-  - [Version-specific grammars]
 - [Contribute]
 - [Resources]
 
-[![Showcase](https://i.imgur.com/Rz845y3.png)](https://i.imgur.com/Rz845y3.png)
+[![Showcase](https://i.imgur.com/0agDB4B.png)](https://i.imgur.com/0agDB4B.png)
 
 ## Install
-- VSCode: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
-- SublimeText: clone repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`)
+### Installing the VSCode extension
+The extension [language-mcfunction](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction) is available from the Marketplace: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
+
+### Installing the SublimeText package
+It is recommended you use [Package Control](https://packagecontrol.io/) to manage the package:
+
+1. [Install Package Control](https://packagecontrol.io/installation) if it is not already present.
+2. Run the `Package Control: Add Repository` [command](https://packagecontrol.io/docs/usage) and enter `https://github.com/Arcensoth/language-mcfunction` to add the repository as a package.
+3. Run the `Package Control: Install Package` and search for `language-mcfunction` to install it as you would a normal package.
+
+This will keep the package updated with the repository automatically.
+
+Otherwise you can clone the repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`) and update it manually.
 
 ## Features
+### Syntax highlighting
 Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
 
-- Comments
-    - [x] [Reminders](https://i.imgur.com/xfiPy7D.png): `TODO` / `FIXME` / etc
-    - [x] [Annotations](https://i.imgur.com/yZgaGSN.png): `@params` / `@returns` / etc
-    - [x] [Headings](https://i.imgur.com/jZvd5nO.png): `## Some Heading`
-- Commands and arguments
-    - [x] [Indentation](https://i.imgur.com/6bRd6Dd.png)
-    - [x] [Booleans](https://i.imgur.com/FBKTc5u.png): `true` / `false`
-    - [x] [Numbers](https://i.imgur.com/KSvbapt.png): `20` / `3.14` / `.001`
-    - [x] [Operations](https://i.imgur.com/iYvND6j.png): `=` / `/=` / `%=` / etc
-    - [x] [Ranges](https://i.imgur.com/ZUicjD0.png): `1..` / `3.14..20` / `...001`
-    - [x] [Relative coordinates](https://i.imgur.com/3qaVlrO.png): `~` / `~10` / `~-4.5`
-    - [x] [Local coordinates](https://i.imgur.com/9De4utY.png): `^` / `^-1` / `^.05`
-    - [x] [Resource locations](https://i.imgur.com/wDWTzSw.png): `minecraft:chests/simple_dungeon` / `#minecraft:wools`
-    - [x] [Block predicates](https://i.imgur.com/7QpQsi6.png): `minecraft:dispenser[facing=up]`
-    - [x] [Unquoted strings](https://i.imgur.com/82vSj6Q.png): `mypack.some.tag` / `mypack.custom_crafting_marker`
-    - [x] [Quoted strings with escaping](https://i.imgur.com/3Ns8MzH.png): `"hello world"` / `"CustomName With Spaces"`
-    - [x] [Single-quoted strings](https://i.imgur.com/6BtgTvu.png): `'hello world'` / `'{"text": "hello world"}'`
-    - [x] [NBT compounds/lists](https://i.imgur.com/ISjyX3Z.png): `{ Fire: 20s , NoGravity: true, Tags: [ "mytag" ] }`
-    - [x] [NBT paths](https://i.imgur.com/DVPvepj.png): `SelectedItem.Count` / `RecordItem.tag.mycustomtag`
-    - [x] [JSON/text components](https://i.imgur.com/5cJVdhc.png): `{"text": "hello world", "color": "blue"}`
-    - [x] [UUIDs](https://i.imgur.com/uvwKnCC.png): `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` `0-0-0-0-0`
-    - [x] [Fakeplayers](https://i.imgur.com/jNODt4g.png): `#hidden` / `$fakefoo` / `%fakebar`
-    - [x] [Base selectors](https://i.imgur.com/6eWmGa4.png): `@e`
-    - [x] [Selectors with arguments](https://i.imgur.com/Ut4W6pF.png): `@e[tag=foo]` / `@e[tag=!foo]`
-    - Selector arguments
-        - [x] [Literal arguments](https://i.imgur.com/LtMfOGW.png): `gamemode` / `sort`
-        - [x] [Numeric arguments](https://i.imgur.com/FvnxwYD.png): `x` / `y` / `z` / `limit`
-        - [x] [Range arguments](https://i.imgur.com/DiLdNU6.png): `distance` / `level`
-        - [x] [Resource location arguments](https://i.imgur.com/ZQ920Yw.png): `type`
-        - [x] [Unquoted string arguments](https://i.imgur.com/svqzc2o.png): `tag`
-        - [x] [Quoted string arguments](https://i.imgur.com/ahm8HYb.png): `name`
-        - [x] [NBT compound arguments](https://i.imgur.com/JqWrpVm.png): `nbt`
-        - [x] [Score arguments](https://i.imgur.com/L7f9wJ3.png): `scores`
-        - [x] [Advancement arguments](https://i.imgur.com/yQj5Oye.png): `advancements`
+- [x] [Comments and indentation](https://i.imgur.com/1N5zlkj.png): `# This is a comment`
+- [x] [Custom block comments]: `#> This is a block heading`
+- [x] [Booleans](https://i.imgur.com/FBKTc5u.png): `true` / `false`
+- [x] [Numbers](https://i.imgur.com/KSvbapt.png): `20` / `3.14` / `.001`
+- [x] [Operations](https://i.imgur.com/iYvND6j.png): `=` / `/=` / `%=` / etc
+- [x] [Ranges](https://i.imgur.com/ZUicjD0.png): `1..` / `3.14..20` / `...001`
+- [x] [Relative coordinates](https://i.imgur.com/3qaVlrO.png): `~` / `~10` / `~-4.5`
+- [x] [Local coordinates](https://i.imgur.com/9De4utY.png): `^` / `^-1` / `^.05`
+- [x] [Resource locations](https://i.imgur.com/wDWTzSw.png): `minecraft:chests/simple_dungeon` / `#minecraft:wools`
+- [x] [Block predicates](https://i.imgur.com/7QpQsi6.png): `minecraft:dispenser[facing=up]`
+- [x] [Unquoted strings](https://i.imgur.com/82vSj6Q.png): `mypack.some.tag` / `mypack.custom_crafting_marker`
+- [x] [Quoted strings with escaping](https://i.imgur.com/3Ns8MzH.png): `"hello world"` / `"CustomName With Spaces"`
+- [x] [Single-quoted strings](https://i.imgur.com/6BtgTvu.png): `'hello world'` / `'{"text": "hello world"}'`
+- [x] [NBT compounds/lists](https://i.imgur.com/ISjyX3Z.png): `{ Fire: 20s , NoGravity: true, Tags: [ "mytag" ] }`
+- [x] [NBT paths](https://i.imgur.com/DVPvepj.png): `SelectedItem.Count` / `RecordItem.tag.mycustomtag`
+- [x] [JSON/text components](https://i.imgur.com/5cJVdhc.png): `{"text": "hello world", "color": "blue"}`
+- [x] [UUIDs](https://i.imgur.com/uvwKnCC.png): `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` `0-0-0-0-0`
+- [x] [Fakeplayers](https://i.imgur.com/jNODt4g.png): `#hidden` / `$fakefoo` / `%fakebar`
+- [x] [Base selectors](https://i.imgur.com/6eWmGa4.png): `@e`
+- [x] [Selectors with arguments](https://i.imgur.com/Ut4W6pF.png): `@e[tag=foo]` / `@e[tag=!foo]`
+    - [x] [Literal arguments](https://i.imgur.com/LtMfOGW.png): `gamemode` / `sort`
+    - [x] [Numeric arguments](https://i.imgur.com/FvnxwYD.png): `x` / `y` / `z` / `limit`
+    - [x] [Range arguments](https://i.imgur.com/DiLdNU6.png): `distance` / `level`
+    - [x] [Resource location arguments](https://i.imgur.com/ZQ920Yw.png): `type`
+    - [x] [Unquoted string arguments](https://i.imgur.com/svqzc2o.png): `tag`
+    - [x] [Quoted string arguments](https://i.imgur.com/ahm8HYb.png): `name`
+    - [x] [NBT compound arguments](https://i.imgur.com/JqWrpVm.png): `nbt`
+    - [x] [Score arguments](https://i.imgur.com/L7f9wJ3.png): `scores`
+    - [x] [Advancement arguments](https://i.imgur.com/yQj5Oye.png): `advancements`
+
+### Custom block comments
+It's common for datapack developers to comment parts of their code with things like headings, parameters, return values, etc. To support these patterns for those who wish to use them, the grammar implements custom block comments. These types of comments are gated behind a vanilla-compatible alternate comment style.
+
+The prefix `#>` can be used to initiate a block comment:
+
+```mcfunction
+#> This is a block heading
+# All adjacent comments will be considered part of the block.
+#
+# So long as you keep comments attached, they will remain part of the block.
+
+# This line no longer attached to the block.
+
+#> But we can start a new block here!
+```
+
+[Click here for a detailed example.](https://i.imgur.com/i2ojCZS.png)
+
+As of writing there is no documentation standard, however the grammar has the capacity to support this via block comments and alternate comment styles.
 
 ## Configure
-### Version-agnostic grammar
+### Configuring the version-agnostic grammar
 This is a generic "version-agnostic" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
 
 The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting.
 
-In the future, the [version-specific grammars](#version-specific-grammars) will be preferred when available.
+In the future, the [version-specific grammars] will be preferred when available.
 
-### Version-specific grammars
-> **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar](#version-agnostic-grammar). Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
+### Configuring the version-specific grammars
+> **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar]. Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
 
 The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher. They have context-sensitive highlighting and command validation comparable to the in-game command bar.
 
@@ -83,7 +115,7 @@ In VSCode, you can easily choose which version of mcfunction to use by changing 
 This option can also be set on the user-level in `settings.json` or folder-level in `.vscode/settings.json`.
 
 ## Customize
-Currently available for the [version-specific grammars](#version-specific-grammars).
+Currently available for the [version-specific grammars].
 
 Scopes have been assigned with user customization in mind. If your editor allows scope overrides, this will make it easy to customize your own colours for a variety of scopes.
 
@@ -106,14 +138,16 @@ Short name  | Full scope name                           | Examples
 `underline` | `markup.underline._.underline.mcfunction` | `execute (foo)`
 
 ### Customizing comments
-Short name                | Full scope name                                       | Examples
-------------------------- | ----------------------------------------------------- | ----------
-`comment`                 | `comment._.comment.mcfunction`                        | `# This is a comment`
-`comment.heading`         | `markup.heading._.heading.comment.mcfunction`         | `## Comment Heading`
-`comment.marker.name`     | `markup.bold._.name.marker.comment.mcfunction`        | `# (TODO): optimize selectors`
-`comment.marker.text`     | `comment._.text.marker.comment.mcfunction`            | `# TODO(: optimize selectors)`
-`comment.annotation.name` | `markup.heading._.name.annotation.comment.mcfunction` | `# (@returns) the number of blocks`
-`comment.annotation.text` | `comment._.text.annotation.comment.mcfunction`        | `# @returns( the number of blocks)`
+Short name                        | Full scope name                                               | Examples
+--------------------------------- | ------------------------------------------------------------- | ----------
+`comment.plain`                   | `comment._.plain.comment.mcfunction`                          | `(# This is a plain comment)`
+`comment.block`                   | `comment.block._.block.comment.mcfunction`                    | `(#> This is part of a block comment)`
+`comment.block.symbol`            | `markup.list._.symbol.block.comment.mcfunction`               | `(#)> This is part of a block comment`
+`comment.block.prefix`            | `markup.list._.prefix.block.comment.mcfunction`               | `#(>) This is part of a block comment`
+`comment.block.heading_1`         | `markup.bold._.heading_1.block.comment.mcfunction`            | `#> (This is part of a block comment)`
+`comment.block.heading_2`         | `markup.list._.heading_2.block.comment.mcfunction`            | `#> (This is part of a block comment)`
+`comment.block.annotation.label`  | `markup.heading._.label.annotation.block.comment.mcfunction`  | `#> (@annotation) some annotation`
+`comment.block.annotation.text`   | `comment.block._.text.annotation.block.comment.mcfunction`    | `#> @annotation (some annotation)`
 
 ### Customizing commands
 Short name      | Full scope name                         | Examples
@@ -141,11 +175,19 @@ Short name                | Full scope name                                     
 ### Customizing NBT
 Short name              | Full scope name                             | Examples
 ----------------------- | ------------------------------------------- | ----------
-`nbt.compound_bracket`  | `storage._.compound_bracket.nbt.mcfunction` | `{}`
-`nbt.compound_colon`    | `storage._.compound_colon.nbt.mcfunction`   | `:`
-`nbt.compound_comma`    | `storage._.compound_comma.nbt.mcfunction`   | `,`
-`nbt.list_bracket`      | `storage._.list_bracket.nbt.mcfunction`     | `[]`
-`nbt.list_comma`        | `storage._.list_comma.nbt.mcfunction`       | `,`
+`nbt_compound.bracket`  | `storage._.bracket.nbt_compound.mcfunction` | `{}`
+`nbt_compound.colon`    | `storage._.colon.nbt_compound.mcfunction`   | `:`
+`nbt_compound.comma`    | `storage._.comma.nbt_compound.mcfunction`   | `,`
+`nbt_list.bracket`      | `storage._.bracket.nbt_list.mcfunction`     | `[]`
+`nbt_list.comma`        | `storage._.comma.nbt_list.mcfunction`       | `,`
+
+### Customizing NBT paths
+Short name                  | Full scope name                                   | Examples
+--------------------------- | ------------------------------------------------- | ----------
+`nbt_path.property`         | `string._.property.nbt_path.mcfunction`           | `(RecordItem)`
+`nbt_path.dot`              | `storage._.dot.nbt_path.mcfunction`               | `RecordItem(.)tag`
+`nbt_path.compound.bracket` | `storage._.bracket.compound.nbt_path.mcfunction`  | `SelectedItem({)(})`
+`nbt_path.index.bracket`    | `storage._.bracket.index.nbt_path.mcfunction`     | `Inventory([)(])`
 
 ### Customizing text components
 Short name                        | Full scope name                                       | Examples
@@ -159,12 +201,15 @@ Short name                        | Full scope name                             
 `text_component.property.event`   | `string._.event.property.text_component.mcfunction`   | `run_command` / `show_text`
 
 ### Customizing resource locations
-Short name                    | Full scope name                                                 | Examples
------------------------------ | --------------------------------------------------------------- | ----------
-`resource_location.namespace` | `entity.name.function._.namespace.resource_location.mcfunction` | `#(mypack):some/resource`
-`resource_location.hash`      | `entity.name.function._.hash.resource_location.mcfunction`      | `(#)mypack:some/resource`
-`resource_location.colon`     | `entity.name.function._.colon.resource_location.mcfunction`     | `#mypack(:)some/resource`
-`resource_location.path`      | `entity.name.function._.path.resource_location.mcfunction`      | `#mypack:(some/resource)`
+Short name                            | Full scope name                                                         | Examples
+------------------------------------- | ----------------------------------------------------------------------- | ----------
+`resource_location.namespace`         | `entity.name.function._.namespace.resource_location.mcfunction`         | `(mypack):some/resource`
+`resource_location.colon`             | `entity.name.function._.colon.resource_location.mcfunction`             | `mypack(:)some/resource`
+`resource_location.path`              | `entity.name.function._.path.resource_location.mcfunction`              | `mypack:(some/resource)`
+`tagged_resource_location.hash`       | `entity.name.function._.hash.tagged_resource_location.mcfunction`       | `(#)mypack:some/resource`
+`tagged_resource_location.namespace`  | `entity.name.function._.namespace.tagged_resource_location.mcfunction`  | `#(mypack):some/resource`
+`tagged_resource_location.colon`      | `entity.name.function._.colon.tagged_resource_location.mcfunction`      | `#mypack(:)some/resource`
+`tagged_resource_location.path`       | `entity.name.function._.path.tagged_resource_location.mcfunction`       | `#mypack:(some/resource)`
 
 ### Customizing strings
 Short name              | Full scope name                                         | Examples
@@ -197,15 +242,17 @@ Short name                  | Full scope name                                   
 `score_holder.fakeplayer `  | `support.class._.fakeplayer.score_holder.mcfunction`            | `#temp` / `$mypack.calc`
 
 ### Other customizable scopes
-Short name                | Full scope name                                       | Examples
-------------------------- | ----------------------------------------------------- | ----------
-`boolean`                 | `constant.numeric._.boolean.mcfunction`               | `true` / `false`
-`target.uuid`             | `support.class._.uuid.target.mcfunction`              | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
-`target.player_name`      | `support.class._.uuid.target.mcfunction`              | `Arcensoth` / `some_guy`
-`generic.dict.bracket`    | `storage._.bracket.dict.generic.mcfunction`           | `({) key: value (})`
-`generic.dict.content`    | `string._.content.dict.generic.mcfunction`            | `{( key: value )}`
-`generic.list.bracket`    | `storage._.bracket.list.generic.mcfunction`           | `([) item, item (])`
-`generic.list.content`    | `string._.content.list.generic.mcfunction`            | `[( item, item )]`
+Short name                | Full scope name                               | Examples
+------------------------- | --------------------------------------------- | ----------
+`boolean`                 | `constant.numeric._.boolean.mcfunction`       | `true` / `false`
+`entity_anchor`           | `constant.numeric._.entity_anchor.mcfunction` | `eyes` / `feet`
+`swizzle`                 | `constant.numeric._.swizzle.mcfunction`       | `y` / `xz` / `xyz`
+`target.uuid`             | `support.class._.uuid.target.mcfunction`      | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
+`target.player_name`      | `support.class._.uuid.target.mcfunction`      | `Arcensoth` / `some_guy`
+`generic.dict.bracket`    | `storage._.bracket.dict.generic.mcfunction`   | `({) key: value (})`
+`generic.dict.content`    | `string._.content.dict.generic.mcfunction`    | `{( key: value )}`
+`generic.list.bracket`    | `storage._.bracket.list.generic.mcfunction`   | `([) item, item (])`
+`generic.list.content`    | `string._.content.list.generic.mcfunction`    | `[( item, item )]`
 
 ## Contribute
 [Contributions are welcome; see `CONTRIBUTING.md`.](./CONTRIBUTING.md)
@@ -223,14 +270,21 @@ Short name                | Full scope name                                     
 - https://code.visualstudio.com/api/language-extensions/language-server-extension-guide
 - https://github.com/Microsoft/vscode-extension-samples/tree/master/lsp-sample
 
+[github-license-badge]: https://img.shields.io/github/license/arcensoth/language-mcfunction.svg?logo=github
 [vscode-version-badge]: https://img.shields.io/visual-studio-marketplace/v/arcensoth.language-mcfunction.svg?logo=visual-studio-code
 [discord-chat-badge]: https://img.shields.io/discord/154777837382008833.svg?color=%237289DA&label=chat&logo=discord&logoColor=%23FFFFFF
 
 [Install]: #install
+[Installing the VSCode extension]: #installing-the-vscode-extension
+[Installing the SublimeText package]: #installing-the-sublimetext-package
 [Features]: #features
+[Syntax highlighting]: #syntax-highlighting
+[Custom block comments]: #custom-block-comments
 [Configure]: #configure
-[Version-agnostic grammar]: #version-agnostic-grammar
-[Version-specific grammars]: #version-specific-grammars
+[Configuring the version-agnostic grammar]: #configuring-the-version-agnostic-grammar
+[version-agnostic grammar]: #configuring-the-version-agnostic-grammar
+[Configuring the version-specific grammars]: #configuring-the-version-specific-grammars
+[version-specific grammars]: #configuring-the-version-specific-grammars
 [Customize]: #customize
 [Customizing errors]: #customizing-errors
 [Customizing comments]: #customizing-comments

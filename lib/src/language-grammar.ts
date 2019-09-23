@@ -8,9 +8,9 @@ export interface GrammarNode {
   match?: string;
   begin?: string;
   end?: string;
-  captures?: GrammarCaptures;
-  beginCaptures?: GrammarCaptures;
-  endCaptures?: GrammarCaptures;
+  captures?: GrammarCaptures | string;
+  beginCaptures?: GrammarCaptures | string;
+  endCaptures?: GrammarCaptures | string;
   patterns?: GrammarNode[];
 }
 

@@ -19,53 +19,106 @@
     "comment": {
       "patterns": [
         {
-          "name": "meta.comment.todo.mcfunction",
-          "match": "^\\s*(#)\\s*((?:TODO|FIXME|DELETEME))(\\b.*)$",
-          "captures": {
+          "name": "meta.comment.block.mcfunction",
+          "begin": "^[ \\t]*((#)(>)((.*)))$",
+          "end": "^(?![ \\t]*#)",
+          "beginCaptures": {
             "1": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "comment.block.mcfunction"
             },
             "2": {
+              "name": "markup.list.mcfunction"
+            },
+            "3": {
+              "name": "markup.list.mcfunction"
+            },
+            "4": {
               "name": "markup.bold.mcfunction"
             },
-            "3": {
-              "name": "comment.number-sign.mcfunction"
+            "5": {
+              "name": "markup.list.mcfunction"
             }
-          }
+          },
+          "patterns": [
+            {
+              "include": "#comment.block"
+            }
+          ]
         },
         {
-          "name": "meta.comment.annotation.mcfunction",
-          "match": "^\\s*(#)\\s*(\\@\\w*)(\\b.*)$",
+          "name": "meta.comment.line.mcfunction",
+          "match": "^[ \\t]*(#.*)$",
           "captures": {
             "1": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "comment.line.mcfunction"
+            }
+          }
+        }
+      ]
+    },
+    "comment.block": {
+      "patterns": [
+        {
+          "name": "meta.comment.block_line.mcfunction",
+          "begin": "^[ \\t]*((#)[ \\t]*)",
+          "end": "$",
+          "beginCaptures": {
+            "1": {
+              "name": "comment.block.mcfunction"
+            },
+            "2": {
+              "name": "markup.list.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comment.block.line"
+            }
+          ]
+        }
+      ]
+    },
+    "comment.block.line": {
+      "patterns": [
+        {
+          "name": "meta.comment.block.annotation.mcfunction",
+          "match": "((\\@\\w*)\\b(.*))$",
+          "captures": {
+            "1": {
+              "name": "comment.block.mcfunction"
             },
             "2": {
               "name": "markup.heading.mcfunction"
             },
             "3": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "comment.block.mcfunction"
             }
           }
         },
         {
-          "name": "meta.comment.annotation.mcfunction",
-          "match": "^\\s*(##)\\s*(.*)$",
+          "name": "meta.comment.block.heading.mcfunction",
+          "match": "((>)((.*)))$",
           "captures": {
             "1": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "comment.block.mcfunction"
             },
             "2": {
-              "name": "markup.heading.mcfunction"
+              "name": "markup.list.mcfunction"
+            },
+            "3": {
+              "name": "markup.bold.mcfunction"
+            },
+            "4": {
+              "name": "markup.list.mcfunction"
             }
           }
         },
         {
-          "name": "meta.comment.mcfunction",
-          "match": "^\\s*(#.*)$",
+          "name": "meta.comment.block.text.mcfunction",
+          "match": "(.*)$",
           "captures": {
             "1": {
-              "name": "comment.number-sign.mcfunction"
+              "name": "comment.block.mcfunction"
             }
           }
         }
@@ -128,6 +181,9 @@
           "include": "#command.token.block_predicate"
         },
         {
+          "include": "#command.token.block_predicate_without_namespace"
+        },
+        {
           "include": "#command.token.resource_location"
         },
         {
@@ -150,6 +206,9 @@
         },
         {
           "include": "#command.token.root_redirect"
+        },
+        {
+          "include": "#command.token.greedy_parent"
         },
         {
           "include": "#command.token.literal"
@@ -320,13 +379,25 @@
     },
     "command.token.root_redirect": {
       "name": "meta.command.token.root_redirect.mcfunction",
-      "match": "(?<= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \\n]|$)",
+      "match": "(?<= )(run) ([a-z_][a-z0-9_]*)?(?=[ \\n]|$)",
       "captures": {
         "1": {
           "name": "entity.name.mcfunction"
         },
         "2": {
           "name": "keyword.control.mcfunction"
+        }
+      }
+    },
+    "command.token.greedy_parent": {
+      "name": "meta.command.token.greedy_parent.mcfunction",
+      "match": "((?<=^say | say ))(.*)$",
+      "captures": {
+        "1": {
+          "name": "entity.name.mcfunction"
+        },
+        "2": {
+          "name": "string.quoted.mcfunction"
         }
       }
     },
@@ -589,6 +660,21 @@
         }
       ]
     },
+    "command.token.block_predicate_without_namespace": {
+      "name": "meta.command.token.block_predicate_without_namespace.mcfunction",
+      "begin": "(?<= )(?=(\\#)?([a-z0-9_\\.\\-\\/]+)(\\[ *([a-z_][a-z0-9_]*) *\\=))",
+      "end": "(?=\\n)|(?:(?<=\\])(?!\\{)|(?<=\\}))([^ \\n]*)",
+      "endCaptures": {
+        "1": {
+          "name": "invalid.illegal.mcfunction"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#block_predicate"
+        }
+      ]
+    },
     "command.token.selector_with_arguments": {
       "name": "meta.command.token.selector_with_arguments.mcfunction",
       "begin": "(?<= )(\\@[a-z])(\\[)",
@@ -692,7 +778,7 @@
     "nbt_path.property": {
       "patterns": [
         {
-          "begin": "(\\.)?(\\w+)(\\[)",
+          "begin": "(\\.)?(\\w+)?(\\[)",
           "end": "(\\])|(?=\\n)",
           "beginCaptures": {
             "1": {
@@ -833,6 +919,14 @@
               "name": "entity.name.function.mcfunction"
             },
             "3": {
+              "name": "entity.name.function.mcfunction"
+            }
+          }
+        },
+        {
+          "match": "([a-z0-9_\\.\\-\\/]+)",
+          "captures": {
+            "1": {
               "name": "entity.name.function.mcfunction"
             }
           }

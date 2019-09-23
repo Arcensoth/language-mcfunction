@@ -33,39 +33,112 @@
         <array>
           <dict>
             <key>name</key>
-            <string>meta.comment.todo.mcfunction</string>
-            <key>match</key>
-            <string>^\s*(#)\s*((?:TODO|FIXME|DELETEME))(\b.*)$</string>
-            <key>captures</key>
+            <string>meta.comment.block.mcfunction</string>
+            <key>begin</key>
+            <string>^[ \t]*((#)(&gt;)((.*)))$</string>
+            <key>end</key>
+            <string>^(?![ \t]*#)</string>
+            <key>beginCaptures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.block.mcfunction</string>
               </dict>
               <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.list.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>markup.list.mcfunction</string>
+              </dict>
+              <key>4</key>
               <dict>
                 <key>name</key>
                 <string>markup.bold.mcfunction</string>
               </dict>
-              <key>3</key>
+              <key>5</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>markup.list.mcfunction</string>
               </dict>
             </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#comment.block</string>
+              </dict>
+            </array>
           </dict>
           <dict>
             <key>name</key>
-            <string>meta.comment.annotation.mcfunction</string>
+            <string>meta.comment.line.mcfunction</string>
             <key>match</key>
-            <string>^\s*(#)\s*(\@\w*)(\b.*)$</string>
+            <string>^[ \t]*(#.*)$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.line.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>comment.block</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta.comment.block_line.mcfunction</string>
+            <key>begin</key>
+            <string>^[ \t]*((#)[ \t]*)</string>
+            <key>end</key>
+            <string>$</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>comment.block.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>markup.list.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#comment.block.line</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>comment.block.line</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>meta.comment.block.annotation.mcfunction</string>
+            <key>match</key>
+            <string>((\@\w*)\b(.*))$</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>comment.block.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
@@ -75,40 +148,50 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.block.mcfunction</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>name</key>
-            <string>meta.comment.annotation.mcfunction</string>
+            <string>meta.comment.block.heading.mcfunction</string>
             <key>match</key>
-            <string>^\s*(##)\s*(.*)$</string>
+            <string>((&gt;)((.*)))$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.block.mcfunction</string>
               </dict>
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>markup.heading.mcfunction</string>
+                <string>markup.list.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>markup.bold.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>markup.list.mcfunction</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>name</key>
-            <string>meta.comment.mcfunction</string>
+            <string>meta.comment.block.text.mcfunction</string>
             <key>match</key>
-            <string>^\s*(#.*)$</string>
+            <string>(.*)$</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>comment.number-sign.mcfunction</string>
+                <string>comment.block.mcfunction</string>
               </dict>
             </dict>
           </dict>
@@ -200,6 +283,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#command.token.block_predicate_without_namespace</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#command.token.resource_location</string>
           </dict>
           <dict>
@@ -229,6 +316,10 @@
           <dict>
             <key>include</key>
             <string>#command.token.root_redirect</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#command.token.greedy_parent</string>
           </dict>
           <dict>
             <key>include</key>
@@ -504,7 +595,7 @@
         <key>name</key>
         <string>meta.command.token.root_redirect.mcfunction</string>
         <key>match</key>
-        <string>(?&lt;= )(run) ?([a-z_][a-z0-9_]*)?(?=[ \n]|$)</string>
+        <string>(?&lt;= )(run) ([a-z_][a-z0-9_]*)?(?=[ \n]|$)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -516,6 +607,26 @@
           <dict>
             <key>name</key>
             <string>keyword.control.mcfunction</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>command.token.greedy_parent</key>
+      <dict>
+        <key>name</key>
+        <string>meta.command.token.greedy_parent.mcfunction</string>
+        <key>match</key>
+        <string>((?&lt;=^say | say ))(.*)$</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.mcfunction</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>string.quoted.mcfunction</string>
           </dict>
         </dict>
       </dict>
@@ -921,6 +1032,30 @@
           </dict>
         </array>
       </dict>
+      <key>command.token.block_predicate_without_namespace</key>
+      <dict>
+        <key>name</key>
+        <string>meta.command.token.block_predicate_without_namespace.mcfunction</string>
+        <key>begin</key>
+        <string>(?&lt;= )(?=(\#)?([a-z0-9_\.\-\/]+)(\[ *([a-z_][a-z0-9_]*) *\=))</string>
+        <key>end</key>
+        <string>(?=\n)|(?:(?&lt;=\])(?!\{)|(?&lt;=\}))([^ \n]*)</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>invalid.illegal.mcfunction</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#block_predicate</string>
+          </dict>
+        </array>
+      </dict>
       <key>command.token.selector_with_arguments</key>
       <dict>
         <key>name</key>
@@ -1079,7 +1214,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(\.)?(\w+)(\[)</string>
+            <string>(\.)?(\w+)?(\[)</string>
             <key>end</key>
             <string>(\])|(?=\n)</string>
             <key>beginCaptures</key>
@@ -1297,6 +1432,18 @@
                 <string>entity.name.function.mcfunction</string>
               </dict>
               <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function.mcfunction</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>([a-z0-9_\.\-\/]+)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
               <dict>
                 <key>name</key>
                 <string>entity.name.function.mcfunction</string>

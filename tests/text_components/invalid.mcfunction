@@ -100,3 +100,5 @@ tellraw @s {"block": "10 ^20 30", "nbt": "RecordItem"}
 tellraw @s {"block": "10 20 ^30", "nbt": "RecordItem"}
 
 tellraw @s {"text": 3.14x}
+
+tellraw @s {"text": "hello", "nby": "RecordItem.tag.foo", "text": "world"}

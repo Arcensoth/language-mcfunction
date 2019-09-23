@@ -19,6 +19,13 @@ setblock ~ ~ ~ mypack:foo{foo: bar} destroy
 setblock ~ ~ ~ mypack:foo[facing=up]{foo: bar} destroy
 setblock ~ ~ ~ mypack:foo[facing = up]{foo: bar} destroy
 
+# test without namespace
+setblock ~ ~ ~ foo{foo:bar} destroy
+setblock ~ ~ ~ foo[facing=up]{foo: bar} destroy
+setblock ~ ~ ~ foo[facing=up] destroy
+setblock ~ ~ ~ foo[ facing = up ]{foo: bar} destroy
+setblock ~ ~ ~ foo[  facing  =  up  ]{foo: bar} destroy
+
 # invalid
 setblock ~ ~ ~ mypack:foo[facing = up]foo destroy
 setblock ~ ~ ~ mypack:foo[facing = up]{foo: bar}foo destroy

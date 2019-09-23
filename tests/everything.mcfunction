@@ -1,19 +1,21 @@
-## Raycasting
+#> Raycasting
 #
 # Casts a ray from starting position along a configurable number
 # of blocks with a confugrable accuracy, counting the number of
 # entities hit by the ray along the way.
 #
 # @params
-#   mypack.raycast.distance temp
+#   $mypack.raycast.distance param
 #       The number of blocks to cast forward.
-#   mypack.raycast.precision temp
+#   $mypack.raycast.precision param
 #       The ratio of block precision to a full block.
-# @returns The number of entities hit by the ray.
+#
+# @returns
+#   $mypack.raycast.result return
+#       The number of entities hit by the ray.
 
 function #mypack:hooks/raycast/begin
 
-# TODO optimize entity selectors
 function mypack:raycast/loop
 
 function #mypack:hooks/raycast/end
@@ -156,3 +158,6 @@ execute as @a[advancements={minecraft:story/form_obsidian={foo=true, bar=false},
 
 give @s diamond_sword{display: {Name: '"My Custom Sword"'}}
 give @s minecraft:diamond_sword{display: {Name: '"My Custom Sword"'}}
+
+execute if score @s foo < @s bar run say execute if score @s foo < @s bar run say
+execute if score @s foo < @s bar run say hello @e[tag=baz, sort=nearest, limit=1] how are you?

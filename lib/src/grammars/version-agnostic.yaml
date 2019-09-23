@@ -32,9 +32,17 @@ names:
   quoted_string: string.quoted.mcfunction
   quoted_string_escape: constant.character.escape.mcfunction
   root_redirect: "#literal"
+  greedy_parent: "#literal"
   top_level_command: keyword.control.mcfunction
   unknown: invalid.illegal.mcfunction
   error: invalid.illegal.mcfunction
+  block_comment: comment.block.mcfunction
+  block_comment_symbol: markup.list.mcfunction
+  block_comment_prefix: markup.list.mcfunction
+  block_comment_heading_1: markup.bold.mcfunction
+  block_comment_heading_2: markup.list.mcfunction
+  block_comment_annotation_label: markup.heading.mcfunction
+  block_comment_annotation_text: comment.block.mcfunction
 
 variables:
   lookahead_newline: '(?=\n)'
@@ -60,12 +68,15 @@ variables:
   # commands like `execute ... run` that redirect to the root node
   root_redirect: "(run)"
 
+  # commands like `say` that consume the rest of the line
+  greedy_parent: "((?<=^say | say ))"
+
   # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
 
   # characters permitted in unquoted string words, like nbt compound keys
   unquoted_word_nc: '[A-Za-z0-9_\.\-]+'
-  unquoted_word: '({{unquoted_word_nc}})'
+  unquoted_word: "({{unquoted_word_nc}})"
 
   # characters permitted in namespaces, resource paths, etc
   component_nc: '[a-z0-9_\.\-]+'
@@ -86,15 +97,15 @@ variables:
   # uuid format
   hex_digit: "[0-9a-fA-F]"
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
-  
+
   # scorebord objective names
-  scoreboard_objective: '{{unquoted_word}}'
+  scoreboard_objective: "{{unquoted_word}}"
 
   # unquoted strings are like literals with additional available characters
   # basically anything is accepted apart from whitespace
   # character ambiguity depends on context
   unquoted_string_nc: '\S+'
-  unquoted_string: '({{unquoted_string_nc}})'
+  unquoted_string: "({{unquoted_string_nc}})"
   nbt_unquoted_string: '([^\s\{\}\[\]\,\:\=]+)'
   selector_unquoted_string: '([^\s\{\}\[\]\,\:\=\!]+)'
 
@@ -114,6 +125,9 @@ variables:
   # base selectors are defined with a single, lower-case character
   base_selector: '(\@[a-z])'
 
+  # prefix following the `#` to initiate a block comment section
+  block_comment_prefix: ">"
+
 patterns:
   - include: "#comment"
   - include: "#command"
@@ -123,6 +137,10 @@ capturesRepository:
   selector_without_arguments:
     1:
       name: "#base_selector"
+
+  resource_path:
+    1:
+      name: "#resource_path"
 
   resource_location:
     1:
@@ -190,6 +208,12 @@ capturesRepository:
     2:
       name: "#top_level_command"
 
+  greedy_parent:
+    1:
+      name: "#literal"
+    2:
+      name: "#quoted_string"
+
   literal:
     1:
       name: "#literal"
@@ -209,40 +233,87 @@ capturesRepository:
 repository:
   comment:
     patterns:
-      # things that need attention, like todos and fixmes
-      - name: meta.comment.todo.mcfunction
-        match: '^\s*(#)\s*((?:TODO|FIXME|DELETEME))(\b.*)$'
+      # enter into block comments via alternate comment style
+      - name: meta.comment.block.mcfunction
+
+        # must begin with unique prefix
+        begin: '^[ \t]*((#)({{block_comment_prefix}})((.*)))$'
+
+        # end on any line that is not a comment, without consuming anything
+        # should only get here when an adjacent comment was not found
+        # this allows the inner block comment loop to run-off
+        end: '^(?![ \t]*#)'
+
+        beginCaptures:
+          1:
+            name: "#block_comment"
+          2:
+            name: "#block_comment_symbol"
+          3:
+            name: "#block_comment_prefix"
+          4:
+            name: "#block_comment_heading_1"
+          5:
+            name: "#block_comment_heading_2"
+
+        patterns:
+          - include: "#comment.block"
+
+      # any other type of comment gets caught here
+      - name: meta.comment.line.mcfunction
+        match: '^[ \t]*(#.*)$'
         captures:
           1:
-            name: comment.number-sign.mcfunction
+            name: comment.line.mcfunction
+
+  comment.block:
+    patterns:
+      # match any type of comment attached to the block
+      - name: meta.comment.block_line.mcfunction
+        begin: '^[ \t]*((#)[ \t]*)'
+        end: "$"
+        beginCaptures:
+          1:
+            name: "#block_comment"
           2:
-            name: markup.bold.mcfunction
-          3:
-            name: comment.number-sign.mcfunction
+            name: "#block_comment_symbol"
+        patterns:
+          - include: "#comment.block.line"
+
+      # otherwise, break from the block loop
+
+  comment.block.line:
+    patterns:
       # doc tags like `@params` and `@returns`
-      - name: meta.comment.annotation.mcfunction
-        match: '^\s*(#)\s*(\@\w*)(\b.*)$'
+      - name: meta.comment.block.annotation.mcfunction
+        match: '((\@\w*)\b(.*))$'
         captures:
           1:
-            name: comment.number-sign.mcfunction
+            name: "#block_comment"
           2:
-            name: markup.heading.mcfunction
+            name: "#block_comment_annotation_label"
           3:
-            name: comment.number-sign.mcfunction
-      # headers for separating blocks
-      - name: meta.comment.annotation.mcfunction
-        match: '^\s*(##)\s*(.*)$'
+            name: "#block_comment_annotation_text"
+
+      # block headers within blocks
+      - name: meta.comment.block.heading.mcfunction
+        match: '(({{block_comment_prefix}})((.*)))$'
         captures:
           1:
-            name: comment.number-sign.mcfunction
+            name: "#block_comment"
           2:
-            name: markup.heading.mcfunction
-      # any other comment should get caught here
-      - name: meta.comment.mcfunction
-        match: '^\s*(#.*)$'
+            name: "#block_comment_prefix"
+          3:
+            name: "#block_comment_heading_1"
+          4:
+            name: "#block_comment_heading_2"
+
+      # otherwise its just a comment
+      - name: meta.comment.block.text.mcfunction
+        match: "(.*)$"
         captures:
           1:
-            name: comment.number-sign.mcfunction
+            name: "#block_comment"
 
   command:
     patterns:
@@ -278,6 +349,7 @@ repository:
       - include: "#command.token.selector_with_arguments"
       - include: "#command.token.selector_without_arguments"
       - include: "#command.token.block_predicate"
+      - include: "#command.token.block_predicate_without_namespace"
       - include: "#command.token.resource_location"
       - include: "#command.token.tagged_resource_location"
       - include: "#command.token.range"
@@ -286,6 +358,7 @@ repository:
       - include: "#command.token.boolean"
       - include: "#command.token.operation"
       - include: "#command.token.root_redirect"
+      - include: "#command.token.greedy_parent"
       - include: "#command.token.literal"
       - include: "#command.token.uuid"
       - include: "#command.token.fakeplayer"
@@ -367,8 +440,14 @@ repository:
     # root command. We use this to highlight the top-level command despite it
     # not being on its own line.
     name: meta.command.token.root_redirect.mcfunction
-    match: "{{command_token_l}}{{root_redirect}} ?{{literal}}?{{command_token_r}}"
+    match: "{{command_token_l}}{{root_redirect}} {{literal}}?{{command_token_r}}"
     captures: "#root_redirect"
+
+  command.token.greedy_parent:
+    # Special case for commands like `say` that consume the rest of the line.
+    name: meta.command.token.greedy_parent.mcfunction
+    match: "{{greedy_parent}}(.*)$"
+    captures: "#greedy_parent"
 
   command.token.nbt_compound:
     name: meta.command.token.nbt_compound.mcfunction
@@ -566,6 +645,24 @@ repository:
     patterns:
       - include: "#block_predicate"
 
+  command.token.block_predicate_without_namespace:
+    name: meta.command.token.block_predicate_without_namespace.mcfunction
+
+    # We need to be careful here about not selecting an NBT path. We do this
+    # by using look-ahead to check for a block state property immediately
+    # inside the braces. Note that we can only disambiguate when a block state
+    # mapping is present, otherwise we can't differentiate from an NBT path.
+    begin: '{{command_token_l}}(?=(\#)?{{resource_path}}(\[ *{{literal}} *\=))'
+
+    end: '{{lookahead_newline}}|(?:(?<=\])(?!\{)|(?<=\}))({{not_command_token_delim}}*)'
+
+    endCaptures:
+      1:
+        name: "#error"
+
+    patterns:
+      - include: "#block_predicate"
+
   command.token.selector_with_arguments:
     name: meta.command.token.selector_with_arguments.mcfunction
 
@@ -669,7 +766,7 @@ repository:
   nbt_path.property:
     patterns:
       # (Inventory)([){Count: 64}(])
-      - begin: '(\.)?(\w+)(\[)'
+      - begin: '(\.)?(\w+)?(\[)'
         end: '(\])|(?=\n)'
         beginCaptures:
           1:
@@ -718,7 +815,7 @@ repository:
   nbt_path.index:
     patterns:
       - match: '(?<=\[){{integer}}(?=\])'
-        captures: '#integer'
+        captures: "#integer"
       - begin: '(\{)'
         end: '{{lookahead_newline}}|(\})([^\]\,\n]*)'
         beginCaptures:
@@ -728,11 +825,11 @@ repository:
           1:
             name: "#nbt_delims"
           2:
-            name: '#error'
+            name: "#error"
         patterns:
           - include: "#nbt.compound"
       - match: '[^\n\]]+'
-        name: '#error'
+        name: "#error"
 
   block_predicate:
     patterns:
@@ -740,6 +837,8 @@ repository:
         captures: "#tagged_resource_location"
       - match: "{{resource_location}}"
         captures: "#resource_location"
+      - match: "{{resource_path}}"
+        captures: "#resource_path"
       - begin: '(\[)'
         end: '(\])'
         beginCaptures:

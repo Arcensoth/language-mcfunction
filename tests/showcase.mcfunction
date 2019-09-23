@@ -1,11 +1,6 @@
-## Raycasting
+#> Raycasting
 # Casts a ray from starting position up to 128 blocks away.
-# @params
-#   $mypack.raycast.precision temp
-#       The ratio of block precision to a full block.
-# @returns The number of entities hit by the ray.
 
-# TODO use real commands
 function mypack:raycast/loop
 function #mypack:hooks/raycast/begin
 effect give @s minecraft:night_vision 999999 1 true

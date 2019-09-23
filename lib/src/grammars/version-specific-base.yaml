@@ -12,12 +12,14 @@ names:
   underline: markup.underline._.underline.mcfunction
 
   # comment scopes
-  comment: comment._.comment.mcfunction
-  comment.heading: markup.heading._.heading.comment.mcfunction
-  comment.marker.name: markup.bold._.name.marker.comment.mcfunction
-  comment.marker.text: comment._.text.marker.comment.mcfunction
-  comment.annotation.name: markup.heading._.name.annotation.comment.mcfunction
-  comment.annotation.text: comment._.text.annotation.comment.mcfunction
+  comment.plain: comment._.plain.comment.mcfunction
+  comment.block: comment.block._.block.comment.mcfunction
+  comment.block.symbol: markup.list._.symbol.block.comment.mcfunction
+  comment.block.prefix: markup.list._.prefix.block.comment.mcfunction
+  comment.block.heading_1: markup.bold._.heading_1.block.comment.mcfunction
+  comment.block.heading_2: markup.list._.heading_2.block.comment.mcfunction
+  comment.block.annotation.label: markup.heading._.label.annotation.block.comment.mcfunction
+  comment.block.annotation.text: comment.block._.text.annotation.block.comment.mcfunction
 
   # command scopes
   command: keyword.control._.command.mcfunction
@@ -33,11 +35,17 @@ names:
   target_selector.param: keyword.other._.param.target_selector.mcfunction
 
   # nbt scopes
-  nbt.compound_bracket: storage._.compound_bracket.nbt.mcfunction
-  nbt.compound_colon: storage._.compound_colon.nbt.mcfunction
-  nbt.compound_comma: storage._.compound_comma.nbt.mcfunction
-  nbt.list_bracket: storage._.list_bracket.nbt.mcfunction
-  nbt.list_comma: storage._.list_comma.nbt.mcfunction
+  nbt_compound.bracket: storage._.bracket.nbt_compound.mcfunction
+  nbt_compound.colon: storage._.colon.nbt_compound.mcfunction
+  nbt_compound.comma: storage._.comma.nbt_compound.mcfunction
+  nbt_list.bracket: storage._.bracket.nbt_list.mcfunction
+  nbt_list.comma: storage._.comma.nbt_list.mcfunction
+
+  # nbt path scopes
+  nbt_path.property: string._.property.nbt_path.mcfunction
+  nbt_path.dot: storage._.dot.nbt_path.mcfunction
+  nbt_path.compound.bracket: storage._.bracket.compound.nbt_path.mcfunction
+  nbt_path.index.bracket: storage._.bracket.index.nbt_path.mcfunction
 
   # score map scopes
   score_map.bracket: storage._.bracket.score_map.mcfunction
@@ -60,9 +68,14 @@ names:
 
   # resource location scopes
   resource_location.namespace: entity.name.function._.namespace.resource_location.mcfunction
-  resource_location.hash: entity.name.function._.hash.resource_location.mcfunction
   resource_location.colon: entity.name.function._.colon.resource_location.mcfunction
   resource_location.path: entity.name.function._.path.resource_location.mcfunction
+
+  # tagged resource location scopes
+  tagged_resource_location.namespace: entity.name.function._.namespace.tagged_resource_location.mcfunction
+  tagged_resource_location.hash: entity.name.function._.hash.tagged_resource_location.mcfunction
+  tagged_resource_location.colon: entity.name.function._.colon.tagged_resource_location.mcfunction
+  tagged_resource_location.path: entity.name.function._.path.tagged_resource_location.mcfunction
 
   # string scopes
   string: string._.string.mcfunction
@@ -98,6 +111,8 @@ names:
   generic.list.bracket: storage._.bracket.list.generic.mcfunction
   generic.list.content: string._.content.list.generic.mcfunction
   boolean: constant.numeric._.boolean.mcfunction
+  swizzle: constant.numeric._.swizzle.mcfunction
+  entity_anchor: constant.numeric._.entity_anchor.mcfunction
 
 variables:
   # padding
@@ -118,12 +133,16 @@ variables:
   # but at least if the following token is also non-executable,
   # it will then be highlighted as an error
   # command_border_executable_false
-  cbx_false: ' (?=[^\s\#])'
+  cbx_false: ' (?=\S)'
 
   # text_component_property
   tc.p.begin_l: '(\")'
   tc.p.begin_r: '(\"){{pad}}(\:){{pad}}(?=[^\s\,\}])'
   tc.p.end: '{{ln}}|(?={{pad}}[\,\}])'
+
+  # comment
+  comment.symbol: "#"
+  comment.block.prefix: ">"
 
   # dictionary/compound
   dict.begin: '(\{)'
@@ -151,14 +170,39 @@ variables:
   parameterized_target_selector.begin: '{{parameterized_target_selector.base}}{{parameterized_target_selector.args_l}}(?={{pad}}[\w\]])'
   parameterized_target_selector.next: "{{parameterized_target_selector.args_r}}"
 
+  # nbt compound
+  nbt_compound.begin: '(\{)'
+  nbt_compound.next: '(\})|{{ln}}'
+
+  # nbt list
+  nbt_list.begin: '(\[)'
+  nbt_list.next: '(\])|{{ln}}'
+
+  # nbt path
+  nbt_path.begin: '(\w+)'
+  nbt_path.next: '(?= |\n)'
+
   # score holders
   score_holder.all: '(\*)'
   score_holder.fakeplayer: '([\w\.\-\#\$\%]+)'
 
+  # resource locations
+  rc: '[a-z0-9_\.\-]+'
+  resource_id: '(?:({{rc}})(\:))?({{rc}})'
+  resource_location: '{{resource_id}}((?:\/?{{rc}})*)'
+  tagged_resource_location: '(\#){{resource_location}}'
+
   # numbers
-  integer: '(\-?\d*)'
+  integer: '(\-?\d+)'
+  non_negative_integer: '(\d+)'
   positive_integer: '(0*[1-9]\d*)'
   double: '(\-?\d*\.?\d+)'
+
+  # ranges
+  range.left: '{{double}}(\.\.){{double}}?'
+  range.right: '{{double}}?(\.\.){{double}}'
+  int_range.left: '{{integer}}(\.\.){{integer}}?'
+  int_range.right: '{{integer}}?(\.\.){{integer}}'
 
   # various coordinates and positions
   coordinate.absolute: "{{double}}"
@@ -168,7 +212,22 @@ variables:
   position.abs_rel: "{{coordinate.abs_rel}} {{coordinate.abs_rel}} {{coordinate.abs_rel}}"
   position.local: "{{coordinate.local}} {{coordinate.local}} {{coordinate.local}}"
 
+  # block coordinates/positions (whole numbers)
+  block_coordinate.absolute: "{{integer}}"
+  block_coordinate.relative: '(\~){{integer}}?'
+  block_coordinate.local: '(\^){{integer}}?'
+  block_coordinate.abs_rel: "(?:{{block_coordinate.relative}}|{{block_coordinate.absolute}})"
+  block_position.abs_rel: "{{block_coordinate.abs_rel}} {{block_coordinate.abs_rel}} {{block_coordinate.abs_rel}}"
+  block_position.local: "{{block_coordinate.local}} {{block_coordinate.local}} {{block_coordinate.local}}"
+
+  # rotation
+  rotation: "{{coordinate.abs_rel}} {{coordinate.abs_rel}}"
+
   boolean: "(true|false)"
+
+  swizzle: "(x|y|z|xy|xz|yz|xyz)"
+
+  entity_anchor: "(eyes|feet)"
 
   hex_digit: "[0-9a-fA-F]"
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
@@ -186,11 +245,12 @@ variables:
 
   text_component.colors: (black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|dark_gray|blue|green|aqua|red|light_purple|yellow|white)
   text_component.keybinds: '(key\.forward|key\.left|key\.back|key\.right|key\.jump|key\.sneak|key\.sprint|key\.inventory|key\.swapHands|key\.drop|key\.use|key\.attack|key\.pickItem|key\.chat|key\.playerlist|key\.command|key\.screenshot|key\.togglePerspective|key\.smoothCamera|key\.fullscreen|key\.spectatorOutlines|key\.hotbar\.1|key\.hotbar\.2|key\.hotbar\.3|key\.hotbar\.4|key\.hotbar\.5|key\.hotbar\.6|key\.hotbar\.7|key\.hotbar\.8|key\.hotbar\.9|key\.saveToolbarActivator|key\.loadToolbarActivator)'
-  text_component.click_events: '(open_url|open_file|run_command|suggest_command|change_page)'
-  text_component.hover_events: '(show_text|show_item|show_entity)'
+  text_component.click_events: "(open_url|open_file|run_command|suggest_command|change_page)"
+  text_component.hover_events: "(show_text|show_item|show_entity)"
 
 patterns:
-  - include: "#comment"
+  - include: "#comment.block"
+  - include: "#comment.plain"
   - include: "#command"
   - include: "#unknown"
 
@@ -200,6 +260,46 @@ capturesRepository:
       name: "#invalid"
     2:
       name: "#underline"
+
+  boolean:
+    1:
+      name: "#boolean"
+
+  swizzle:
+    1:
+      name: "#swizzle"
+
+  entity_anchor:
+    1:
+      name: "#entity_anchor"
+
+  integer:
+    1:
+      name: "#number"
+
+  non_negative_integer:
+    1:
+      name: "#number"
+
+  positive_integer:
+    1:
+      name: "#number"
+
+  double:
+    1:
+      name: "#number"
+
+  scoreboard_objective:
+    1:
+      name: "#scoreboard_objective"
+
+  score_holder.all:
+    1:
+      name: "#score_holder.all"
+
+  score_holder.fakeplayer:
+    1:
+      name: "#score_holder.fakeplayer"
 
   position.abs_rel:
     1:
@@ -234,6 +334,20 @@ capturesRepository:
       name: "#position.local.operator"
     6:
       name: "#position.local.number"
+
+  rotation:
+    1:
+      name: "#position.relative.operator"
+    2:
+      name: "#position.relative.number"
+    3:
+      name: "#position.absolute.number"
+    4:
+      name: "#position.relative.operator"
+    5:
+      name: "#position.relative.number"
+    6:
+      name: "#position.absolute.number"
 
   quoted_string.begin:
     1:
@@ -275,7 +389,7 @@ capturesRepository:
     3:
       name: "#string"
     4:
-      name: "#nbt.compound_colon"
+      name: "#nbt_compound.colon"
 
   text_component.dict.begin:
     1:
@@ -293,70 +407,160 @@ capturesRepository:
     1:
       name: "#text_component.bracket"
 
+  nbt_compound.begin:
+    1:
+      name: "#nbt_compound.bracket"
+
+  nbt_compound.next:
+    1:
+      name: "#nbt_compound.bracket"
+
+  nbt_list.begin:
+    1:
+      name: "#nbt_list.bracket"
+
+  nbt_list.next:
+    1:
+      name: "#nbt_list.bracket"
+
+  nbt_path.begin:
+    1:
+      name: "#nbt_path.property"
+
+  nbt_path.next: {}
+
+  resource_id:
+    # (namespace):foo
+    1:
+      name: "#resource_location.namespace"
+    # namespace(:)foo
+    2:
+      name: "#resource_location.colon"
+    # namespace:(foo)
+    3:
+      name: "#resource_location.path"
+
+  resource_location:
+    # (namespace):foo/bar/baz
+    1:
+      name: "#resource_location.namespace"
+    # namespace(:)foo/bar/baz
+    2:
+      name: "#resource_location.colon"
+    # namespace:(foo)/bar/baz
+    3:
+      name: "#resource_location.path"
+    # namespace:foo(/bar/baz)
+    4:
+      name: "#resource_location.path"
+
+  tagged_resource_location:
+    # (#)namespace:foo/bar/baz
+    1:
+      name: "#tagged_resource_location.hash"
+    # (namespace):foo/bar/baz
+    2:
+      name: "#tagged_resource_location.namespace"
+    # namespace(:)foo/bar/baz
+    3:
+      name: "#tagged_resource_location.colon"
+    # namespace:(foo)/bar/baz
+    4:
+      name: "#tagged_resource_location.path"
+    # namespace:foo(/bar/baz)
+    5:
+      name: "#tagged_resource_location.path"
+
 repository:
-  comment:
+  comment.plain:
     patterns:
-      # comments begin on with `#`, after optional leading whitespace
-      - name: meta._.comment.mcfunction
-        begin: '^{{tpad}}(?=\#)'
-        end: '\n'
+      # any other type of comment gets caught here
+      - name: meta._.plain.comment.mcfunction
+        match: "^{{tpad}}({{comment.symbol}}.*)$"
+        captures:
+          1:
+            name: "#comment.plain"
+
+  comment.block:
+    patterns:
+      - name: meta._.block.comment.mcfunction
+
+        # must begin with unique prefix
+        begin: "^{{tpad}}(({{comment.symbol}})({{comment.block.prefix}})((.*)))$"
+
+        # end on any line that is not a comment, without consuming anything
+        # should only get here when an adjacent comment was not found
+        # this allows the inner block comment loop to run-off
+        end: "^(?!{{tpad}}{{comment.symbol}})"
+
+        beginCaptures:
+          1:
+            name: "#comment.block"
+          2:
+            name: "#comment.block.symbol"
+          3:
+            name: "#comment.block.prefix"
+          4:
+            name: "#comment.block.heading_1"
+          5:
+            name: "#comment.block.heading_2"
+
         patterns:
-          - include: "#comments"
+          - include: "#comment.block.lines"
 
-  comments:
+  comment.block.lines:
     patterns:
-      - include: "#comment.heading"
-      - include: "#comment.marker"
-      - include: "#comment.annotation"
-      - include: "#comment.other"
+      # match any type of comment attached to the block
+      - name: meta._.lines.block.comment.mcfunction
+        begin: "^{{tpad}}(({{comment.symbol}}){{tpad}})"
+        end: "$"
+        beginCaptures:
+          1:
+            name: "#comment.block"
+          2:
+            name: "#comment.block.symbol"
+        patterns:
+          - include: "#comment.block.line"
+      # otherwise, break from the block loop
 
-  comment.heading:
-    # headers for separating blocks
-    name: meta._.heading.comment.mcfunction
-    match: "(##){{tpad}}(.*)$"
-    captures:
-      1:
-        name: "#comment"
-      2:
-        name: "#comment.heading"
+  comment.block.line:
+    patterns:
+      # doc tags like `@params` and `@returns`
+      - name: meta._.annotation.line.block.comment.mcfunction
+        match: '((\@\w*)\b(.*))$'
+        captures:
+          1:
+            name: "#comment.block"
+          2:
+            name: "#comment.block.annotation.label"
+          3:
+            name: "#comment.block.annotation.text"
 
-  comment.marker:
-    # things that need attention, like todos and fixmes
-    name: meta._.marker.comment.mcfunction
-    match: '(#){{tpad}}((?:TODO|FIXME|XXX))(\b.*)$'
-    captures:
-      1:
-        name: "#comment"
-      2:
-        name: "#comment.marker.name"
-      3:
-        name: "#comment.marker.text"
+      # block headers within blocks
+      - name: meta._.heading.line.block.comment.mcfunction
+        match: "(({{comment.block.prefix}})((.*)))$"
+        captures:
+          1:
+            name: "#comment.block"
+          2:
+            name: "#comment.block.prefix"
+          3:
+            name: "#comment.block.heading_1"
+          4:
+            name: "#comment.block.heading_2"
 
-  comment.annotation:
-    # doc tags like `@params` and `@returns`
-    name: meta._.annotation.comment.mcfunction
-    match: '(#){{tpad}}(\@\w*)(\b.*)$'
-    captures:
-      1:
-        name: "#comment"
-      2:
-        name: "#comment.annotation.name"
-      3:
-        name: "#comment.annotation.text"
-
-  comment.other:
-    # any other comment should get caught here
-    name: meta._.other.comment.mcfunction
-    match: "(#.*)$"
-    captures:
-      1:
-        name: "#comment"
+      # otherwise its just a comment
+      - name: meta._.text.line.block.comment.mcfunction
+        match: "(.*)$"
+        captures:
+          1:
+            name: "#comment.block"
 
   command:
     # commands begin with any non-whitespace, non-comment character, after optional leading whitespace
     name: meta._.command.mcfunction
     # don't start consuming the command yet
-    begin: '^{{tpad}}(?=[^\s\#])'
+    begin: '^{{tpad}}(?=[^\s{{comment.symbol}}])'
     # we will actually consume the newline here
     # none of the sub-patterns will consume the newline
     # instead they will use lookahead to return to the parent scope
@@ -378,6 +582,26 @@ repository:
   ##############################################################################
   # ERRORS #####################################################################
   ##############################################################################
+
+  error.invalid_node:
+    name: meta._.invalid_node.error.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
+
+  error.unknown_parser:
+    name: meta._.unknown_parser.error.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
+
+  error.unmatched_child:
+    name: meta._.unmatched_child.error.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
+
+  error.bad_syntax:
+    name: meta._.bad_syntax.error.mcfunction
+    match: "((.*))$"
+    captures: "#underlined_error"
 
   error.command_line:
     # continue until the end of the line
@@ -472,6 +696,15 @@ repository:
   ##############################################################################
   # COMMON PARSERS #############################################################
   ##############################################################################
+
+  common.trailing_whitespace:
+    patterns:
+      - name: meta._.trailing_whitespace.common.mcfunction
+        begin: "{{tpad}}"
+        end: "{{ln}}"
+        patterns:
+          - match: '((\S))'
+            captures: "#underlined_error"
 
   common.block:
     patterns:
@@ -616,10 +849,10 @@ repository:
   common.integer_range:
     patterns:
       # right-side optional
-      - match: '{{integer}}(\.\.){{integer}}?'
+      - match: '{{int_range.left}}'
         captures: "#range"
       # left-side optional
-      - match: '{{integer}}?(\.\.){{integer}}'
+      - match: '{{int_range.right}}'
         captures: "#range"
       # exact number
       - match: "{{integer}}"
@@ -629,41 +862,31 @@ repository:
   common.double_range:
     patterns:
       # right-side optional
-      - match: '{{double}}(\.\.){{double}}?'
+      - match: '{{range.left}}'
         captures: "#range"
       # left-side optional
-      - match: '{{double}}?(\.\.){{double}}'
+      - match: '{{range.right}}'
         captures: "#range"
       # exact number
       - match: "{{double}}"
         name: "#number"
       # elevate `..` and any other cases to parent
 
-  common.resource_location:
-    # TODO refine resource location patterns
+  common.resource_id:
+    # essentually a resource location without separators
     patterns:
-      - match: '([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
-        captures:
-          1:
-            name: "#resource_location.namespace"
-          2:
-            name: "#resource_location.colon"
-          3:
-            name: "#resource_location.path"
+      - match: "{{resource_id}}"
+        captures: "#resource_id"
+
+  common.resource_location:
+    patterns:
+      - match: "{{resource_location}}"
+        captures: "#resource_location"
 
   common.tagged_resource_location:
-    # TODO refine tagged resource location patterns
     patterns:
-      - match: '(\#)([a-z0-9_\.\-]+)?(\:)?([a-z0-9_\.\-\/]+)'
-        captures:
-          1:
-            name: "#resource_location.hash"
-          2:
-            name: "#resource_location.namespace"
-          3:
-            name: "#resource_location.colon"
-          4:
-            name: "#resource_location.path"
+      - match: "{{tagged_resource_location}}"
+        captures: "#tagged_resource_location"
 
   common.taggable_resource_location:
     patterns:
@@ -700,27 +923,89 @@ repository:
         name: "#string"
 
   ##############################################################################
-  # NBT ########################################################################
+  # NBT COMPOUND ###############################################################
   ##############################################################################
 
-  nbt.compound:
+  nbt_compound:
     patterns:
-      - begin: '{{dict.begin}}'
-        end: '{{dict.end}}'
-        beginCaptures: '#dict.begin'
-        endCaptures: '#dict.end'
+      - begin: "{{nbt_compound.begin}}"
+        end: "{{nbt_compound.next}}"
+        beginCaptures: "#nbt_compound.begin"
+        endCaptures: "#nbt_compound.next"
         patterns:
-          - include: '#nbt.compound.content'
+          - include: "#nbt_compound.content"
+          - include: "#error.bad_syntax"
 
-  nbt.compound.content:
-    # FIXME implement nbt compound patterns
+  nbt_compound.content:
+    # FIXME finish nbt compound patterns
     patterns:
       - include: "#common.block"
 
-  nbt_path:
-    # FIXME implement nbt paths
+  ##############################################################################
+  # NBT LIST ###################################################################
+  ##############################################################################
+
+  nbt_list:
     patterns:
-      - include: "#common.double_quoted_string.content"
+      - begin: "{{nbt_list.begin}}"
+        end: "{{nbt_list.next}}"
+        beginCaptures: "#nbt_list.begin"
+        endCaptures: "#nbt_list.next"
+        patterns:
+          - include: "#nbt_list.content"
+          - include: "#error.bad_syntax"
+
+  nbt_list.content:
+    # FIXME finish nbt list patterns
+    patterns:
+      - include: "#common.block"
+
+  ##############################################################################
+  # NBT PATH ###################################################################
+  ##############################################################################
+
+  nbt_path:
+    patterns:
+      - begin: "{{nbt_path.begin}}"
+        end: "{{nbt_path.next}}"
+        beginCaptures: "#nbt_path.begin"
+        endCaptures: "#nbt_path.next"
+        patterns:
+          - include: "#nbt_path.content"
+
+  nbt_path.content:
+    patterns:
+      # SelectedItem(.)(Count)
+      - match: '(\.)(\w+)'
+        captures:
+          1:
+            name: "#nbt_path.dot"
+          2:
+            name: "#nbt_path.property"
+      # Inventory([){Count: 64}(])
+      - begin: "{{nbt_list.begin}}"
+        end: "{{nbt_list.next}}"
+        beginCaptures: "#nbt_list.begin"
+        endCaptures: "#nbt_list.next"
+        patterns:
+          - include: "#nbt_path.index"
+      # Inventory[].tag({)custom: true(})
+      - include: "#nbt_compound"
+      # special case for weird trailing "."
+      # SelectedItem(.)
+      - match: '(\.){{nbt_path.next}}'
+        captures:
+          1:
+            name: "#nbt_path.dot"
+      # anything else is a syntax error
+      - include: "#error.bad_syntax"
+
+  nbt_path.index:
+    patterns:
+      - match: '(?<=\[){{integer}}(?=\])'
+        captures: "#integer"
+      - include: "#nbt_compound"
+      - include: "#error.bad_syntax"
 
   ##############################################################################
   # MAPS #######################################################################
@@ -937,7 +1222,7 @@ repository:
         beginCaptures: "#quoted_string.begin"
         endCaptures: "#quoted_string.end"
         patterns:
-          - include: "#nbt.compound"
+          - include: "#nbt_compound"
 
   text_component.list_common:
     patterns:
@@ -1507,230 +1792,9 @@ repository:
           3:
             name: "#target_selector.not"
           4:
-            name: "#nbt.compound_bracket"
+            name: "#nbt_compound.bracket"
         endCaptures:
           1:
-            name: "#nbt.compound_bracket"
+            name: "#nbt_compound.bracket"
         patterns:
-          - include: "#nbt.compound.content"
-
-  ##############################################################################
-  # GENERATED COMMANDS #########################################################
-  ##############################################################################
-
-  generated.commands:
-    # this is where the generator will inject command patterns
-    patterns:
-      - include: "#generated.command.say"
-      - include: "#generated.command.tellraw"
-      - include: "#generated.command.execute"
-
-  generated.command.say:
-    begin: "(say){{cbx_false}}"
-    end: "{{ln}}"
-    beginCaptures:
-      1:
-        name: "#command"
-    patterns:
-      - include: "#generated.commands.say"
-
-  generated.commands.say:
-    patterns:
-      - include: "#generated.command.say.message"
-      - include: "#error.command_line"
-
-  generated.command.say.message:
-    # minecraft:message is an exception
-    # it just consume the rest of the line, attempting to
-    # parse various patterns (such as selectors) as it goes
-    patterns:
-      - include: "#common.message"
-
-  generated.command.tellraw:
-    begin: "(tellraw){{cbx_false}}"
-    end: "{{ln}}"
-    beginCaptures:
-      1:
-        name: "#command"
-    patterns:
-      - include: "#generated.commands.tellraw"
-
-  generated.commands.tellraw:
-    patterns:
-      - include: "#generated.command.tellraw.targets"
-      - include: "#error.command_line"
-
-  generated.command.tellraw.targets:
-    # this should only allow players, but using regex is not viable
-    patterns:
-      # (1) selector without arguments
-      - begin: "{{basic_target_selector}}{{cbx_false}}"
-        end: "{{ln}}"
-        beginCaptures:
-          1:
-            name: "#target_selector.base"
-        patterns:
-          - include: "#generated.commands.tellraw.targets"
-
-      # (2) uuid
-      - begin: "{{uuid}}{{cbx_false}}"
-        end: "{{ln}}"
-        beginCaptures:
-          1:
-            name: "#target.uuid"
-        patterns:
-          - include: "#generated.commands.tellraw.targets"
-
-      # (3) player name
-      - begin: "{{player_name}}{{cbx_false}}"
-        end: "{{ln}}"
-        beginCaptures:
-          1:
-            name: "#target.player_name"
-        patterns:
-          - include: "#generated.commands.tellraw.targets"
-
-      # (4) selector with arguments
-      - begin: "{{parameterized_target_selector.begin}}"
-        end: "{{ln}}"
-        beginCaptures:
-          1:
-            name: "#target_selector.base"
-          2:
-            name: "#target_selector.bracket"
-        patterns:
-          - begin: "{{parameterized_target_selector.next}}{{cbx_false}}"
-            end: "{{ln}}"
-            beginCaptures:
-              1:
-                name: "#target_selector.bracket"
-            patterns:
-              - include: "#generated.commands.tellraw.targets"
-          - include: "#target_selector.content"
-          - include: "#error.command_line"
-
-      - include: "#error.command_line"
-
-  generated.commands.tellraw.targets:
-    patterns:
-      - include: "#text_component"
-      - include: "#error.command_line"
-
-  generated.command.execute:
-    # `execute` is non-executable
-    begin: "(execute){{cbx_false}}"
-    end: "{{ln}}"
-    beginCaptures:
-      1:
-        name: "#command"
-    patterns:
-      - include: "#generated.commands.execute"
-
-  generated.commands.execute:
-    # define child commands separately so they can be re-used in redirects
-    patterns:
-      - include: "#generated.command.execute.run"
-      - include: "#generated.command.execute.as"
-      - include: "#error.command_line"
-
-  generated.command.execute.run:
-    # `execute run` is executable
-    begin: "(run){{cbx_true}}"
-    end: "{{ln}}"
-    beginCaptures:
-      1:
-        name: "#subcommand"
-    patterns:
-      - include: "#generated.commands.execute.run"
-
-  generated.commands.execute.run:
-    # redirect to root
-    patterns:
-      - include: "#generated.commands"
-
-  generated.command.execute.as:
-    # `execute as` is non-executable
-    begin: "(as){{cbx_false}}"
-    end: "{{ln}}"
-    beginCaptures:
-      1:
-        name: "#subcommand"
-    patterns:
-      - include: "#generated.commands.execute.as"
-
-  generated.commands.execute.as:
-    patterns:
-      - include: "#generated.command.execute.as.targets"
-      - include: "#error.command_line"
-
-  generated.command.execute.as.targets:
-    # `execute as <targets>` is executable
-    patterns:
-      # unfortunately we cannot generalize these, because
-      # we need to keep the context of the parent command
-
-      # we can use basic `match` patterns for the simpler parsers (1-3)
-
-      # (1) selector without arguments
-      - begin: "{{basic_target_selector}}{{cbx_true}}"
-        end: "{{ln}}"
-        beginCaptures:
-          1:
-            name: "#target_selector.base"
-        patterns:
-          - include: "#generated.commands.execute.as.targets"
-
-      # (2) uuid
-      - begin: "{{uuid}}{{cbx_true}}"
-        end: "{{ln}}"
-        beginCaptures:
-          1:
-            name: "#target.uuid"
-        patterns:
-          - include: "#generated.commands.execute.as.targets"
-
-      # (3) player name
-      - begin: "{{player_name}}{{cbx_true}}"
-        end: "{{ln}}"
-        beginCaptures:
-          1:
-            name: "#target.player_name"
-        patterns:
-          - include: "#generated.commands.execute.as.targets"
-
-      # but more complex parsers will require further diving (4)
-
-      # (4) selector with arguments
-      - begin: "{{parameterized_target_selector.begin}}"
-        end: "{{ln}}"
-        beginCaptures:
-          1:
-            name: "#target_selector.base"
-          2:
-            name: "#target_selector.bracket"
-        patterns:
-          # the ending brace pattern cannot be generalized,
-          # because it needs to return to a specific parent command
-          - begin: "{{parameterized_target_selector.next}}{{cbx_true}}"
-            end: "{{ln}}"
-            beginCaptures:
-              1:
-                name: "#target_selector.bracket"
-            patterns:
-              # now we can finally resume back to the command arguments
-              - include: "#generated.commands.execute.as.targets"
-
-          # this is where common selector patterns can be included
-          - include: "#target_selector.content"
-
-          # this doesn't go in common selector patterns, because it invalidates
-          # rest of the line... which wouldn't make sense in other future
-          # potential scopes, like text components
-          - include: "#error.command_line"
-
-      - include: "#error.command_line"
-
-  generated.commands.execute.as.targets:
-    # redirect to `execute`
-    patterns:
-      - include: "#generated.commands.execute"
+          - include: "#nbt_compound.content"
