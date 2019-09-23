@@ -1,64 +1,51 @@
-import fs = require("fs");
-import path = require("path");
-import yaml = require("js-yaml");
+import {
+  buildVersionAgnosticGrammar,
+  buildVersionSpecificData,
+  buildVersionSpecificGrammar
+} from "./utils";
 
-import { CommandManifest } from "./command-manifest";
-import { compileExtendedGrammar, writeGrammar } from "./utils";
-import { augmentGrammar } from "./version-specific";
+const nargs = process.argv.length;
 
-function buildVersionSpecificGrammar(
-  dataPath: string,
-  baseGrammarPath: string,
-  outDir: string,
-  outName: string,
-  label: string
-) {
-  const baseGrammar = yaml.safeLoad(fs.readFileSync(baseGrammarPath, "utf8"));
-  baseGrammar.label = label;
-  const commands = JSON.parse(
-    fs.readFileSync(path.join(dataPath, "reports", "commands.json"), "utf8")
-  ) as CommandManifest;
-  const augmentedGrammar = augmentGrammar(baseGrammar, commands);
-  const compiledGrammar = compileExtendedGrammar(augmentedGrammar);
-  writeGrammar(compiledGrammar, outDir, outName);
-}
-
-function buildVersionAgnosticGrammar(
-  grammarPath: string,
-  outDir: string,
-  outName: string
-) {
-  const extendedGrammar = yaml.safeLoad(fs.readFileSync(grammarPath, "utf8"));
-  const compiledGrammar = compileExtendedGrammar(extendedGrammar);
-  writeGrammar(compiledGrammar, outDir, outName);
-}
-
-const PROJECT_ROOT = path.resolve(__dirname, "..", "..");
-
-if (process.argv.length > 2) {
-  // data path provided; go version-specific
-  const dataPath = process.argv[2];
-  const label = process.argv[3];
-  console.log(`Building version-specific grammar '${label}' from:`, dataPath);
-  buildVersionSpecificGrammar(
-    path.resolve(dataPath),
-    path.join(
-      PROJECT_ROOT,
-      "lib",
-      "src",
-      "grammars",
-      "version-specific-base.yaml"
-    ),
-    path.join(PROJECT_ROOT, "grammars"),
-    `mcfunction-${label}`,
-    label
+if (nargs < 3) {
+  console.error(
+    "[ERROR] You must provide a command:\n  build-grammar\n  build-data"
   );
+  process.exit();
 } else {
-  // no data path; go version-agnostic
-  console.log("Building version-agnostic grammar");
-  buildVersionAgnosticGrammar(
-    path.join(PROJECT_ROOT, "lib", "src", "grammars", "version-agnostic.yaml"),
-    PROJECT_ROOT,
-    "mcfunction"
-  );
+  const cmd = process.argv[2];
+
+  // BUILD GRAMMAR
+  if (cmd === "build-grammar") {
+    // VERSION-AGNOSTIC
+    if (nargs < 4) {
+      // no data path; go version-agnostic
+      buildVersionAgnosticGrammar();
+    }
+
+    // VERSION-SPECIFIC
+    else {
+      // data path provided; go version-specific
+      buildVersionSpecificGrammar(process.argv[3]);
+    }
+  }
+
+  // BUILD DATA
+  else if (cmd === "build-data") {
+    if (nargs < 5) {
+      console.error(
+        "[ERROR] You must provide a path to the generated data and a version" +
+          " label to build version-specific data. For example:" +
+          "\n  npm run cli build-data ./generated/ snapshot"
+      );
+      process.exit();
+    } else {
+      buildVersionSpecificData(process.argv[3], process.argv[4]);
+    }
+  }
+
+  // ERROR: UNKNOWN COMMAND
+  else {
+    console.error(`[ERROR] Unknown command: ${cmd}`);
+    process.exit();
+  }
 }

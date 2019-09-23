@@ -1,34 +1,33 @@
 import fs = require("fs");
 import path = require("path");
+import bson = require("bson");
 
 import {
-  TextDocument,
-  Position,
+  CompletionItem,
   CompletionItemKind,
-  CompletionItem
+  Position,
+  TextDocument
 } from "vscode-languageserver";
-
-import { CommandParser, CommandParserState } from "./command-parser";
-import { RawLanguageData } from "./raw-language-data";
-import { LanguageData } from "./language-data";
 import { CommandNode, CommandNodeType, makeCommandTree } from "./command-node";
+import { CommandParser, CommandParserState } from "./command-parser";
+import { LanguageData } from "./language-data";
 
 export class LanguageDatabase {
   private languageCache: { [languageId: string]: LanguageData } = {};
   private parserCache: { [languageId: string]: CommandParser } = {};
 
   private loadLanguage(languageId: string) {
-    const dataFilePath = path.resolve(
-      path.join("server", "src", "data", `${languageId}.json`)
-    );
+    const dataFilePath = path.resolve(path.join("data", `${languageId}.bson`));
 
-    const rawData: RawLanguageData = JSON.parse(
-      fs.readFileSync(dataFilePath, "utf8")
-    );
+    const langData = bson.deserialize(
+      fs.readFileSync(dataFilePath)
+    ) as LanguageData;
 
-    const languageData = this.makeLanguageData(rawData);
+    const rootNode = langData.commands;
 
-    this.languageCache[languageId] = languageData;
+    langData.commands = makeCommandTree(rootNode);
+
+    this.languageCache[languageId] = langData;
   }
 
   private loadParser(languageId: string) {
@@ -49,12 +48,6 @@ export class LanguageDatabase {
       this.loadParser(languageId);
     }
     return this.parserCache[languageId];
-  }
-
-  makeLanguageData(rawData: RawLanguageData): LanguageData {
-    return {
-      commands: makeCommandTree(rawData.commands)
-    };
   }
 
   getCommandText(document: TextDocument, position: Position): string {

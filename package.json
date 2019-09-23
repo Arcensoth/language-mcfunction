@@ -14,7 +14,7 @@
     "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
     "test": "sh ./scripts/e2e.sh",
     "compile-lib": "tsc -b lib -v",
-    "generate-grammars": "npm run compile-lib && node lib/out/cli.js"
+    "cli": "npm run compile-lib && node lib/out/cli.js"
   },
   "engines": {
     "vscode": "^1.30.0"
@@ -91,9 +91,11 @@
     }
   },
   "devDependencies": {
+    "@types/bson": "latest",
     "@types/js-yaml": "latest",
     "@types/node": "latest",
     "@types/plist": "latest",
+    "bson": "latest",
     "js-yaml": "^3.13.1",
     "plist": "latest",
     "typescript": "latest"

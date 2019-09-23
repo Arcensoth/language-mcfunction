@@ -1,4 +1,4 @@
-import { CommandNode } from "./command-node";
+import { CommandManifest } from "./command-manifest";
 
 // TODO How to not duplicate this? #refactoring
 
@@ -22,6 +22,6 @@ export interface LanguageRegistries {
 
 export interface LanguageData {
   label: string;
-  commands: CommandNode;
+  commands: CommandManifest;
   registries: LanguageRegistries;
 }

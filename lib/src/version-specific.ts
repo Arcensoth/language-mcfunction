@@ -30,7 +30,7 @@ export function makeLiteralGrammarNode(
 
 function printError(context: CommandNodeContext, message: string) {
   const nodePath = [...context.breadcrumb, context.name].join(".");
-  console.error(`${message} at node ${nodePath}`);
+  console.warn(`[WARN] ${message} at node ${nodePath}`);
 }
 
 export function makeArgumentGrammarNode(

@@ -2,8 +2,12 @@ import fs = require("fs");
 import path = require("path");
 import plist = require("plist");
 import yaml = require("js-yaml");
-
+import bson = require("bson");
+import { LanguageData } from "./language-data";
 import { ExtendedLanguageGrammar, LanguageGrammar } from "./language-grammar";
+import { augmentGrammar } from "./version-specific";
+
+const PROJECT_ROOT = path.resolve(__dirname, "..", "..");
 
 const FORMAT_PROPERTIES = ["match", "begin", "end"];
 const FORMAT_NAMES = ["name", "contentName"];
@@ -45,9 +49,7 @@ function getCaptures(grammar: any, name: string): any {
   const result = grammar.capturesRepository[name.substring(1)];
   if (!result) {
     throw Error(
-      `Grammar "${
-        grammar.name
-      }" -> capturesRespository has no item named "${name}"`
+      `Grammar "${grammar.name}" -> capturesRespository has no item named "${name}"`
     );
   }
   return result;
@@ -160,16 +162,164 @@ export function writeGrammar(
 ) {
   // write yaml
   const yamlPath = path.join(outDir, `${outName}.tmLanguage.yaml`);
-  console.log("Writing:", yamlPath);
-  fs.writeFileSync(yamlPath, yaml.safeDump(grammar));
+  const yamlData = yaml.safeDump(grammar);
+  console.log(`Writing ${yamlData.length} bytes to: ${yamlPath}`);
+  fs.writeFileSync(yamlPath, yamlData);
 
   // write json
   const jsonPath = path.join(outDir, `${outName}.tmLanguage.json`);
-  console.log("Writing:", jsonPath);
-  fs.writeFileSync(jsonPath, JSON.stringify(grammar, null, 2));
+  const jsonData = JSON.stringify(grammar, null, 2);
+  console.log(`Writing ${jsonData.length} bytes to: ${jsonPath}`);
+  fs.writeFileSync(jsonPath, jsonData);
 
   // write plist
   const plistPath = path.join(outDir, `${outName}.tmLanguage`);
-  console.log("Writing:", plistPath);
-  fs.writeFileSync(plistPath, plist.build(grammar as {}));
+  const plistData = plist.build(grammar as {});
+  console.log(`Writing ${plistData.length} bytes to: ${plistPath}`);
+  fs.writeFileSync(plistPath, plistData);
+}
+
+export function buildVersionAgnosticGrammar() {
+  console.log("Building version-agnostic grammar");
+
+  const grammarPath = path.join(
+    PROJECT_ROOT,
+    "lib",
+    "src",
+    "grammars",
+    "version-agnostic.yaml"
+  );
+
+  const extendedGrammar = yaml.safeLoad(fs.readFileSync(grammarPath, "utf8"));
+  const compiledGrammar = compileExtendedGrammar(extendedGrammar);
+
+  const outDir = PROJECT_ROOT;
+  const outName = "mcfunction";
+
+  writeGrammar(compiledGrammar, outDir, outName);
+
+  console.log("Success!");
+}
+
+function assertDataPath(dataPath: string) {
+  // error and exit if the supplied data path does not exist
+  if (!fs.existsSync(dataPath)) {
+    console.error(
+      "[ERROR] Could not find generated data at:" + `\n  ${dataPath}`
+    );
+    process.exit();
+  }
+}
+
+export function buildVersionSpecificGrammar(label: string) {
+  console.log(`Building version-specific grammar '${label}'`);
+
+  // read data
+  const langDataPath = path.join(
+    PROJECT_ROOT,
+    "data",
+    `mcfunction-${label}.bson`
+  );
+
+  console.log(`Reading data from: ${langDataPath}`);
+
+  // error and exit if base file does not exist
+  if (!fs.existsSync(langDataPath)) {
+    console.error(
+      `[ERROR] You must first build data for version "${label}" at:` +
+        `\n  ${langDataPath}`
+    );
+    process.exit();
+  }
+
+  const langData = bson.deserialize(
+    fs.readFileSync(langDataPath)
+  ) as LanguageData;
+
+  const commands = langData.commands;
+  const numCommands = Object.keys(commands.children).length;
+  console.log(`Data "${langData.label}" contains ${numCommands} commands`);
+
+  // read base grammar
+  const baseGrammarPath = path.join(
+    PROJECT_ROOT,
+    "lib",
+    "src",
+    "grammars",
+    "version-specific-base.yaml"
+  );
+
+  const baseGrammar = yaml.safeLoad(fs.readFileSync(baseGrammarPath, "utf8"));
+  baseGrammar.label = langData.label;
+
+  const augmentedGrammar = augmentGrammar(baseGrammar, commands);
+  const compiledGrammar = compileExtendedGrammar(augmentedGrammar);
+
+  const outDir = path.join(PROJECT_ROOT, "grammars");
+  const outName = `mcfunction-${langData.label}`;
+
+  writeGrammar(compiledGrammar, outDir, outName);
+
+  console.log("Success!");
+}
+
+export function buildVersionSpecificData(inPath: string, label: string) {
+  const dataPath = path.resolve(inPath);
+
+  console.log(`Building version-specific data "${label}" from: ${dataPath}`);
+
+  assertDataPath(dataPath);
+
+  // read commands
+  const commandsPath = path.join(dataPath, "reports", "commands.json");
+  console.log(`Reading commands from: ${commandsPath}`);
+  const commands = JSON.parse(fs.readFileSync(commandsPath, "utf8"));
+  const numCommands = Object.keys(commands.children).length;
+  console.log(`Read ${numCommands} commands`);
+
+  // read registries
+  const registriesPath = path.join(dataPath, "reports", "registries.json");
+  console.log(`Reading registries from: ${registriesPath}`);
+  const registries = JSON.parse(fs.readFileSync(registriesPath, "utf8"));
+  const numRegistries = Object.keys(registries).length;
+  console.log(`Read ${numRegistries} registries`);
+
+  // read base data
+  const baseDataPath = path.join(
+    PROJECT_ROOT,
+    "lib",
+    "src",
+    "data",
+    `mcfunction-${label}.yaml`
+  );
+
+  console.log(`Reading base data from: ${baseDataPath}`);
+
+  // error and exit if base file does not exist
+  if (!fs.existsSync(baseDataPath)) {
+    console.error(
+      "[ERROR] You must first create the base data for" +
+        ` version "${label}" at:` +
+        `\n  ${baseDataPath}`
+    );
+    process.exit();
+  }
+
+  const langData = yaml.safeLoad(
+    fs.readFileSync(baseDataPath, "utf8")
+  ) as LanguageData;
+
+  // populate loaded data
+  langData.commands = commands;
+  langData.registries = registries;
+
+  // write bson
+  const outDir = path.join(PROJECT_ROOT, "data");
+  const outName = `mcfunction-${label}`;
+  const serializedData = bson.serialize(langData);
+  const bsonPath = path.join(outDir, `${outName}.bson`);
+  console.log(`Writing ${serializedData.byteLength} bytes to: ${bsonPath}`);
+  fs.writeFileSync(bsonPath, serializedData);
+
+  console.log("Success!");
 }
