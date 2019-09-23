@@ -378,7 +378,7 @@ repository:
   common.tagged_resource_location:
     patterns:
       - match: '(\#)(?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+)((?:\/?[a-z0-9_\.\-]+)*)'
-        captures: &ref_20
+        captures: &ref_21
           '1':
             name: entity.name.function._.hash.tagged_resource_location.mcfunction
           '2':
@@ -6367,7 +6367,13 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.anchored.anchor:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: (eyes|feet) (?=\S)
+        end: (?=\n)
+        beginCaptures: &ref_20
+          '1':
+            name: constant.numeric._.entity_anchor.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.anchored.anchor'
   generated.commands.execute.anchored.anchor:
     patterns:
       - include: '#generated.commands.execute'
@@ -6563,7 +6569,11 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.facing.entity.targets.anchor:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: (eyes|feet) (?=\S)
+        end: (?=\n)
+        beginCaptures: *ref_20
+        patterns:
+          - include: '#generated.commands.execute.facing.entity.targets.anchor'
   generated.commands.execute.facing.entity.targets.anchor:
     patterns:
       - include: '#generated.commands.execute'
@@ -6641,7 +6651,7 @@ repository:
           (\#)(?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+)((?:\/?[a-z0-9_\.\-]+)*)(
           |(?=\n))
         end: (?=\n)
-        beginCaptures: *ref_20
+        beginCaptures: *ref_21
         patterns:
           - include: '#generated.commands.execute.if.block.pos.block'
   generated.commands.execute.if.block.pos.block:
@@ -7038,14 +7048,14 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: &ref_21
+        beginCaptures: &ref_22
           '1':
             name: support.class._.all.score_holder.mcfunction
         patterns:
           - include: '#generated.commands.execute.if.score.target'
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: &ref_22
+        beginCaptures: &ref_23
           '1':
             name: support.class._.fakeplayer.score_holder.mcfunction
         patterns:
@@ -7097,7 +7107,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: &ref_23
+        beginCaptures: &ref_24
           '1':
             name: entity.other.attribute-name._.scoreboard_objective.mcfunction
         patterns:
@@ -7129,13 +7139,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.<.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.<.source
@@ -7191,7 +7201,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.<.source.sourceObjective
@@ -7217,13 +7227,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.<=.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.<=.source
@@ -7279,7 +7289,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.<=.source.sourceObjective
@@ -7305,13 +7315,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.=.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.=.source
@@ -7367,7 +7377,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.=.source.sourceObjective
@@ -7393,13 +7403,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.>.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.>.source
@@ -7455,7 +7465,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.>.source.sourceObjective
@@ -7481,13 +7491,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.>=.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.>=.source
@@ -7543,7 +7553,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.if.score.target.targetObjective.>=.source.sourceObjective
@@ -8325,12 +8335,12 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: '#generated.commands.execute.store.result.score.targets'
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: '#generated.commands.execute.store.result.score.targets'
       - begin: '(\@[parse]) (?=\S)'
@@ -8380,7 +8390,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: '#generated.commands.execute.store.result.score.targets.objective'
   generated.commands.execute.store.result.score.targets.objective:
@@ -9143,12 +9153,12 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: '#generated.commands.execute.store.success.score.targets'
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: '#generated.commands.execute.store.success.score.targets'
       - begin: '(\@[parse]) (?=\S)'
@@ -9198,7 +9208,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: '#generated.commands.execute.store.success.score.targets.objective'
   generated.commands.execute.store.success.score.targets.objective:
@@ -9481,7 +9491,7 @@ repository:
           (\#)(?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+)((?:\/?[a-z0-9_\.\-]+)*)(
           |(?=\n))
         end: (?=\n)
-        beginCaptures: *ref_20
+        beginCaptures: *ref_21
         patterns:
           - include: '#generated.commands.execute.unless.block.pos.block'
   generated.commands.execute.unless.block.pos.block:
@@ -9878,12 +9888,12 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: '#generated.commands.execute.unless.score.target'
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: '#generated.commands.execute.unless.score.target'
       - begin: '(\@[parse]) (?=\S)'
@@ -9933,7 +9943,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: '#generated.commands.execute.unless.score.target.targetObjective'
   generated.commands.execute.unless.score.target.targetObjective:
@@ -9964,13 +9974,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.<.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.<.source
@@ -10026,7 +10036,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.<.source.sourceObjective
@@ -10053,13 +10063,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.<=.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.<=.source
@@ -10115,7 +10125,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.<=.source.sourceObjective
@@ -10142,13 +10152,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.=.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.=.source
@@ -10204,7 +10214,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.=.source.sourceObjective
@@ -10231,13 +10241,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.>.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.>.source
@@ -10293,7 +10303,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.>.source.sourceObjective
@@ -10320,13 +10330,13 @@ repository:
     patterns:
       - begin: (\*) (?=\S)
         end: (?=\n)
-        beginCaptures: *ref_21
+        beginCaptures: *ref_22
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.>=.source
       - begin: '([\w\.\-\#\$\%]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_22
+        beginCaptures: *ref_23
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.>=.source
@@ -10382,7 +10392,7 @@ repository:
     patterns:
       - begin: '([\w\.\-\+]+)( |(?=\n))'
         end: (?=\n)
-        beginCaptures: *ref_23
+        beginCaptures: *ref_24
         patterns:
           - include: >-
               #generated.commands.execute.unless.score.target.targetObjective.>=.source.sourceObjective
@@ -10440,7 +10450,7 @@ repository:
           (\#)(?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+)((?:\/?[a-z0-9_\.\-]+)*)(
           |(?=\n))
         end: (?=\n)
-        beginCaptures: *ref_20
+        beginCaptures: *ref_21
         patterns:
           - include: '#generated.commands.function.name'
   generated.commands.function.name:

@@ -14685,7 +14685,18 @@
     "generated.command.execute.anchored.anchor": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(eyes|feet) (?=\\S)",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.entity_anchor.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.anchored.anchor"
+            }
+          ]
         }
       ]
     },
@@ -15095,7 +15106,18 @@
     "generated.command.execute.facing.entity.targets.anchor": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(eyes|feet) (?=\\S)",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "constant.numeric._.entity_anchor.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.facing.entity.targets.anchor"
+            }
+          ]
         }
       ]
     },

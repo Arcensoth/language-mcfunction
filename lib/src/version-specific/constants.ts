@@ -36,7 +36,8 @@ export const patterns = {
     begin: "{{nbt_path.begin}}",
     next: "{{nbt_path.next}}"
   },
-  swizzle: "{{swizzle}}"
+  swizzle: "{{swizzle}}",
+  entityAnchor: "{{entity_anchor}}"
 };
 
 export const captures = {
@@ -77,7 +78,8 @@ export const captures = {
     begin: "#nbt_path.begin",
     next: "#nbt_path.next"
   },
-  swizzle: "#swizzle"
+  swizzle: "#swizzle",
+  entityAnchor: "#entity_anchor"
 };
 
 export const nodes = {

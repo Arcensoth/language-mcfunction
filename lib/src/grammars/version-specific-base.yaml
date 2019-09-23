@@ -112,6 +112,7 @@ names:
   generic.list.content: string._.content.list.generic.mcfunction
   boolean: constant.numeric._.boolean.mcfunction
   swizzle: constant.numeric._.swizzle.mcfunction
+  entity_anchor: constant.numeric._.entity_anchor.mcfunction
 
 variables:
   # padding
@@ -209,6 +210,8 @@ variables:
 
   swizzle: "(x|y|z|xy|xz|yz|xyz)"
 
+  entity_anchor: "(eyes|feet)"
+
   hex_digit: "[0-9a-fA-F]"
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
 
@@ -248,6 +251,10 @@ capturesRepository:
   swizzle:
     1:
       name: "#swizzle"
+
+  entity_anchor:
+    1:
+      name: "#entity_anchor"
 
   integer:
     1:

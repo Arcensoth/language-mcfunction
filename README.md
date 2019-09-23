@@ -242,16 +242,17 @@ Short name                  | Full scope name                                   
 `score_holder.fakeplayer `  | `support.class._.fakeplayer.score_holder.mcfunction`            | `#temp` / `$mypack.calc`
 
 ### Other customizable scopes
-Short name                | Full scope name                                       | Examples
-------------------------- | ----------------------------------------------------- | ----------
-`boolean`                 | `constant.numeric._.boolean.mcfunction`               | `true` / `false`
-`swizzle`                 | `constant.numeric._.swizzle.mcfunction`               | `y` / `xz` / `xyz`
-`target.uuid`             | `support.class._.uuid.target.mcfunction`              | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
-`target.player_name`      | `support.class._.uuid.target.mcfunction`              | `Arcensoth` / `some_guy`
-`generic.dict.bracket`    | `storage._.bracket.dict.generic.mcfunction`           | `({) key: value (})`
-`generic.dict.content`    | `string._.content.dict.generic.mcfunction`            | `{( key: value )}`
-`generic.list.bracket`    | `storage._.bracket.list.generic.mcfunction`           | `([) item, item (])`
-`generic.list.content`    | `string._.content.list.generic.mcfunction`            | `[( item, item )]`
+Short name                | Full scope name                               | Examples
+------------------------- | --------------------------------------------- | ----------
+`boolean`                 | `constant.numeric._.boolean.mcfunction`       | `true` / `false`
+`entity_anchor`           | `constant.numeric._.entity_anchor.mcfunction` | `eyes` / `feet`
+`swizzle`                 | `constant.numeric._.swizzle.mcfunction`       | `y` / `xz` / `xyz`
+`target.uuid`             | `support.class._.uuid.target.mcfunction`      | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
+`target.player_name`      | `support.class._.uuid.target.mcfunction`      | `Arcensoth` / `some_guy`
+`generic.dict.bracket`    | `storage._.bracket.dict.generic.mcfunction`   | `({) key: value (})`
+`generic.dict.content`    | `string._.content.dict.generic.mcfunction`    | `{( key: value )}`
+`generic.list.bracket`    | `storage._.bracket.list.generic.mcfunction`   | `([) item, item (])`
+`generic.list.content`    | `string._.content.list.generic.mcfunction`    | `[( item, item )]`
 
 ## Contribute
 [Contributions are welcome; see `CONTRIBUTING.md`.](./CONTRIBUTING.md)
