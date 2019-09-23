@@ -17525,7 +17525,27 @@
     "generated.command.execute.in.dimension": {
       "patterns": [
         {
-          "include": "#error.unknown_parser"
+          "begin": "(?:([a-z0-9_\\.\\-]+)(\\:))?([a-z0-9_\\.\\-]+)((?:\\/?[a-z0-9_\\.\\-]+)*) (?=\\S)",
+          "end": "(?=\\n)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.function._.namespace.resource_location.mcfunction"
+            },
+            "2": {
+              "name": "entity.name.function._.colon.resource_location.mcfunction"
+            },
+            "3": {
+              "name": "entity.name.function._.path.resource_location.mcfunction"
+            },
+            "4": {
+              "name": "entity.name.function._.path.resource_location.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#generated.commands.execute.in.dimension"
+            }
+          ]
         }
       ]
     },

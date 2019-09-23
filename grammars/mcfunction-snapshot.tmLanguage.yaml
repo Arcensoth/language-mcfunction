@@ -7599,7 +7599,13 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.in.dimension:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: >-
+          (?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+)((?:\/?[a-z0-9_\.\-]+)*)
+          (?=\S)
+        end: (?=\n)
+        beginCaptures: *ref_14
+        patterns:
+          - include: '#generated.commands.execute.in.dimension'
   generated.commands.execute.in.dimension:
     patterns:
       - include: '#generated.commands.execute'

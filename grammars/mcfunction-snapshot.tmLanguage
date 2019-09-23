@@ -26149,8 +26149,40 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+)((?:\/?[a-z0-9_\.\-]+)*) (?=\S)</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.namespace.resource_location.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.colon.resource_location.mcfunction</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.path.resource_location.mcfunction</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function._.path.resource_location.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.in.dimension</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>

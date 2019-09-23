@@ -3,6 +3,7 @@ import { GrammarNodeGenerator } from "./grammar-node-generators/abc/grammar-node
 import { BlockPositionGrammarNodeGenerator } from "./grammar-node-generators/block-position-grammar-node-generator";
 import { BlockPredicateGrammarNodeGenerator } from "./grammar-node-generators/block-predicate-grammar-node-generator";
 import { BoolGrammarNodeGenerator } from "./grammar-node-generators/bool-grammar-node-generator";
+import { DimensionGrammarNodeGenerator } from "./grammar-node-generators/dimension-grammar-node-generator";
 import { DoubleGrammarNodeGenerator } from "./grammar-node-generators/double-grammar-node-generator";
 import { EntityAnchorGrammarNodeGenerator } from "./grammar-node-generators/entity-anchor-grammar-node-generator";
 import { FunctionGrammarNodeGenerator } from "./grammar-node-generators/function-grammar-node-generator";
@@ -28,6 +29,7 @@ export const GRAMMAR_NODE_GENERATOR_MAP: {
   "minecraft:block_pos": new BlockPositionGrammarNodeGenerator(),
   "minecraft:block_predicate": new BlockPredicateGrammarNodeGenerator(),
   "minecraft:component": new TextComponentGrammarNodeGenerator(),
+  "minecraft:dimension": new DimensionGrammarNodeGenerator(),
   "minecraft:entity": new TargetSelectorGrammarNodeGenerator(),
   "minecraft:entity_anchor": new EntityAnchorGrammarNodeGenerator(),
   "minecraft:function": new FunctionGrammarNodeGenerator(),
