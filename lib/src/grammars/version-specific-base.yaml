@@ -111,6 +111,7 @@ names:
   generic.list.bracket: storage._.bracket.list.generic.mcfunction
   generic.list.content: string._.content.list.generic.mcfunction
   boolean: constant.numeric._.boolean.mcfunction
+  swizzle: constant.numeric._.swizzle.mcfunction
 
 variables:
   # padding
@@ -206,6 +207,8 @@ variables:
 
   boolean: "(true|false)"
 
+  swizzle: "(x|y|z|xy|xz|yz|xyz)"
+
   hex_digit: "[0-9a-fA-F]"
   uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
 
@@ -241,6 +244,10 @@ capturesRepository:
   boolean:
     1:
       name: "#boolean"
+
+  swizzle:
+    1:
+      name: "#swizzle"
 
   integer:
     1:

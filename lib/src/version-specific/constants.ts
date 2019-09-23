@@ -35,7 +35,8 @@ export const patterns = {
   nbtPath: {
     begin: "{{nbt_path.begin}}",
     next: "{{nbt_path.next}}"
-  }
+  },
+  swizzle: "{{swizzle}}"
 };
 
 export const captures = {
@@ -75,7 +76,8 @@ export const captures = {
   nbtPath: {
     begin: "#nbt_path.begin",
     next: "#nbt_path.next"
-  }
+  },
+  swizzle: "#swizzle"
 };
 
 export const nodes = {

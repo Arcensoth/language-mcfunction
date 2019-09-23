@@ -6340,7 +6340,13 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.align.axes:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: (x|y|z|xy|xz|yz|xyz) (?=\S)
+        end: (?=\n)
+        beginCaptures:
+          '1':
+            name: constant.numeric._.swizzle.mcfunction
+        patterns:
+          - include: '#generated.commands.execute.align.axes'
   generated.commands.execute.align.axes:
     patterns:
       - include: '#generated.commands.execute'

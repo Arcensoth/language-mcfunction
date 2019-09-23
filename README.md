@@ -245,6 +245,7 @@ Short name                  | Full scope name                                   
 Short name                | Full scope name                                       | Examples
 ------------------------- | ----------------------------------------------------- | ----------
 `boolean`                 | `constant.numeric._.boolean.mcfunction`               | `true` / `false`
+`swizzle`                 | `constant.numeric._.swizzle.mcfunction`               | `y` / `xz` / `xyz`
 `target.uuid`             | `support.class._.uuid.target.mcfunction`              | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
 `target.player_name`      | `support.class._.uuid.target.mcfunction`              | `Arcensoth` / `some_guy`
 `generic.dict.bracket`    | `storage._.bracket.dict.generic.mcfunction`           | `({) key: value (})`

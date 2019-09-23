@@ -14,6 +14,7 @@ import { NBTValueGrammarNodeGenerator } from "./grammar-node-generators/nbt-valu
 import { ResourceLocationGrammarNodeGenerator } from "./grammar-node-generators/resource-location-grammar-node-generator";
 import { ScoreHolderGrammarNodeGenerator } from "./grammar-node-generators/score-holder-grammar-node-generator";
 import { ScoreboardObjectiveGrammarNodeGenerator } from "./grammar-node-generators/scoreboard-objective-grammar-node-generator";
+import { SwizzleGrammarNodeGenerator } from "./grammar-node-generators/swizzle-grammar-node-generator";
 import { TargetSelectorGrammarNodeGenerator } from "./grammar-node-generators/target-selector-grammar-node-generator";
 import { TextComponentGrammarNodeGenerator } from "./grammar-node-generators/text-component-grammar-node-generator";
 
@@ -35,7 +36,8 @@ export const GRAMMAR_NODE_GENERATOR_MAP: {
   "minecraft:nbt_tag": new NBTValueGrammarNodeGenerator(),
   "minecraft:objective": new ScoreboardObjectiveGrammarNodeGenerator(),
   "minecraft:resource_location": new ResourceLocationGrammarNodeGenerator(),
-  "minecraft:score_holder": new ScoreHolderGrammarNodeGenerator()
+  "minecraft:score_holder": new ScoreHolderGrammarNodeGenerator(),
+  "minecraft:swizzle": new SwizzleGrammarNodeGenerator()
 };
 
 export function getGrammarNodeGenerator(node: CommandNode) {

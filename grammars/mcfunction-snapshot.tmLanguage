@@ -21834,8 +21834,25 @@
         <key>patterns</key>
         <array>
           <dict>
-            <key>include</key>
-            <string>#error.unknown_parser</string>
+            <key>begin</key>
+            <string>(x|y|z|xy|xz|yz|xyz) (?=\S)</string>
+            <key>end</key>
+            <string>(?=\n)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric._.swizzle.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#generated.commands.execute.align.axes</string>
+              </dict>
+            </array>
           </dict>
         </array>
       </dict>
