@@ -4696,7 +4696,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -4757,7 +4757,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -5508,7 +5508,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -5569,7 +5569,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -6203,7 +6203,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -6264,7 +6264,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -6546,7 +6546,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -6607,7 +6607,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -7485,7 +7485,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -7546,7 +7546,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -8379,7 +8379,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -8440,7 +8440,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -9273,7 +9273,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -9334,7 +9334,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -10167,7 +10167,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -10228,7 +10228,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -11319,7 +11319,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -11380,7 +11380,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -12258,7 +12258,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -12319,7 +12319,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -13152,7 +13152,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -13213,7 +13213,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -14046,7 +14046,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -14107,7 +14107,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -14940,7 +14940,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -15001,7 +15001,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -16014,7 +16014,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -16075,7 +16075,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -16953,7 +16953,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -17014,7 +17014,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -17847,7 +17847,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -17908,7 +17908,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -18741,7 +18741,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -18802,7 +18802,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -19635,7 +19635,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))( |(?=\n))</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*))( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -19696,7 +19696,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)?( |(?=\n))</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)?( |(?=\n))</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -20485,7 +20485,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -20546,7 +20546,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -22819,7 +22819,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -22880,7 +22880,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -23091,7 +23091,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -23152,7 +23152,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -23222,7 +23222,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -23283,7 +23283,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -23353,7 +23353,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -23414,7 +23414,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -23656,7 +23656,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -23717,7 +23717,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -27096,7 +27096,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -27157,7 +27157,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -29832,7 +29832,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -29893,7 +29893,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -32572,7 +32572,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -32633,7 +32633,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -32844,7 +32844,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -32905,7 +32905,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -32975,7 +32975,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -33036,7 +33036,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -33106,7 +33106,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -33167,7 +33167,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -33409,7 +33409,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)</string>
+            <string>(?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?:(\~)(\-?\d*)?|(\-?\d*)) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -33470,7 +33470,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)</string>
+            <string>(\^)(\-?\d*)? (\^)(\-?\d*)? (\^)(\-?\d*)? (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>

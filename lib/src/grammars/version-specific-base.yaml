@@ -206,6 +206,14 @@ variables:
   position.abs_rel: "{{coordinate.abs_rel}} {{coordinate.abs_rel}} {{coordinate.abs_rel}}"
   position.local: "{{coordinate.local}} {{coordinate.local}} {{coordinate.local}}"
 
+  # block coordinates/positions (whole numbers)
+  block_coordinate.absolute: "{{integer}}"
+  block_coordinate.relative: '(\~){{integer}}?'
+  block_coordinate.local: '(\^){{integer}}?'
+  block_coordinate.abs_rel: "(?:{{block_coordinate.relative}}|{{block_coordinate.absolute}})"
+  block_position.abs_rel: "{{block_coordinate.abs_rel}} {{block_coordinate.abs_rel}} {{block_coordinate.abs_rel}}"
+  block_position.local: "{{block_coordinate.local}} {{block_coordinate.local}} {{block_coordinate.local}}"
+
   boolean: "(true|false)"
 
   swizzle: "(x|y|z|xy|xz|yz|xyz)"

@@ -14,6 +14,10 @@ export const patterns = {
     absoluteRelative: "{{position.abs_rel}}",
     local: "{{position.local}}"
   },
+  blockPosition: {
+    absoluteRelative: "{{block_position.abs_rel}}",
+    local: "{{block_position.local}}"
+  },
   resourceID: "{{resource_id}}",
   resourceLocation: "{{resource_location}}",
   taggedResourceLocation: "{{tagged_resource_location}}",
@@ -52,6 +56,11 @@ export const captures = {
     fakeplayer: "#score_holder.fakeplayer"
   },
   position: {
+    absoluteRelative: "#position.abs_rel",
+    local: "#position.local"
+  },
+  // just use the same capture groups as for normal positions
+  blockPosition: {
     absoluteRelative: "#position.abs_rel",
     local: "#position.local"
   },

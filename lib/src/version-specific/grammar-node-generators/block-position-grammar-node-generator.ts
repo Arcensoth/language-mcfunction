@@ -9,15 +9,15 @@ export class BlockPositionGrammarNodeGenerator extends GrammarNodeGenerator {
     return {
       patterns: [
         {
-          begin: context.appendExec(patterns.position.absoluteRelative),
+          begin: context.appendExec(patterns.blockPosition.absoluteRelative),
           end: patterns.newLine,
-          beginCaptures: captures.position.absoluteRelative,
+          beginCaptures: captures.blockPosition.absoluteRelative,
           patterns: context.groupPatterns
         },
         {
-          begin: context.appendExec(patterns.position.local),
+          begin: context.appendExec(patterns.blockPosition.local),
           end: patterns.newLine,
-          beginCaptures: captures.position.local,
+          beginCaptures: captures.blockPosition.local,
           patterns: context.groupPatterns
         }
       ]
