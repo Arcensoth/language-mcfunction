@@ -6581,7 +6581,19 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.facing.pos:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: >-
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)
+        end: (?=\n)
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#generated.commands.execute.facing.pos'
+      - begin: (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)
+        end: (?=\n)
+        beginCaptures: *ref_7
+        patterns:
+          - include: '#generated.commands.execute.facing.pos'
   generated.commands.execute.facing.pos:
     patterns:
       - include: '#generated.commands.execute'
@@ -7685,7 +7697,19 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.positioned.pos:
     patterns:
-      - include: '#error.unknown_parser'
+      - begin: >-
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+))
+          (?:(\~)(\-?\d*\.?\d+)?|(\-?\d*\.?\d+)) (?=\S)
+        end: (?=\n)
+        beginCaptures: *ref_6
+        patterns:
+          - include: '#generated.commands.execute.positioned.pos'
+      - begin: (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (\^)(\-?\d*\.?\d+)? (?=\S)
+        end: (?=\n)
+        beginCaptures: *ref_7
+        patterns:
+          - include: '#generated.commands.execute.positioned.pos'
   generated.commands.execute.positioned.pos:
     patterns:
       - include: '#generated.commands.execute'
