@@ -26332,7 +26332,7 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+)((?:\/?[a-z0-9_\.\-]+)*) (?=\S)</string>
+            <string>(?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+) (?=\S)</string>
             <key>end</key>
             <string>(?=\n)</string>
             <key>beginCaptures</key>
@@ -26348,11 +26348,6 @@
                 <string>entity.name.function._.colon.resource_location.mcfunction</string>
               </dict>
               <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>entity.name.function._.path.resource_location.mcfunction</string>
-              </dict>
-              <key>4</key>
               <dict>
                 <key>name</key>
                 <string>entity.name.function._.path.resource_location.mcfunction</string>

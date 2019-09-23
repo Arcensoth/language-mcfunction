@@ -1,3 +1,3 @@
-import { ResourceLocationGrammarNodeGenerator } from "./resource-location-grammar-node-generator";
+import { ResourceIDGrammarNodeGenerator } from "./resource-id-grammar-node-generator";
 
-export class DimensionGrammarNodeGenerator extends ResourceLocationGrammarNodeGenerator {}
+export class DimensionGrammarNodeGenerator extends ResourceIDGrammarNodeGenerator {}

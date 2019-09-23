@@ -7604,11 +7604,9 @@ repository:
       - include: '#error.unmatched_child'
   generated.command.execute.in.dimension:
     patterns:
-      - begin: >-
-          (?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+)((?:\/?[a-z0-9_\.\-]+)*)
-          (?=\S)
+      - begin: '(?:([a-z0-9_\.\-]+)(\:))?([a-z0-9_\.\-]+) (?=\S)'
         end: (?=\n)
-        beginCaptures: *ref_14
+        beginCaptures: *ref_19
         patterns:
           - include: '#generated.commands.execute.in.dimension'
   generated.commands.execute.in.dimension:
