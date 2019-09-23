@@ -35,9 +35,9 @@ export function activate(context: ExtensionContext) {
 
   // Options to control the language client
   let clientOptions: LanguageClientOptions = {
-    // Register the server for mcfunction documents
+    // Register the server for version-specific mcfunction documents
     documentSelector: [
-      { scheme: "file", language: "mcfunction" },
+      // { scheme: "file", language: "mcfunction" },
       { scheme: "file", language: "mcfunction-snapshot" }
     ],
     synchronize: {
