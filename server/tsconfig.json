@@ -3,11 +3,11 @@
     "target": "es6",
     "module": "commonjs",
     "outDir": "out",
-    "rootDir": "src",
+    "rootDir": "..",
     "lib": ["es6"],
     "sourceMap": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node"
   },
-  "include": ["src"],
+  "include": ["src", "../lib/src"],
   "exclude": ["node_modules", ".vscode-test"]
 }

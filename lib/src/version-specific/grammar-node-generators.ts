@@ -1,4 +1,4 @@
-import { CommandNode } from "../command-manifest";
+import { CommandNode } from "./command-node";
 import { GrammarNodeGenerator } from "./grammar-node-generators/abc/grammar-node-generator";
 import { BlockPositionGrammarNodeGenerator } from "./grammar-node-generators/block-position-grammar-node-generator";
 import { BlockPredicateGrammarNodeGenerator } from "./grammar-node-generators/block-predicate-grammar-node-generator";

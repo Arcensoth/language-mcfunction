@@ -1,5 +1,5 @@
-import { CommandNodeContext } from "../../command-manifest";
 import { GrammarNode } from "../../language-grammar";
+import { CommandNodeContext } from "../command-node-context";
 import { captures, nodes, patterns } from "../constants";
 import { GrammarNodeGenerator } from "./abc/grammar-node-generator";
 

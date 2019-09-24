@@ -1,5 +1,5 @@
-import { CommandNodeContext } from "../../command-manifest";
 import { GrammarNode } from "../../language-grammar";
+import { CommandNodeContext } from "../command-node-context";
 import { captures, nodes, patterns } from "../constants";
 import { GrammarNodeGenerator } from "./abc/grammar-node-generator";
 
@@ -13,9 +13,7 @@ export class NBTPathGrammarNodeGenerator extends GrammarNodeGenerator {
           beginCaptures: captures.nbtPath.begin,
           patterns: [
             {
-              begin: context.appendExec(
-                patterns.nbtPath.next
-              ),
+              begin: context.appendExec(patterns.nbtPath.next),
               end: patterns.newLine,
               beginCaptures: captures.nbtPath.next,
               patterns: context.groupPatterns

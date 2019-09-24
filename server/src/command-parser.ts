@@ -1,12 +1,13 @@
-import { LanguageData } from "./language-data";
-import { CommandNode, CommandNodeType } from "./command-node";
+import { CommandNodeType } from "../../lib/src/version-specific/command-node";
+import { ExtendedCommandNode } from "./extended-command-node";
+import { LanguageData } from "./language-database";
 
 export interface CommandParserState {
   // remaining text to be parsed
   commandText: string;
 
   // current node in the command tree
-  commandNode: CommandNode;
+  commandNode: ExtendedCommandNode;
 
   // preserved history of the original literals and arguments, by name
   breadcrumb: string[];

@@ -1,26 +1,6 @@
-import { GrammarNode } from "./language-grammar";
-import { makeGrammarGroupName } from "./version-specific/utils";
-
-export enum CommandNodeType {
-  ROOT = "root",
-  LITERAL = "literal",
-  ARGUMENT = "argument"
-}
-
-export interface CommandNodeChildren {
-  [name: string]: CommandNode;
-}
-
-export interface CommandNode {
-  type: CommandNodeType;
-  parser?: string;
-  properties?: {};
-  executable?: boolean;
-  children?: CommandNodeChildren;
-  redirect?: string[];
-}
-
-export interface CommandManifest extends CommandNode {}
+import { CommandNode } from "./command-node";
+import { GrammarNode } from "../language-grammar";
+import { makeGrammarGroupName } from "./utils";
 
 export class CommandNodeContext {
   constructor(

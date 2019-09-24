@@ -3,9 +3,10 @@ import path = require("path");
 import plist = require("plist");
 import yaml = require("js-yaml");
 import bson = require("bson");
-import { LanguageData } from "./language-data";
+
 import { ExtendedLanguageGrammar, LanguageGrammar } from "./language-grammar";
-import { augmentGrammar } from "./version-specific";
+import { augmentGrammar } from "./version-specific/utils";
+import { VersionData } from "./version-specific/version-data";
 
 const PROJECT_ROOT = path.resolve(__dirname, "..", "..");
 
@@ -215,30 +216,28 @@ export function buildVersionSpecificGrammar(label: string) {
   console.log(`Building version-specific grammar '${label}'`);
 
   // read data
-  const langDataPath = path.join(
+  const versionDataFilePath = path.join(
     PROJECT_ROOT,
     "data",
     `mcfunction-${label}.bson`
   );
 
-  console.log(`Reading data from: ${langDataPath}`);
+  console.log(`Reading data from: ${versionDataFilePath}`);
 
   // error and exit if base file does not exist
-  if (!fs.existsSync(langDataPath)) {
+  if (!fs.existsSync(versionDataFilePath)) {
     console.error(
       `[ERROR] You must first build data for version "${label}" at:` +
-        `\n  ${langDataPath}`
+        `\n  ${versionDataFilePath}`
     );
     process.exit();
   }
 
-  const langData = bson.deserialize(
-    fs.readFileSync(langDataPath)
-  ) as LanguageData;
+  const versionData = VersionData.fromFile(versionDataFilePath);
 
-  const commands = langData.commands;
-  const numCommands = Object.keys(commands.children).length;
-  console.log(`Data "${langData.label}" contains ${numCommands} commands`);
+  const commands = versionData.commands;
+  const numCommands = Object.keys(commands).length;
+  console.log(`Data "${versionData.label}" contains ${numCommands} commands`);
 
   // read base grammar
   const baseGrammarPath = path.join(
@@ -250,13 +249,13 @@ export function buildVersionSpecificGrammar(label: string) {
   );
 
   const baseGrammar = yaml.safeLoad(fs.readFileSync(baseGrammarPath, "utf8"));
-  baseGrammar.label = langData.label;
+  baseGrammar.label = versionData.label;
 
   const augmentedGrammar = augmentGrammar(baseGrammar, commands);
   const compiledGrammar = compileExtendedGrammar(augmentedGrammar);
 
   const outDir = path.join(PROJECT_ROOT, "grammars");
-  const outName = `mcfunction-${langData.label}`;
+  const outName = `mcfunction-${versionData.label}`;
 
   writeGrammar(compiledGrammar, outDir, outName);
 
@@ -305,18 +304,16 @@ export function buildVersionSpecificData(inPath: string, label: string) {
     process.exit();
   }
 
-  const langData = yaml.safeLoad(
-    fs.readFileSync(baseDataPath, "utf8")
-  ) as LanguageData;
+  const data = yaml.safeLoad(fs.readFileSync(baseDataPath, "utf8"));
 
   // populate loaded data
-  langData.commands = commands;
-  langData.registries = registries;
+  data.commands = commands;
+  data.registries = registries;
 
   // write bson
   const outDir = path.join(PROJECT_ROOT, "data");
   const outName = `mcfunction-${label}`;
-  const serializedData = bson.serialize(langData);
+  const serializedData = bson.serialize(data);
   const bsonPath = path.join(outDir, `${outName}.bson`);
   console.log(`Writing ${serializedData.byteLength} bytes to: ${bsonPath}`);
   fs.writeFileSync(bsonPath, serializedData);

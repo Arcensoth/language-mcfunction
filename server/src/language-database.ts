@@ -8,9 +8,24 @@ import {
   Position,
   TextDocument
 } from "vscode-languageserver";
-import { CommandNode, CommandNodeType, makeCommandTree } from "./command-node";
+import { CommandNodeType } from "../../lib/src/version-specific/command-node";
+import { ResourceRegistries } from "../../lib/src/version-specific/resource-registries";
+import { VersionData } from "../../lib/src/version-specific/version-data";
 import { CommandParser, CommandParserState } from "./command-parser";
-import { LanguageData } from "./language-data";
+import {
+  ExtendedCommandNode,
+  makeCommandTree as extendCommandNode
+} from "./extended-command-node";
+
+// TODO consolidate VersionData and LanguageData (aka ExtendedVersionData)
+
+export class LanguageData {
+  constructor(
+    public label: string,
+    public commands: ExtendedCommandNode,
+    public registries: ResourceRegistries
+  ) {}
+}
 
 export class LanguageDatabase {
   private languageCache: { [languageId: string]: LanguageData } = {};
@@ -19,15 +34,15 @@ export class LanguageDatabase {
   private loadLanguage(languageId: string) {
     const dataFilePath = path.resolve(path.join("data", `${languageId}.bson`));
 
-    const langData = bson.deserialize(
-      fs.readFileSync(dataFilePath)
-    ) as LanguageData;
+    const versionData = VersionData.fromFile(dataFilePath);
+    const commands = extendCommandNode(versionData.commands);
+    const languageData = new LanguageData(
+      versionData.label,
+      commands,
+      versionData.registries
+    );
 
-    const rootNode = langData.commands;
-
-    langData.commands = makeCommandTree(rootNode);
-
-    this.languageCache[languageId] = langData;
+    this.languageCache[languageId] = languageData;
   }
 
   private loadParser(languageId: string) {
@@ -62,7 +77,9 @@ export class LanguageDatabase {
     return commandText;
   }
 
-  completionizeCommandNodes(commandNodes: CommandNode[]): CompletionItem[] {
+  completionizeCommandNodes(
+    commandNodes: ExtendedCommandNode[]
+  ): CompletionItem[] {
     const completions: CompletionItem[] = [];
 
     commandNodes.forEach(node => {
@@ -98,7 +115,7 @@ export class LanguageDatabase {
   }
 
   doesCommandNodeMatchText(
-    commandNode: CommandNode,
+    commandNode: ExtendedCommandNode,
     commandText: string
   ): boolean {
     if (commandNode.type === CommandNodeType.LITERAL) {
@@ -111,7 +128,9 @@ export class LanguageDatabase {
     return false;
   }
 
-  gatherMatchingCommandNodes(parserState: CommandParserState): CommandNode[] {
+  gatherMatchingCommandNodes(
+    parserState: CommandParserState
+  ): ExtendedCommandNode[] {
     const matches = parserState.commandNode.childList.filter(childNode => {
       return this.doesCommandNodeMatchText(childNode, parserState.commandText);
     });

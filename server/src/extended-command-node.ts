@@ -1,30 +1,27 @@
-import { RawCommandNode } from "./raw-command-node";
+import {
+  CommandNode,
+  CommandNodeType
+} from "../../lib/src/version-specific/command-node";
 
-export enum CommandNodeType {
-  ROOT = "root",
-  LITERAL = "literal",
-  ARGUMENT = "argument"
+export interface ExtendedCommandNodeChildren {
+  [name: string]: ExtendedCommandNode;
 }
 
-export interface CommandNodeChildren {
-  [name: string]: CommandNode;
-}
-
-export interface CommandNode {
+export interface ExtendedCommandNode {
   type: CommandNodeType;
   parser?: string;
   properties?: {};
   executable?: boolean;
-  children: CommandNodeChildren;
+  children: ExtendedCommandNodeChildren;
 
   // let's make this an actual reference
-  redirect?: CommandNode;
+  redirect?: ExtendedCommandNode;
 
   // add this for smoother iteration
-  childList: CommandNode[];
+  childList: ExtendedCommandNode[];
 
   // add this for backtracking
-  parent: CommandNode;
+  parent: ExtendedCommandNode;
 
   // and these for flexibility
   name: string;
@@ -33,16 +30,16 @@ export interface CommandNode {
 }
 
 function augmentCommandNode(
-  rootNode: RawCommandNode,
-  parentNode: RawCommandNode,
-  rawNode: RawCommandNode,
+  rootNode: CommandNode,
+  parentNode: CommandNode,
+  rawNode: CommandNode,
   breadcrumb: string[]
 ): void {
-  const node: CommandNode = rawNode as CommandNode;
+  const node: ExtendedCommandNode = (rawNode as any) as ExtendedCommandNode;
 
   node.children = node.children || {};
 
-  node.parent = parentNode as CommandNode;
+  node.parent = (parentNode as any) as ExtendedCommandNode;
   node.name = breadcrumb[breadcrumb.length - 1];
   node.breadcrumb = breadcrumb;
   node.id = node.breadcrumb.join(".");
@@ -56,23 +53,28 @@ function augmentCommandNode(
     while (redirects.length > 0) {
       redirect = redirect.children[redirects.pop()];
     }
-    node.redirect = redirect as CommandNode;
+    node.redirect = (redirect as any) as ExtendedCommandNode;
   }
 
   // implicit case for root redirects (such as `execute run`)
   else if (!node.executable && node.childList.length === 0) {
-    node.redirect = rootNode as CommandNode;
+    node.redirect = (rootNode as any) as ExtendedCommandNode;
   }
 
   // recurse into children
   Object.keys(node.children).forEach(childNodeName => {
     const childNode = node.children[childNodeName];
     const childBreadcrumb = [...node.breadcrumb, childNodeName];
-    augmentCommandNode(rootNode, node, childNode, childBreadcrumb);
+    augmentCommandNode(
+      rootNode,
+      node as any,
+      childNode as any,
+      childBreadcrumb
+    );
   });
 }
 
-export function makeCommandTree(rawRoot: RawCommandNode): CommandNode {
+export function makeCommandTree(rawRoot: CommandNode): ExtendedCommandNode {
   augmentCommandNode(rawRoot, null, rawRoot, []);
-  return rawRoot as CommandNode;
+  return (rawRoot as any) as ExtendedCommandNode;
 }
