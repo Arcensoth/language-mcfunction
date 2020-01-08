@@ -236,7 +236,8 @@ export function buildVersionSpecificGrammar(label: string) {
   const versionData = VersionData.fromFile(versionDataFilePath);
 
   const commands = versionData.commands;
-  const numCommands = Object.keys(commands).length;
+  const rootChildren = commands.children;
+  const numCommands = Object.keys(rootChildren).length;
   console.log(`Data "${versionData.label}" contains ${numCommands} commands`);
 
   // read base grammar
