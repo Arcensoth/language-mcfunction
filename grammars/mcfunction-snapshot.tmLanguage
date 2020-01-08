@@ -21115,7 +21115,7 @@
       <key>generated.command.effect.clear</key>
       <dict>
         <key>begin</key>
-        <string>(clear) (?=\S)</string>
+        <string>(clear)( |(?=\n))</string>
         <key>end</key>
         <string>(?=\n)</string>
         <key>beginCaptures</key>

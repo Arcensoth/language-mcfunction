@@ -14137,7 +14137,7 @@
       ]
     },
     "generated.command.effect.clear": {
-      "begin": "(clear) (?=\\S)",
+      "begin": "(clear)( |(?=\\n))",
       "end": "(?=\\n)",
       "beginCaptures": {
         "1": {
