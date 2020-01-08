@@ -8,12 +8,9 @@
   "license": "MIT",
   "repository": "https://github.com/Arcensoth/language-mcfunction",
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -b",
-    "watch": "tsc -b -w",
-    "test": "sh ./scripts/e2e.sh",
-    "compile-lib": "tsc -b lib -v",
-    "cli": "npm run compile-lib && node lib/out/cli.js"
+    "compile": "tsc -b lib -v",
+    "cli": "npm run compile && node lib/out/cli.js",
+    "vscode:prepublish": "npm run compile"
   },
   "engines": {
     "vscode": "^1.30.0"
