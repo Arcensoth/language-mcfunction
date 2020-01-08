@@ -267,8 +267,6 @@ Short name                | Full scope name                               | Exam
 - https://gist.github.com/Aerijo/b8c82d647db783187804e86fa0a604a1
 - https://macromates.com/manual/en/language_grammars
 - https://regex101.com/
-- https://code.visualstudio.com/api/language-extensions/language-server-extension-guide
-- https://github.com/Microsoft/vscode-extension-samples/tree/master/lsp-sample
 
 [github-license-badge]: https://img.shields.io/github/license/arcensoth/language-mcfunction.svg?logo=github
 [vscode-version-badge]: https://img.shields.io/visual-studio-marketplace/v/arcensoth.language-mcfunction.svg?logo=visual-studio-code

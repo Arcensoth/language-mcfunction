@@ -8,10 +8,9 @@
   "license": "MIT",
   "repository": "https://github.com/Arcensoth/language-mcfunction",
   "scripts": {
-    "vscode:prepublish": "cd client && npm run update-vscode && cd .. && npm run compile",
+    "vscode:prepublish": "npm run compile",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
-    "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
     "test": "sh ./scripts/e2e.sh",
     "compile-lib": "tsc -b lib -v",
     "cli": "npm run compile-lib && node lib/out/cli.js"
@@ -19,10 +18,6 @@
   "engines": {
     "vscode": "^1.30.0"
   },
-  "activationEvents": [
-    "onLanguage:mcfunction-snapshot"
-  ],
-  "main": "./client/out/extension",
   "categories": [
     "Programming Languages"
   ],
@@ -65,30 +60,7 @@
         "scopeName": "source.mcfunction",
         "path": "./mcfunction.tmLanguage.json"
       }
-    ],
-    "configuration": {
-      "type": "object",
-      "title": "mcfunction configuration",
-      "properties": {
-        "mcfunction.maxNumberOfProblems": {
-          "scope": "resource",
-          "type": "number",
-          "default": 100,
-          "description": "Controls the maximum number of problems produced by the server."
-        },
-        "mcfunction.trace.server": {
-          "scope": "window",
-          "type": "string",
-          "enum": [
-            "off",
-            "messages",
-            "verbose"
-          ],
-          "default": "off",
-          "description": "Traces the communication between VS Code and the language server."
-        }
-      }
-    }
+    ]
   },
   "devDependencies": {
     "@types/bson": "latest",

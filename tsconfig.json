@@ -10,8 +10,6 @@
   "include": ["src"],
   "exclude": ["node_modules", ".vscode-test"],
   "references": [
-    { "path": "./lib" },
-    { "path": "./client" },
-    { "path": "./server" }
+    { "path": "./lib" }
   ]
 }
