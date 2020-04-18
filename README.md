@@ -3,7 +3,7 @@ Language grammars and syntax highlighting for mcfunction files.
 
 [![github-license-badge]](https://github.com/Arcensoth/language-mcfunction)
 [![vscode-version-badge]](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction)
-[![discord-chat-badge]](https://discord.gg/QAFXFtZ)
+[![discord-chat-badge]](https://discord.gg/ZdxgcAD)
 
 This project provides two types of grammars: the default, [version-agnostic grammar](#version-agnostic-grammar) (shown below), and WIP [version-specific grammars](#version-specific-grammars).
 
