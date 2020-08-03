@@ -9,7 +9,7 @@ assignees: ''
 
 **Bug report checklist:**
 [ ] The language-mcfunction extension only provides syntax highlighting. Have you confirmed that your issue is with the syntax highlighting, and **not** other features such as squiggly underlines, warning indicators, and/or pop-ups?
-[ ] Have you disabled all other datapack-related extensions?
-[ ] Have you attached a screenshot of the bug?
+[ ] Ensure that you are able to reproduce the issue without any other datapack-related extensions enabled.
+[ ] Make sure you attach a screenshot to your bug report. Bug reports without a screenshot will be closed.
 
 **Describe the bug:**
