@@ -2,7 +2,7 @@
   "name": "language-mcfunction",
   "displayName": "language-mcfunction",
   "icon": "icon.png",
-  "description": "Language grammars and syntax highlighting for mcfunction files.",
+  "description": "Syntax highlighting for mcfunction files.",
   "version": "0.17.0-dev",
   "publisher": "arcensoth",
   "license": "MIT",
