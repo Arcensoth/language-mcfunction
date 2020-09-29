@@ -74,6 +74,9 @@ variables:
   # characters for literal subcommands and other strict word-like identifiers
   literal: "([a-z_][a-z0-9_]*)"
 
+  # case-insensitive literal or quoted strings (with limited support)
+  maybe_quoted_key: "((?:[a-z_][a-z0-9_]*)|(?:\"[^\"\n]*\")|(?:\\'[^\\'\n]*\\'))"
+
   # characters permitted in unquoted string words, like nbt compound keys
   unquoted_word_nc: '[A-Za-z0-9_\.\-]+'
   unquoted_word: "({{unquoted_word_nc}})"
@@ -699,7 +702,7 @@ repository:
       - name: meta.selector.argument.mcfunction
 
         # Begin as soon as we see a key, equals, and optional negation operator.
-        begin: '{{literal}} *(\=) *(\!)? *'
+        begin: '{{maybe_quoted_key}} *(\=) *(\!)? *'
 
         # End in three distinct cases:
         #   1. Comma followed immediately by a terminal. Consume the comma, but

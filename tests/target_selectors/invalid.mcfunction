@@ -44,3 +44,15 @@ execute as @e[limit=nearest] run
 execute as @e[limit=0.1] run
 execute as @e[limit=-1] run
 execute as @e[limit=!1] run
+
+execute as @e["quoted_key=foo] run say hi
+execute as @e[quoted_key"=foo] run say hi
+execute as @e["quoted_key""=foo] run say hi
+execute as @e["quoted_key"bar=foo] run say hi
+execute as @e[bar"quoted_key"=foo] run say hi
+
+execute as @e['quoted_key=foo] run say hi
+execute as @e[quoted_key'=foo] run say hi
+execute as @e['quoted_key''=foo] run say hi
+execute as @e['quoted_key'bar=foo] run say hi
+execute as @e[bar'quoted_key'=foo] run say hi

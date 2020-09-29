@@ -70,3 +70,25 @@ execute as @e[name='foo bar'] run say hi
 execute as @e[name=!'foo bar'] run say hi
 execute as @e[name='foo \' bar'] run say hi
 execute as @e[name='foo " bar'] run say hi
+
+# double quoted keys
+execute as @e["quoted_key"=foo] run say hi
+execute as @e["quoted key"=foo] run say hi
+execute as @e[foo=bar,"quoted key"=foo] run say hi
+execute as @e["quoted key"=foo,foo=bar] run say hi
+execute as @e[foo=bar,"quoted key"=foo,foo=bar] run say hi
+execute as @e[foo=bar,  "quoted key"=foo,  foo=bar] run say hi
+execute as @e["quoted key"=foo, "another quoted key"=foo] run say hi
+execute as @e["quoted 'x key"=foo] run say hi
+execute as @e["quoted 'x' key"=foo] run say hi
+
+# single quoted keys
+execute as @e['quoted_key'=foo] run say hi
+execute as @e['quoted key'=foo] run say hi
+execute as @e[foo=bar,'quoted key'=foo] run say hi
+execute as @e['quoted key'=foo,foo=bar] run say hi
+execute as @e[foo=bar,'quoted key'=foo,foo=bar] run say hi
+execute as @e[foo=bar,  'quoted key'=foo,  foo=bar] run say hi
+execute as @e['quoted key'=foo, 'another quoted key'=foo] run say hi
+execute as @e['quoted "x key'=foo] run say hi
+execute as @e['quoted "x" key'=foo] run say hi

@@ -395,7 +395,10 @@ repository:
       - name: meta.selector.argument_spacing.mcfunction
         match: ' +'
       - name: meta.selector.argument.mcfunction
-        begin: '([a-z_][a-z0-9_]*) *(\=) *(\!)? *'
+        begin: |-
+          ((?:[a-z_][a-z0-9_]*)|(?:"[^"
+          ]*")|(?:\'[^\'
+          ]*\')) *(\=) *(\!)? *
         end: '( *\,)(?=[\]\n])|( *\,)|(?= *[\]\n])'
         beginCaptures:
           '1':

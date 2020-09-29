@@ -1102,7 +1102,9 @@
             <key>name</key>
             <string>meta.selector.argument.mcfunction</string>
             <key>begin</key>
-            <string>([a-z_][a-z0-9_]*) *(\=) *(\!)? *</string>
+            <string>((?:[a-z_][a-z0-9_]*)|(?:"[^"
+]*")|(?:\'[^\'
+]*\')) *(\=) *(\!)? *</string>
             <key>end</key>
             <string>( *\,)(?=[\]\n])|( *\,)|(?= *[\]\n])</string>
             <key>beginCaptures</key>
