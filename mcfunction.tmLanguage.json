@@ -426,10 +426,13 @@
     },
     "command.token.nbt_list": {
       "name": "meta.command.token.nbt_list.mcfunction",
-      "begin": "(?<= )(\\[)",
+      "begin": "(?<= )(\\[)(\\w*;)?",
       "end": "(?=\\n)|(\\])([^ \\n]*)",
       "beginCaptures": {
         "1": {
+          "name": "variable.language.mcfunction"
+        },
+        "2": {
           "name": "variable.language.mcfunction"
         }
       },
@@ -525,10 +528,13 @@
           ]
         },
         {
-          "begin": "(\\[)",
+          "begin": "(\\[)(\\w*;)?",
           "end": "(?=\\n)|(\\])",
           "beginCaptures": {
             "1": {
+              "name": "variable.language.mcfunction"
+            },
+            "2": {
               "name": "variable.language.mcfunction"
             }
           },

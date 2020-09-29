@@ -241,10 +241,12 @@ repository:
       - include: '#nbt.compound'
   command.token.nbt_list:
     name: meta.command.token.nbt_list.mcfunction
-    begin: '(?<= )(\[)'
+    begin: '(?<= )(\[)(\w*;)?'
     end: '(?=\n)|(\])([^ \n]*)'
     beginCaptures:
       '1':
+        name: variable.language.mcfunction
+      '2':
         name: variable.language.mcfunction
     endCaptures:
       '1':
@@ -293,10 +295,12 @@ repository:
             name: variable.language.mcfunction
         patterns:
           - include: '#nbt.compound'
-      - begin: '(\[)'
+      - begin: '(\[)(\w*;)?'
         end: '(?=\n)|(\])'
         beginCaptures:
           '1':
+            name: variable.language.mcfunction
+          '2':
             name: variable.language.mcfunction
         endCaptures:
           '1':

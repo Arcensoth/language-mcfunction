@@ -15,6 +15,7 @@ names:
   selector_delims: "#base_selector"
   block_predicate_delims: "#brace_delims"
   nbt_delims: "#brace_delims"
+  nbt_array_type: "#brace_delims"
   nbt_key: string.interpolated.mcfunction
   nbt_index: constant.numeric.mcfunction
   resource_namespace: entity.name.function.mcfunction
@@ -111,6 +112,9 @@ variables:
   unquoted_string: "({{unquoted_string_nc}})"
   nbt_unquoted_string: '([^\s\{\}\[\]\,\:\=]+)'
   selector_unquoted_string: '([^\s\{\}\[\]\,\:\=\!]+)'
+
+  # optional nbt array type declaration
+  nbt_array_type: "(\\w*;)?"
 
   # various popular fakeplayer formats
   # they'd get classified as unquoted strings anyway
@@ -469,11 +473,13 @@ repository:
 
   command.token.nbt_list:
     name: meta.command.token.nbt_list.mcfunction
-    begin: '{{command_token_l}}(\[)'
+    begin: '{{command_token_l}}(\[){{nbt_array_type}}'
     end: '{{lookahead_newline}}|(\])({{not_command_token_delim}}*)'
     beginCaptures:
       1:
         name: "#nbt_delims"
+      2:
+        name: "#nbt_array_type"
     endCaptures:
       1:
         name: "#nbt_delims"
@@ -549,11 +555,13 @@ repository:
             name: "#nbt_delims"
         patterns:
           - include: "#nbt.compound"
-      - begin: '(\[)'
+      - begin: '(\[){{nbt_array_type}}'
         end: '{{lookahead_newline}}|(\])'
         beginCaptures:
           1:
             name: "#nbt_delims"
+          2:
+            name: "#nbt_array_type"
         endCaptures:
           1:
             name: "#nbt_delims"
