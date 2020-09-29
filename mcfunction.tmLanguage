@@ -1291,6 +1291,40 @@
             </array>
           </dict>
           <dict>
+            <key>begin</key>
+            <string>(\")</string>
+            <key>end</key>
+            <string>(?=\n)|(\")([^\. \n]*)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string.quoted.mcfunction</string>
+              </dict>
+            </dict>
+            <key>endCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string.quoted.mcfunction</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal.mcfunction</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#common.quoted_string</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
             <key>match</key>
             <string>(\.)?(\w+)</string>
             <key>captures</key>

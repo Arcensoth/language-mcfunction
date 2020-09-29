@@ -44,3 +44,7 @@ say hello
 # test inner compound leak
 data get entity @s Inventory[{
 say hello
+
+# test trailing text after quoted nbt path key
+data modify entity @s Item.tag."my_quoted_key"foo
+data modify entity @s Item.tag."my_quoted_key"foo set value true

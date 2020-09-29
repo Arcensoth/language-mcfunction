@@ -828,6 +828,28 @@
           ]
         },
         {
+          "begin": "(\\\")",
+          "end": "(?=\\n)|(\\\")([^\\. \\n]*)",
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.mcfunction"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string.quoted.mcfunction"
+            },
+            "2": {
+              "name": "invalid.illegal.mcfunction"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#common.quoted_string"
+            }
+          ]
+        },
+        {
           "match": "(\\.)?(\\w+)",
           "captures": {
             "1": {

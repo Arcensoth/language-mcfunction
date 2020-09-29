@@ -297,7 +297,7 @@ repository:
 
       # block headers within blocks
       - name: meta.comment.block.heading.mcfunction
-        match: '(({{block_comment_prefix}})((.*)))$'
+        match: "(({{block_comment_prefix}})((.*)))$"
         captures:
           1:
             name: "#block_comment"
@@ -795,6 +795,20 @@ repository:
             name: "#nbt_delims"
         patterns:
           - include: "#nbt.compound"
+      # SelectedItem.tag(."my quoted key")
+      - begin: '(\")'
+        # Anything other than a dot, space, or newline immediately following the quote is invalid.
+        end: '{{lookahead_newline}}|(\")([^\. \n]*)'
+        beginCaptures:
+          1:
+            name: "#quoted_string"
+        endCaptures:
+          1:
+            name: "#quoted_string"
+          2:
+            name: "#error"
+        patterns:
+          - include: "#common.quoted_string"
       # SelectedItem(.Count)
       - match: '(\.)?(\w+)'
         captures:

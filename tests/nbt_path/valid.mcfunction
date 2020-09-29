@@ -27,3 +27,13 @@ data modify entity @s Item.tag.foo[][{}][] set value true
 
 # compound access
 data get entity @s Inventory[].tag{custom: true}.display.Name
+
+# quoted keys
+data modify entity @s Item.tag."my_quoted_key"
+data modify entity @s Item.tag."my_quoted_key"
+data modify entity @s Item.tag."my_quoted_key" set value true
+data modify entity @s Item.tag."my_quoted_key".foo set value true
+data modify entity @s Item.tag."my quoted key"
+data modify entity @s Item.tag."my quoted key".foo
+data modify entity @s Item.tag."my quoted key" set value true
+data modify entity @s Item.tag."my quoted key".foo set value true
