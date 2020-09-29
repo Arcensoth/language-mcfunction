@@ -4,8 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Changed the package description to be less ambiguous
+- Overhauled the version-specific grammar generator using intermediate data files
+- Updated the version-specific grammar/data to 1.16.3 (no command-facing changes)
+### Removed
+- Purged work-in-progress LSP support in light of other extensions
+### Fixed
+- Fixed NBT array types (#30)
+- Fixed quoted selector keys (#28)
+- Fixed quoted keys in NBT paths (#27)
 
-## [0.16.0]
+## [0.16.0] - 2019-09-22
 ### Added
 - Implemented a handful of commands and arguments for version-specific grammars
 - Ported block comments to the version-specific grammar
