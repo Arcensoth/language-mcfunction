@@ -79,4 +79,3 @@ I recommend creating a symlink `generated` (pre-configured in `.gitignore`) in t
 ## Style guide
 
 - We use [prettier](https://prettier.io/) to auto-format our TypeScript code.
-- We usually bump the `version` in `package.json` alongside the first change after any given release.
