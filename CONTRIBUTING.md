@@ -64,13 +64,14 @@ We recommend using VSCode to develop and test the VSCode extension. Otherwise yo
 The following command will both compile `lib` (from TypeScript into JavaScript) and run the `cli` script to generate the **version-agnostic** grammar from `version-agnostic.yaml`:
 
 ```
-npm run generate-grammars
+npm run cli build-grammar
 ```
 
-Providing two additional arguments: (1) a directory (the server-generated data folder) and (2) a version label; will cause the script to instead generate a **version-specific grammar** based on `version-specific-base.yaml`:
+Providing two additional arguments: (1) a directory (the server-generated data folder) and (2) a version label; will cause the script to instead build a data dump for a particular version of the game. This data can in turn be used to generate a **version-specific grammar** based on `version-specific-base.yaml`:
 
 ```
-npm run generate-grammars ./generated snapshot
+npm run cli build-data ./generated/ snapshot
+npm run cli build-grammar snapshot
 ```
 
 I recommend creating a symlink `generated` (pre-configured in `.gitignore`) in the repository root that points to the generated data folder of a recent Minecraft snapshot. This will make it easier to supply the grammar generator with a directory for the server-generated data.
