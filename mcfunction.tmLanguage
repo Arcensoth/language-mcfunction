@@ -35,7 +35,7 @@
             <key>name</key>
             <string>meta.comment.block.mcfunction</string>
             <key>begin</key>
-            <string>^[ \t]*((#)(&gt;)((.*)))$</string>
+            <string>^[ \t]*((#)([\#\&gt;\~\!\@\$\%\^\*]+)((.*)))$</string>
             <key>end</key>
             <string>^(?![ \t]*#)</string>
             <key>beginCaptures</key>
@@ -156,7 +156,7 @@
             <key>name</key>
             <string>meta.comment.block.heading.mcfunction</string>
             <key>match</key>
-            <string>((&gt;)((.*)))$</string>
+            <string>(([\#\&gt;\~\!\@\$\%\^\*]+)((.*)))$</string>
             <key>captures</key>
             <dict>
               <key>1</key>

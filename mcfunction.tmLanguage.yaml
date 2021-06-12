@@ -10,7 +10,7 @@ repository:
   comment:
     patterns:
       - name: meta.comment.block.mcfunction
-        begin: '^[ \t]*((#)(>)((.*)))$'
+        begin: '^[ \t]*((#)([\#\>\~\!\@\$\%\^\*]+)((.*)))$'
         end: '^(?![ \t]*#)'
         beginCaptures:
           '1':
@@ -54,7 +54,7 @@ repository:
           '3':
             name: comment.block.mcfunction
       - name: meta.comment.block.heading.mcfunction
-        match: ((>)((.*)))$
+        match: '(([\#\>\~\!\@\$\%\^\*]+)((.*)))$'
         captures:
           '1':
             name: comment.block.mcfunction

@@ -57,3 +57,26 @@ execute as @s run say this should also be a command
 execute as @s run say this should also also be a command
 
 execute as @s run say this should also also also be a command
+
+## An alternate block comment prefix
+# a
+# b
+# c
+
+### With multiple characters
+
+########## Really long one
+
+#~ Another alternate prefix
+
+#! And another one
+
+#@ And another one
+
+#$ And another one
+
+#% And another one
+
+#^ And another one
+
+#* And another one

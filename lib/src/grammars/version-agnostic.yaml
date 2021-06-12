@@ -133,7 +133,7 @@ variables:
   base_selector: '(\@[a-z])'
 
   # prefix following the `#` to initiate a block comment section
-  block_comment_prefix: ">"
+  block_comment_prefix: '[\#\>\~\!\@\$\%\^\*]+'
 
 patterns:
   - include: "#comment"
@@ -291,6 +291,7 @@ repository:
 
   comment.block.line:
     patterns:
+      # TODO Move this to a separate grammar with more features for block comments.
       # doc tags like `@params` and `@returns`
       - name: meta.comment.block.annotation.mcfunction
         match: '((\@\w*)\b(.*))$'

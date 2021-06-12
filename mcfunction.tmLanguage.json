@@ -20,7 +20,7 @@
       "patterns": [
         {
           "name": "meta.comment.block.mcfunction",
-          "begin": "^[ \\t]*((#)(>)((.*)))$",
+          "begin": "^[ \\t]*((#)([\\#\\>\\~\\!\\@\\$\\%\\^\\*]+)((.*)))$",
           "end": "^(?![ \\t]*#)",
           "beginCaptures": {
             "1": {
@@ -97,7 +97,7 @@
         },
         {
           "name": "meta.comment.block.heading.mcfunction",
-          "match": "((>)((.*)))$",
+          "match": "(([\\#\\>\\~\\!\\@\\$\\%\\^\\*]+)((.*)))$",
           "captures": {
             "1": {
               "name": "comment.block.mcfunction"
