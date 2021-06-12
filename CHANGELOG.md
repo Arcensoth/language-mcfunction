@@ -9,12 +9,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - Implemented highlighting for Markdown code blocks in VSCode
+- Add more block comment prefix characters (#45)
 
 ### Fixed
 
 - Fixed compile errors due to unbounded dependency versions
   - `@types/js-yaml` has had a semver breaking change
   - `typescript` requires type assertions in more places
+
+### Removed
+
+- Removed the incomplete version-specific grammar to avoid confusion
 
 ## [0.17.0] - 2020-09-29
 
