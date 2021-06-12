@@ -1,4 +1,5 @@
 # language-mcfunction
+
 Language grammars and syntax highlighting for mcfunction files.
 
 [![github-license-badge]](https://github.com/Arcensoth/language-mcfunction)
@@ -23,10 +24,13 @@ This project provides two types of grammars: the default, [version-agnostic gram
 [![Showcase](https://i.imgur.com/0agDB4B.png)](https://i.imgur.com/0agDB4B.png)
 
 ## Install
+
 ### Installing the VSCode extension
+
 The extension [language-mcfunction](https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction) is available from the Marketplace: https://marketplace.visualstudio.com/items?itemName=arcensoth.language-mcfunction
 
 ### Installing the SublimeText package
+
 It is recommended you use [Package Control](https://packagecontrol.io/) to manage the package:
 
 1. [Install Package Control](https://packagecontrol.io/installation) if it is not already present.
@@ -38,7 +42,9 @@ This will keep the package updated with the repository automatically.
 Otherwise you can clone the repository into user packages (e.g. `%appdata%\Sublime Text 3\Packages`) and update it manually.
 
 ## Features
+
 ### Syntax highlighting
+
 Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
 
 - [x] [Comments and indentation](https://i.imgur.com/1N5zlkj.png): `# This is a comment`
@@ -61,17 +67,18 @@ Here's an [album](https://imgur.com/a/a8LvRjK) with everything below.
 - [x] [Fakeplayers](https://i.imgur.com/jNODt4g.png): `#hidden` / `$fakefoo` / `%fakebar`
 - [x] [Base selectors](https://i.imgur.com/6eWmGa4.png): `@e`
 - [x] [Selectors with arguments](https://i.imgur.com/Ut4W6pF.png): `@e[tag=foo]` / `@e[tag=!foo]`
-    - [x] [Literal arguments](https://i.imgur.com/LtMfOGW.png): `gamemode` / `sort`
-    - [x] [Numeric arguments](https://i.imgur.com/FvnxwYD.png): `x` / `y` / `z` / `limit`
-    - [x] [Range arguments](https://i.imgur.com/DiLdNU6.png): `distance` / `level`
-    - [x] [Resource location arguments](https://i.imgur.com/ZQ920Yw.png): `type`
-    - [x] [Unquoted string arguments](https://i.imgur.com/svqzc2o.png): `tag`
-    - [x] [Quoted string arguments](https://i.imgur.com/ahm8HYb.png): `name`
-    - [x] [NBT compound arguments](https://i.imgur.com/JqWrpVm.png): `nbt`
-    - [x] [Score arguments](https://i.imgur.com/L7f9wJ3.png): `scores`
-    - [x] [Advancement arguments](https://i.imgur.com/yQj5Oye.png): `advancements`
+  - [x] [Literal arguments](https://i.imgur.com/LtMfOGW.png): `gamemode` / `sort`
+  - [x] [Numeric arguments](https://i.imgur.com/FvnxwYD.png): `x` / `y` / `z` / `limit`
+  - [x] [Range arguments](https://i.imgur.com/DiLdNU6.png): `distance` / `level`
+  - [x] [Resource location arguments](https://i.imgur.com/ZQ920Yw.png): `type`
+  - [x] [Unquoted string arguments](https://i.imgur.com/svqzc2o.png): `tag`
+  - [x] [Quoted string arguments](https://i.imgur.com/ahm8HYb.png): `name`
+  - [x] [NBT compound arguments](https://i.imgur.com/JqWrpVm.png): `nbt`
+  - [x] [Score arguments](https://i.imgur.com/L7f9wJ3.png): `scores`
+  - [x] [Advancement arguments](https://i.imgur.com/yQj5Oye.png): `advancements`
 
 ### Custom block comments
+
 It's common for datapack developers to comment parts of their code with things like headings, parameters, return values, etc. To support these patterns for those who wish to use them, the grammar implements custom block comments. These types of comments are gated behind a vanilla-compatible alternate comment style.
 
 The prefix `#>` can be used to initiate a block comment:
@@ -92,7 +99,9 @@ The prefix `#>` can be used to initiate a block comment:
 As of writing there is no documentation standard, however the grammar has the capacity to support this via block comments and alternate comment styles.
 
 ## Configure
+
 ### Configuring the version-agnostic grammar
+
 This is a generic "version-agnostic" grammar that does not target any particular version of Minecraft. As a result it may not be as accurate as version-specific grammars, however it will continue to work for multiple versions of the game.
 
 The version-agnostic `mcfunction` language should be active by default. It provides a decent fallback for otherwise unsupported versions of Minecraft. In order to do this, it must not assume any particular version. Because it cannot assume a version, it cannot provide context-sensitive highlighting.
@@ -100,6 +109,7 @@ The version-agnostic `mcfunction` language should be active by default. It provi
 In the future, the [version-specific grammars] will be preferred when available.
 
 ### Configuring the version-specific grammars
+
 > **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar]. Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
 
 The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher. They have context-sensitive highlighting and command validation comparable to the in-game command bar.
@@ -115,6 +125,7 @@ In VSCode, you can easily choose which version of mcfunction to use by changing 
 This option can also be set on the user-level in `settings.json` or folder-level in `.vscode/settings.json`.
 
 ## Customize
+
 Currently available for the [version-specific grammars].
 
 Scopes have been assigned with user customization in mind. If your editor allows scope overrides, this will make it easy to customize your own colours for a variety of scopes.
@@ -132,132 +143,146 @@ Scopes have been assigned with user customization in mind. If your editor allows
 - [Other customizable scopes]
 
 ### Customizing errors
-Short name  | Full scope name                           | Examples
------------ | ----------------------------------------- | ----------
-`invalid`   | `invalid.illegal._.invalid.mcfunction`    | `execute (foo)`
-`underline` | `markup.underline._.underline.mcfunction` | `execute (foo)`
+
+| Short name  | Full scope name                           | Examples        |
+| ----------- | ----------------------------------------- | --------------- |
+| `invalid`   | `invalid.illegal._.invalid.mcfunction`    | `execute (foo)` |
+| `underline` | `markup.underline._.underline.mcfunction` | `execute (foo)` |
 
 ### Customizing comments
-Short name                        | Full scope name                                               | Examples
---------------------------------- | ------------------------------------------------------------- | ----------
-`comment.plain`                   | `comment._.plain.comment.mcfunction`                          | `(# This is a plain comment)`
-`comment.block`                   | `comment.block._.block.comment.mcfunction`                    | `(#> This is part of a block comment)`
-`comment.block.symbol`            | `markup.list._.symbol.block.comment.mcfunction`               | `(#)> This is part of a block comment`
-`comment.block.prefix`            | `markup.list._.prefix.block.comment.mcfunction`               | `#(>) This is part of a block comment`
-`comment.block.heading_1`         | `markup.bold._.heading_1.block.comment.mcfunction`            | `#> (This is part of a block comment)`
-`comment.block.heading_2`         | `markup.list._.heading_2.block.comment.mcfunction`            | `#> (This is part of a block comment)`
-`comment.block.annotation.label`  | `markup.heading._.label.annotation.block.comment.mcfunction`  | `#> (@annotation) some annotation`
-`comment.block.annotation.text`   | `comment.block._.text.annotation.block.comment.mcfunction`    | `#> @annotation (some annotation)`
+
+| Short name                       | Full scope name                                              | Examples                               |
+| -------------------------------- | ------------------------------------------------------------ | -------------------------------------- |
+| `comment.plain`                  | `comment._.plain.comment.mcfunction`                         | `(# This is a plain comment)`          |
+| `comment.block`                  | `comment.block._.block.comment.mcfunction`                   | `(#> This is part of a block comment)` |
+| `comment.block.symbol`           | `markup.list._.symbol.block.comment.mcfunction`              | `(#)> This is part of a block comment` |
+| `comment.block.prefix`           | `markup.list._.prefix.block.comment.mcfunction`              | `#(>) This is part of a block comment` |
+| `comment.block.heading_1`        | `markup.bold._.heading_1.block.comment.mcfunction`           | `#> (This is part of a block comment)` |
+| `comment.block.heading_2`        | `markup.list._.heading_2.block.comment.mcfunction`           | `#> (This is part of a block comment)` |
+| `comment.block.annotation.label` | `markup.heading._.label.annotation.block.comment.mcfunction` | `#> (@annotation) some annotation`     |
+| `comment.block.annotation.text`  | `comment.block._.text.annotation.block.comment.mcfunction`   | `#> @annotation (some annotation)`     |
 
 ### Customizing commands
-Short name      | Full scope name                         | Examples
---------------- | --------------------------------------- | ----------
-`command`       | `keyword.control._.command.mcfunction`  | `(execute) as @a run (function)`
-`subcommand`    | `keyword.other._.subcommand.mcfunction` | `execute (as) @a (run) function`
-`command.slash` | `keyword.control._.command.mcfunction`  | `/`
+
+| Short name      | Full scope name                         | Examples                         |
+| --------------- | --------------------------------------- | -------------------------------- |
+| `command`       | `keyword.control._.command.mcfunction`  | `(execute) as @a run (function)` |
+| `subcommand`    | `keyword.other._.subcommand.mcfunction` | `execute (as) @a (run) function` |
+| `command.slash` | `keyword.control._.command.mcfunction`  | `/`                              |
 
 ### Customizing selectors
-Short name                | Full scope name                                               | Examples
-------------------------- | ------------------------------------------------------------- | ----------
-`target_selector.base`    | `support.class._.base.target_selector.mcfunction`             | `@a`
-`target_selector.bracket` | `support.class._.bracket.target_selector.mcfunction`          | `[]`
-`target_selector.equals`  | `support.class._.equals.target_selector.mcfunction`           | `=`
-`target_selector.comma`   | `support.class._.comma.target_selector.mcfunction`            | `,`
-`target_selector.not`     | `constant.character.escape._.not.target_selector.mcfunction`  | `!`
-`target_selector.param`   | `keyword.other._.param.target_selector.mcfunction`            | `tag` / `type`
-`score_map.bracket`       | `storage._.bracket.score_map.mcfunction`                      | `{}`
-`score_map.equals`        | `storage._.equals.score_map.mcfunction`                       | `=`
-`score_map.comma`         | `storage._.comma.score_map.mcfunction`                        | `,`
-`advancement_map.bracket` | `storage._.bracket.advancement_map.mcfunction`                | `{}`
-`advancement_map.equals`  | `storage._.equals.advancement_map.mcfunction`                 | `=`
-`advancement_map.comma`   | `storage._.comma.advancement_map.mcfunction`                  | `,`
+
+| Short name                | Full scope name                                              | Examples       |
+| ------------------------- | ------------------------------------------------------------ | -------------- |
+| `target_selector.base`    | `support.class._.base.target_selector.mcfunction`            | `@a`           |
+| `target_selector.bracket` | `support.class._.bracket.target_selector.mcfunction`         | `[]`           |
+| `target_selector.equals`  | `support.class._.equals.target_selector.mcfunction`          | `=`            |
+| `target_selector.comma`   | `support.class._.comma.target_selector.mcfunction`           | `,`            |
+| `target_selector.not`     | `constant.character.escape._.not.target_selector.mcfunction` | `!`            |
+| `target_selector.param`   | `keyword.other._.param.target_selector.mcfunction`           | `tag` / `type` |
+| `score_map.bracket`       | `storage._.bracket.score_map.mcfunction`                     | `{}`           |
+| `score_map.equals`        | `storage._.equals.score_map.mcfunction`                      | `=`            |
+| `score_map.comma`         | `storage._.comma.score_map.mcfunction`                       | `,`            |
+| `advancement_map.bracket` | `storage._.bracket.advancement_map.mcfunction`               | `{}`           |
+| `advancement_map.equals`  | `storage._.equals.advancement_map.mcfunction`                | `=`            |
+| `advancement_map.comma`   | `storage._.comma.advancement_map.mcfunction`                 | `,`            |
 
 ### Customizing NBT
-Short name              | Full scope name                             | Examples
------------------------ | ------------------------------------------- | ----------
-`nbt_compound.bracket`  | `storage._.bracket.nbt_compound.mcfunction` | `{}`
-`nbt_compound.colon`    | `storage._.colon.nbt_compound.mcfunction`   | `:`
-`nbt_compound.comma`    | `storage._.comma.nbt_compound.mcfunction`   | `,`
-`nbt_list.bracket`      | `storage._.bracket.nbt_list.mcfunction`     | `[]`
-`nbt_list.comma`        | `storage._.comma.nbt_list.mcfunction`       | `,`
+
+| Short name             | Full scope name                             | Examples |
+| ---------------------- | ------------------------------------------- | -------- |
+| `nbt_compound.bracket` | `storage._.bracket.nbt_compound.mcfunction` | `{}`     |
+| `nbt_compound.colon`   | `storage._.colon.nbt_compound.mcfunction`   | `:`      |
+| `nbt_compound.comma`   | `storage._.comma.nbt_compound.mcfunction`   | `,`      |
+| `nbt_list.bracket`     | `storage._.bracket.nbt_list.mcfunction`     | `[]`     |
+| `nbt_list.comma`       | `storage._.comma.nbt_list.mcfunction`       | `,`      |
 
 ### Customizing NBT paths
-Short name                  | Full scope name                                   | Examples
---------------------------- | ------------------------------------------------- | ----------
-`nbt_path.property`         | `string._.property.nbt_path.mcfunction`           | `(RecordItem)`
-`nbt_path.dot`              | `storage._.dot.nbt_path.mcfunction`               | `RecordItem(.)tag`
-`nbt_path.compound.bracket` | `storage._.bracket.compound.nbt_path.mcfunction`  | `SelectedItem({)(})`
-`nbt_path.index.bracket`    | `storage._.bracket.index.nbt_path.mcfunction`     | `Inventory([)(])`
+
+| Short name                  | Full scope name                                  | Examples             |
+| --------------------------- | ------------------------------------------------ | -------------------- |
+| `nbt_path.property`         | `string._.property.nbt_path.mcfunction`          | `(RecordItem)`       |
+| `nbt_path.dot`              | `storage._.dot.nbt_path.mcfunction`              | `RecordItem(.)tag`   |
+| `nbt_path.compound.bracket` | `storage._.bracket.compound.nbt_path.mcfunction` | `SelectedItem({)(})` |
+| `nbt_path.index.bracket`    | `storage._.bracket.index.nbt_path.mcfunction`    | `Inventory([)(])`    |
 
 ### Customizing text components
-Short name                        | Full scope name                                       | Examples
---------------------------------- | ----------------------------------------------------- | ----------
-`text_component.bracket`          | `storage._.bracket.text_component.mcfunction`         | `{}[]`
-`text_component.colon`            | `storage._.colon.text_component.mcfunction`           | `:`
-`text_component.comma`            | `storage._.comma.text_component.mcfunction`           | `,`
-`text_component.property`         | `string._.property.text_component.mcfunction`         | `text` / `color` / `selector`
-`text_component.property.color`   | `string._.color.property.text_component.mcfunction`   | `red` / `green` / `blue`
-`text_component.property.keybind` | `string._.keybind.property.text_component.mcfunction` | `key.drop` / `key.use`
-`text_component.property.event`   | `string._.event.property.text_component.mcfunction`   | `run_command` / `show_text`
+
+| Short name                        | Full scope name                                       | Examples                      |
+| --------------------------------- | ----------------------------------------------------- | ----------------------------- |
+| `text_component.bracket`          | `storage._.bracket.text_component.mcfunction`         | `{}[]`                        |
+| `text_component.colon`            | `storage._.colon.text_component.mcfunction`           | `:`                           |
+| `text_component.comma`            | `storage._.comma.text_component.mcfunction`           | `,`                           |
+| `text_component.property`         | `string._.property.text_component.mcfunction`         | `text` / `color` / `selector` |
+| `text_component.property.color`   | `string._.color.property.text_component.mcfunction`   | `red` / `green` / `blue`      |
+| `text_component.property.keybind` | `string._.keybind.property.text_component.mcfunction` | `key.drop` / `key.use`        |
+| `text_component.property.event`   | `string._.event.property.text_component.mcfunction`   | `run_command` / `show_text`   |
 
 ### Customizing resource locations
-Short name                            | Full scope name                                                         | Examples
-------------------------------------- | ----------------------------------------------------------------------- | ----------
-`resource_location.namespace`         | `entity.name.function._.namespace.resource_location.mcfunction`         | `(mypack):some/resource`
-`resource_location.colon`             | `entity.name.function._.colon.resource_location.mcfunction`             | `mypack(:)some/resource`
-`resource_location.path`              | `entity.name.function._.path.resource_location.mcfunction`              | `mypack:(some/resource)`
-`tagged_resource_location.hash`       | `entity.name.function._.hash.tagged_resource_location.mcfunction`       | `(#)mypack:some/resource`
-`tagged_resource_location.namespace`  | `entity.name.function._.namespace.tagged_resource_location.mcfunction`  | `#(mypack):some/resource`
-`tagged_resource_location.colon`      | `entity.name.function._.colon.tagged_resource_location.mcfunction`      | `#mypack(:)some/resource`
-`tagged_resource_location.path`       | `entity.name.function._.path.tagged_resource_location.mcfunction`       | `#mypack:(some/resource)`
+
+| Short name                           | Full scope name                                                        | Examples                  |
+| ------------------------------------ | ---------------------------------------------------------------------- | ------------------------- |
+| `resource_location.namespace`        | `entity.name.function._.namespace.resource_location.mcfunction`        | `(mypack):some/resource`  |
+| `resource_location.colon`            | `entity.name.function._.colon.resource_location.mcfunction`            | `mypack(:)some/resource`  |
+| `resource_location.path`             | `entity.name.function._.path.resource_location.mcfunction`             | `mypack:(some/resource)`  |
+| `tagged_resource_location.hash`      | `entity.name.function._.hash.tagged_resource_location.mcfunction`      | `(#)mypack:some/resource` |
+| `tagged_resource_location.namespace` | `entity.name.function._.namespace.tagged_resource_location.mcfunction` | `#(mypack):some/resource` |
+| `tagged_resource_location.colon`     | `entity.name.function._.colon.tagged_resource_location.mcfunction`     | `#mypack(:)some/resource` |
+| `tagged_resource_location.path`      | `entity.name.function._.path.tagged_resource_location.mcfunction`      | `#mypack:(some/resource)` |
 
 ### Customizing strings
-Short name              | Full scope name                                         | Examples
------------------------ | ------------------------------------------------------- | ----------
-`string`                | `string._.string.mcfunction`                            | `("hello world")`
-`string_escape`         | `constant.character.escape._.string_escape.mcfunction`  | `"hello(\n)newline"`
-`word`                  | `string._.word.mcfunction`                              | `foo` / `foo_bar`
-`keyword`               | `keyword._.word.mcfunction`                             | `nearest` / `creative`
+
+| Short name      | Full scope name                                        | Examples               |
+| --------------- | ------------------------------------------------------ | ---------------------- |
+| `string`        | `string._.string.mcfunction`                           | `("hello world")`      |
+| `string_escape` | `constant.character.escape._.string_escape.mcfunction` | `"hello(\n)newline"`   |
+| `word`          | `string._.word.mcfunction`                             | `foo` / `foo_bar`      |
+| `keyword`       | `keyword._.word.mcfunction`                            | `nearest` / `creative` |
 
 ### Customizing numbers
-Short name                    | Full scope name                                             | Examples
------------------------------ | ----------------------------------------------------------- | ----------
-`number`                      | `constant.numeric._.number.mcfunction`                      | `0` / `123` / `-99`
-`range.minimum`               | `constant.numeric._.minimum.range.mcfunction`               | `(10)..20`
-`range.maximum`               | `constant.numeric._.maximum.range.mcfunction`               | `10..(20)`
-`range.ellipsis`              | `keyword.control._.ellipsis.range.mcfunction`               | `10(..)20`
-`position.absolute.number`    | `constant.numeric._.number.absolute.position.mcfunction`    | `(10) ~20 (30)`
-`position.relative.operator`  | `keyword.control._.operator.relative.position.mcfunction`   | `10 (~)20 30`
-`position.relative.number`    | `constant.numeric._.number.relative.position.mcfunction`    | `10 ~(20) 30`
-`position.local.operator`     | `keyword.control._.operator.local.position.mcfunction`      | `(^)10 (^)20 (^)30`
-`position.local.number`       | `constant.numeric._.number.local.position.mcfunction`       | `^(10) ^(20) ^(30)`
+
+| Short name                   | Full scope name                                           | Examples            |
+| ---------------------------- | --------------------------------------------------------- | ------------------- |
+| `number`                     | `constant.numeric._.number.mcfunction`                    | `0` / `123` / `-99` |
+| `range.minimum`              | `constant.numeric._.minimum.range.mcfunction`             | `(10)..20`          |
+| `range.maximum`              | `constant.numeric._.maximum.range.mcfunction`             | `10..(20)`          |
+| `range.ellipsis`             | `keyword.control._.ellipsis.range.mcfunction`             | `10(..)20`          |
+| `position.absolute.number`   | `constant.numeric._.number.absolute.position.mcfunction`  | `(10) ~20 (30)`     |
+| `position.relative.operator` | `keyword.control._.operator.relative.position.mcfunction` | `10 (~)20 30`       |
+| `position.relative.number`   | `constant.numeric._.number.relative.position.mcfunction`  | `10 ~(20) 30`       |
+| `position.local.operator`    | `keyword.control._.operator.local.position.mcfunction`    | `(^)10 (^)20 (^)30` |
+| `position.local.number`      | `constant.numeric._.number.local.position.mcfunction`     | `^(10) ^(20) ^(30)` |
 
 ### Customizing tags, teams, and objectives
-Short name                  | Full scope name                                                 | Examples
---------------------------- | --------------------------------------------------------------- | ----------
-`entity_tag`                | `entity.other.attribute-name._.entity_tag.mcfunction`           | `mypack.some.tag`
-`scoreboard_team `          | `entity.other.attribute-name._.scoreboard_team.mcfunction`      | `mypack.blue`
-`scoreboard_objective`      | `entity.other.attribute-name._.scoreboard_objective.mcfunction` | `mypack.points`
-`score_holder.all`          | `support.class._.all.score_holder.mcfunction`                   | `*`
-`score_holder.fakeplayer `  | `support.class._.fakeplayer.score_holder.mcfunction`            | `#temp` / `$mypack.calc`
+
+| Short name                 | Full scope name                                                 | Examples                 |
+| -------------------------- | --------------------------------------------------------------- | ------------------------ |
+| `entity_tag`               | `entity.other.attribute-name._.entity_tag.mcfunction`           | `mypack.some.tag`        |
+| `scoreboard_team `         | `entity.other.attribute-name._.scoreboard_team.mcfunction`      | `mypack.blue`            |
+| `scoreboard_objective`     | `entity.other.attribute-name._.scoreboard_objective.mcfunction` | `mypack.points`          |
+| `score_holder.all`         | `support.class._.all.score_holder.mcfunction`                   | `*`                      |
+| `score_holder.fakeplayer ` | `support.class._.fakeplayer.score_holder.mcfunction`            | `#temp` / `$mypack.calc` |
 
 ### Other customizable scopes
-Short name                | Full scope name                               | Examples
-------------------------- | --------------------------------------------- | ----------
-`boolean`                 | `constant.numeric._.boolean.mcfunction`       | `true` / `false`
-`entity_anchor`           | `constant.numeric._.entity_anchor.mcfunction` | `eyes` / `feet`
-`swizzle`                 | `constant.numeric._.swizzle.mcfunction`       | `y` / `xz` / `xyz`
-`target.uuid`             | `support.class._.uuid.target.mcfunction`      | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0`
-`target.player_name`      | `support.class._.uuid.target.mcfunction`      | `Arcensoth` / `some_guy`
-`generic.dict.bracket`    | `storage._.bracket.dict.generic.mcfunction`   | `({) key: value (})`
-`generic.dict.content`    | `string._.content.dict.generic.mcfunction`    | `{( key: value )}`
-`generic.list.bracket`    | `storage._.bracket.list.generic.mcfunction`   | `([) item, item (])`
-`generic.list.content`    | `string._.content.list.generic.mcfunction`    | `[( item, item )]`
+
+| Short name             | Full scope name                               | Examples                                             |
+| ---------------------- | --------------------------------------------- | ---------------------------------------------------- |
+| `boolean`              | `constant.numeric._.boolean.mcfunction`       | `true` / `false`                                     |
+| `entity_anchor`        | `constant.numeric._.entity_anchor.mcfunction` | `eyes` / `feet`                                      |
+| `swizzle`              | `constant.numeric._.swizzle.mcfunction`       | `y` / `xz` / `xyz`                                   |
+| `target.uuid`          | `support.class._.uuid.target.mcfunction`      | `f7a39418-72ca-4bf2-bc7e-ba9df67a4707` / `0-0-0-0-0` |
+| `target.player_name`   | `support.class._.uuid.target.mcfunction`      | `Arcensoth` / `some_guy`                             |
+| `generic.dict.bracket` | `storage._.bracket.dict.generic.mcfunction`   | `({) key: value (})`                                 |
+| `generic.dict.content` | `string._.content.dict.generic.mcfunction`    | `{( key: value )}`                                   |
+| `generic.list.bracket` | `storage._.bracket.list.generic.mcfunction`   | `([) item, item (])`                                 |
+| `generic.list.content` | `string._.content.list.generic.mcfunction`    | `[( item, item )]`                                   |
 
 ## Contribute
+
 [Contributions are welcome; see `CONTRIBUTING.md`.](./CONTRIBUTING.md)
 
 ## Resources
+
 - https://github.com/Arcensoth/language-tmdemo
 - https://github.com/github/linguist/blob/master/CONTRIBUTING.md
 - https://github.com/github/linguist/blob/master/vendor/README.md
@@ -271,29 +296,28 @@ Short name                | Full scope name                               | Exam
 [github-license-badge]: https://img.shields.io/github/license/arcensoth/language-mcfunction.svg?logo=github
 [vscode-version-badge]: https://img.shields.io/visual-studio-marketplace/v/arcensoth.language-mcfunction.svg?logo=visual-studio-code
 [discord-chat-badge]: https://img.shields.io/discord/154777837382008833.svg?color=%237289DA&label=chat&logo=discord&logoColor=%23FFFFFF
-
-[Install]: #install
-[Installing the VSCode extension]: #installing-the-vscode-extension
-[Installing the SublimeText package]: #installing-the-sublimetext-package
-[Features]: #features
-[Syntax highlighting]: #syntax-highlighting
-[Custom block comments]: #custom-block-comments
-[Configure]: #configure
-[Configuring the version-agnostic grammar]: #configuring-the-version-agnostic-grammar
+[install]: #install
+[installing the vscode extension]: #installing-the-vscode-extension
+[installing the sublimetext package]: #installing-the-sublimetext-package
+[features]: #features
+[syntax highlighting]: #syntax-highlighting
+[custom block comments]: #custom-block-comments
+[configure]: #configure
+[configuring the version-agnostic grammar]: #configuring-the-version-agnostic-grammar
 [version-agnostic grammar]: #configuring-the-version-agnostic-grammar
-[Configuring the version-specific grammars]: #configuring-the-version-specific-grammars
+[configuring the version-specific grammars]: #configuring-the-version-specific-grammars
 [version-specific grammars]: #configuring-the-version-specific-grammars
-[Customize]: #customize
-[Customizing errors]: #customizing-errors
-[Customizing comments]: #customizing-comments
-[Customizing commands]: #customizing-commands
-[Customizing selectors]: #customizing-selectors
-[Customizing NBT]: #customizing-NBT
-[Customizing text components]: #customizing-text-components
-[Customizing resource locations]: #customizing-resource-locations
-[Customizing strings]: #customizing-strings
-[Customizing numbers]: #customizing-numbers
-[Customizing tags, teams, and objectives]: #customizing-tags-teams-and-objectives
-[Other customizable scopes]: #other-customizable-scopes
-[Contribute]: #contribute
-[Resources]: #resources
+[customize]: #customize
+[customizing errors]: #customizing-errors
+[customizing comments]: #customizing-comments
+[customizing commands]: #customizing-commands
+[customizing selectors]: #customizing-selectors
+[customizing nbt]: #customizing-NBT
+[customizing text components]: #customizing-text-components
+[customizing resource locations]: #customizing-resource-locations
+[customizing strings]: #customizing-strings
+[customizing numbers]: #customizing-numbers
+[customizing tags, teams, and objectives]: #customizing-tags-teams-and-objectives
+[other customizable scopes]: #other-customizable-scopes
+[contribute]: #contribute
+[resources]: #resources
