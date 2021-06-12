@@ -26,16 +26,6 @@
   "contributes": {
     "languages": [
       {
-        "id": "mcfunction-snapshot",
-        "aliases": [
-          "mcfunction-snapshot"
-        ],
-        "extensions": [
-          "mcfunction"
-        ],
-        "configuration": "./language-configuration.json"
-      },
-      {
         "id": "mcfunction",
         "aliases": [
           "mcfunction"
@@ -47,11 +37,6 @@
       }
     ],
     "grammars": [
-      {
-        "language": "mcfunction-snapshot",
-        "scopeName": "source.mcfunction-snapshot",
-        "path": "./grammars/mcfunction-snapshot.tmLanguage.json"
-      },
       {
         "language": "mcfunction",
         "scopeName": "source.mcfunction",

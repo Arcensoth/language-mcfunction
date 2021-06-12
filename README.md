@@ -110,7 +110,7 @@ In the future, the [version-specific grammars] will be preferred when available.
 
 ### Configuring the version-specific grammars
 
-> **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar]. Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback.
+> **The version-specific grammars are currently under heavy development.** These grammars are incomplete and experimental. They do not yet support the same feature set as the [version-agnostic grammar]. Please only use these grammars if you intend to contribute in some form, such as pull requests, bug reports, or general feedback. **To use the version-specific grammars, you will need to build them and configure the extension yourself.**
 
 The version-specific grammars are partially generated based on Minecraft's generated data, which is available for Minecraft versions 1.13 and higher. They have context-sensitive highlighting and command validation comparable to the in-game command bar.
 
