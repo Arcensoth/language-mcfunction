@@ -183,21 +183,31 @@ export function writeGrammar(
 export function buildVersionAgnosticGrammar() {
   console.log("Building version-agnostic grammar");
 
-  const grammarPath = path.join(
+  const grammarFolder = path.join(
     PROJECT_ROOT,
     "lib",
     "src",
-    "grammars",
-    "version-agnostic.yaml"
+    "grammars"
   );
 
-  const extendedGrammar = yaml.safeLoad(fs.readFileSync(grammarPath, "utf8"));
-  const compiledGrammar = compileExtendedGrammar(extendedGrammar);
+  {
+    // Version-agnostic grammar.
+    const grammarPath = path.join(grammarFolder, "version-agnostic.yaml");
+    const extendedGrammar = yaml.safeLoad(fs.readFileSync(grammarPath, "utf8")) as ExtendedLanguageGrammar;
+    const compiledGrammar = compileExtendedGrammar(extendedGrammar);
+    const outDir = PROJECT_ROOT;
+    const outName = "mcfunction";
+    writeGrammar(compiledGrammar, outDir, outName);
+  }
 
-  const outDir = PROJECT_ROOT;
-  const outName = "mcfunction";
-
-  writeGrammar(compiledGrammar, outDir, outName);
+  {
+    // Markdown codeblock support.
+    const grammarPath = path.join(grammarFolder, "markdown-codeblock.yaml")
+    const grammar = yaml.safeLoad(fs.readFileSync(grammarPath, "utf8")) as LanguageGrammar;
+    const outDir = path.join(PROJECT_ROOT, "grammars");
+    const outName = "mcfunction-markdown";
+    writeGrammar(grammar, outDir, outName);
+  }
 
   console.log("Success!");
 }
@@ -249,7 +259,7 @@ export function buildVersionSpecificGrammar(label: string) {
     "version-specific-base.yaml"
   );
 
-  const baseGrammar = yaml.safeLoad(fs.readFileSync(baseGrammarPath, "utf8"));
+  const baseGrammar = yaml.safeLoad(fs.readFileSync(baseGrammarPath, "utf8")) as ExtendedLanguageGrammar;
   baseGrammar.label = versionData.label;
 
   const augmentedGrammar = augmentGrammar(baseGrammar, commands);
@@ -305,7 +315,7 @@ export function buildVersionSpecificData(inPath: string, label: string) {
     process.exit();
   }
 
-  const data = yaml.safeLoad(fs.readFileSync(baseDataPath, "utf8"));
+  const data = yaml.safeLoad(fs.readFileSync(baseDataPath, "utf8")) as VersionData;
 
   // populate loaded data
   data.commands = commands;

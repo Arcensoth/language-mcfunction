@@ -20,6 +20,7 @@ export interface LanguageGrammar {
   fileTypes: string[];
   patterns: GrammarNode[];
   repository?: { [name: string]: GrammarNode };
+  injectionSelector?: string;
 }
 
 export interface ExtendedLanguageGrammar extends LanguageGrammar {

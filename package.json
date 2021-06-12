@@ -3,7 +3,7 @@
   "displayName": "language-mcfunction",
   "icon": "icon.png",
   "description": "Syntax highlighting for mcfunction files.",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "publisher": "arcensoth",
   "license": "MIT",
   "repository": "https://github.com/Arcensoth/language-mcfunction",
@@ -56,17 +56,27 @@
         "language": "mcfunction",
         "scopeName": "source.mcfunction",
         "path": "./mcfunction.tmLanguage.json"
+      },
+      {
+        "scopeName": "markdown.mcfunction.codeblock",
+        "path": "./grammars/mcfunction-markdown.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.mcfunction": "mcfunction"
+        }
       }
     ]
   },
   "devDependencies": {
-    "@types/bson": "latest",
-    "@types/js-yaml": "latest",
-    "@types/node": "latest",
-    "@types/plist": "latest",
-    "bson": "latest",
+    "@types/bson": "^4.0.3",
+    "@types/js-yaml": "^3.12.6",
+    "@types/node": "^15.12.2",
+    "@types/plist": "^3.0.2",
+    "bson": "^4.4.0",
     "js-yaml": "^3.13.1",
-    "plist": "latest",
-    "typescript": "latest"
+    "plist": "^3.0.2",
+    "typescript": "^4.3.2"
   }
 }
