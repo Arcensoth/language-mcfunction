@@ -1,0 +1,25 @@
+# quoted strings are a recursive format captured between the quotes
+name: meta.command.token.quoted_string.mcfunction
+
+# begin whenever we see a quote
+begin: '{{command_token_l}}(\")'
+
+# End on anything. This is tricky. If we got to this point, it means the
+# child scope has been terminated. According to the child scope, the only
+# things that can get us here are an unescaped quote or a newline (which
+# cannot be escaped). Also make sure to mark anything following an ending
+# quote to the next token delimiter as an error.
+end: '{{lookahead_newline}}|(\")({{not_command_token_delim}}*)'
+
+beginCaptures:
+  1:
+    name: "#quoted_string"
+
+endCaptures:
+  1:
+    name: "#quoted_string"
+  2:
+    name: "#error"
+
+patterns:
+  - include: "#common.quoted_string"

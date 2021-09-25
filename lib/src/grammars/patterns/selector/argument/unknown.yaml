@@ -1,0 +1,5 @@
+name: meta.selector.argument.unknown.mcfunction
+match: '([^\]\n\,]+)'
+captures:
+  1:
+    name: "#unknown"

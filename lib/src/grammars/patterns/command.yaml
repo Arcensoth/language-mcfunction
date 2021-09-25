@@ -1,0 +1,17 @@
+patterns:
+  - name: meta.command.mcfunction
+    begin: '^\s*{{literal}}[ \n]'
+    end: "$"
+    beginCaptures:
+      # highlight the first command on each line
+      1:
+        name: "#top_level_command"
+    patterns:
+      # don't name this one yet, we want to get rid of the space
+      - begin: "(?<= )"
+        # consume the space
+        end: '[ \n]'
+        # name everything inside as part of the token
+        contentName: meta.command.token.mcfunction
+        patterns:
+          - include: "#command.tokens"

@@ -1,0 +1,27 @@
+patterns:
+  - match: "{{tagged_resource_location}}"
+    captures: "#tagged_resource_location"
+  - match: "{{resource_location}}"
+    captures: "#resource_location"
+  - match: "{{resource_path}}"
+    captures: "#resource_path"
+  - begin: '(\[)'
+    end: '(\])'
+    beginCaptures:
+      1:
+        name: "#block_predicate_delims"
+    endCaptures:
+      1:
+        name: "#block_predicate_delims"
+    patterns:
+      - include: "#block_predicate.arguments"
+  - begin: '(\{)'
+    end: '(\})'
+    beginCaptures:
+      1:
+        name: "#nbt_delims"
+    endCaptures:
+      1:
+        name: "#nbt_delims"
+    patterns:
+      - include: "#nbt.compound"

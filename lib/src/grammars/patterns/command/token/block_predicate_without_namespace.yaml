@@ -1,0 +1,16 @@
+name: meta.command.token.block_predicate_without_namespace.mcfunction
+
+# We need to be careful here about not selecting an NBT path. We do this
+# by using look-ahead to check for a block state property immediately
+# inside the braces. Note that we can only disambiguate when a block state
+# mapping is present, otherwise we can't differentiate from an NBT path.
+begin: '{{command_token_l}}(?=(\#)?{{resource_path}}(\[ *{{literal}} *\=))'
+
+end: '{{lookahead_newline}}|(?:(?<=\])(?!\{)|(?<=\}))({{not_command_token_delim}}*)'
+
+endCaptures:
+  1:
+    name: "#error"
+
+patterns:
+  - include: "#block_predicate"

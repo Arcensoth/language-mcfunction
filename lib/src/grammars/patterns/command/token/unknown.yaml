@@ -1,0 +1,5 @@
+name: meta.command.token.unknown.mcfunction
+match: '{{command_token_l}}([^ \n]*){{command_token_r}}'
+captures:
+  1:
+    name: "#unknown"

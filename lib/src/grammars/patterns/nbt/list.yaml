@@ -1,0 +1,23 @@
+patterns:
+  # skip whitespace: [( )1 , 2 , 3]
+  - match: " +"
+
+  # values: [ 1 (,) (2) , 3]
+  # begin on anything that is not a terminal or separator
+  - begin: '(,)? *(?=[^\n\]\,])'
+
+    # Possible ending cases:
+    #   1. the closing brace of the parent compound
+    #   2. the comma separating the next element
+    #   3. newline (error case)
+    end: ' *(?=[\n\]\,])'
+
+    beginCaptures:
+      1:
+        name: "#nbt_delims"
+
+    patterns:
+      - include: "#nbt.value"
+
+  - match: '[^\n\]\,]+'
+    name: "#error"

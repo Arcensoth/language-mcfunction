@@ -1,0 +1,51 @@
+patterns:
+  - begin: '(\{)'
+    end: '{{lookahead_newline}}|(\})'
+    beginCaptures:
+      1:
+        name: "#nbt_delims"
+    endCaptures:
+      1:
+        name: "#nbt_delims"
+    patterns:
+      - include: "#nbt.compound"
+  - begin: '(\[){{nbt_array_type}}'
+    end: '{{lookahead_newline}}|(\])'
+    beginCaptures:
+      1:
+        name: "#nbt_delims"
+      2:
+        name: "#nbt_array_type"
+    endCaptures:
+      1:
+        name: "#nbt_delims"
+    patterns:
+      - include: "#nbt.list"
+  - begin: '(\")'
+    end: '{{lookahead_newline}}|(\")'
+    beginCaptures:
+      1:
+        name: "#quoted_string"
+    endCaptures:
+      1:
+        name: "#quoted_string"
+    patterns:
+      - include: "#common.quoted_string"
+  - begin: "(\\')"
+    end: "{{lookahead_newline}}|(\\')"
+    beginCaptures:
+      1:
+        name: "#quoted_string"
+    endCaptures:
+      1:
+        name: "#quoted_string"
+    patterns:
+      - include: "#common.single_quoted_string"
+  - match: "{{boolean}}"
+    name: "#boolean"
+  - match: "{{number}}"
+    name: "#numeric_constant"
+  - match: "{{nbt_unquoted_string}}"
+    name: "#unquoted_string"
+  - match: '[^\n\,\]\}]+'
+    name: "#error"

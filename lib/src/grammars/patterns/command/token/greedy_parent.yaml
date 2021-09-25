@@ -1,0 +1,4 @@
+# Special case for commands like `say` that consume the rest of the line.
+name: meta.command.token.greedy_parent.mcfunction
+match: "{{greedy_parent}}(.*)$"
+captures: "#greedy_parent"

@@ -9,6 +9,7 @@ import { augmentGrammar } from "./version-specific/utils";
 import { VersionData } from "./version-specific/version-data";
 
 const PROJECT_ROOT = path.resolve(__dirname, "..", "..");
+const GRAMMAR_FOLDER = path.join(PROJECT_ROOT, "lib", "src", "grammars");
 
 const FORMAT_PROPERTIES = ["match", "begin", "end"];
 const FORMAT_NAMES = ["name", "contentName"];
@@ -114,6 +115,11 @@ function updateNode(grammar: any, node: any) {
   });
 }
 
+function loadPattern(subpath: string): any {
+  const patternPath = path.join(GRAMMAR_FOLDER, "patterns", `${subpath}.yaml`);
+  return yaml.safeLoad(fs.readFileSync(patternPath, "utf8"));
+}
+
 export function deepCopy(obj: any): any {
   return JSON.parse(JSON.stringify(obj));
 }
@@ -123,10 +129,20 @@ export function compileExtendedGrammar(
 ): LanguageGrammar {
   const grammar = deepCopy(extendedGrammar);
 
+  // initialize required properties
+  if (!("repository" in grammar)) {
+    grammar.repository = {};
+  }
+
   // append label, if any, to grammar name and scopeName
   if ("label" in grammar) {
     grammar.name = `${grammar.name}-${grammar.label}`;
     grammar.scopeName = `${grammar.scopeName}-${grammar.label}`;
+  }
+
+  // load pattern nodes from other files
+  for (const key in grammar.loadPatterns) {
+    grammar.repository[key] = loadPattern(grammar.loadPatterns[key]);
   }
 
   // start by formatting variables themselves
@@ -149,6 +165,7 @@ export function compileExtendedGrammar(
 
   // remove excess nodes
   delete grammar.label;
+  delete grammar.loadPatterns;
   delete grammar.names;
   delete grammar.variables;
   delete grammar.capturesRepository;
@@ -183,17 +200,12 @@ export function writeGrammar(
 export function buildVersionAgnosticGrammar() {
   console.log("Building version-agnostic grammar");
 
-  const grammarFolder = path.join(
-    PROJECT_ROOT,
-    "lib",
-    "src",
-    "grammars"
-  );
-
   {
     // Version-agnostic grammar.
-    const grammarPath = path.join(grammarFolder, "version-agnostic.yaml");
-    const extendedGrammar = yaml.safeLoad(fs.readFileSync(grammarPath, "utf8")) as ExtendedLanguageGrammar;
+    const grammarPath = path.join(GRAMMAR_FOLDER, "version-agnostic.yaml");
+    const extendedGrammar = yaml.safeLoad(
+      fs.readFileSync(grammarPath, "utf8")
+    ) as ExtendedLanguageGrammar;
     const compiledGrammar = compileExtendedGrammar(extendedGrammar);
     const outDir = PROJECT_ROOT;
     const outName = "mcfunction";
@@ -202,8 +214,10 @@ export function buildVersionAgnosticGrammar() {
 
   {
     // Markdown codeblock support.
-    const grammarPath = path.join(grammarFolder, "markdown-codeblock.yaml")
-    const grammar = yaml.safeLoad(fs.readFileSync(grammarPath, "utf8")) as LanguageGrammar;
+    const grammarPath = path.join(GRAMMAR_FOLDER, "markdown-codeblock.yaml");
+    const grammar = yaml.safeLoad(
+      fs.readFileSync(grammarPath, "utf8")
+    ) as LanguageGrammar;
     const outDir = path.join(PROJECT_ROOT, "grammars");
     const outName = "mcfunction-markdown";
     writeGrammar(grammar, outDir, outName);
@@ -259,7 +273,9 @@ export function buildVersionSpecificGrammar(label: string) {
     "version-specific-base.yaml"
   );
 
-  const baseGrammar = yaml.safeLoad(fs.readFileSync(baseGrammarPath, "utf8")) as ExtendedLanguageGrammar;
+  const baseGrammar = yaml.safeLoad(
+    fs.readFileSync(baseGrammarPath, "utf8")
+  ) as ExtendedLanguageGrammar;
   baseGrammar.label = versionData.label;
 
   const augmentedGrammar = augmentGrammar(baseGrammar, commands);
@@ -315,7 +331,9 @@ export function buildVersionSpecificData(inPath: string, label: string) {
     process.exit();
   }
 
-  const data = yaml.safeLoad(fs.readFileSync(baseDataPath, "utf8")) as VersionData;
+  const data = yaml.safeLoad(
+    fs.readFileSync(baseDataPath, "utf8")
+  ) as VersionData;
 
   // populate loaded data
   data.commands = commands;

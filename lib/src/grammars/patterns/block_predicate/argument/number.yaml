@@ -1,0 +1,3 @@
+name: meta.block_predicate.argument.number.mcfunction
+match: "{{number}}{{bpat}}"
+captures: "#number"

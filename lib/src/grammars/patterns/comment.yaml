@@ -1,0 +1,33 @@
+patterns:
+  # enter into block comments via alternate comment style
+  - name: meta.comment.block.mcfunction
+
+    # must begin with unique prefix
+    begin: '^[ \t]*((#)({{block_comment_prefix}})((.*)))$'
+
+    # end on any line that is not a comment, without consuming anything
+    # should only get here when an adjacent comment was not found
+    # this allows the inner block comment loop to run-off
+    end: '^(?![ \t]*#)'
+
+    beginCaptures:
+      1:
+        name: "#block_comment"
+      2:
+        name: "#block_comment_symbol"
+      3:
+        name: "#block_comment_prefix"
+      4:
+        name: "#block_comment_heading_1"
+      5:
+        name: "#block_comment_heading_2"
+
+    patterns:
+      - include: "#comment.block"
+
+  # any other type of comment gets caught here
+  - name: meta.comment.line.mcfunction
+    match: '^[ \t]*(#.*)$'
+    captures:
+      1:
+        name: comment.line.mcfunction

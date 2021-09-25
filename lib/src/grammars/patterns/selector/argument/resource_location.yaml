@@ -1,0 +1,3 @@
+name: meta.selector.argument.resource_location.mcfunction
+match: "{{resource_location}}{{sat}}"
+captures: "#resource_location"

@@ -1,0 +1,13 @@
+patterns:
+  # match any type of comment attached to the block
+  - name: meta.comment.block_line.mcfunction
+    begin: '^[ \t]*((#)[ \t]*)'
+    end: "$"
+    beginCaptures:
+      1:
+        name: "#block_comment"
+      2:
+        name: "#block_comment_symbol"
+    patterns:
+      - include: "#comment.block.line"
+  # otherwise, break from the block loop

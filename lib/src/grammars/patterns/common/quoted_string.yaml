@@ -1,0 +1,11 @@
+patterns:
+  # consume everything except for backslashes, quotes, and newlines
+  - match: '[^\\\"\n]'
+    name: "#quoted_string"
+  # consume any escaped characters... except for newlines
+  - match: '\\[^\n]'
+    name: "#quoted_string_escape"
+  # consume a single backslash (implicitly followed by a newline) as an error
+  - match: '\\'
+    name: "#error"
+  # anything else will be handed back to the parent scope

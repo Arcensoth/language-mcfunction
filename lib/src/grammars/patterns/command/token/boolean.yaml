@@ -1,0 +1,3 @@
+name: meta.command.token.boolean.mcfunction
+match: "{{command_token_l}}{{boolean}}{{command_token_r}}"
+captures: "#boolean"
