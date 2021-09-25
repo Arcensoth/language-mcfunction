@@ -1,3 +1,0 @@
-name: meta.selector.argument.range.mcfunction
-match: "{{range}}{{sat}}"
-captures: "#range"

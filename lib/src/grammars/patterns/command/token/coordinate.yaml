@@ -1,3 +1,0 @@
-name: meta.command.token.coordinate.mcfunction
-match: "{{command_token_l}}{{coordinate}}{{command_token_r}}"
-captures: "#coordinate"

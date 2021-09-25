@@ -1,3 +1,0 @@
-name: meta.command.token.selector_without_arguments.mcfunction
-match: "{{command_token_l}}{{base_selector}}{{command_token_r}}"
-captures: "#selector_without_arguments"

@@ -1,3 +1,0 @@
-name: meta.command.token.unquoted_string.mcfunction
-match: "{{command_token_l}}{{unquoted_string}}{{command_token_r}}"
-captures: "#unquoted_string"

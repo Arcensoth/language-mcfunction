@@ -1,3 +1,0 @@
-name: meta.command.token.number.mcfunction
-match: "{{command_token_l}}{{number}}{{command_token_r}}"
-captures: "#number"

@@ -1,3 +1,0 @@
-name: meta.command.token.operation.mcfunction
-match: "{{command_token_l}}{{operation}}{{command_token_r}}"
-captures: "#operation"

@@ -1,3 +1,0 @@
-name: meta.command.token.uuid.mcfunction
-match: "{{command_token_l}}{{uuid}}{{command_token_r}}"
-captures: "#uuid"

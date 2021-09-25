@@ -1,3 +1,0 @@
-name: meta.selector.argument.number.mcfunction
-match: "{{number}}{{sat}}"
-captures: "#number"

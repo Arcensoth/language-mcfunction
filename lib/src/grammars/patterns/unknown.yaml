@@ -1,6 +1,0 @@
-patterns:
-  - name: meta.unknown.mcfunction
-    match: "^(.*)$"
-    captures:
-      1:
-        name: "#unknown"

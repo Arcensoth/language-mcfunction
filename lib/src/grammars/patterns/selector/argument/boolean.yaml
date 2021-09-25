@@ -1,3 +1,0 @@
-name: meta.selector.argument.boolean.mcfunction
-match: "{{boolean}}{{sat}}"
-captures: "#boolean"

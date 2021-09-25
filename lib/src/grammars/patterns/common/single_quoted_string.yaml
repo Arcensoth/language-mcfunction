@@ -1,7 +1,0 @@
-patterns:
-  - match: "[^\\\\\\'\\n]"
-    name: "#quoted_string"
-  - match: '\\[^\n]'
-    name: "#quoted_string_escape"
-  - match: '\\'
-    name: "#error"

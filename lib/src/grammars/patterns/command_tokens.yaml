@@ -1,0 +1,6 @@
+patterns:
+  - name: "#command_token.integer"
+    match: "{{integer}}{{TT}}"
+
+  - name: "#command_token.unknown"
+    match: '\S+{{TT}}'
