@@ -1,3 +1,0 @@
-name: meta.block_predicate.argument.literal.mcfunction
-match: "{{literal}}{{bpat}}"
-captures: "#literal"

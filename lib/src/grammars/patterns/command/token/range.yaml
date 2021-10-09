@@ -1,3 +1,0 @@
-name: meta.command.token.range.mcfunction
-match: "{{command_token_l}}{{range}}{{command_token_r}}"
-captures: "#range"

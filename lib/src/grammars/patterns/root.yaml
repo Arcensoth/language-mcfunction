@@ -1,0 +1,34 @@
+patterns:
+  # Look for root commands.
+  - name: "#root_command"
+    # Root commands are anchored to the start of a line, with optional leading
+    # space.
+    match: "{{LLS}}{{literal}}{{TT}}"
+
+  # Look for comments.
+  - name: "#comment"
+
+    # Comments are anchored to the start of a line in the same way as root
+    # commands. Note that we intentionally leave the comment character for
+    # the child patterns to consume.
+    begin: "{{LLS}}(?=#)"
+
+    # Stop at the end of a line. The child patterns will hand one back to us
+    # when they detect that there is no comment on the following line. We leave
+    # the newline for the whitespace pattern to consume.
+    end: "{{LR}}"
+
+    patterns:
+      # Consume everything up to, but not including, the end of the line.
+      - match: ".+"
+
+      # Consume a new line, but only if it eventually starts with a comment
+      # character.
+      - match: "{{LLS}}#"
+
+  # Consume any whitespace left over in between other patterns.
+  - name: "#whitespace"
+    match: '\s'
+
+  # Anything else is expected to be one of many possible command tokens.
+  - include: "#command_tokens"

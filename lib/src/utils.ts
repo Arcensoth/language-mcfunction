@@ -18,18 +18,20 @@ const RECURSE_MAPS = ["captures", "beginCaptures", "endCaptures"];
 const RECURSE_LISTS = ["patterns"];
 
 function formatProperty(grammar: any, s: string): string {
-  if (s.indexOf("{{") < 0) {
-    return s;
-  }
+  const pattern = new RegExp("{{[\\w\\.]+}}", "g");
+  const matchResult = [...s.matchAll(pattern)];
   let s2 = s;
-  for (const key in grammar.variables) {
-    const value = grammar.variables[key];
-    if (!value) {
-      throw Error(
-        `Grammar "${grammar.name}" -> variables has no item named "${key}"`
-      );
+  for (const matches of matchResult) {
+    for (const match of matches) {
+      const name = match.substring(2, match.length - 2);
+      const variable = grammar.variables[name];
+      if (!variable) {
+        throw Error(
+          `Grammar "${grammar.name}" -> variables has no item named "${name}"`
+        );
+      }
+      s2 = s2.replace(new RegExp(match, "g"), variable);
     }
-    s2 = s2.replace(new RegExp("{{" + key + "}}", "g"), value);
   }
   return s2;
 }

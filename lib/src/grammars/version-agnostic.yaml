@@ -5,290 +5,37 @@ fileTypes:
   - mcfunction
 
 names:
-  brace_delims: variable.language.mcfunction
-  argument_key: variable.other.mcfunction
-  numeric_constant: constant.numeric.mcfunction
-  numeric_altered: constant.numeric.mcfunction
-  range_ellipsis: keyword.control.mcfunction
-  coordinate_operator: "#numeric_altered"
-  base_selector: support.class.mcfunction
-  selector_delims: "#base_selector"
-  block_predicate_delims: "#brace_delims"
-  nbt_delims: "#brace_delims"
-  nbt_array_type: "#brace_delims"
-  nbt_key: string.interpolated.mcfunction
-  nbt_index: constant.numeric.mcfunction
-  resource_namespace: entity.name.function.mcfunction
-  resource_path: "#resource_namespace"
-  tagged_resource_namespace: "#resource_namespace"
-  tagged_resource_path: "#tagged_resource_namespace"
-  namespace_separator: "#resource_namespace"
-  scoreboard_objective: "#resource_namespace"
-  uuid: "#base_selector"
-  fakeplayer: "#base_selector"
-  boolean: "#numeric_constant"
-  operation: "#numeric_constant"
-  literal: entity.name.mcfunction
-  unquoted_string: string.unquoted.mcfunction
-  quoted_string: string.quoted.mcfunction
-  quoted_string_escape: constant.character.escape.mcfunction
-  root_redirect: "#literal"
-  greedy_parent: "#literal"
-  top_level_command: keyword.control.mcfunction
-  unknown: invalid.illegal.mcfunction
-  error: invalid.illegal.mcfunction
-  block_comment: comment.block.mcfunction
-  block_comment_symbol: markup.list.mcfunction
-  block_comment_prefix: markup.list.mcfunction
-  block_comment_heading_1: markup.bold.mcfunction
-  block_comment_heading_2: markup.list.mcfunction
-  block_comment_annotation_label: markup.heading.mcfunction
-  block_comment_annotation_text: comment.block.mcfunction
+  # naming convention: <root_scope>._.<name>.<language>
+
+  whitespace: meta._.whitespace.mcfunction
+  root_command: keyword.control._.root_command.mcfunction
+  comment: comment._.comment.mcfunction
+
+  command_token.integer: constant.numeric._.integer.command_token.mcfunction
+  command_token.unknown: string.unquoted._.unknown.command_token.mcfunction
 
 variables:
-  lookahead_newline: '(?=\n)'
+  # Space
+  S: '[ \t]*'
 
-  command_token_delim: '[ \n]'
-  not_command_token_delim: '[^ \n]'
+  # Line Left
+  LL: '(?:\r\n|\n|^)'
 
-  command_token_l: "(?<= )"
-  command_token_r: '(?=[ \n]|$)'
+  # Line Left with Space
+  LLS: "{{LL}}{{S}}"
 
-  selector_argument_terminal: '(?= *[\,\]\n])'
-  sat: "{{selector_argument_terminal}}"
+  # Line Right
+  LR: '(?=\r\n|\n|$)'
 
-  block_predicate_argument_terminal: "{{sat}}"
-  bpat: "{{block_predicate_argument_terminal}}"
+  # Token Terminator
+  TT: '(?=\s|$)'
 
-  # boolean true/false
-  boolean: "(true|false)"
-
-  # math/numeric operations
-  operation: '(\%\=|\*\=|\+\=|\-\=|\/\=|\<|\=|\>|\>\<|\<\=|\>\=)'
-
-  # commands like `execute ... run` that redirect to the root node
-  root_redirect: "(run)"
-
-  # commands like `say` that consume the rest of the line
-  greedy_parent: "((?<=^say | say ))"
-
-  # characters for literal subcommands and other strict word-like identifiers
-  literal: "([a-z_][a-z0-9_]*)"
-
-  # case-insensitive literal or quoted strings (with limited support)
-  maybe_quoted_key: "((?:[a-z_][a-z0-9_]*)|(?:\"[^\"\n]*\")|(?:\\'[^\\'\n]*\\'))"
-
-  # characters permitted in unquoted string words, like nbt compound keys
-  unquoted_word_nc: '[A-Za-z0-9_\.\-]+'
-  unquoted_word: "({{unquoted_word_nc}})"
-
-  # characters permitted in namespaces, resource paths, etc
-  component_nc: '[a-z0-9_\.\-]+'
-  component: "({{component_nc}})"
-
-  # an integer or decimal with optional leading digit
-  number: '(\-?\d*\.?\d+)'
-  integer: '(\-?\d+)'
-
-  # a resource path is the portion of the resource location following the namespace
-  resource_path_nc: '[a-z0-9_\.\-\/]+'
-  resource_path: "({{resource_path_nc}})"
-
-  # resource locations: namespace + path
-  resource_location_nc: '{{component_nc}}\:{{resource_path_nc}}'
-  resource_location: '{{component}}(\:){{resource_path}}'
-
-  # uuid format
-  hex_digit: "[0-9a-fA-F]"
-  uuid: "({{hex_digit}}+(?:(-){{hex_digit}}+){4})"
-
-  # scorebord objective names
-  scoreboard_objective: "{{unquoted_word}}"
-
-  # unquoted strings are like literals with additional available characters
-  # basically anything is accepted apart from whitespace
-  # character ambiguity depends on context
-  unquoted_string_nc: '\S+'
-  unquoted_string: "({{unquoted_string_nc}})"
-  nbt_unquoted_string: '([^\s\{\}\[\]\,\:\=]+)'
-  selector_unquoted_string: '([^\s\{\}\[\]\,\:\=\!]+)'
-
-  # optional nbt array type declaration
-  nbt_array_type: "(\\w*;)?"
-
-  # various popular fakeplayer formats
-  # they'd get classified as unquoted strings anyway
-  fakeplayer: '([\#\$\%]{{unquoted_string_nc}})'
-
-  # a tagged resource location is a resource location prefaced with `#`
-  tagged_resource_location: '(\#){{resource_location}}'
-
-  # relative or local coordinate
-  coordinate: '([\~\^]){{number}}?'
-
-  # numeric range
-  range: '{{number}}?(\.\.){{number}}?'
-
-  # base selectors are defined with a single, lower-case character
-  base_selector: '(\@[a-z])'
-
-  # prefix following the `#` to initiate a block comment section
-  block_comment_prefix: '[\#\>\~\!\@\$\%\^\*]+'
+  literal: "[a-z][a-z0-9_]*"
+  integer: '\-?\d+'
 
 loadPatterns:
-  comment: comment
-  comment.block: comment/block
-  comment.block.line: comment/block/line
-  command: command
-  unknown: unknown
-  command.tokens: command/tokens
-  command.token.selector_without_arguments: command/token/selector_without_arguments
-  command.token.resource_location: command/token/resource_location
-  command.token.tagged_resource_location: command/token/tagged_resource_location
-  command.token.range: command/token/range
-  command.token.number: command/token/number
-  command.token.coordinate: command/token/coordinate
-  command.token.boolean: command/token/boolean
-  command.token.operation: command/token/operation
-  command.token.literal: command/token/literal
-  command.token.uuid: command/token/uuid
-  command.token.fakeplayer: command/token/fakeplayer
-  command.token.unquoted_string: command/token/unquoted_string
-  command.token.unknown: command/token/unknown
-  command.token.root_redirect: command/token/root_redirect
-  command.token.greedy_parent: command/token/greedy_parent
-  command.token.nbt_compound: command/token/nbt_compound
-  command.token.nbt_list: command/token/nbt_list
-  nbt.compound: nbt/compound
-  nbt.list: nbt/list
-  nbt.value: nbt/value
-  command.token.quoted_string: command/token/quoted_string
-  command.token.single_quoted_string: command/token/single_quoted_string
-  command.token.block_predicate: command/token/block_predicate
-  command.token.block_predicate_without_namespace: command/token/block_predicate_without_namespace
-  command.token.selector_with_arguments: command/token/selector_with_arguments
-  command.token.nbt_path: command/token/nbt_path
-  nbt_path.property: nbt_path/property
-  nbt_path.index: nbt_path/index
-  block_predicate: block_predicate
-  block_predicate.arguments: block_predicate/arguments
-  block_predicate.argument.number: block_predicate/argument/number
-  block_predicate.argument.boolean: block_predicate/argument/boolean
-  block_predicate.argument.literal: block_predicate/argument/literal
-  selector.argument.resource_location: selector/argument/resource_location
-  selector.argument.tagged_resource_location: selector/argument/tagged_resource_location
-  selector.argument.range: selector/argument/range
-  selector.argument.number: selector/argument/number
-  selector.argument.boolean: selector/argument/boolean
-  selector.argument.unquoted_string: selector/argument/unquoted_string
-  selector.argument.unknown: selector/argument/unknown
-  selector.argument.quoted_string: selector/argument/quoted_string
-  selector.argument.single_quoted_string: selector/argument/single_quoted_string
-  selector.argument.property_map: selector/argument/property_map
-  selector.argument.nbt_compound: selector/argument/nbt_compound
-  property_map: property_map
-  property_map.values: property_map/values
-  common.quoted_string: common/quoted_string
-  common.single_quoted_string: common/single_quoted_string
+  root: root
+  command_tokens: command_tokens
 
 patterns:
-  - include: "#comment"
-  - include: "#command"
-  - include: "#unknown"
-
-capturesRepository:
-  selector_without_arguments:
-    1:
-      name: "#base_selector"
-
-  resource_path:
-    1:
-      name: "#resource_path"
-
-  resource_location:
-    1:
-      # the namespace
-      name: "#resource_namespace"
-    2:
-      # the `:`
-      name: "#namespace_separator"
-    3:
-      # the path
-      name: "#resource_path"
-
-  tagged_resource_location:
-    1:
-      # the `#`
-      name: "#tagged_resource_namespace"
-    2:
-      # the namespace
-      name: "#tagged_resource_namespace"
-    3:
-      # the `:`
-      name: "#namespace_separator"
-    4:
-      # the path
-      name: "#tagged_resource_path"
-
-  range:
-    1:
-      # the number on the left side
-      name: "#numeric_altered"
-    2:
-      # color the `..` differently to distinguish it from decimals
-      name: "#range_ellipsis"
-    3:
-      # the number on the right side
-      name: "#numeric_altered"
-
-  number:
-    1:
-      name: "#numeric_constant"
-
-  integer:
-    1:
-      name: "#numeric_constant"
-
-  coordinate:
-    1:
-      # the `~` or `^`
-      name: "#coordinate_operator"
-    2:
-      # the actual number
-      name: "#numeric_altered"
-
-  boolean:
-    1:
-      name: "#boolean"
-
-  operation:
-    1:
-      name: "#operation"
-
-  root_redirect:
-    1:
-      name: "#root_redirect"
-    2:
-      name: "#top_level_command"
-
-  greedy_parent:
-    1:
-      name: "#literal"
-    2:
-      name: "#quoted_string"
-
-  literal:
-    1:
-      name: "#literal"
-
-  uuid:
-    1:
-      name: "#uuid"
-
-  fakeplayer:
-    1:
-      name: "#fakeplayer"
-
-  unquoted_string:
-    1:
-      name: "#unquoted_string"
+  - include: "#root"

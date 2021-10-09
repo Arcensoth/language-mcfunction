@@ -1,3 +1,0 @@
-name: meta.selector.argument.unquoted_string.mcfunction
-match: "{{selector_unquoted_string}}{{sat}}"
-captures: "#unquoted_string"

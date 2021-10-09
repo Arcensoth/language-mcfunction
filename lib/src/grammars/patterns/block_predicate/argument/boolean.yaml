@@ -1,3 +1,0 @@
-name: meta.block_predicate.argument.boolean.mcfunction
-match: "{{boolean}}{{bpat}}"
-captures: "#boolean"
