@@ -52,6 +52,12 @@
           "meta.embedded.block.mcfunction": "mcfunction"
         }
       }
+    ],
+    "snippets": [
+      {
+        "language": "mcfunction",
+        "path": "./snippets.json"
+      }
     ]
   },
   "devDependencies": {

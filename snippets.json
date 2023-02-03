@@ -1,0 +1,48 @@
+{
+  "Set a player ability": {
+    "prefix": "ability:set",
+    "body": [
+      "ability ${1:<player: target>} ${2:<ability: worldbuilder|mayfly|mute>} ${3:[value: Boolean]}",
+      "$0"
+    ],
+    "description": "Set player ability"
+  },
+  "Query an ability": {
+    "prefix": "ability:query",
+    "body": [
+      "ability ${1:<player: target>} ${2:[ability: worldbuilder|mayfly|mute]}",
+      "$0"
+    ],
+    "description": "Query a player ability"
+  },
+  "Add/remove all loaded advancements": {
+    "prefix": "advancement:everything",
+    "body": [
+      "advancement ${1:(grant|revoke)} ${2:<targets: Player(s)>} everything",
+      "$0"
+    ]
+  },
+  "Add/remove a single advancement": {
+    "prefix": "advancement:only",
+    "body": [
+      "advancement ${1:(grant|revoke)} ${2:<targets: Player(s)>} only ${3:<advancement>} ${4:[<criterion>]}",
+      "$0"
+    ],
+    "description": "Grant/revoke all loaded advancements"
+  },
+  "Add/remove an advancement and all its child advancements": {
+    "prefix": "advancment:from",
+    "body": [
+      "advancement ${1:(grant|revoke)} ${2:<targets: Player(s)>} from ${3:<advancement>}",
+      "$0"
+    ],
+    "description": "Grant/revoke an advancement and all child advancements"
+  },
+  "Add/removes an advancement, all its parent advancements, and all its children advancements": {
+    "prefix": "advancement:through",
+    "body": [
+      "advancement ${1:(grant|revoke)} ${2:<targets: Player(s)>} through ${3:<advancement>}"
+    ],
+    "description": "Grant/revoke an advancement, its parent, and its children."
+  }
+}
