@@ -16,7 +16,8 @@
     "vscode": "^1.30.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Snippets"
   ],
   "keywords": [
     "minecraft",
