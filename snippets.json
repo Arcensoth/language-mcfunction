@@ -44,5 +44,68 @@
       "advancement ${1:(grant|revoke)} ${2:<targets: Player(s)>} through ${3:<advancement>}"
     ],
     "description": "Grant/revoke an advancement, its parent, and its children."
+  },
+  "Add/remove an advancement and all its parent advancements": {
+    "prefix": "advacement:until",
+    "body": [
+      "advancement ${1:(grant|revoke)} ${2:<targets: Player(s)>} until ${3:<advancement>}",
+      "$0"
+    ],
+    "description": "Grant/revoke an advancement and all parent advancements"
+  },
+  "Set alwaysday": {
+    "prefix": "alwaysday",
+    "body": [
+      "alwaysday ${1:[lock: Boolean]}",
+      "$0"
+    ],
+    "description": "Lock or unlock the clock"
+  },
+  "Get total attribute value": {
+    "prefix": "attribute:get",
+    "body": [
+      "attribute ${1:<target: Entity>} ${2:<attribute: Attribute>} get ${3:[<scale: Number>]}",
+      "$0"
+    ],
+    "description": "Get the computed value of an entity's attribute"
+  },
+  "Get attribute base value": {
+    "prefix": "attribute:base.get",
+    "body": [
+      "attribute ${1:<target: Entity>} ${2:<attribute: Attribute>} base get ${3:[<scale: Number>]}",
+      "$0"
+    ],
+    "description": "Get the base value of an entity's attribute"
+  },
+  "Set attribute base value": {
+    "prefix": "attribute:base.set",
+    "body": [
+      "attribute ${1:<target: Entity>} ${2:<attribute: Attribute>} base set ${3:[<scale: Number>]}",
+      "$0"
+    ],
+    "description": "Set the base value of an entity's attribute"
+  },
+  "Add attribute modifier": {
+    "prefix": "attribute:modifier.add",
+    "body": [
+      "attribute ${1:<target: Entity>} ${2:<attribute: Attribute>} modifier add ${3:<uuid>} ${4:<name>} ${6:<value>} ${7:(add|multiply|multiply_base)}",
+      "$0"
+    ],
+    "description": "Adds an attribute modifier with the specified properties if no modifier with the same UUID already existed."
+  },
+  "Remove attribute modifier": {
+    "prefix": "attribute:modifier.remove",
+    "body": [
+      "attribute ${1:<target: Entity>} ${2:<attribute: Attribute>} modifier remove ${3:<uuid>}",
+      "$0"
+    ],
+    "description": "Removes the attribute modifier with the specified UUID."
+  },
+  "Get attribute modifier": {
+    "prefix": "attribute:modifier.get",
+    "body": [
+      "attribute ${1:<target: Entity>} ${2:<attribute: Attribute>} modifier value get ${3:<uuid>} ${4:[<scale: Number>]}"
+    ],
+    "description": "Returns the value of the modifier with the specified UUID."
   }
 }
